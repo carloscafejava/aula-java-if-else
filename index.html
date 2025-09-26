@@ -3,585 +3,495 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IF e ELSE em Java</title>
+    <title>IF, ELSE e ELSE IF em Java - Aula Completa</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 5px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 0;
+            background: #fdfaf6;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
             box-sizing: border-box;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: #fdfaf6;
+        }
+        
+        .logo {
+            background: #000;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1em;
+            margin-right: 20px;
+        }
+        
+        .menu-item {
+            margin-right: 20px;
+            color: #333;
+            font-size: 1em;
+            text-decoration: none;
         }
         
         .slide-container {
-            background: white;
-            border-radius: 15px;
+            background: #fdfaf6;
             padding: 20px;
             width: 100%;
-            max-width: 900px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            animation: slideIn 0.8s ease-out;
+            max-width: 1200px;
+            margin: 0 auto;
             box-sizing: border-box;
-            margin: 10px;
         }
         
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        h1 { 
+            color: #333; 
+            text-align: left; 
+            font-size: clamp(1.8em, 5vw, 2.5em); 
+            margin-bottom: 20px; 
         }
+        h2 { color: #333; font-size: clamp(1.2em, 4vw, 1.5em); margin-top: 25px; margin-bottom: 15px; }
+        h3 { color: #495057; font-size: clamp(1.1em, 3vw, 1.3em); margin-top: 20px; margin-bottom: 10px; }
         
-        h1 {
-            color: #333;
-            text-align: center;
-            font-size: clamp(1.8em, 5vw, 2.5em);
-            margin-bottom: 20px;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
-            word-wrap: break-word;
+        .syntax-box { 
+            background: #424242; 
+            padding: 20px; 
+            margin: 10px 0; 
+            border-radius: 10px; 
+            font-family: 'Courier New', monospace; 
+            font-size: 1.05em; 
+            color: #fff;
         }
+        .example-box { background: #fdfaf6; border: 2px solid #e0e0e0; padding: 20px; margin: 20px 0; border-radius: 10px; }
+        pre.code { 
+            background: transparent; 
+            color: inherit; 
+            padding: 0; 
+            border-radius: 0; 
+            font-family: 'Courier New', monospace; 
+            overflow-x: auto; 
+            line-height: 1.45; 
+        }
+        .highlight { background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107; margin: 15px 0; }
+        .diagram-container { display: flex; justify-content: center; margin: 30px 0; }
+        .condition-box { background: #ffc107; color: #333; padding: 15px 20px; border-radius: 10px; font-weight: bold; text-align: center; }
+        .start-box, .end-box { background: #28a745; color: white; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 14px; }
+        .branches { display: flex; gap: 40px; align-items: flex-start; margin: 20px 0; justify-content: center; flex-wrap: wrap; }
         
-        h2 {
-            color: #667eea;
-            font-size: clamp(1.2em, 4vw, 1.5em);
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
+        .warning-box { background: #ffe6e6; border: 2px solid #ff4444; padding: 20px; margin: 20px 0; border-radius: 10px; border-left: 5px solid #ff4444; }
+        .success-box { background: #e8f5e8; border: 2px solid #28a745; padding: 20px; margin: 20px 0; border-radius: 10px; border-left: 5px solid #28a745; }
         
-        .syntax-box {
-            background: #f8f9fa;
-            border-left: 5px solid #667eea;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-            font-family: 'Courier New', monospace;
-            font-size: 1.1em;
-        }
+        .tips-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin: 20px 0; }
+        .tip-box { background: #fff3cd; border: 2px solid #ffc107; border-radius: 10px; padding: 15px; font-size: clamp(0.9em, 2.2vw, 1em); line-height: 1.5; }
+        .tip-box strong { color: #856404; display: block; margin-bottom: 8px; }
         
-        .example-box {
-            background: #e8f4fd;
-            border: 2px solid #667eea;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 10px;
-        }
+        .exercise { background: #f1f8e9; border: 2px solid #8bc34a; padding: 14px; border-radius: 10px; margin: 12px 0; }
+        details { margin-top: 8px; }
+        summary { cursor: pointer; font-weight: bold; }
         
-        .code {
-            background: #2d3748;
-            color: #e2e8f0;
-            padding: 15px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            margin: 10px 0;
-            overflow-x: auto;
-        }
-        
-        .highlight {
-            background: #fff3cd;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #ffc107;
-            margin: 15px 0;
-        }
-        
-        .diagram-container {
-            display: flex;
-            justify-content: center;
-            margin: 30px 0;
-        }
-        
-        .diagram {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .start-box, .end-box {
-            background: #28a745;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        
-        .condition-box {
-            background: #ffc107;
-            color: #333;
-            padding: 15px 20px;
-            border-radius: 10px;
-            font-weight: bold;
-            text-align: center;
-            font-size: 14px;
-        }
-        
-        .branches {
-            display: flex;
-            gap: 40px;
-            align-items: flex-start;
-            margin: 20px 0;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .branch-left, .branch-right {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            min-width: 120px;
-        }
-        
-        .code {
-            background: #2d3748;
-            color: #e2e8f0;
-            padding: 15px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            margin: 10px 0;
-            overflow-x: auto;
-            font-size: clamp(0.9em, 2.5vw, 1em);
-            line-height: 1.4;
-        }
-        
-        ul {
-            font-size: clamp(1em, 2.5vw, 1.1em);
-            line-height: 1.6;
-        }
-        
-        p, li {
-            font-size: clamp(0.95em, 2.5vw, 1.05em);
-            line-height: 1.6;
-        }
-        
-        /* Media Queries para dispositivos móveis */
-        @media (max-width: 768px) {
-            .slide-container {
-                padding: 15px;
-                margin: 5px;
-                border-radius: 10px;
-            }
-            
-            .intro-section {
-                padding: 15px;
-            }
-            
-            .branches {
-                gap: 20px;
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .branch-left, .branch-right {
-                width: 100%;
-                max-width: 200px;
-            }
-            
-            .syntax-box, .example-box, .logic-box {
-                padding: 15px;
-                font-size: 0.95em;
-            }
-            
-            .diagram {
-                transform: scale(0.9);
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .slide-container {
-                padding: 10px;
-                margin: 3px;
-            }
-            
-            .intro-section {
-                padding: 12px;
-            }
-            
-            .syntax-box, .example-box, .logic-box {
-                padding: 12px;
-                font-size: 0.9em;
-            }
-            
-            .code {
-                padding: 12px;
-                font-size: 0.85em;
-            }
-            
-            .diagram {
-                transform: scale(0.8);
-            }
-            
-            .action-box {
-                padding: 10px 15px;
-                font-size: 12px;
-            }
-            
-            .branches {
-                gap: 15px;
-            }
-        }
-        
-        h3 {
-            color: #495057;
-            font-size: clamp(1.1em, 3vw, 1.3em);
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-        
-        .full-code-box {
-            background: #f8f9fa;
-            border: 2px solid #667eea;
-            border-radius: 15px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-        
-        .full-code-box .code {
-            margin: 0;
-            border-radius: 0;
-            background: #1a1a1a;
-            font-size: clamp(0.8em, 2vw, 0.95em);
-            padding: 20px;
-        }
-        
-        .highlight-code {
-            background-color: #2d5aa0;
-            padding: 2px 4px;
-            border-radius: 3px;
-        }
-        
-        .execution-example {
-            background: #e3f2fd;
-            padding: 15px 20px;
-            font-size: clamp(0.9em, 2.2vw, 1em);
-            line-height: 1.6;
-        }
-        
-        .execution-example code {
-            background: #fff;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-weight: bold;
-            color: #d63384;
-        }
-        
-        .tips-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-        
-        .tip-box {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 10px;
-            padding: 15px;
-            font-size: clamp(0.9em, 2.2vw, 1em);
-            line-height: 1.5;
-        }
-        
-        .tip-box strong {
-            color: #856404;
-            display: block;
-            margin-bottom: 8px;
-        }
-        
-        .tip-box code {
-            background: #f8f9fa;
-            padding: 2px 5px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            color: #d63384;
-        }
+        .solution { background: #f8f9fa; border-left: 4px solid #667eea; padding: 12px; margin-top: 8px; border-radius: 6px; }
         
         @media (max-width: 768px) {
-            .tips-container {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            
-            .full-code-box .code {
-                padding: 15px;
-                font-size: 0.8em;
-            }
-            
-            .execution-example {
-                padding: 12px 15px;
-                font-size: 0.9em;
-            }
-        }
-        
-        .branch-left, .branch-right {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .arrow-left, .arrow-right {
-            font-weight: bold;
-            color: #667eea;
-            font-size: 14px;
-        }
-        
-        .action-box {
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            text-align: center;
-            font-size: 13px;
-            color: white;
-        }
-        
-        .true-box {
-            background: #28a745;
-        }
-        
-        .false-box {
-            background: #dc3545;
-        }
-        
-        .arrow {
-            font-size: 20px;
-            color: #667eea;
-            font-weight: bold;
-        }
-        
-        .arrow-down {
-            font-size: 20px;
-            color: #667eea;
-            font-weight: bold;
-            margin-top: -10px;
-        }
-        
-        .emoji {
-            font-size: 1.5em;
-        }
-        
-        .intro-section {
-            background: #f8f9ff;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            border-left: 5px solid #667eea;
-        }
-        
-        .logic-box {
-            background: #e8f4fd;
-            border: 2px solid #4dabf7;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            font-size: 1em;
-            line-height: 1.6;
-        }
-        
-        .intro-section ul {
-            background: white;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin: 15px 0;
-        }
-        
-        .intro-section li {
-            margin-bottom: 10px;
-            font-size: 1.05em;
-        }
-        
-        ul {
-            font-size: 1.1em;
-            line-height: 1.6;
-        }
-        
-        li {
-            margin-bottom: 8px;
+            .slide-container { padding: 15px; }
+            .branches { gap: 20px; flex-direction: column; align-items: center; }
+            pre.code { font-size: 0.9em; }
         }
     </style>
 </head>
 <body>
+    <div class="header">
+        <div class="logo">JAVA Learning</div>
+        <a href="#" class="menu-item">Inicio</a>
+        <a href="#" class="menu-item">Conteúdo</a>
+        <a href="#" class="menu-item">Roadmap</a>
+    </div>
     <div class="slide-container">
-        <h1><span class="emoji">🤖</span> IF e ELSE em Java</h1>
+        <h1>IF, ELSE e ELSE IF em Java</h1>
         
         <div class="intro-section">
-            <h2>🧠 A Lógica por trás do IF e ELSE</h2>
-            <p>Na vida real, você toma decisões o tempo todo baseado em <strong>condições</strong>:</p>
-            <ul>
-                <li><strong>"SE</strong> está chovendo, <strong>ENTÃO</strong> levo guarda-chuva"</li>
-                <li><strong>"SE</strong> tenho dinheiro, <strong>ENTÃO</strong> compro o lanche, <strong>SENÃO</strong> fico sem"</li>
-                <li><strong>"SE</strong> a nota é maior que 7, <strong>ENTÃO</strong> passei, <strong>SENÃO</strong> reprovei"</li>
-            </ul>
-            
-            <p>O <strong>IF e ELSE</strong> funcionam exatamente assim! Eles fazem o computador <strong>pensar</strong> e <strong>decidir</strong> qual caminho seguir.</p>
-            
-            <div class="logic-box">
-                <strong>🔍 Como o computador "pensa":</strong><br>
-                1. Ele faz uma <strong>pergunta</strong> (condição)<br>
-                2. A resposta é sempre <strong>SIM</strong> (verdadeiro) ou <strong>NÃO</strong> (falso)<br>
-                3. Se for <strong>SIM</strong> → executa o <code>IF</code><br>
-                4. Se for <strong>NÃO</strong> → executa o <code>ELSE</code><br>
-                5. Nunca executa os dois ao mesmo tempo!
-            </div>
-        </div>
-        
-        <h2>🎯 O que é?</h2>
-        <p><strong>IF e ELSE</strong> são comandos que fazem o programa <strong>tomar decisões</strong>!</p>
-        
-        <div class="syntax-box">
-            <strong>Sintaxe básica:</strong><br>
-            if (condição) {<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;// faz isso se for VERDADEIRO<br>
-            } else {<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;// faz isso se for FALSO<br>
-            }
-        </div>
-        
-        <h2>📝 Exemplo 1: Maior de Idade</h2>
-        <div class="example-box">
-            <div class="code">
-if (idade >= 18) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Maior de idade!");<br>
-} else {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Menor de idade.");<br>
-}
-            </div>
-        </div>
-        
-        <h2>🔢 Exemplo 2: Par ou Ímpar</h2>
-        <div class="example-box">
-            <div class="code">
-if (numero % 2 == 0) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("É PAR!");<br>
-} else {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("É ÍMPAR!");<br>
-}
-            </div>
-        </div>
-        
-        <h2>⚡ Operadores Importantes</h2>
-        <ul>
-            <li><code>></code> maior que</li>
-            <li><code><</code> menor que</li>
-            <li><code>>=</code> maior ou igual</li>
-            <li><code><=</code> menor ou igual</li>
-            <li><code>==</code> igual a</li>
-            <li><code>!=</code> diferente de</li>
-        </ul>
-        
-        <h2>🔄 Como Funciona (Diagrama)</h2>
-        <div class="diagram-container">
-            <div class="diagram">
-                <div class="start-box">INÍCIO</div>
-                <div class="arrow">↓</div>
-                <div class="condition-box">CONDIÇÃO<br>É VERDADEIRA?</div>
-                <div class="branches">
-                    <div class="branch-left">
-                        <div class="arrow-left">← SIM</div>
-                        <div class="action-box true-box">EXECUTA<br>IF</div>
-                    </div>
-                    <div class="branch-right">
-                        <div class="arrow-right">NÃO →</div>
-                        <div class="action-box false-box">EXECUTA<br>ELSE</div>
-                    </div>
-                </div>
-                <div class="arrow-down">↓</div>
-                <div class="end-box">CONTINUA PROGRAMA</div>
+            <p>Na vida real voce faz decisões em sequência. Em código é a mesma coisa: testar uma condição, agir se for verdadeira e pular as demais quando uma for satisfeita.</p>
+            <strong>Sintaxe basica :</strong>
+            <div class="syntax-box">
+                <pre class="code"><code>if (condição) {
+    // executa se condição for verdadeira
+} else if (outraCondicao) {
+    // executa se a primeira for falsa e esta for verdadeira
+} else {
+    // executa se todas as anteriores forem falsas
+}</code></pre>
             </div>
         </div>
 
-        <div class="highlight">
-            <strong>💡 Dica:</strong> O programa sempre vai por UM dos dois caminhos: ou IF ou ELSE, nunca os dois!
-        </div>
-        
-        <h2>💻 Exemplos Completos em Java</h2>
-        
-        <h3>🎂 Exemplo 1: Verificar Idade (Código Completo)</h3>
-        <div class="full-code-box">
-            <div class="code">
-import java.util.Scanner;<br><br>
-
-public class VerificarIdade {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;public static void main(String[] args) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scanner teclado = new Scanner(System.in);<br><br>
-        
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.print("Qual sua idade? ");<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int idade = teclado.nextInt();<br><br>
-        
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight-code">if (idade >= 18) {</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight-code">System.out.println("Você é maior de idade!");</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight-code">} else {</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight-code">System.out.println("Você é menor de idade.");</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight-code">}</span><br><br>
-        
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;teclado.close();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-}
-            </div>
-            <div class="execution-example">
-                <strong>📋 Como funciona na prática:</strong><br>
-                • Se você digitar <code>20</code> → Mostra: "Você é maior de idade!"<br>
-                • Se você digitar <code>15</code> → Mostra: "Você é menor de idade."
-            </div>
-        </div>
-        
-        <h3>🧮 Exemplo 2: Calculadora Simples</h3>
-        <div class="full-code-box">
-            <div class="code">
-import java.util.Scanner;<br><br>
-
-public class Calculadora {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;public static void main(String[] args) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scanner teclado = new Scanner(System.in);<br><br>
-        
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.print("Digite o primeiro número: ");<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double num1 = teclado.nextDouble();<br><br>
-        
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.print("Digite o segundo número: ");<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double num2 = teclado.nextDouble();<br><br>
-        
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight-code">if (num1 > num2) {</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight-code">System.out.println(num1 + " é maior que " + num2);</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight-code">} else if (num1 < num2) {</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight-code">System.out.println(num2 + " é maior que " + num1);</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight-code">} else {</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight-code">System.out.println("Os números são iguais!");</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight-code">}</span><br><br>
-        
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;teclado.close();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-}
-            </div>
-            <div class="execution-example">
-                <strong>📋 Possibilidades:</strong><br>
-                • <code>10</code> e <code>5</code> → "10.0 é maior que 5.0"<br>
-                • <code>3</code> e <code>8</code> → "8.0 é maior que 3.0"<br>
-                • <code>7</code> e <code>7</code> → "Os números são iguais!"
-            </div>
-        </div>
-        
-        <h2>🔥 Dicas Importantes para Iniciantes</h2>
+        <h2>Conceitos essenciais</h2>
         <div class="tips-container">
             <div class="tip-box">
-                <strong>1. Sempre use chaves { }</strong><br>
-                Mesmo que seja só uma linha, use as chaves para evitar erros.
+                <strong>IF</strong>
+                Primeiro teste. Se verdadeiro, o restante da cadeia é ignorado.
             </div>
             <div class="tip-box">
-                <strong>2. Cuidado com o ==</strong><br>
-                Para comparar use <code>==</code>, não <code>=</code> (que é para atribuir).
+                <strong>ELSE IF</strong>
+                Testes alternativos que só são avaliados se os anteriores falharem.
             </div>
             <div class="tip-box">
-                <strong>3. Para textos use .equals()</strong><br>
-                <code>nome.equals("João")</code> em vez de <code>nome == "João"</code>
-            </div>
-            <div class="tip-box">
-                <strong>4. Teste sempre os dois caminhos</strong><br>
-                Execute seu programa testando tanto o IF quanto o ELSE.
+                <strong>ELSE</strong>
+                Plano B obrigatório — pega tudo que sobrou.
             </div>
         </div>
+
+        <h2>Operadores de comparação e lógicos</h2>
+            <div class="syntax-box">
+                <pre class="code"><code>// Comparações
+==    !=    &gt;   &lt;   &gt;=   &lt;=
+// Lógicos
+&amp;&amp; (AND), || (OR), ! (NOT)</code></pre>
+            </div>
+            <p class="highlight">
+  <strong>==</strong> -> compara <em>referências na memória</em>. Ou seja, ele quer saber se as duas variáveis apontam pro mesmo objeto.<br><br>
+
+  <strong>.equals()</strong> -> compara o <em>conteúdo</em>. No caso de <code>String</code>, compara o texto que está dentro dela.
+</p>
+
+<p><strong>Exemplo:</strong></p>
+            <div class="syntax-box">
+<pre class="code"><code>
+String a = new String("Carlos");
+String b = new String("Carlos");
+
+System.out.println(a == b);       // false -&gt; não são o mesmo objeto na memória
+System.out.println(a.equals(b));  // true  -&gt; o conteúdo é igual
+</code></pre>
+            </div>
+
+<p><strong>Outro caso:</strong></p>
+            <div class="syntax-box">
+<pre class="code"><code>
+String x = "Java";
+String y = "Java";
+
+System.out.println(x == y);       // true -&gt; nesse caso sim, porque o compilador guarda no pool de Strings
+System.out.println(x.equals(y));  // true  -&gt; conteúdo igual também
+</code></pre>
+            </div>
+
+<p><strong>Ou seja:</strong><br>
+Sempre use <code>.equals()</code> pra comparar <code>String</code>s, porque você está interessado no conteúdo e não em saber se as duas variáveis apontam pro mesmo espaço de memória.<br><br>
+O <code>==</code> até pode dar “true” às vezes (por causa do <em>string pool</em>), mas é sorte de principiante. Mais cedo ou mais tarde, vai dar ruim.
+</p>
+
+            <div class="syntax-box">
+                <pre class="code"><code>if (obj != null &amp;&amp; obj.isAtivo()) {
+    // seguro: obj.isAtivo() só é chamado se obj != null
+}</code></pre>
+            </div>
+
+        <h2>Boas práticas (leia se valoriza sua sanidade)</h2>
+        <ul>
+            <li>Sempre use chaves { } mesmo para uma única linha dentro do if — evita bugs quando alguém mexer depois.</li>
+            <li>Evite cadeias enormes de <code>else if</code> — considere <code>switch</code>, Map de funções ou polimorfismo.</li>
+            <li>Menos aninhamento: prefira guard clauses (retornos antecipados).</li>
+            <li>Extraia condições complexas para métodos com nome significativo (<code>isUsuarioAtivo()</code>).</li>
+        </ul>
+
+        <h2>Erros comuns que dão dor de cabeça</h2>
+        <div class="warning-box">
+            <ul>
+                <li>Usar <code>==</code> com Strings em vez de <code>.equals()</code>.</li>
+                <li>Comparar doubles com <code>==</code> (use epsilon).</li>
+                <li>Esquecer que <code>if</code> pára na primeira condição verdadeira.</li>
+                <li>Não fechar Scanner: causa warnings e, às vezes, travamento no fluxo de entrada.</li>
+            </ul>
+        </div>
+
+        <h2>Exemplos completos (práticos)</h2>
+
+        <h3>Exemplo: Calculadora com menu (corrigida e completa)</h3>
+        <div class="syntax-box">
+            <pre class="code"><code>import java.util.Scanner;
+
+public class CalculadoraMenu {
+    public static void main(String[] args) {
+        Scanner teclado = new Scanner(System.in);
+
+        System.out.print("Digite o primeiro número: ");
+        double num1 = teclado.nextDouble();
+
+        System.out.print("Digite o segundo número: ");
+        double num2 = teclado.nextDouble();
+
+        System.out.println("Escolha a operação:");
+        System.out.println("1 - Somar");
+        System.out.println("2 - Subtrair");
+        System.out.println("3 - Multiplicar");
+        System.out.println("4 - Dividir");
+        int opcao = teclado.nextInt();
+
+        if (opcao == 1) {
+            System.out.println("Resultado: " + (num1 + num2));
+        } else if (opcao == 2) {
+            System.out.println("Resultado: " + (num1 - num2));
+        } else if (opcao == 3) {
+            System.out.println("Resultado: " + (num1 * num2));
+        } else if (opcao == 4) {
+            if (num2 != 0) {
+                System.out.println("Resultado: " + (num1 / num2));
+            } else {
+                System.out.println("Erro: divisão por zero!");
+            }
+        } else {
+            System.out.println("Opção inválida.");
+        }
+
+        teclado.close();
+    }
+}</code></pre>
+        </div>
+
+        <h3>Exemplo: Comparação de Strings corretamente</h3>
+        <div class="syntax-box">
+            <pre class="code"><code>import java.util.Scanner;
+
+public class CompararStrings {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Digite a senha: ");
+        String senha = sc.nextLine();
+
+        if ("admin".equals(senha)) {
+            System.out.println("Acesso permitido");
+        } else {
+            System.out.println("Acesso negado");
+        }
+
+        sc.close();
+    }
+}</code></pre>
+        </div>
+
+        <h3>Exemplo: Ternário (quando usar)</h3>
+        <div class="syntax-box">
+            <pre class="code"><code>int nota = 8;
+String resultado = nota &gt;= 7 ? "Aprovado" : "Reprovado";
+System.out.println(resultado);</code></pre>
+        </div>
+
+        <h3>Exemplo: Switch vs If (quando usar switch)</h3>
+        <div class="syntax-box">
+            <pre class="code"><code>int dia = 3;
+switch (dia) {
+    case 1: System.out.println("Segunda"); break;
+    case 2: System.out.println("Terça"); break;
+    case 3: System.out.println("Quarta"); break;
+    default: System.out.println("Outro dia"); break;
+}</code></pre>
+        </div>
+
+        <h2>Refatoração de menu com Map (padrão mais moderno)</h2>
+        <div class="syntax-box">
+            <pre class="code"><code>import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class MenuMap {
+    public static void main(String[] args) {
+        Map&lt;Integer,Runnable&gt; acoes = new HashMap&lt;&gt;();
+        acoes.put(1, () -&gt; System.out.println("Somar..."));
+        acoes.put(2, () -&gt; System.out.println("Subtrair..."));
+        acoes.put(3, () -&gt; System.out.println("Multiplicar..."));
+        acoes.put(4, () -&gt; System.out.println("Dividir..."));
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Opção: ");
+        int opc = sc.nextInt();
+        Runnable acao = acoes.get(opc);
+        if (acao != null) {
+            acao.run();
+        } else {
+            System.out.println("Opção inválida.");
+        }
+        sc.close();
+    }
+}</code></pre>
+        </div>
+
+        <h2>Atividades por tópico (com soluções escondidas)</h2>
+
+        <div class="exercise">
+            <strong>Sintaxe básica</strong><br>
+            <p>1) Dado um inteiro <code>nota</code>, imprima "Aprovado" se >= 7, caso contrário imprima "Reprovado".</p>
+            <details><summary>Mostrar solução</summary>
+                <div class="solution">
+                    <div class="syntax-box">
+                        <pre class="code"><code>int nota = 6;
+if (nota &gt;= 7) {
+    System.out.println("Aprovado");
+} else {
+    System.out.println("Reprovado");
+}</code></pre>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <div class="exercise">
+            <strong>Operadores lógicos</strong><br>
+            <p>2) Verifique se uma pessoa pode votar: condição = (idade &gt;= 18) <em>e</em> (não está suspensa). Use booleanos fictícios.</p>
+            <details><summary>Mostrar solução</summary>
+                <div class="solution">
+                    <div class="syntax-box">
+                        <pre class="code"><code>int idade = 20;
+boolean suspensa = false;
+if (idade &gt;= 18 &amp;&amp; !suspensa) {
+    System.out.println("Pode votar");
+} else {
+    System.out.println("Não pode votar");
+}</code></pre>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <div class="exercise">
+            <strong>Curto-circuito e null</strong><br>
+            <p>3) Dada uma String <code>usuario</code>, imprima "Bem-vindo" somente se <code>usuario</code> não for nulo e tiver mais de 3 caracteres.</p>
+            <details><summary>Mostrar solução</summary>
+                <div class="solution">
+                    <div class="syntax-box">
+                        <pre class="code"><code>String usuario = "carlos";
+if (usuario != null &amp;&amp; usuario.length() &gt; 3) {
+    System.out.println("Bem-vindo, " + usuario);
+} else {
+    System.out.println("Usuário inválido");
+}</code></pre>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <div class="exercise">
+            <strong>Comparação de Strings</strong><br>
+            <p>4) Leia uma entrada e verifique se é igual a "exit" (ignorar maiúsculas).</p>
+            <details><summary>Mostrar solução</summary>
+                <div class="solution">
+                    <div class="syntax-box">
+                        <pre class="code"><code>import java.util.Scanner;
+
+Scanner sc = new Scanner(System.in);
+System.out.print("Comando: ");
+String cmd = sc.nextLine();
+if ("exit".equalsIgnoreCase(cmd)) {
+    System.out.println("Encerrando...");
+} else {
+    System.out.println("Comando diferente");
+}
+sc.close();</code></pre>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <div class="exercise">
+            <strong>Ternário</strong><br>
+            <p>5) Transforme o código <code>if/else</code> abaixo em um operador ternário:<br><code>if (x % 2 == 0) tipo = "par"; else tipo = "ímpar";</code></p>
+            <details><summary>Mostrar solução</summary>
+                <div class="solution">
+                    <div class="syntax-box">
+                        <pre class="code"><code>int x = 7;
+String tipo = (x % 2 == 0) ? "par" : "ímpar";
+System.out.println(tipo);</code></pre>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <div class="exercise">
+            <strong>Switch vs If</strong><br>
+            <p>6) Dado um número 1-7 imprima o dia da semana usando <code>switch</code>. Depois reescreva com <code>if/else</code> (atividade opcional).</p>
+            <details><summary>Mostrar solução (switch)</summary>
+                <div class="solution">
+                    <div class="syntax-box">
+                        <pre class="code"><code>int d = 5;
+switch (d) {
+    case 1: System.out.println("Segunda"); break;
+    case 2: System.out.println("Terça"); break;
+    case 3: System.out.println("Quarta"); break;
+    case 4: System.out.println("Quinta"); break;
+    case 5: System.out.println("Sexta"); break;
+    case 6: System.out.println("Sábado"); break;
+    case 7: System.out.println("Domingo"); break;
+    default: System.out.println("Número inválido"); break;
+}</code></pre>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <div class="exercise">
+            <strong>Guardar cláusulas (guard clauses)</strong><br>
+            <p>7) Escreva um método que recebe idade e retorna <code>true</code> se é maior de idade; use retorno antecipado (guard clause) para idade negativa.</p>
+            <details><summary>Mostrar solução</summary>
+                <div class="solution">
+                    <div class="syntax-box">
+                        <pre class="code"><code>public static boolean isAdult(int idade) {
+    if (idade &lt; 0) return false; // entrada inválida
+    return idade &gt;= 18;
+}</code></pre>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <div class="exercise">
+            <strong>Comparação de ponto flutuante</strong><br>
+            <p>8) Compare dois doubles <code>a</code> e <code>b</code> com precisão (epsilon).</p>
+            <details><summary>Mostrar solução</summary>
+                <div class="solution">
+                    <div class="syntax-box">
+                        <pre class="code"><code>double a = 0.1 + 0.2;
+double b = 0.3;
+double eps = 1e-9;
+if (Math.abs(a - b) &lt; eps) {
+    System.out.println("Iguais (próximo o suficiente)");
+} else {
+    System.out.println("Diferentes");
+}</code></pre>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <div class="exercise">
+            <strong>Refatoração: menu com Map</strong><br>
+            <p>9) Substitua um grande <code>if/else</code> que chama funções diferentes por um <code>Map&lt;Integer,Runnable&gt;</code> (exercício de refatoração).</p>
+            <details><summary>Mostrar solução</summary>
+                <div class="solution">
+                    <div class="syntax-box">
+                        <pre class="code"><code>Map&lt;Integer,Runnable&gt; acoes = new java.util.HashMap&lt;&gt;();
+acoes.put(1, () -&gt; System.out.println("Ação 1"));
+acoes.put(2, () -&gt; System.out.println("Ação 2"));
+// ...
+int opc = 2;
+Runnable r = acoes.get(opc);
+if (r != null) r.run(); else System.out.println("Inválida");</code></pre>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <h2>Checklist do que foi adicionado</h2>
+        <ul>
+            <li>Corrigi e completei a calculadora (tratamento de divisão por zero + fechamento do Scanner).</li>
+            <li>Adicionei seções: operadores lógicos, curto-circuito, comparação de Strings, ternário, switch, boas práticas e armadilhas comuns.</li>
+            <li>Incluí exemplo moderno de refatoração (Map + Runnable).</li>
+            <li>Criei exercícios por tópico com soluções escondidas (use &lt;summary&gt; para mostrar).</li>
+        </ul>
+
+        <div class="highlight">
+            <strong>Nota prática:</strong> esse material funciona com Java 8+. Se seu ambiente for antigo, avisa que eu adapto (lembrando: eu detesto retrabalho, mas faço).</div>
+
+      
     </div>
 </body>
 </html>
