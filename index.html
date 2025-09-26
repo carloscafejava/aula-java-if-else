@@ -3,495 +3,824 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IF, ELSE e ELSE IF em Java - Aula Completa</title>
+    <title>Aprenda IF, ELSE IF e ELSE em Java</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* Estilos Gerais */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background: #fdfaf6;
+            background: #fdfaf6; /* Fundo suave, tipo papel */
             min-height: 100vh;
             box-sizing: border-box;
+            color: #333;
+            line-height: 1.6;
         }
-        
+
+        .container {
+            max-width: 960px;
+            margin: 20px auto;
+            padding: 20px 30px;
+            background: #fdfaf6;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+
+        /* Header */
         .header {
             display: flex;
             align-items: center;
-            padding: 10px 20px;
+            padding: 15px 30px;
             background: #fdfaf6;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
         
         .logo {
             background: #000;
             color: #fff;
-            padding: 5px 15px;
+            padding: 8px 18px;
             border-radius: 5px;
             font-weight: bold;
-            font-size: 1em;
-            margin-right: 20px;
+            font-size: 1.1em;
+            margin-right: 25px;
         }
         
         .menu-item {
             margin-right: 20px;
             color: #333;
             font-size: 1em;
+            font-weight: 600;
             text-decoration: none;
+            padding: 5px 0;
+            transition: color 0.3s;
         }
         
-        .slide-container {
-            background: #fdfaf6;
+        .menu-item:hover {
+            color: #007bff;
+        }
+
+        /* Títulos */
+        h1 {
+            font-size: clamp(2.2em, 5vw, 3.2em);
+            color: #212529;
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: clamp(1.1em, 2.5vw, 1.4em);
+            color: #6c757d;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: clamp(1.8em, 4vw, 2.2em);
+            color: #343a40;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: clamp(1.4em, 3vw, 1.7em);
+            color: #495057;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        h4 {
+            font-size: clamp(1.2em, 2.5vw, 1.4em);
+            color: #555;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* Parágrafos e Listas */
+        p {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        ul, ol {
+            margin-bottom: 15px;
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+
+        /* Blocos de Código */
+        .syntax-box, .code-example {
+            background: #2d2d2d; /* Fundo escuro para código */
+            color: #f8f8f2;     /* Texto claro */
             padding: 20px;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            box-sizing: border-box;
+            margin: 25px 0;
+            border-radius: 8px;
+            overflow-x: auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        
-        h1 { 
-            color: #333; 
-            text-align: left; 
-            font-size: clamp(1.8em, 5vw, 2.5em); 
-            margin-bottom: 20px; 
+
+        pre.code {
+            margin: 0;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
         }
-        h2 { color: #333; font-size: clamp(1.2em, 4vw, 1.5em); margin-top: 25px; margin-bottom: 15px; }
-        h3 { color: #495057; font-size: clamp(1.1em, 3vw, 1.3em); margin-top: 20px; margin-bottom: 10px; }
-        
-        .syntax-box { 
-            background: #424242; 
-            padding: 20px; 
-            margin: 10px 0; 
-            border-radius: 10px; 
-            font-family: 'Courier New', monospace; 
-            font-size: 1.05em; 
-            color: #fff;
+
+        /* Destaques e Caixas Especiais */
+        .highlight {
+            background: #fff3cd; /* Amarelo claro */
+            border-left: 5px solid #ffc107; /* Borda amarela */
+            padding: 18px;
+            margin: 25px 0;
+            border-radius: 8px;
+            font-size: 1.05em;
+            color: #664d03;
         }
-        .example-box { background: #fdfaf6; border: 2px solid #e0e0e0; padding: 20px; margin: 20px 0; border-radius: 10px; }
-        pre.code { 
-            background: transparent; 
-            color: inherit; 
-            padding: 0; 
-            border-radius: 0; 
-            font-family: 'Courier New', monospace; 
-            overflow-x: auto; 
-            line-height: 1.45; 
+
+        .warning-box {
+            background: #f8d7da; /* Vermelho claro */
+            border-left: 5px solid #dc3545; /* Borda vermelha */
+            padding: 18px;
+            margin: 25px 0;
+            border-radius: 8px;
+            font-size: 1.05em;
+            color: #721c24;
         }
-        .highlight { background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107; margin: 15px 0; }
-        .diagram-container { display: flex; justify-content: center; margin: 30px 0; }
-        .condition-box { background: #ffc107; color: #333; padding: 15px 20px; border-radius: 10px; font-weight: bold; text-align: center; }
-        .start-box, .end-box { background: #28a745; color: white; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 14px; }
-        .branches { display: flex; gap: 40px; align-items: flex-start; margin: 20px 0; justify-content: center; flex-wrap: wrap; }
-        
-        .warning-box { background: #ffe6e6; border: 2px solid #ff4444; padding: 20px; margin: 20px 0; border-radius: 10px; border-left: 5px solid #ff4444; }
-        .success-box { background: #e8f5e8; border: 2px solid #28a745; padding: 20px; margin: 20px 0; border-radius: 10px; border-left: 5px solid #28a745; }
-        
-        .tips-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin: 20px 0; }
-        .tip-box { background: #fff3cd; border: 2px solid #ffc107; border-radius: 10px; padding: 15px; font-size: clamp(0.9em, 2.2vw, 1em); line-height: 1.5; }
-        .tip-box strong { color: #856404; display: block; margin-bottom: 8px; }
-        
-        .exercise { background: #f1f8e9; border: 2px solid #8bc34a; padding: 14px; border-radius: 10px; margin: 12px 0; }
-        details { margin-top: 8px; }
-        summary { cursor: pointer; font-weight: bold; }
-        
-        .solution { background: #f8f9fa; border-left: 4px solid #667eea; padding: 12px; margin-top: 8px; border-radius: 6px; }
-        
+
+        /* Exercícios */
+        .exercise {
+            background: #e9f7ef; /* Verde claro suave */
+            border: 1px solid #c3e6cb;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        details {
+            margin-top: 15px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+        }
+
+        summary {
+            font-weight: bold;
+            cursor: pointer;
+            padding: 12px 15px;
+            color: #007bff;
+            list-style: none; /* Remove a seta padrão */
+        }
+        /* Adiciona uma seta personalizada */
+        summary::-webkit-details-marker {
+            display: none;
+        }
+        summary::before {
+            content: "▶"; /* Seta para a direita */
+            margin-right: 10px;
+            display: inline-block;
+            transition: transform 0.2s ease-in-out;
+        }
+        details[open] summary::before {
+            content: "▼"; /* Seta para baixo quando aberto */
+            transform: rotate(0deg);
+        }
+
+        .solution {
+            padding: 15px;
+            background: #e2e3e5;
+            border-top: 1px solid #dee2e6;
+            border-radius: 0 0 5px 5px;
+            margin-top: 0;
+            color: #333;
+        }
+        .solution .syntax-box { /* Estilo do código dentro da solução */
+            background: #3a3a3a;
+            color: #f0f0f0;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        /* Infográfico / Resumo Visual */
+        .summary-visual {
+            background: #eaf6ff; /* Azul claro */
+            border: 1px solid #b3e0ff;
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .summary-visual h3 {
+            color: #0056b3;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .summary-item {
+            background: #ffffff;
+            border: 1px solid #cce5ff;
+            border-radius: 8px;
+            padding: 20px;
+            font-weight: bold;
+            color: #004085;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* Rodapé */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            border-top: 1px solid #e0e0e0;
+            color: #6c757d;
+            font-size: 0.95em;
+        }
+
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* SVG Diagrams for String explanation */
+        .svg-diagram {
+            max-width: 100%;
+            height: auto;
+            margin: 25px auto;
+            display: block;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .svg-diagram text {
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+
+        /* Responsividade */
         @media (max-width: 768px) {
-            .slide-container { padding: 15px; }
-            .branches { gap: 20px; flex-direction: column; align-items: center; }
-            pre.code { font-size: 0.9em; }
+            .container {
+                margin: 10px auto;
+                padding: 15px;
+            }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px;
+            }
+            .logo {
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+            .menu-item {
+                margin-right: 15px;
+                margin-bottom: 5px;
+            }
+            pre.code {
+                font-size: 0.85em;
+            }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <div class="logo">JAVA Learning</div>
-        <a href="#" class="menu-item">Inicio</a>
-        <a href="#" class="menu-item">Conteúdo</a>
-        <a href="#" class="menu-item">Roadmap</a>
+        <div class="logo">JAVA SENAI</div>
+        <a href="#introducao" class="menu-item">Introdução</a>
+        <a href="#teoria" class="menu-item">Teoria</a>
+        <a href="#regras" class="menu-item">Regras Java</a>
+        <a href="#exemplos" class="menu-item">Exemplos</a>
+        <a href="#exercicios" class="menu-item">Exercícios</a>
+        <a href="#erros" class="menu-item">Erros Comuns</a>
+        <a href="#resumo" class="menu-item">Resumo</a>
     </div>
-    <div class="slide-container">
-        <h1>IF, ELSE e ELSE IF em Java</h1>
+
+    <div class="container">
+        <h1>Aprenda IF, ELSE IF e ELSE em Java</h1>
+        <p class="subtitle">Guia completo para dominar estruturas condicionais em Java do jeito mais simples possível</p>
+
+        <h2 id="introducao">1. O Básico: Entendendo as Condicionais</h2>
+        <p>No mundo da programação, as <strong>estruturas condicionais</strong> são como a capacidade de tomar decisões no dia a dia. Imagine que você acorda e pensa: "Se estiver sol, vou à praia. Senão, se estiver nublado, vou ao parque. Caso contrário (se chover), vou ficar em casa."</p>
+        <p>Em Java, e em outras linguagens, as estruturas <code>if</code>, <code>else if</code> e <code>else</code> permitem que seu programa siga diferentes caminhos lógicos dependendo de certas condições serem verdadeiras ou falsas. Elas são fundamentais para criar programas que reagem a entradas do usuário, condições do sistema ou valores de variáveis, tornando-os dinâmicos e inteligentes.</p>
+        <p>Dominar as condicionais é um passo crucial para qualquer desenvolvedor, pois elas são a espinha dorsal da lógica de negócios em quase todo software que você encontrará.</p>
+
+        <h2 id="teoria">2. IF, ELSE IF e ELSE: As Ferramentas da Decisão</h2>
+
+        <h3>2.1. O que é <code>if</code>?</h3>
+        <p>O <code>if</code> (se) é a estrutura condicional mais básica. Ele testa uma única condição. Se a condição for verdadeira, o bloco de código dentro do <code>if</code> é executado. Se for falsa, o bloco é ignorado, e o programa continua sua execução a partir da linha seguinte ao <code>if</code> (ou <code>else</code>, se houver).</p>
+        <h4>Sintaxe do <code>if</code>:</h4>
+        <div class="syntax-box">
+            <pre class="code"><code>if (condicao) {
+    // Código a ser executado SOMENTE se a condicao for verdadeira
+}
+// O programa continua aqui, independentemente da condicao</code></pre>
+        </div>
         
-        <div class="intro-section">
-            <p>Na vida real voce faz decisões em sequência. Em código é a mesma coisa: testar uma condição, agir se for verdadeira e pular as demais quando uma for satisfeita.</p>
-            <strong>Sintaxe basica :</strong>
-            <div class="syntax-box">
-                <pre class="code"><code>if (condição) {
-    // executa se condição for verdadeira
-} else if (outraCondicao) {
-    // executa se a primeira for falsa e esta for verdadeira
+        <h3>2.2. O que é <code>else</code>?</h3>
+        <p>O <code>else</code> (senão) atua como uma "alternativa" ao <code>if</code>. Ele sempre vem junto com um <code>if</code>. Se a condição do <code>if</code> for falsa, o bloco de código dentro do <code>else</code> é executado. A lógica é simples: "Se isso for verdade, faça A. Senão, faça B."</p>
+        <h4>Sintaxe do <code>if-else</code>:</h4>
+        <div class="syntax-box">
+            <pre class="code"><code>if (condicao) {
+    // Código para quando a condicao for verdadeira
 } else {
-    // executa se todas as anteriores forem falsas
+    // Código para quando a condicao for falsa (a alternativa)
 }</code></pre>
-            </div>
         </div>
 
-        <h2>Conceitos essenciais</h2>
-        <div class="tips-container">
-            <div class="tip-box">
-                <strong>IF</strong>
-                Primeiro teste. Se verdadeiro, o restante da cadeia é ignorado.
-            </div>
-            <div class="tip-box">
-                <strong>ELSE IF</strong>
-                Testes alternativos que só são avaliados se os anteriores falharem.
-            </div>
-            <div class="tip-box">
-                <strong>ELSE</strong>
-                Plano B obrigatório — pega tudo que sobrou.
-            </div>
+        <h3>2.3. O que é <code>else if</code>?</h3>
+        <p>O <code>else if</code> (senão se) é usado para testar múltiplas condições em sequência. Ele sempre vem depois de um <code>if</code> (ou outro <code>else if</code>). Se a condição do <code>if</code> inicial for falsa, o programa passa para o primeiro <code>else if</code> e testa sua condição. Se for verdadeira, executa seu bloco e pula o restante. Se for falsa, vai para o próximo <code>else if</code> (se houver), e assim por diante.</p>
+        <p>Você pode ter quantos <code>else if</code>s precisar em uma cadeia. É como um "cascateamento" de decisões.</p>
+        <h4>Sintaxe do <code>if-else if-else</code>:</h4>
+        <div class="syntax-box">
+            <pre class="code"><code>if (primeiraCondicao) {
+    // Executa se a primeira condição for verdadeira
+} else if (segundaCondicao) {
+    // Executa se a primeira for falsa E a segunda for verdadeira
+} else if (terceiraCondicao) {
+    // Executa se a primeira e segunda forem falsas E a terceira for verdadeira
+} else {
+    // Executa se TODAS as condições anteriores forem falsas (opcional)
+}</code></pre>
+        </div>
+        <div class="highlight">
+            <strong>Comparação:</strong> O <code>if</code> é para uma decisão única. O <code>if-else</code> oferece dois caminhos. O <code>if-else if-else</code> permite múltiplos caminhos, testando um após o outro até encontrar uma condição verdadeira ou cair no <code>else</code> final.
         </div>
 
-        <h2>Operadores de comparação e lógicos</h2>
-            <div class="syntax-box">
-                <pre class="code"><code>// Comparações
-==    !=    &gt;   &lt;   &gt;=   &lt;=
-// Lógicos
-&amp;&amp; (AND), || (OR), ! (NOT)</code></pre>
-            </div>
-            <p class="highlight">
-  <strong>==</strong> -> compara <em>referências na memória</em>. Ou seja, ele quer saber se as duas variáveis apontam pro mesmo objeto.<br><br>
+        <h2 id="regras">3. Regras de Ouro das Condicionais em Java</h2>
+        <p>Para usar <code>if</code>, <code>else if</code> e <code>else</code> corretamente em Java, fique atento a estas regras:</p>
 
-  <strong>.equals()</strong> -> compara o <em>conteúdo</em>. No caso de <code>String</code>, compara o texto que está dentro dela.
-</p>
-
-<p><strong>Exemplo:</strong></p>
-            <div class="syntax-box">
-<pre class="code"><code>
-String a = new String("Carlos");
-String b = new String("Carlos");
-
-System.out.println(a == b);       // false -&gt; não são o mesmo objeto na memória
-System.out.println(a.equals(b));  // true  -&gt; o conteúdo é igual
-</code></pre>
-            </div>
-
-<p><strong>Outro caso:</strong></p>
-            <div class="syntax-box">
-<pre class="code"><code>
-String x = "Java";
-String y = "Java";
-
-System.out.println(x == y);       // true -&gt; nesse caso sim, porque o compilador guarda no pool de Strings
-System.out.println(x.equals(y));  // true  -&gt; conteúdo igual também
-</code></pre>
-            </div>
-
-<p><strong>Ou seja:</strong><br>
-Sempre use <code>.equals()</code> pra comparar <code>String</code>s, porque você está interessado no conteúdo e não em saber se as duas variáveis apontam pro mesmo espaço de memória.<br><br>
-O <code>==</code> até pode dar “true” às vezes (por causa do <em>string pool</em>), mas é sorte de principiante. Mais cedo ou mais tarde, vai dar ruim.
-</p>
-
-            <div class="syntax-box">
-                <pre class="code"><code>if (obj != null &amp;&amp; obj.isAtivo()) {
-    // seguro: obj.isAtivo() só é chamado se obj != null
-}</code></pre>
-            </div>
-
-        <h2>Boas práticas (leia se valoriza sua sanidade)</h2>
+        <h3>3.1. Estrutura dos Blocos com Chaves <code>{ }</code></h3>
+        <p>Em Java, os blocos de código associados a um <code>if</code>, <code>else if</code> ou <code>else</code> são delimitados por chaves <code>{ }</code>. Embora seja possível omitir as chaves para um único comando, é uma **má prática** e altamente desencorajado.</p>
+        <div class="warning-box">
+            <strong>Sempre use chaves <code>{ }</code>:</strong> Isso melhora a legibilidade do código, evita erros quando você ou outro programador adicionar mais linhas de código no futuro e define claramente o escopo do bloco.
+        </div>
+        
+        <h3>3.2. Comparando Valores: <code>==</code> vs <code>.equals()</code></h3>
+        <p>Esta é uma das maiores fontes de erro para iniciantes em Java e crucial para entender.</p>
         <ul>
-            <li>Sempre use chaves { } mesmo para uma única linha dentro do if — evita bugs quando alguém mexer depois.</li>
-            <li>Evite cadeias enormes de <code>else if</code> — considere <code>switch</code>, Map de funções ou polimorfismo.</li>
-            <li>Menos aninhamento: prefira guard clauses (retornos antecipados).</li>
-            <li>Extraia condições complexas para métodos com nome significativo (<code>isUsuarioAtivo()</code>).</li>
+            <li><strong><code>==</code> (Operador de Comparação):</strong>
+                <ul>
+                    <li>Para <strong>tipos primitivos</strong> (<code>int</code>, <code>double</code>, <code>boolean</code>, <code>char</code>), ele compara os <strong>valores</strong>.</li>
+                    <li>Para <strong>objetos</strong> (como <code>String</code>), ele compara as <strong>referências de memória</strong>, ou seja, verifica se as duas variáveis apontam para o *mesmo* objeto na memória. Raramente é o que você quer ao comparar Strings.</li>
+                </ul>
+            </li>
+            <li><strong><code>.equals()</code> (Método de Objeto):</strong>
+                <ul>
+                    <li>É um método disponível para todos os objetos (incluindo <code>String</code>) que compara o <strong>conteúdo</strong> dos objetos.</li>
+                    <li>Para Strings, <code>.equals()</code> verifica se os caracteres de uma String são idênticos aos da outra.</li>
+                </ul>
+            </li>
         </ul>
+        <p><strong>A regra é:</strong> Sempre use <code>.equals()</code> para comparar o conteúdo de objetos, especialmente Strings.</p>
+        
+        <h4>Ilustração da Memória e Referências para Strings</h4>
+        <p><strong>Strings criadas com `new String()` - Referências Diferentes</strong></p>
+        <svg class="svg-diagram" viewBox="0 0 450 220" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#333" />
+                </marker>
+            </defs>
+            <rect x="1" y="1" width="448" height="218" fill="#f9f9f9" stroke="#ccc"/>
+            <text x="225" y="25" font-size="16" text-anchor="middle" font-weight="bold">Memória Heap</text>
 
-        <h2>Erros comuns que dão dor de cabeça</h2>
+            <rect x="50" y="50" width="120" height="40" fill="#e3f2fd" stroke="#90caf9"/>
+            <text x="110" y="75" font-size="14" text-anchor="middle">Objeto String: "SENAI"</text>
+            
+            <rect x="280" y="50" width="120" height="40" fill="#e3f2fd" stroke="#90caf9"/>
+            <text x="340" y="75" font-size="14" text-anchor="middle">Objeto String: "SENAI"</text>
+
+            <text x="70" y="150" font-size="14" font-family="monospace">String s1</text>
+            <line x1="110" y1="140" x2="110" y2="90" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)" />
+            
+            <text x="300" y="150" font-size="14" font-family="monospace">String s2</text>
+            <line x1="340" y1="140" x2="340" y2="90" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)" />
+
+            <text x="225" y="195" font-size="14" text-anchor="middle" fill="#c62828" font-weight="bold">s1 == s2  // Retorna false (Referências diferentes)</text>
+        </svg>
+
+        <p><strong>Strings Literais - Mesma Referência (String Pool)</strong></p>
+        <svg class="svg-diagram" viewBox="0 0 450 220" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="448" height="218" fill="#f9f9f9" stroke="#ccc"/>
+            <text x="225" y="25" font-size="16" text-anchor="middle" font-weight="bold">Memória (String Pool)</text>
+
+            <rect x="165" y="50" width="120" height="40" fill="#e8f5e9" stroke="#a5d6a7"/>
+            <text x="225" y="75" font-size="14" text-anchor="middle">Objeto String: "Java"</text>
+
+            <text x="70" y="150" font-size="14" font-family="monospace">String s3</text>
+            <path d="M 110 140 Q 150 100 225 90" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+            
+            <text x="300" y="150" font-size="14" font-family="monospace">String s4</text>
+            <path d="M 340 140 Q 300 100 225 90" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+
+            <text x="225" y="195" font-size="14" text-anchor="middle" fill="#2e7d32" font-weight="bold">s3 == s4  // Retorna true (Mesma referência no pool)</text>
+        </svg>
+        <p class="highlight">
+            Mesmo que <code>s3 == s4</code> possa retornar <code>true</code> em certos casos devido a uma otimização do Java (o "String Pool"), para garantir que você está comparando o conteúdo textual e não a localização na memória, **sempre use <code>.equals()</code> para Strings**.
+        </p>
+
+        <h3>3.3. Valores Aceitos nas Condições</h3>
+        <p>A expressão dentro dos parênteses de um <code>if</code> ou <code>else if</code> deve sempre resultar em um valor **booleano** (<code>true</code> ou <code>false</code>).</p>
+        <ul>
+            <li><strong>Variáveis booleanas:</strong> <code>if (estaLogado)</code></li>
+            <li><strong>Operadores relacionais:</strong> (<code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>==</code>, <code>!=</code>) para comparar números. Ex: <code>if (idade >= 18)</code></li>
+            <li><strong>Chamadas de método que retornam booleanos:</strong> Ex: <code>if (minhaString.isEmpty())</code></li>
+            <li><strong>Operadores lógicos:</strong> (<code>&&</code>, <code>||</code>, <code>!</code>) para combinar múltiplas condições. Ex: <code>if (saldo > 0 && clienteAtivo)</code></li>
+        </ul>
+        <div class="syntax-box">
+            <pre class="code"><code>boolean estaAtivo = true;
+int nivel = 5;
+
+if (estaAtivo) { // Condição com booleano
+    System.out.println("Usuário ativo.");
+}
+
+if (nivel > 3) { // Condição com operador relacional
+    System.out.println("Nível alto.");
+}
+
+String nome = "Maria";
+if (nome.equals("Maria") || nome.equals("Joana")) { // Condição com .equals() e operador lógico
+    System.out.println("Nome comum.");
+}</code></pre>
+        </div>
+
+        <h3>3.4. A Importância da Ordem das Condições no <code>else if</code></h3>
+        <p>Em uma cadeia de <code>if-else if-else</code>, as condições são avaliadas na ordem em que aparecem. A primeira condição que for verdadeira terá seu bloco executado, e as demais serão ignoradas.</p>
+        <div class="highlight">
+            <strong>Cuidado com a ordem:</strong> Coloque as condições mais específicas (ou restritivas) primeiro e as mais gerais por último.
+        </div>
+        <p><strong>Exemplo de ordem incorreta (e o porquê):</strong></p>
+        <div class="code-example">
+            <pre class="code"><code>int score = 95;
+if (score >= 70) {
+    System.out.println("Aprovado"); // Esta condição pega 95, 80, 70...
+} else if (score >= 90) { // NUNCA será alcançado se o score for >= 90, pois o primeiro IF já pegou!
+    System.out.println("Parabéns!"); 
+} else {
+    System.out.println("Reprovado");
+}
+// Saída: "Aprovado" (o "Parabéns!" nunca aparece)</code></pre>
+        </div>
+        <p><strong>Exemplo de ordem correta:</strong></p>
+        <div class="code-example">
+            <pre class="code"><code>int score = 95;
+if (score >= 90) { // Condição mais específica primeiro
+    System.out.println("Parabéns! (Conceito A)"); // Este será executado
+} else if (score >= 70) { 
+    System.out.println("Aprovado (Conceito C)");
+} else {
+    System.out.println("Reprovado");
+}
+// Saída: "Parabéns! (Conceito A)"</code></pre>
+        </div>
+        
+        <h2 id="exemplos">4. Na Prática: Exemplos de Código</h2>
+        <p>Vamos ver como essas estruturas funcionam com exemplos reais.</p>
+
+        <h3>Exemplo 1: Condição Simples com <code>if</code></h3>
+        <div class="code-example">
+            <pre class="code"><code>public class ExemploIf {
+    public static void main(String[] args) {
+        int temperatura = 25; // Define a temperatura
+
+        if (temperatura > 20) { // Condição: Se temperatura for maior que 20...
+            System.out.println("Está calor hoje!"); // ...então imprime esta mensagem
+        }
+        System.out.println("Fim do programa."); // Esta linha sempre executa
+    }
+}</code></pre>
+        </div>
+        <p><strong>Explicação:</strong> Aqui, a condição `temperatura > 20` é verdadeira (25 é maior que 20). Portanto, a mensagem "Está calor hoje\!" é impressa. A mensagem "Fim do programa." é impressa em ambos os casos, pois está fora do bloco `if`.</p>
+
+        <h3>Exemplo 2: Uso de <code>if</code> e <code>else</code></h3>
+        <div class="code-example">
+            <pre class="code"><code>public class ExemploIfElse {
+    public static void main(String[] args) {
+        boolean temCafe = false; // Define se há café
+
+        if (temCafe) { // Condição: Se temCafe for verdadeiro...
+            System.out.println("Que bom, vou tomar café!"); // ...executa este bloco
+        } else { // Senão (se temCafe for falso)...
+            System.out.println("Preciso fazer mais café."); // ...executa este outro bloco
+        }
+    }
+}</code></pre>
+        </div>
+        <p><strong>Explicação:</strong> Como `temCafe` é `false`, o bloco `if` é ignorado e o bloco `else` é executado, imprimindo "Preciso fazer mais café."</p>
+
+        <h3>Exemplo 3: Uso de <code>if</code>, <code>else if</code> e <code>else</code> (Sistema de Notas)</h3>
+        <div class="code-example">
+            <pre class="code"><code>import java.util.Scanner; // Importa a classe Scanner para ler entrada do usuário
+
+public class ExemploNotas {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in); // Cria um objeto Scanner
+
+        System.out.print("Digite a nota do aluno (0-100): ");
+        int nota = scanner.nextInt(); // Lê a nota digitada pelo usuário
+
+        if (nota >= 90) { // Primeira condição: Se nota for 90 ou mais...
+            System.out.println("Excelente! Conceito A.");
+        } else if (nota >= 70) { // Senão, se nota for 70 ou mais...
+            System.out.println("Muito bom! Conceito B.");
+        } else if (nota >= 50) { // Senão, se nota for 50 ou mais...
+            System.out.println("Aprovado! Conceito C.");
+        } else { // Senão (se nenhuma das anteriores for verdadeira)...
+            System.out.println("Reprovado. Precisa estudar mais.");
+        }
+        
+        scanner.close(); // Fecha o Scanner para liberar recursos
+    }
+}</code></pre>
+        </div>
+        <p><strong>Explicação:</strong> O programa pede uma nota. Ele testa as condições em cascata. Se a nota for 85, por exemplo, o primeiro `if` (>=90) é falso. O primeiro `else if` (>=70) é verdadeiro, então imprime "Muito bom\! Conceito B." e as demais condições são ignoradas.</p>
+
+        <h3>Exemplo 4: Uso com Comparação de Strings (`==` vs `.equals()`)</h3>
+        <div class="code-example">
+            <pre class="code"><code>public class ExemploStringComparacao {
+    public static void main(String[] args) {
+        String nome1 = "Java";
+        String nome2 = "Java"; // Literal, pode estar no String Pool
+        String nome3 = new String("Java"); // Cria um novo objeto String
+
+        // Comparação com ==
+        System.out.println("nome1 == nome2: " + (nome1 == nome2)); // Provavelmente true (String Pool)
+        System.out.println("nome1 == nome3: " + (nome1 == nome3)); // False (referências diferentes)
+
+        // Comparação com .equals()
+        System.out.println("nome1.equals(nome2): " + (nome1.equals(nome2))); // True (conteúdo igual)
+        System.out.println("nome1.equals(nome3): " + (nome1.equals(nome3))); // True (conteúdo igual)
+
+        String senhaCorreta = "senai123";
+        String senhaDigitada = "senai123"; // Simula entrada do usuário
+
+        if (senhaDigitada.equals(senhaCorreta)) { // Forma CORRETA de comparar Strings
+            System.out.println("Senha correta! Acesso permitido.");
+        } else {
+            System.out.println("Senha incorreta! Acesso negado.");
+        }
+    }
+}</code></pre>
+        </div>
+        <p><strong>Explicação:</strong> Este exemplo demonstra a diferença crítica. `==` pode dar resultados inconsistentes com Strings. `equals()` sempre compara o conteúdo, sendo a maneira segura e correta de verificar igualdade de texto.</p>
+
+        <h3>Exemplo 5: Aplicação Prática (Verificar Idade para Votar)</h3>
+        <div class="code-example">
+            <pre class="code"><code>import java.util.Scanner;
+
+public class Eleitor {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        
+        System.out.print("Digite sua idade: ");
+        int idade = input.nextInt();
+
+        if (idade < 16) {
+            System.out.println("Você ainda não pode votar.");
+        } else if (idade >= 18 && idade <= 70) { // Combina duas condições com AND
+            System.out.println("Seu voto é obrigatório!");
+        } else if (idade >= 16 || idade > 70) { // Condição para voto facultativo
+            System.out.println("Seu voto é facultativo.");
+        } else {
+            System.out.println("Idade inválida."); // Para idades negativas, por exemplo
+        }
+
+        input.close();
+    }
+}</code></pre>
+        </div>
+        <p><strong>Explicação:</strong> Um exemplo real de como <code>if-else if-else</code> é usado para categorizar uma idade em diferentes grupos de eleitores, utilizando também operadores lógicos `&&` (AND) e `||` (OR).</p>
+
+        <h2 id="exercicios">5. Hora de Praticar: Desafios</h2>
+        <p>Agora é sua vez de colocar a mão na massa\! Tente resolver estes exercícios. Não se preocupe em errar, é parte do aprendizado.</p>
+
+        <div class="exercise">
+            <h4>Exercício 1: Par ou Ímpar</h4>
+            <p>Crie um programa que peça um número inteiro ao usuário e diga se ele é par ou ímpar usando <code>if</code> e <code>else</code>.</p>
+            <details>
+                <summary>Mostrar Solução</summary>
+                <div class="solution">
+                    <div class="syntax-box">
+<!-- <pre class="code"><code>import java.util.Scanner;
+
+public class ParOuImpar {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Digite um número inteiro: ");
+        int num = sc.nextInt();
+
+        if (num % 2 == 0) {
+            System.out.println("O número " + num + " é PAR.");
+        } else {
+            System.out.println("O número " + num + " é ÍMPAR.");
+        }
+        sc.close();
+    }
+}</code></pre> -->
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <div class="exercise">
+            <h4>Exercício 2: Dia da Semana</h4>
+            <p>Escreva um programa que peça um número de 1 a 7 e imprima o dia da semana correspondente (1 para Domingo, 2 para Segunda, etc.). Se o número não estiver no intervalo, imprima "Número inválido". Use <code>if-else if-else</code>.</p>
+            <details>
+                <summary>Mostrar Solução</summary>
+                <div class="solution">
+                    <div class="syntax-box">
+<!-- <pre class="code"><code>import java.util.Scanner;
+
+public class DiaDaSemana {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Digite um número de 1 a 7: ");
+        int dia = sc.nextInt();
+
+        if (dia == 1) {
+            System.out.println("Domingo");
+        } else if (dia == 2) {
+            System.out.println("Segunda-feira");
+        } else if (dia == 3) {
+            System.out.println("Terça-feira");
+        } else if (dia == 4) {
+            System.out.println("Quarta-feira");
+        } else if (dia == 5) {
+            System.out.println("Quinta-feira");
+        } else if (dia == 6) {
+            System.out.println("Sexta-feira");
+        } else if (dia == 7) {
+            System.out.println("Sábado");
+        } else {
+            System.out.println("Número inválido. Digite um valor entre 1 e 7.");
+        }
+        sc.close();
+    }
+}</code></pre> -->
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <div class="exercise">
+            <h4>Exercício 3: Login Simples</h4>
+            <p>Crie um programa que peça um nome de usuário e uma senha. Se o usuário for "aluno" e a senha for "senai123", imprima "Login bem-sucedido". Caso contrário, imprima "Usuário ou senha inválidos". Lembre-se de usar <code>.equals()</code> para as Strings.</p>
+            <details>
+                <summary>Mostrar Solução</summary>
+                <div class="solution">
+                    <div class="syntax-box">
+<!-- <pre class="code"><code>import java.util.Scanner;
+
+public class Login {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Usuário: ");
+        String usuario = sc.nextLine();
+        System.out.print("Senha: ");
+        String senha = sc.nextLine();
+
+        if (usuario.equals("aluno") && senha.equals("senai123")) {
+            System.out.println("Login bem-sucedido!");
+        } else {
+            System.out.println("Usuário ou senha inválidos.");
+        }
+        sc.close();
+    }
+}</code></pre> -->
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <div class="exercise">
+            <h4>Exercício 4: Verificador de Triângulo</h4>
+            <p>Dados três lados de um triângulo (inteiros), use `if-else if-else` para determinar se é um triângulo Equilátero (3 lados iguais), Isósceles (2 lados iguais) ou Escaleno (todos os lados diferentes). Assuma que os lados formam um triângulo válido.</p>
+            <details>
+                <summary>Mostrar Solução</summary>
+                <div class="solution">
+                    <div class="syntax-box">
+<!-- <pre class="code"><code>public class TipoTriangulo {
+    public static void main(String[] args) {
+        int lado1 = 5;
+        int lado2 = 5;
+        int lado3 = 7;
+
+        if (lado1 == lado2 && lado2 == lado3) {
+            System.out.println("Triângulo Equilátero");
+        } else if (lado1 == lado2 || lado1 == lado3 || lado2 == lado3) {
+            System.out.println("Triângulo Isósceles");
+        } else {
+            System.out.println("Triângulo Escaleno");
+        }
+    }
+}</code></pre> -->
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <div class="exercise">
+            <h4>Exercício 5: Múltiplas Condições com Operadores Lógicos</h4>
+            <p>Um aluno é aprovado se tiver média maior ou igual a 70 E frequência maior ou igual a 75%. Crie um programa que, dadas a média e a frequência, diga se o aluno foi aprovado ou reprovado. Use <code>if-else</code> com operador lógico.</p>
+            <details>
+                <summary>Mostrar Solução</summary>
+                <div class="solution">
+                    <div class="syntax-box">
+<!-- <pre class="code"><code>public class AprovacaoAluno {
+    public static void main(String[] args) {
+        double media = 75.0;
+        int frequencia = 80; // em porcentagem
+
+        if (media >= 70 && frequencia >= 75) {
+            System.out.println("Aluno APROVADO!");
+        } else {
+            System.out.println("Aluno REPROVADO.");
+        }
+    }
+}</code></pre> -->
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <h2 id="erros">6. Armadilhas Comuns: Evitando Erros de Iniciante</h2>
+        <p>Aprender é errar e corrigir. Mas já que estamos aqui, vamos destacar alguns erros frequentes para você tentar evitar:</p>
         <div class="warning-box">
             <ul>
-                <li>Usar <code>==</code> com Strings em vez de <code>.equals()</code>.</li>
-                <li>Comparar doubles com <code>==</code> (use epsilon).</li>
-                <li>Esquecer que <code>if</code> pára na primeira condição verdadeira.</li>
-                <li>Não fechar Scanner: causa warnings e, às vezes, travamento no fluxo de entrada.</li>
+                <li><strong>Esquecer ou Omitir as Chaves <code>{ }</code>:</strong> Mesmo para um comando, a falta de chaves pode levar a bugs difíceis de encontrar quando o código for modificado.</li>
+                <li><strong>Confundir Atribuição (<code>=</code>) com Comparação (<code>==</code>):</strong> 
+                    <pre class="code"><code>int x = 10;
+if (x = 5) { // ERRO COMUM! Isso tenta atribuir 5 a x, e não é uma condição booleana.
+    // ...
+}</code></pre>
+                    Sempre use `==` para comparar.
+                </li>
+                <li><strong>Usar <code>==</code> para Comparar Strings:</strong> Vimos que isso compara referências, não conteúdo. Use <code>.equals()</code> ou <code>.equalsIgnoreCase()</code>.</li>
+                <li><strong>Ordem Incorreta das Condições no <code>else if</code>:</strong> Se uma condição mais geral vier antes de uma mais específica, a específica pode nunca ser alcançada (como no exemplo do score >= 70 antes do >= 90).</li>
+                <li><strong>Colocar Ponto e Vírgula <code>;</code> Logo Após o <code>if</code>:</strong>
+                    <pre class="code"><code>if (condicao); { // ERRO! O ; "encerra" o if, o bloco seguinte é executado SEMPRE.
+    System.out.println("Isso sempre vai aparecer.");
+}</code></pre>
+                    O ponto e vírgula indica o fim de uma instrução. Um `if` não termina ali, ele espera um bloco de código.
+                </li>
             </ul>
         </div>
 
-        <h2>Exemplos completos (práticos)</h2>
-
-        <h3>Exemplo: Calculadora com menu (corrigida e completa)</h3>
-        <div class="syntax-box">
-            <pre class="code"><code>import java.util.Scanner;
-
-public class CalculadoraMenu {
-    public static void main(String[] args) {
-        Scanner teclado = new Scanner(System.in);
-
-        System.out.print("Digite o primeiro número: ");
-        double num1 = teclado.nextDouble();
-
-        System.out.print("Digite o segundo número: ");
-        double num2 = teclado.nextDouble();
-
-        System.out.println("Escolha a operação:");
-        System.out.println("1 - Somar");
-        System.out.println("2 - Subtrair");
-        System.out.println("3 - Multiplicar");
-        System.out.println("4 - Dividir");
-        int opcao = teclado.nextInt();
-
-        if (opcao == 1) {
-            System.out.println("Resultado: " + (num1 + num2));
-        } else if (opcao == 2) {
-            System.out.println("Resultado: " + (num1 - num2));
-        } else if (opcao == 3) {
-            System.out.println("Resultado: " + (num1 * num2));
-        } else if (opcao == 4) {
-            if (num2 != 0) {
-                System.out.println("Resultado: " + (num1 / num2));
-            } else {
-                System.out.println("Erro: divisão por zero!");
-            }
-        } else {
-            System.out.println("Opção inválida.");
-        }
-
-        teclado.close();
-    }
-}</code></pre>
-        </div>
-
-        <h3>Exemplo: Comparação de Strings corretamente</h3>
-        <div class="syntax-box">
-            <pre class="code"><code>import java.util.Scanner;
-
-public class CompararStrings {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Digite a senha: ");
-        String senha = sc.nextLine();
-
-        if ("admin".equals(senha)) {
-            System.out.println("Acesso permitido");
-        } else {
-            System.out.println("Acesso negado");
-        }
-
-        sc.close();
-    }
-}</code></pre>
-        </div>
-
-        <h3>Exemplo: Ternário (quando usar)</h3>
-        <div class="syntax-box">
-            <pre class="code"><code>int nota = 8;
-String resultado = nota &gt;= 7 ? "Aprovado" : "Reprovado";
-System.out.println(resultado);</code></pre>
-        </div>
-
-        <h3>Exemplo: Switch vs If (quando usar switch)</h3>
-        <div class="syntax-box">
-            <pre class="code"><code>int dia = 3;
-switch (dia) {
-    case 1: System.out.println("Segunda"); break;
-    case 2: System.out.println("Terça"); break;
-    case 3: System.out.println("Quarta"); break;
-    default: System.out.println("Outro dia"); break;
-}</code></pre>
-        </div>
-
-        <h2>Refatoração de menu com Map (padrão mais moderno)</h2>
-        <div class="syntax-box">
-            <pre class="code"><code>import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-
-public class MenuMap {
-    public static void main(String[] args) {
-        Map&lt;Integer,Runnable&gt; acoes = new HashMap&lt;&gt;();
-        acoes.put(1, () -&gt; System.out.println("Somar..."));
-        acoes.put(2, () -&gt; System.out.println("Subtrair..."));
-        acoes.put(3, () -&gt; System.out.println("Multiplicar..."));
-        acoes.put(4, () -&gt; System.out.println("Dividir..."));
-
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Opção: ");
-        int opc = sc.nextInt();
-        Runnable acao = acoes.get(opc);
-        if (acao != null) {
-            acao.run();
-        } else {
-            System.out.println("Opção inválida.");
-        }
-        sc.close();
-    }
-}</code></pre>
-        </div>
-
-        <h2>Atividades por tópico (com soluções escondidas)</h2>
-
-        <div class="exercise">
-            <strong>Sintaxe básica</strong><br>
-            <p>1) Dado um inteiro <code>nota</code>, imprima "Aprovado" se >= 7, caso contrário imprima "Reprovado".</p>
-            <details><summary>Mostrar solução</summary>
-                <div class="solution">
-                    <div class="syntax-box">
-                        <pre class="code"><code>int nota = 6;
-if (nota &gt;= 7) {
-    System.out.println("Aprovado");
-} else {
-    System.out.println("Reprovado");
-}</code></pre>
-                    </div>
+        <h2 id="resumo">7. Resumo Rápido: A Essência das Condicionais</h2>
+        <p>Para fixar os conceitos, aqui está um resumo visual do uso de cada estrutura:</p>
+        <div class="summary-visual">
+            <h3>Quando Usar Cada Estrutura Condicional</h3>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <p><strong>IF</strong></p>
+                    <p>Para verificar uma <strong>única condição</strong>.</p>
+                    <p><em>"SE chover, levo o guarda-chuva."</em></p>
                 </div>
-            </details>
-        </div>
-
-        <div class="exercise">
-            <strong>Operadores lógicos</strong><br>
-            <p>2) Verifique se uma pessoa pode votar: condição = (idade &gt;= 18) <em>e</em> (não está suspensa). Use booleanos fictícios.</p>
-            <details><summary>Mostrar solução</summary>
-                <div class="solution">
-                    <div class="syntax-box">
-                        <pre class="code"><code>int idade = 20;
-boolean suspensa = false;
-if (idade &gt;= 18 &amp;&amp; !suspensa) {
-    System.out.println("Pode votar");
-} else {
-    System.out.println("Não pode votar");
-}</code></pre>
-                    </div>
+                <div class="summary-item">
+                    <p><strong>ELSE</strong></p>
+                    <p>Para a <strong>alternativa direta</strong> ao `if`.</p>
+                    <p><em>"SENÃO, saio sem."</em></p>
                 </div>
-            </details>
-        </div>
-
-        <div class="exercise">
-            <strong>Curto-circuito e null</strong><br>
-            <p>3) Dada uma String <code>usuario</code>, imprima "Bem-vindo" somente se <code>usuario</code> não for nulo e tiver mais de 3 caracteres.</p>
-            <details><summary>Mostrar solução</summary>
-                <div class="solution">
-                    <div class="syntax-box">
-                        <pre class="code"><code>String usuario = "carlos";
-if (usuario != null &amp;&amp; usuario.length() &gt; 3) {
-    System.out.println("Bem-vindo, " + usuario);
-} else {
-    System.out.println("Usuário inválido");
-}</code></pre>
-                    </div>
+                <div class="summary-item">
+                    <p><strong>ELSE IF</strong></p>
+                    <p>Para <strong>múltiplas condições</strong> em sequência.</p>
+                    <p><em>"SE estiver sol, vou à praia. SENÃO SE estiver nublado, vou ao parque."</em></p>
                 </div>
-            </details>
+            </div>
         </div>
 
-        <div class="exercise">
-            <strong>Comparação de Strings</strong><br>
-            <p>4) Leia uma entrada e verifique se é igual a "exit" (ignorar maiúsculas).</p>
-            <details><summary>Mostrar solução</summary>
-                <div class="solution">
-                    <div class="syntax-box">
-                        <pre class="code"><code>import java.util.Scanner;
+    </div>
 
-Scanner sc = new Scanner(System.in);
-System.out.print("Comando: ");
-String cmd = sc.nextLine();
-if ("exit".equalsIgnoreCase(cmd)) {
-    System.out.println("Encerrando...");
-} else {
-    System.out.println("Comando diferente");
-}
-sc.close();</code></pre>
-                    </div>
-                </div>
-            </details>
-        </div>
-
-        <div class="exercise">
-            <strong>Ternário</strong><br>
-            <p>5) Transforme o código <code>if/else</code> abaixo em um operador ternário:<br><code>if (x % 2 == 0) tipo = "par"; else tipo = "ímpar";</code></p>
-            <details><summary>Mostrar solução</summary>
-                <div class="solution">
-                    <div class="syntax-box">
-                        <pre class="code"><code>int x = 7;
-String tipo = (x % 2 == 0) ? "par" : "ímpar";
-System.out.println(tipo);</code></pre>
-                    </div>
-                </div>
-            </details>
-        </div>
-
-        <div class="exercise">
-            <strong>Switch vs If</strong><br>
-            <p>6) Dado um número 1-7 imprima o dia da semana usando <code>switch</code>. Depois reescreva com <code>if/else</code> (atividade opcional).</p>
-            <details><summary>Mostrar solução (switch)</summary>
-                <div class="solution">
-                    <div class="syntax-box">
-                        <pre class="code"><code>int d = 5;
-switch (d) {
-    case 1: System.out.println("Segunda"); break;
-    case 2: System.out.println("Terça"); break;
-    case 3: System.out.println("Quarta"); break;
-    case 4: System.out.println("Quinta"); break;
-    case 5: System.out.println("Sexta"); break;
-    case 6: System.out.println("Sábado"); break;
-    case 7: System.out.println("Domingo"); break;
-    default: System.out.println("Número inválido"); break;
-}</code></pre>
-                    </div>
-                </div>
-            </details>
-        </div>
-
-        <div class="exercise">
-            <strong>Guardar cláusulas (guard clauses)</strong><br>
-            <p>7) Escreva um método que recebe idade e retorna <code>true</code> se é maior de idade; use retorno antecipado (guard clause) para idade negativa.</p>
-            <details><summary>Mostrar solução</summary>
-                <div class="solution">
-                    <div class="syntax-box">
-                        <pre class="code"><code>public static boolean isAdult(int idade) {
-    if (idade &lt; 0) return false; // entrada inválida
-    return idade &gt;= 18;
-}</code></pre>
-                    </div>
-                </div>
-            </details>
-        </div>
-
-        <div class="exercise">
-            <strong>Comparação de ponto flutuante</strong><br>
-            <p>8) Compare dois doubles <code>a</code> e <code>b</code> com precisão (epsilon).</p>
-            <details><summary>Mostrar solução</summary>
-                <div class="solution">
-                    <div class="syntax-box">
-                        <pre class="code"><code>double a = 0.1 + 0.2;
-double b = 0.3;
-double eps = 1e-9;
-if (Math.abs(a - b) &lt; eps) {
-    System.out.println("Iguais (próximo o suficiente)");
-} else {
-    System.out.println("Diferentes");
-}</code></pre>
-                    </div>
-                </div>
-            </details>
-        </div>
-
-        <div class="exercise">
-            <strong>Refatoração: menu com Map</strong><br>
-            <p>9) Substitua um grande <code>if/else</code> que chama funções diferentes por um <code>Map&lt;Integer,Runnable&gt;</code> (exercício de refatoração).</p>
-            <details><summary>Mostrar solução</summary>
-                <div class="solution">
-                    <div class="syntax-box">
-                        <pre class="code"><code>Map&lt;Integer,Runnable&gt; acoes = new java.util.HashMap&lt;&gt;();
-acoes.put(1, () -&gt; System.out.println("Ação 1"));
-acoes.put(2, () -&gt; System.out.println("Ação 2"));
-// ...
-int opc = 2;
-Runnable r = acoes.get(opc);
-if (r != null) r.run(); else System.out.println("Inválida");</code></pre>
-                    </div>
-                </div>
-            </details>
-        </div>
-
-        <h2>Checklist do que foi adicionado</h2>
-        <ul>
-            <li>Corrigi e completei a calculadora (tratamento de divisão por zero + fechamento do Scanner).</li>
-            <li>Adicionei seções: operadores lógicos, curto-circuito, comparação de Strings, ternário, switch, boas práticas e armadilhas comuns.</li>
-            <li>Incluí exemplo moderno de refatoração (Map + Runnable).</li>
-            <li>Criei exercícios por tópico com soluções escondidas (use &lt;summary&gt; para mostrar).</li>
-        </ul>
-
-        <div class="highlight">
-            <strong>Nota prática:</strong> esse material funciona com Java 8+. Se seu ambiente for antigo, avisa que eu adapto (lembrando: eu detesto retrabalho, mas faço).</div>
-
-      
+    <div class="footer">
+        <p>A prática leva à fluência em Java! Continue codificando e explorando.</p>
+        <p>Recursos úteis:
+            <a href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/if.html" target="_blank">Documentação Oficial Java - If/Else</a> |
+            <a href="https://www.w3schools.com/java/java_conditions.asp" target="_blank">W3Schools Java Conditions</a>
+        </p>
+        <p>&copy; 2023 Java SENAI Learning. Todos os direitos reservados.</p>
     </div>
 </body>
 </html>
