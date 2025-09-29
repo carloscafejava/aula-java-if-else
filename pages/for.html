@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laço FOR em Java - Guia Completo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
     <style>
         * {
             margin: 0;
@@ -94,39 +97,55 @@
             font-size: 1em;
         }
 
-        .code-box {
-            background: #333333;
-            color: #f8f8f2;
-            padding: 25px;
-            border-radius: 12px;
+        .code-wrapper {
+            position: relative;
             margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .code-header {
+            background: #2d2d2d;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .code-dot.red { background: #ff5f56; }
+        .code-dot.yellow { background: #ffbd2e; }
+        .code-dot.green { background: #27c93f; }
+
+        .code-lang {
+            color: #888;
+            font-size: 0.85em;
+            margin-left: auto;
+            font-family: 'Consolas', monospace;
+        }
+
+        pre {
+            margin: 0 !important;
+            border-radius: 0 !important;
+        }
+
+        pre code {
+            display: block;
+            padding: 25px !important;
+            background: #1e1e1e !important;
+            color: #d4d4d4;
+            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
             overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 1em;
-            line-height: 1.8;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .code-box .comment {
-            color: #6a9955;
-            font-style: italic;
-        }
-
-        .code-box .keyword {
-            color: #569cd6;
-            font-weight: 600;
-        }
-
-        .code-box .string {
-            color: #ce9178;
-        }
-
-        .code-box .method {
-            color: #dcdcaa;
-        }
-
-        .code-box .number {
-            color: #b5cea8;
         }
 
         .section {
@@ -279,6 +298,10 @@
             background: rgba(51, 51, 51, 0.1);
             margin: 30px 0;
         }
+
+        .markdown-content {
+            color: #333333;
+        }
     </style>
 </head>
 <body>
@@ -313,10 +336,18 @@
             <h3>2.1. O que é for?</h3>
             <p>O <strong>for</strong> é a estrutura de repetição mais usada em Java quando sabemos exatamente quantas vezes queremos que um código seja executado. Ele organiza tudo de forma clara: onde começar, quando parar e como progredir.</p>
 
-            <div class=""><strong>Sintaxe básica:</div></strong></span>
-            <div class="code-box"><span class="keyword">for</span> (inicialização; condição; atualização) {
-    <span class="comment">// bloco de código a ser executado</span>
-}</div>
+            <div class="syntax-header">Sintaxe básica:</div>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">for (inicialização; condição; atualização) {
+    // bloco de código a ser executado
+}</code></pre>
+            </div>
 
             <div class="glass-box">
                 <h3>Explicação de cada parte:</h3>
@@ -332,76 +363,124 @@
             <h2>3. Exemplos Práticos</h2>
             
             <p class="example-title">Exemplo 1: Contagem de 1 a 10</p>
-            <div class="code-box"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i <= <span class="number">10</span>; i++) {
-    System.out.<span class="method">println</span>(<span class="string">"Número: "</span> + i);
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">for (int i = 1; i <= 10; i++) {
+    System.out.println("Número: " + i);
 }
 
-<span class="comment">// Saída:</span>
-<span class="comment">// Número: 1</span>
-<span class="comment">// Número: 2</span>
-<span class="comment">// Número: 3</span>
-<span class="comment">// ...</span>
-<span class="comment">// Número: 10</span></div>
+// Saída:
+// Número: 1
+// Número: 2
+// Número: 3
+// ...
+// Número: 10</code></pre>
+            </div>
 
             <p class="example-title">Exemplo 2: Contagem Regressiva</p>
-            <div class="code-box"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">10</span>; i >= <span class="number">1</span>; i--) {
-    System.out.<span class="method">println</span>(i);
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">for (int i = 10; i >= 1; i--) {
+    System.out.println(i);
 }
-System.out.<span class="method">println</span>(<span class="string">"🚀 Lançamento!"</span>);
+System.out.println("🚀 Lançamento!");
 
-<span class="comment">// Saída: 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 🚀 Lançamento!</span></div>
+// Saída: 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 🚀 Lançamento!</code></pre>
+            </div>
 
             <p class="example-title">Exemplo 3: Incremento de 2 em 2 (Números Pares)</p>
-            <div class="code-box"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i <= <span class="number">20</span>; i += <span class="number">2</span>) {
-    System.out.<span class="method">println</span>(<span class="string">"Número par: "</span> + i);
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">for (int i = 0; i <= 20; i += 2) {
+    System.out.println("Número par: " + i);
 }
 
-<span class="comment">// Saída: Número par: 0</span>
-<span class="comment">//        Número par: 2</span>
-<span class="comment">//        Número par: 4</span>
-<span class="comment">//        ...</span>
-<span class="comment">//        Número par: 20</span></div>
+// Saída: Número par: 0
+//        Número par: 2
+//        Número par: 4
+//        ...
+//        Número par: 20</code></pre>
+            </div>
 
             <p class="example-title">Exemplo 4: Soma de Números</p>
-            <div class="code-box"><span class="keyword">int</span> soma = <span class="number">0</span>;
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">int soma = 0;
 
-<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i <= <span class="number">10</span>; i++) {
+for (int i = 1; i <= 10; i++) {
     soma += i;
-    System.out.<span class="method">println</span>(<span class="string">"Somando "</span> + i + <span class="string">". Total até agora: "</span> + soma);
+    System.out.println("Somando " + i + ". Total até agora: " + soma);
 }
 
-System.out.<span class="method">println</span>(<span class="string">"Soma final: "</span> + soma);
+System.out.println("Soma final: " + soma);
 
-<span class="comment">// Saída final: Soma final: 55</span></div>
+// Saída final: Soma final: 55</code></pre>
+            </div>
 
             <p class="example-title">Exemplo 5: Tabuada do 7</p>
-            <div class="code-box">System.out.<span class="method">println</span>(<span class="string">"=== TABUADA DO 7 ==="</span>);
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">System.out.println("=== TABUADA DO 7 ===");
 
-<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i <= <span class="number">10</span>; i++) {
-    <span class="keyword">int</span> resultado = <span class="number">7</span> * i;
-    System.out.<span class="method">println</span>(<span class="string">"7 x "</span> + i + <span class="string">" = "</span> + resultado);
+for (int i = 1; i <= 10; i++) {
+    int resultado = 7 * i;
+    System.out.println("7 x " + i + " = " + resultado);
 }
 
-<span class="comment">// Saída:</span>
-<span class="comment">// 7 x 1 = 7</span>
-<span class="comment">// 7 x 2 = 14</span>
-<span class="comment">// 7 x 3 = 21</span>
-<span class="comment">// ...</span></div>
+// Saída:
+// 7 x 1 = 7
+// 7 x 2 = 14
+// 7 x 3 = 21
+// ...</code></pre>
+            </div>
 
             <p class="example-title">Exemplo 6: FOR Aninhado (Padrão de Asteriscos)</p>
-            <div class="code-box"><span class="keyword">for</span> (<span class="keyword">int</span> linha = <span class="number">1</span>; linha <= <span class="number">5</span>; linha++) {
-    <span class="keyword">for</span> (<span class="keyword">int</span> coluna = <span class="number">1</span>; coluna <= linha; coluna++) {
-        System.out.<span class="method">print</span>(<span class="string">"* "</span>);
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">for (int linha = 1; linha <= 5; linha++) {
+    for (int coluna = 1; coluna <= linha; coluna++) {
+        System.out.print("* ");
     }
-    System.out.<span class="method">println</span>();
+    System.out.println();
 }
 
-<span class="comment">// Saída:</span>
-<span class="comment">// *</span>
-<span class="comment">// * *</span>
-<span class="comment">// * * *</span>
-<span class="comment">// * * * *</span>
-<span class="comment">// * * * * *</span></div>
+// Saída:
+// *
+// * *
+// * * *
+// * * * *
+// * * * * *</code></pre>
+            </div>
         </div>
 
         <div class="divider"></div>
@@ -445,22 +524,38 @@ System.out.<span class="method">println</span>(<span class="string">"Soma final:
             
             <div class="solid-box">
                 <h3>❌ Erro 1: Loop Infinito</h3>
-                <div class="code-box" style="margin: 15px 0;"><span class="comment">// ERRADO! Esqueceu de atualizar o 'i'</span>
-<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">10</span>; ) {
-    System.out.<span class="method">println</span>(i);
-    <span class="comment">// Loop infinito! i nunca aumenta</span>
-}</div>
+                <div class="code-wrapper" style="margin: 15px 0;">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// ERRADO! Esqueceu de atualizar o 'i'
+for (int i = 0; i < 10; ) {
+    System.out.println(i);
+    // Loop infinito! i nunca aumenta
+}</code></pre>
+                </div>
                 <p><strong>Solução:</strong> Sempre inclua a atualização da variável de controle (i++)</p>
             </div>
 
             <div class="solid-box">
                 <h3>❌ Erro 2: Condição Incorreta</h3>
-                <div class="code-box" style="margin: 15px 0;"><span class="comment">// CUIDADO! Pode gerar erro de índice</span>
-<span class="keyword">int</span>[] numeros = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>};
+                <div class="code-wrapper" style="margin: 15px 0;">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// CUIDADO! Pode gerar erro de índice
+int[] numeros = {10, 20, 30, 40, 50};
 
-<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i <= numeros.length; i++) {
-    System.out.<span class="method">println</span>(numeros[i]); <span class="comment">// Erro quando i = 5</span>
-}</div>
+for (int i = 0; i <= numeros.length; i++) {
+    System.out.println(numeros[i]); // Erro quando i = 5
+}</code></pre>
+                </div>
                 <p><strong>Correção:</strong> Use <span class="highlight-text">i < numeros.length</span> ao invés de <span class="highlight-text">i <= numeros.length</span></p>
             </div>
 
@@ -538,5 +633,12 @@ System.out.<span class="method">println</span>(<span class="string">"Soma final:
         </div>
 
     </div>
+
+    <script>
+        // Inicializa o highlight.js
+        document.addEventListener('DOMContentLoaded', (event) => {
+            hljs.highlightAll();
+        });
+    </script>
 </body>
 </html>
