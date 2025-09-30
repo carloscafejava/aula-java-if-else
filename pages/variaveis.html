@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variáveis e Escopo em Java - Guia Completo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #FFF7E2;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #FFF7E2;
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            background: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #333333;
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin: 35px 0 15px 0;
+            color: #333333;
+            font-weight: 800;
+        }
+
+        h3 {
+            font-size: 1.2em;
+            margin: 20px 0 12px 0;
+            color: #333333;
+            font-weight: 700;
+        }
+
+        h4 {
+            font-size: 1.1em;
+            margin: 15px 0 10px 0;
+            color: #333333;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1em;
+            color: #333333;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        p {
+            line-height: 1.8;
+            margin: 12px 0;
+            color: #333333;
+            font-size: 1em;
+        }
+
+        .code-wrapper {
+            position: relative;
+            margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .code-header {
+            background: #2d2d2d;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .code-dot.red { background: #ff5f56; }
+        .code-dot.yellow { background: #ffbd2e; }
+        .code-dot.green { background: #27c93f; }
+
+        .code-lang {
+            color: #888;
+            font-size: 0.85em;
+            margin-left: auto;
+            font-family: 'Consolas', monospace;
+        }
+
+        pre {
+            margin: 0 !important;
+            border-radius: 0 !important;
+        }
+
+        pre code {
+            display: block;
+            padding: 25px !important;
+            background: #1e1e1e !important;
+            color: #d4d4d4;
+            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .glass-box {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(51, 51, 51, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-box h3 {
+            margin-top: 0;
+        }
+
+        .explanation-list {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .explanation-list li {
+            margin: 10px 0;
+            line-height: 1.7;
+            color: #333333;
+        }
+
+        .example-section {
+            margin: 30px 0;
+        }
+
+        .example-title {
+            font-weight: 700;
+            color: #333333;
+            margin: 25px 0 10px 0;
+            font-size: 1.15em;
+        }
+
+        .solid-box {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .solid-box h3,
+        .solid-box h4 {
+            color: #FFF7E2;
+            margin-top: 0;
+        }
+
+        .solid-box p,
+        .solid-box li {
+            color: #FFF7E2;
+        }
+
+        .solid-box ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(51, 51, 51, 0.1);
+            color: #333333;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .exercise-box {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(51, 51, 51, 0.15);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.3s;
+        }
+
+        .exercise-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .exercise-box h4 {
+            margin-top: 0;
+        }
+
+        details {
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        summary {
+            font-weight: 700;
+            color: #333333;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            list-style: none;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::before {
+            content: "▶ ";
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        details[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        .solution {
+            margin-top: 10px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+        }
+
+        .highlight-text {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        strong {
+            font-weight: 700;
+            color: #333333;
+        }
+
+        .intro-text {
+            margin-bottom: 25px;
+        }
+
+        .syntax-header {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            margin: 25px 0 0 0;
+        }
+
+        .conclusion-box {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(51, 51, 51, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .divider {
+            height: 2px;
+            background: rgba(51, 51, 51, 0.1);
+            margin: 30px 0;
+        }
+
+        code {
+            background: rgba(51, 51, 51, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        .visual-diagram {
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(51, 51, 51, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .scope-level {
+            background: rgba(51, 51, 51, 0.05);
+            border-left: 4px solid #333333;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="nav">
+                <a href="../index.html" class="nav-btn">JAVA Learning</a>
+                <a href="../index.html#inicio" class="nav-btn">Início</a>
+                <a href="../index.html#conteudo" class="nav-btn">• Conteúdo</a>
+                <a href="../index.html#roadmap" class="nav-btn">Roadmap</a>
+            </div>
+            
+            <h1>Variáveis e Escopo em Java</h1>
+            <p class="subtitle">Guia completo para entender declaração, ciclo de vida e escopo de variáveis em Java</p>
+        </div>
+
+        <div class="section">
+            <h2>1. O que são Variáveis?</h2>
+            
+            <div class="intro-text">
+                <p>Variáveis são como caixas que armazenam informações na memória do computador. Cada variável tem um nome (identificador), um tipo que define que tipo de dado ela pode guardar, e um valor.</p>
+                
+                <p>Pense em variáveis como gavetas etiquetadas: a etiqueta é o nome da variável, o tipo da gaveta determina o que pode ser guardado nela (números, textos, etc.), e o conteúdo dentro é o valor atual.</p>
+                
+                <p>Entender variáveis e seu escopo é fundamental para escrever código organizado, eficiente e sem erros. O escopo determina onde uma variável existe e pode ser acessada no seu programa.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. Declaração e Inicialização de Variáveis</h2>
+            
+            <h3>2.1. Declaração</h3>
+            <p>Declarar uma variável significa criar um espaço na memória para ela. Você precisa informar o tipo e o nome da variável.</p>
+
+            <div class="syntax-header">Sintaxe básica:</div>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">tipo nomeVariavel;</code></pre>
+            </div>
+
+            <h3>2.2. Inicialização</h3>
+            <p>Inicializar é dar um valor inicial à variável. Você pode declarar e inicializar ao mesmo tempo ou separadamente.</p>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">// Declaração e inicialização separadas
+int idade;
+idade = 25;
+
+// Declaração e inicialização juntas (recomendado)
+int idade = 25;
+String nome = "Maria";
+double salario = 3500.50;
+boolean ativo = true;</code></pre>
+            </div>
+
+            <div class="glass-box">
+                <h3>Regras para Nomes de Variáveis:</h3>
+                <ul class="explanation-list">
+                    <li>Deve começar com letra, underscore (_) ou cifrão ($)</li>
+                    <li>Não pode começar com número</li>
+                    <li>Não pode usar palavras reservadas do Java (if, for, class, etc.)</li>
+                    <li>É case-sensitive: <span class="highlight-text">idade</span> é diferente de <span class="highlight-text">Idade</span></li>
+                    <li>Use camelCase: <span class="highlight-text">nomeCompleto</span>, <span class="highlight-text">idadeAluno</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>3. Tipos de Variáveis em Java</h2>
+
+            <h3>3.1. Variáveis Locais</h3>
+            <p>São declaradas dentro de métodos, construtores ou blocos. Elas só existem dentro do bloco onde foram criadas.</p>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">public class Exemplo {
+    public void calcular() {
+        int numero = 10; // Variável local
+        double resultado = numero * 2.5;
+        System.out.println(resultado);
+    } // 'numero' e 'resultado' deixam de existir aqui
+}</code></pre>
+            </div>
+
+            <h3>3.2. Variáveis de Instância (Atributos)</h3>
+            <p>São declaradas dentro da classe, mas fora dos métodos. Cada objeto da classe tem sua própria cópia dessas variáveis.</p>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">public class Pessoa {
+    // Variáveis de instância
+    String nome;
+    int idade;
+    
+    public void apresentar() {
+        System.out.println("Meu nome é " + nome);
+        System.out.println("Tenho " + idade + " anos");
+    }
+}</code></pre>
+            </div>
+
+            <h3>3.3. Variáveis de Classe (Static)</h3>
+            <p>São declaradas com a palavra-chave <code>static</code>. São compartilhadas por todos os objetos da classe.</p>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">public class Contador {
+    static int totalObjetos = 0; // Variável de classe
+    
+    public Contador() {
+        totalObjetos++; // Incrementa para cada objeto criado
+    }
+    
+    public static void mostrarTotal() {
+        System.out.println("Total de objetos: " + totalObjetos);
+    }
+}</code></pre>
+            </div>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Tipo</th>
+                    <th>Onde Declarar</th>
+                    <th>Tempo de Vida</th>
+                    <th>Acesso</th>
+                </tr>
+                <tr>
+                    <td><strong>Local</strong></td>
+                    <td>Dentro de métodos/blocos</td>
+                    <td>Durante execução do método</td>
+                    <td>Apenas no bloco onde foi criada</td>
+                </tr>
+                <tr>
+                    <td><strong>Instância</strong></td>
+                    <td>Dentro da classe, fora dos métodos</td>
+                    <td>Enquanto o objeto existir</td>
+                    <td>Por todos os métodos da instância</td>
+                </tr>
+                <tr>
+                    <td><strong>Classe (static)</strong></td>
+                    <td>Dentro da classe com static</td>
+                    <td>Durante toda execução do programa</td>
+                    <td>Por todas as instâncias e pela classe</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>4. Entendendo Escopo</h2>
+
+            <p>Escopo é a região do código onde uma variável é visível e pode ser acessada. Java tem escopo de bloco, ou seja, variáveis existem apenas dentro das chaves <code>{ }</code> onde foram declaradas.</p>
+
+            <div class="visual-diagram">
+                <h3>Hierarquia de Escopo:</h3>
+                <div class="scope-level">
+                    <strong>Escopo de Classe</strong> - Variáveis static (toda a classe)
+                    <div class="scope-level" style="margin-top: 10px;">
+                        <strong>Escopo de Instância</strong> - Atributos (todos os métodos do objeto)
+                        <div class="scope-level" style="margin-top: 10px;">
+                            <strong>Escopo de Método</strong> - Variáveis locais (apenas no método)
+                            <div class="scope-level" style="margin-top: 10px;">
+                                <strong>Escopo de Bloco</strong> - Variáveis em if, for, etc. (apenas no bloco)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>4.1. Exemplo Completo de Escopo</h3>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">public class ExemploEscopo {
+    // Variável de classe (escopo: toda a classe)
+    static int contadorGlobal = 0;
+    
+    // Variável de instância (escopo: todos os métodos do objeto)
+    String nome = "Java";
+    
+    public void metodo1() {
+        // Variável local (escopo: apenas neste método)
+        int numero = 10;
+        
+        System.out.println(nome); // OK - variável de instância
+        System.out.println(contadorGlobal); // OK - variável static
+        System.out.println(numero); // OK - variável local
+        
+        if (numero > 5) {
+            // Variável de bloco (escopo: apenas dentro deste if)
+            int resultado = numero * 2;
+            System.out.println(resultado); // OK - está no mesmo bloco
+        }
+        
+        // System.out.println(resultado); // ERRO! 'resultado' não existe aqui
+    }
+    
+    public void metodo2() {
+        System.out.println(nome); // OK - variável de instância
+        System.out.println(contadorGlobal); // OK - variável static
+        // System.out.println(numero); // ERRO! 'numero' é do metodo1
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section example-section">
+            <h2>5. Exemplos Práticos</h2>
+            
+            <p class="example-title">Exemplo 1: Variáveis Locais em Métodos</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">public class Calculadora {
+    public int somar(int a, int b) {
+        int resultado = a + b; // Variável local
+        return resultado;
+    }
+    
+    public int multiplicar(int a, int b) {
+        int resultado = a * b; // Outra variável local (diferente da anterior)
+        return resultado;
+    }
+}</code></pre>
+            </div>
+
+            <p class="example-title">Exemplo 2: Variáveis de Instância</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">public class ContaBancaria {
+    // Variáveis de instância
+    String titular;
+    double saldo;
+    
+    public ContaBancaria(String titular, double saldoInicial) {
+        this.titular = titular;
+        this.saldo = saldoInicial;
+    }
+    
+    public void depositar(double valor) {
+        saldo += valor; // Acessa variável de instância
+        System.out.println("Novo saldo: " + saldo);
+    }
+    
+    public void sacar(double valor) {
+        if (valor <= saldo) {
+            saldo -= valor;
+            System.out.println("Saque realizado. Saldo: " + saldo);
+        } else {
+            System.out.println("Saldo insuficiente!");
+        }
+    }
+}</code></pre>
+            </div>
+
+            <p class="example-title">Exemplo 3: Variável Static Compartilhada</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">public class Aluno {
+    String nome;
+    static int totalAlunos = 0; // Compartilhada por todos os alunos
+    
+    public Aluno(String nome) {
+        this.nome = nome;
+        totalAlunos++; // Incrementa o contador compartilhado
+    }
+    
+    public static void mostrarTotal() {
+        System.out.println("Total de alunos: " + totalAlunos);
+    }
+}
+
+// Uso:
+// Aluno a1 = new Aluno("João");
+// Aluno a2 = new Aluno("Maria");
+// Aluno.mostrarTotal(); // Saída: Total de alunos: 2</code></pre>
+            </div>
+
+            <p class="example-title">Exemplo 4: Escopo em Loops</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">public class ExemploLoop {
+    public void processar() {
+        int soma = 0; // Variável do método
+        
+        for (int i = 0; i < 5; i++) {
+            // 'i' só existe dentro do for
+            int quadrado = i * i; // Variável do bloco for
+            soma += quadrado;
+            System.out.println("i: " + i + ", quadrado: " + quadrado);
+        }
+        
+        System.out.println("Soma total: " + soma);
+        // System.out.println(i); // ERRO! 'i' não existe aqui
+        // System.out.println(quadrado); // ERRO! 'quadrado' não existe aqui
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>6. Erros Comuns e Boas Práticas</h2>
+            
+            <div class="solid-box">
+                <h3>Erro 1: Usar Variável Sem Inicializar</h3>
+                <div class="code-wrapper" style="margin: 15px 0;">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public void exemplo() {
+    int numero; // Declarada mas não inicializada
+    System.out.println(numero); // ERRO! Variável não inicializada
+    
+    // Correção:
+    int numero2 = 0; // Sempre inicialize
+    System.out.println(numero2); // OK
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="solid-box">
+                <h3>Erro 2: Tentar Acessar Variável Fora do Escopo</h3>
+                <div class="code-wrapper" style="margin: 15px 0;">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public void exemplo() {
+    if (true) {
+        int x = 10;
+    }
+    System.out.println(x); // ERRO! 'x' não existe aqui
+    
+    // Correção: Declare fora do bloco
+    int y;
+    if (true) {
+        y = 10;
+    }
+    System.out.println(y); // OK
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="glass-box">
+                <h3>Boas Práticas:</h3>
+                <ul class="explanation-list">
+                    <li>Sempre inicialize variáveis ao declará-las</li>
+                    <li>Use nomes descritivos: <span class="highlight-text">idadeAluno</span> ao invés de <span class="highlight-text">x</span></li>
+                    <li>Declare variáveis no menor escopo possível</li>
+                    <li>Evite variáveis globais (static) quando não necessário</li>
+                    <li>Use <span class="highlight-text">final</span> para constantes: <span class="highlight-text">final double PI = 3.14159;</span></li>
+                    <li>Prefira variáveis locais quando possível para melhor encapsulamento</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>7. Exercícios Práticos</h2>
+            
+            <div class="exercise-box">
+                <h4>📝 Exercício 1: Declaração e Uso</h4>
+                <p>Crie um programa que declare variáveis para armazenar nome, idade e altura de uma pessoa, inicialize-as e imprima os valores.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public class DadosPessoa {
+    public static void main(String[] args) {
+        String nome = "Carlos";
+        int idade = 28;
+        double altura = 1.75;
+        
+        System.out.println("Nome: " + nome);
+        System.out.println("Idade: " + idade + " anos");
+        System.out.println("Altura: " + altura + " m");
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 2: Escopo de Variáveis</h4>
+                <p>Identifique e corrija o erro no código abaixo relacionado ao escopo de variáveis.</p>
+                <div class="code-wrapper" style="margin-top: 15px;">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public void calcular() {
+    if (true) {
+        int resultado = 100;
+    }
+    System.out.println(resultado); // Erro aqui
+}</code></pre>
+                </div>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <p><strong>Problema:</strong> A variável <code>resultado</code> foi declarada dentro do bloco if, então não existe fora dele.</p>
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public void calcular() {
+    int resultado; // Declarar fora do bloco
+    if (true) {
+        resultado = 100; // Atribuir dentro do bloco
+    }
+    System.out.println(resultado); // Agora funciona
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 3: Variável Static vs Instância</h4>
+                <p>Crie uma classe <code>Produto</code> com um contador static que incremente cada vez que um produto é criado. Adicione também atributos de instância para nome e preço.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public class Produto {
+    // Variável de classe (compartilhada)
+    static int totalProdutos = 0;
+    
+    // Variáveis de instância (única por objeto)
+    String nome;
+    double preco;
+    
+    public Produto(String nome, double preco) {
+        this.nome = nome;
+        this.preco = preco;
+        totalProdutos++; // Incrementa contador global
+    }
+    
+    public void exibir() {
+        System.out.println("Produto: " + nome);
+        System.out.println("Preço: R$ " + preco);
+    }
+    
+    public static void mostrarTotal() {
+        System.out.println("Total de produtos: " + totalProdutos);
+    }
+}
+
+// Teste:
+// Produto p1 = new Produto("Notebook", 2500.00);
+// Produto p2 = new Produto("Mouse", 50.00);
+// Produto.mostrarTotal(); // Saída: Total de produtos: 2</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 4: Escopo em Loop</h4>
+                <p>Crie um método que some os números de 1 a 10 usando um loop for. A variável de controle do loop deve ter escopo apenas dentro do loop.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public class SomaNumeros {
+    public static void main(String[] args) {
+        int soma = 0; // Variável do método
+        
+        for (int i = 1; i <= 10; i++) {
+            // 'i' tem escopo apenas no loop
+            soma += i;
+        }
+        
+        System.out.println("Soma: " + soma);
+        // System.out.println(i); // Erro: 'i' não existe aqui
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 5: Constantes com final</h4>
+                <p>Declare uma constante para o valor do PI e use-a para calcular a área de um círculo dado o raio.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public class CalculoCirculo {
+    // Constante (não pode ser alterada)
+    static final double PI = 3.14159;
+    
+    public static double calcularArea(double raio) {
+        return PI * raio * raio;
+    }
+    
+    public static void main(String[] args) {
+        double raio = 5.0;
+        double area = calcularArea(raio);
+        System.out.println("Área do círculo: " + area);
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>8. Resumo Visual</h2>
+            
+            <div class="glass-box">
+                <h3>🔍 Tipos de Variáveis:</h3>
+                <p><strong>Local:</strong> Dentro de métodos/blocos - existe apenas durante execução</p>
+                <p><strong>Instância:</strong> Atributos da classe - cada objeto tem sua cópia</p>
+                <p><strong>Classe (static):</strong> Compartilhada por todos - existe durante todo programa</p>
+            </div>
+
+            <div class="glass-box">
+                <h3>📌 Regras de Escopo:</h3>
+                <p>• Variável só existe dentro das chaves <code>{ }</code> onde foi declarada</p>
+                <p>• Variáveis locais não são inicializadas automaticamente</p>
+                <p>• Variáveis de instância são inicializadas com valores padrão</p>
+                <p>• Use <code>this</code> para diferenciar variável de instância de parâmetro</p>
+                <p>• Declare variáveis no menor escopo possível</p>
+            </div>
+
+            <div class="glass-box">
+                <h3>🌍 Uso no Mundo Real:</h3>
+                <p>• Variáveis locais para cálculos temporários em métodos</p>
+                <p>• Variáveis de instância para características de objetos (nome, idade, saldo)</p>
+                <p>• Variáveis static para contadores, configurações globais</p>
+                <p>• Constantes (final) para valores fixos (PI, taxa de conversão, etc.)</p>
+            </div>
+        </div>
+
+        <div class="conclusion-box">
+            <h2>🎯 Conclusão</h2>
+            <p>Entender variáveis e escopo é fundamental para escrever código Java organizado e eficiente. Saber onde declarar cada tipo de variável e compreender seu ciclo de vida evita erros e melhora a qualidade do seu código.</p>
+            <p style="margin-top: 15px;"><strong>Continue praticando</strong> e logo você estará usando variáveis e gerenciando escopos naturalmente em seus projetos!</p>
+        </div>
+
+    </div>
+
+    <script>
+        // Inicializa o highlight.js
+        document.addEventListener('DOMContentLoaded', (event) => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>
