@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WHILE e DO-WHILE em Java - Guia Completo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #FFF7E2;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #FFF7E2;
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            background: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #333333;
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin: 35px 0 15px 0;
+            color: #333333;
+            font-weight: 800;
+        }
+
+        h3 {
+            font-size: 1.2em;
+            margin: 20px 0 12px 0;
+            color: #333333;
+            font-weight: 700;
+        }
+
+        h4 {
+            font-size: 1.1em;
+            margin: 15px 0 10px 0;
+            color: #333333;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1em;
+            color: #333333;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        p {
+            line-height: 1.8;
+            margin: 12px 0;
+            color: #333333;
+            font-size: 1em;
+        }
+
+        .code-wrapper {
+            position: relative;
+            margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .code-header {
+            background: #2d2d2d;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .code-dot.red { background: #ff5f56; }
+        .code-dot.yellow { background: #ffbd2e; }
+        .code-dot.green { background: #27c93f; }
+
+        .code-lang {
+            color: #888;
+            font-size: 0.85em;
+            margin-left: auto;
+            font-family: 'Consolas', monospace;
+        }
+
+        pre {
+            margin: 0 !important;
+            border-radius: 0 !important;
+        }
+
+        pre code {
+            display: block;
+            padding: 25px !important;
+            background: #1e1e1e !important;
+            color: #d4d4d4;
+            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .glass-box {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(51, 51, 51, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-box h3 {
+            margin-top: 0;
+        }
+
+        .explanation-list {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .explanation-list li {
+            margin: 10px 0;
+            line-height: 1.7;
+            color: #333333;
+        }
+
+        .example-section {
+            margin: 30px 0;
+        }
+
+        .example-title {
+            font-weight: 700;
+            color: #333333;
+            margin: 25px 0 10px 0;
+            font-size: 1.15em;
+        }
+
+        .solid-box {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .solid-box h3,
+        .solid-box h4 {
+            color: #FFF7E2;
+            margin-top: 0;
+        }
+
+        .solid-box p,
+        .solid-box li {
+            color: #FFF7E2;
+        }
+
+        .solid-box ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(51, 51, 51, 0.1);
+            color: #333333;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .exercise-box {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(51, 51, 51, 0.15);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.3s;
+        }
+
+        .exercise-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .exercise-box h4 {
+            margin-top: 0;
+        }
+
+        details {
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        summary {
+            font-weight: 700;
+            color: #333333;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            list-style: none;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::before {
+            content: "▶ ";
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        details[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        .solution {
+            margin-top: 10px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+        }
+
+        .highlight-text {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        strong {
+            font-weight: 700;
+            color: #333333;
+        }
+
+        .intro-text {
+            margin-bottom: 25px;
+        }
+
+        .syntax-header {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            margin: 25px 0 0 0;
+        }
+
+        .conclusion-box {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(51, 51, 51, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .divider {
+            height: 2px;
+            background: rgba(51, 51, 51, 0.1);
+            margin: 30px 0;
+        }
+
+        code {
+            background: rgba(51, 51, 51, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        .visual-diagram {
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(51, 51, 51, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .flow-step {
+            background: rgba(51, 51, 51, 0.05);
+            border-left: 4px solid #333333;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="nav">
+                <a href="../index.html" class="nav-btn">JAVA Learning</a>
+                <a href="../index.html#inicio" class="nav-btn">Início</a>
+                <a href="../index.html#conteudo" class="nav-btn">• Conteúdo</a>
+                <a href="../index.html#roadmap" class="nav-btn">Roadmap</a>
+            </div>
+            
+            <h1>WHILE e DO-WHILE em Java</h1>
+            <p class="subtitle">Guia completo para dominar loops condicionais e validações dinâmicas em Java</p>
+        </div>
+
+        <div class="section">
+            <h2>1. O Básico: Entendendo os Loops Condicionais</h2>
+            
+            <div class="intro-text">
+                <p>Enquanto o laço <code>for</code> é ideal quando sabemos exatamente quantas vezes queremos repetir algo, os laços <code>while</code> e <code>do-while</code> são perfeitos para situações onde a repetição depende de uma condição que pode mudar durante a execução.</p>
+                
+                <p>Imagine que você está pedindo uma senha ao usuário. Você não sabe quantas tentativas ele precisará até acertar. Você quer continuar pedindo "enquanto" a senha estiver errada. Esse é o cenário perfeito para usar <code>while</code> ou <code>do-while</code>.</p>
+                
+                <p>A diferença principal entre eles é simples mas crucial: o <code>while</code> verifica a condição antes de executar o bloco, enquanto o <code>do-while</code> executa o bloco pelo menos uma vez antes de verificar a condição.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. WHILE: O Loop com Verificação Prévia</h2>
+            
+            <h3>2.1. O que é while?</h3>
+            <p>O <code>while</code> (enquanto) é um loop que continua executando enquanto uma condição específica for verdadeira. A condição é verificada ANTES de cada execução do bloco de código.</p>
+
+            <div class="syntax-header">Sintaxe do while:</div>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">while (condição) {
+    // Código executado enquanto a condição for verdadeira
+    // É importante modificar algo que afete a condição
+}</code></pre>
+            </div>
+
+            <div class="glass-box">
+                <h3>Como o WHILE funciona:</h3>
+                <ul class="explanation-list">
+                    <li><strong>Passo 1:</strong> Verifica se a condição é verdadeira</li>
+                    <li><strong>Passo 2:</strong> Se SIM, executa o bloco de código</li>
+                    <li><strong>Passo 3:</strong> Volta ao Passo 1</li>
+                    <li><strong>Passo 4:</strong> Se NÃO, pula o bloco e continua o programa</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>Importante:</strong> Se a condição for falsa desde o início, o bloco nunca será executado!</p>
+            </div>
+
+            <h3>2.2. Quando usar WHILE?</h3>
+            <ul class="explanation-list">
+                <li>Validação de entrada do usuário (senha, email, etc.)</li>
+                <li>Leitura de dados até encontrar um marcador específico</li>
+                <li>Processamento até uma condição de parada ser atingida</li>
+                <li>Quando o número de repetições é desconhecido</li>
+                <li>Menus de aplicação que repetem até o usuário sair</li>
+            </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>3. DO-WHILE: O Loop com Verificação Posterior</h2>
+            
+            <h3>3.1. O que é do-while?</h3>
+            <p>O <code>do-while</code> (faça-enquanto) é semelhante ao while, mas com uma diferença crucial: o bloco de código é executado PELO MENOS UMA VEZ, pois a condição é verificada no final.</p>
+
+            <div class="syntax-header">Sintaxe do do-while:</div>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">do {
+    // Código executado PELO MENOS UMA VEZ
+    // Depois continua enquanto a condição for verdadeira
+} while (condição);</code></pre>
+            </div>
+
+            <div class="glass-box">
+                <h3>Como o DO-WHILE funciona:</h3>
+                <ul class="explanation-list">
+                    <li><strong>Passo 1:</strong> Executa o bloco de código (SEM verificar nada antes)</li>
+                    <li><strong>Passo 2:</strong> Verifica se a condição é verdadeira</li>
+                    <li><strong>Passo 3:</strong> Se SIM, volta ao Passo 1</li>
+                    <li><strong>Passo 4:</strong> Se NÃO, termina o loop</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>Importante:</strong> O bloco SEMPRE executa pelo menos uma vez, mesmo que a condição seja falsa!</p>
+            </div>
+
+            <h3>3.2. Quando usar DO-WHILE?</h3>
+            <ul class="explanation-list">
+                <li>Menus interativos (sempre mostrar o menu pelo menos uma vez)</li>
+                <li>Validações onde você precisa pedir o dado primeiro</li>
+                <li>Jogos que precisam rodar pelo menos uma rodada</li>
+                <li>Quando você quer garantir que algo aconteça antes de verificar a condição</li>
+            </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>4. WHILE vs DO-WHILE: Comparação Visual</h2>
+            
+            <div class="visual-diagram">
+                <h3>Fluxo do WHILE:</h3>
+                <div class="flow-step">
+                    <strong>→ VERIFICA condição</strong>
+                </div>
+                <div class="flow-step">
+                    <strong>→ Se VERDADEIRA: Executa bloco</strong>
+                </div>
+                <div class="flow-step">
+                    <strong>→ Volta para verificar novamente</strong>
+                </div>
+                <div class="flow-step">
+                    <strong>→ Se FALSA: Sai do loop (pode nunca executar)</strong>
+                </div>
+            </div>
+
+            <div class="visual-diagram">
+                <h3>Fluxo do DO-WHILE:</h3>
+                <div class="flow-step">
+                    <strong>→ EXECUTA bloco (sempre uma vez no mínimo)</strong>
+                </div>
+                <div class="flow-step">
+                    <strong>→ VERIFICA condição</strong>
+                </div>
+                <div class="flow-step">
+                    <strong>→ Se VERDADEIRA: Volta para executar novamente</strong>
+                </div>
+                <div class="flow-step">
+                    <strong>→ Se FALSA: Sai do loop</strong>
+                </div>
+            </div>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Aspecto</th>
+                    <th>WHILE</th>
+                    <th>DO-WHILE</th>
+                </tr>
+                <tr>
+                    <td><strong>Verificação</strong></td>
+                    <td>Antes de executar</td>
+                    <td>Depois de executar</td>
+                </tr>
+                <tr>
+                    <td><strong>Mínimo de execuções</strong></td>
+                    <td>0 vezes (pode nunca executar)</td>
+                    <td>1 vez (sempre executa)</td>
+                </tr>
+                <tr>
+                    <td><strong>Uso típico</strong></td>
+                    <td>Quando pode não precisar executar</td>
+                    <td>Quando precisa executar pelo menos uma vez</td>
+                </tr>
+                <tr>
+                    <td><strong>Sintaxe</strong></td>
+                    <td>while (condição) { }</td>
+                    <td>do { } while (condição);</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section example-section">
+            <h2>5. Exemplos Práticos com WHILE</h2>
+            
+            <p class="example-title">Exemplo 1: Contagem Simples</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">public class ContagemWhile {
+    public static void main(String[] args) {
+        int contador = 1;
+        
+        while (contador <= 5) {
+            System.out.println("Contagem: " + contador);
+            contador++; // IMPORTANTE: atualizar a variável
+        }
+        
+        System.out.println("Fim!");
+    }
+}
+
+// Saída:
+// Contagem: 1
+// Contagem: 2
+// Contagem: 3
+// Contagem: 4
+// Contagem: 5
+// Fim!</code></pre>
+            </div>
+
+            <p class="example-title">Exemplo 2: Validação de Senha</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">import java.util.Scanner;
+
+public class ValidacaoSenha {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String senhaCorreta = "java123";
+        String senhaDigitada = "";
+        
+        // Continua pedindo enquanto a senha estiver errada
+        while (!senhaDigitada.equals(senhaCorreta)) {
+            System.out.print("Digite a senha: ");
+            senhaDigitada = sc.nextLine();
+            
+            if (!senhaDigitada.equals(senhaCorreta)) {
+                System.out.println("Senha incorreta! Tente novamente.\n");
+            }
+        }
+        
+        System.out.println("Acesso liberado!");
+        sc.close();
+    }
+}</code></pre>
+            </div>
+
+            <p class="example-title">Exemplo 3: Soma até o Usuário Digitar Zero</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">import java.util.Scanner;
+
+public class SomaNumeros {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int numero = -1; // Inicia com valor diferente de zero
+        int soma = 0;
+        
+        System.out.println("Digite números para somar (0 para parar):");
+        
+        while (numero != 0) {
+            System.out.print("Número: ");
+            numero = sc.nextInt();
+            soma += numero;
+        }
+        
+        System.out.println("Soma total: " + soma);
+        sc.close();
+    }
+}</code></pre>
+            </div>
+
+            <p class="example-title">Exemplo 4: Menu com WHILE</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">import java.util.Scanner;
+
+public class MenuWhile {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int opcao = 0;
+        
+        while (opcao != 4) {
+            System.out.println("\n=== MENU ===");
+            System.out.println("1. Cadastrar");
+            System.out.println("2. Listar");
+            System.out.println("3. Excluir");
+            System.out.println("4. Sair");
+            System.out.print("Escolha: ");
+            opcao = sc.nextInt();
+            
+            if (opcao == 1) {
+                System.out.println("Cadastrando...");
+            } else if (opcao == 2) {
+                System.out.println("Listando...");
+            } else if (opcao == 3) {
+                System.out.println("Excluindo...");
+            } else if (opcao == 4) {
+                System.out.println("Saindo...");
+            } else {
+                System.out.println("Opção inválida!");
+            }
+        }
+        
+        sc.close();
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section example-section">
+            <h2>6. Exemplos Práticos com DO-WHILE</h2>
+            
+            <p class="example-title">Exemplo 1: Menu Garantido (sempre mostra uma vez)</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">import java.util.Scanner;
+
+public class MenuDoWhile {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int opcao;
+        
+        do {
+            System.out.println("\n=== CALCULADORA ===");
+            System.out.println("1. Somar");
+            System.out.println("2. Subtrair");
+            System.out.println("3. Multiplicar");
+            System.out.println("4. Dividir");
+            System.out.println("0. Sair");
+            System.out.print("Escolha: ");
+            opcao = sc.nextInt();
+            
+            if (opcao >= 1 && opcao <= 4) {
+                System.out.println("Executando operação " + opcao + "...");
+            } else if (opcao != 0) {
+                System.out.println("Opção inválida!");
+            }
+            
+        } while (opcao != 0);
+        
+        System.out.println("Até logo!");
+        sc.close();
+    }
+}</code></pre>
+            </div>
+
+            <p class="example-title">Exemplo 2: Validação de Idade</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">import java.util.Scanner;
+
+public class ValidacaoIdade {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int idade;
+        
+        do {
+            System.out.print("Digite sua idade (0-120): ");
+            idade = sc.nextInt();
+            
+            if (idade < 0 || idade > 120) {
+                System.out.println("Idade inválida! Tente novamente.\n");
+            }
+            
+        } while (idade < 0 || idade > 120);
+        
+        System.out.println("Idade válida: " + idade + " anos");
+        sc.close();
+    }
+}</code></pre>
+            </div>
+
+            <p class="example-title">Exemplo 3: Jogo de Adivinhação</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">import java.util.Scanner;
+import java.util.Random;
+
+public class JogoAdivinhacao {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Random random = new Random();
+        
+        int numeroSecreto = random.nextInt(100) + 1; // 1 a 100
+        int palpite;
+        int tentativas = 0;
+        
+        System.out.println("=== JOGO DA ADIVINHAÇÃO ===");
+        System.out.println("Adivinhe o número de 1 a 100!");
+        
+        do {
+            System.out.print("\nSeu palpite: ");
+            palpite = sc.nextInt();
+            tentativas++;
+            
+            if (palpite < numeroSecreto) {
+                System.out.println("Muito baixo!");
+            } else if (palpite > numeroSecreto) {
+                System.out.println("Muito alto!");
+            } else {
+                System.out.println("PARABÉNS! Você acertou em " + tentativas + " tentativas!");
+            }
+            
+        } while (palpite != numeroSecreto);
+        
+        sc.close();
+    }
+}</code></pre>
+            </div>
+
+            <p class="example-title">Exemplo 4: Repetir até Confirmação</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">import java.util.Scanner;
+
+public class ConfirmacaoUsuario {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String resposta;
+        
+        do {
+            System.out.println("\nProcessando dados importantes...");
+            System.out.println("Operação concluída!");
+            
+            System.out.print("\nDeseja repetir? (s/n): ");
+            resposta = sc.nextLine().toLowerCase();
+            
+        } while (resposta.equals("s") || resposta.equals("sim"));
+        
+        System.out.println("Programa encerrado.");
+        sc.close();
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>7. Comparação: FOR vs WHILE vs DO-WHILE</h2>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Aspecto</th>
+                    <th>FOR</th>
+                    <th>WHILE</th>
+                    <th>DO-WHILE</th>
+                </tr>
+                <tr>
+                    <td><strong>Melhor para</strong></td>
+                    <td>Repetições com contador fixo</td>
+                    <td>Condições dinâmicas</td>
+                    <td>Executar pelo menos uma vez</td>
+                </tr>
+                <tr>
+                    <td><strong>Verificação</strong></td>
+                    <td>Início de cada iteração</td>
+                    <td>Antes de executar</td>
+                    <td>Depois de executar</td>
+                </tr>
+                <tr>
+                    <td><strong>Mínimo execuções</strong></td>
+                    <td>0 vezes</td>
+                    <td>0 vezes</td>
+                    <td>1 vez</td>
+                </tr>
+                <tr>
+                    <td><strong>Exemplo típico</strong></td>
+                    <td>Percorrer array</td>
+                    <td>Validar entrada</td>
+                    <td>Menu interativo</td>
+                </tr>
+                <tr>
+                    <td><strong>Controle</strong></td>
+                    <td>Contador automático</td>
+                    <td>Condição manual</td>
+                    <td>Condição manual</td>
+                </tr>
+            </table>
+
+            <div class="glass-box">
+                <h3>Quando usar cada um?</h3>
+                <ul class="explanation-list">
+                    <li><strong>FOR:</strong> "Preciso fazer isso 10 vezes" ou "Para cada item da lista"</li>
+                    <li><strong>WHILE:</strong> "Enquanto a senha estiver errada, peça novamente"</li>
+                    <li><strong>DO-WHILE:</strong> "Mostre o menu, depois pergunte se quer continuar"</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>8. Erros Comuns e Boas Práticas</h2>
+            
+            <div class="solid-box">
+                <h3>❌ Erro 1: Loop Infinito no WHILE</h3>
+                <div class="code-wrapper" style="margin: 15px 0;">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// ERRADO! A condição nunca muda
+int contador = 0;
+while (contador < 10) {
+    System.out.println("Loop infinito!");
+    // Esqueceu de incrementar contador!
+}
+
+// CORRETO:
+int contador = 0;
+while (contador < 10) {
+    System.out.println("Contagem: " + contador);
+    contador++; // SEMPRE atualize a variável de controle
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="solid-box">
+                <h3>❌ Erro 2: Condição Sempre Verdadeira</h3>
+                <div class="code-wrapper" style="margin: 15px 0;">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// CUIDADO! Pode gerar loop infinito
+Scanner sc = new Scanner(System.in);
+String resposta = "sim";
+
+while (resposta.equals("sim")) {
+    System.out.println("Fazendo algo...");
+    // Se esquecer de pedir nova resposta, loop infinito!
+}
+
+// CORRETO:
+while (resposta.equals("sim")) {
+    System.out.println("Fazendo algo...");
+    System.out.print("Continuar? (sim/não): ");
+    resposta = sc.nextLine();
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="solid-box">
+                <h3>❌ Erro 3: Ponto e Vírgula no DO-WHILE</h3>
+                <div class="code-wrapper" style="margin: 15px 0;">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// ERRADO! Falta o ponto e vírgula
+do {
+    System.out.println("Teste");
+} while (true) // ERRO DE COMPILAÇÃO!
+
+// CORRETO:
+do {
+    System.out.println("Teste");
+} while (false); // Note o ponto e vírgula!</code></pre>
+                </div>
+            </div>
+
+            <div class="glass-box">
+                <h3>✅ Boas Práticas:</h3>
+                <ul class="explanation-list">
+                    <li>Sempre garanta que a condição do loop pode se tornar falsa</li>
+                    <li>Inicialize variáveis de controle antes do loop</li>
+                    <li>No DO-WHILE, não esqueça o ponto e vírgula após o while</li>
+                    <li>Use nomes descritivos para condições booleanas</li>
+                    <li>Evite loops infinitos acidentais - sempre atualize as variáveis de controle</li>
+                    <li>Prefira WHILE quando pode não precisar executar, DO-WHILE quando precisa executar ao menos uma vez</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>9. Controle de Fluxo: BREAK e CONTINUE</h2>
+            
+            <h3>9.1. BREAK - Sair do Loop</h3>
+            <p>O comando <code>break</code> interrompe o loop imediatamente, mesmo que a condição ainda seja verdadeira.</p>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">import java.util.Scanner;
+
+public class ExemploBreak {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int numero;
+        
+        while (true) { // Loop infinito proposital
+            System.out.print("Digite um número (0 para sair): ");
+            numero = sc.nextInt();
+            
+            if (numero == 0) {
+                System.out.println("Saindo...");
+                break; // Sai do loop
+            }
+            
+            System.out.println("Você digitou: " + numero);
+        }
+        
+        sc.close();
+    }
+}</code></pre>
+            </div>
+
+            <h3>9.2. CONTINUE - Pular para Próxima Iteração</h3>
+            <p>O comando <code>continue</code> pula o restante do código no loop atual e vai direto para a próxima iteração.</p>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">public class ExemploContinue {
+    public static void main(String[] args) {
+        int i = 0;
+        
+        while (i < 10) {
+            i++;
+            
+            if (i % 2 == 0) {
+                continue; // Pula números pares
+            }
+            
+            System.out.println("Número ímpar: " + i);
+        }
+    }
+}
+
+// Saída: Número ímpar: 1, 3, 5, 7, 9</code></pre>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>10. Exercícios Práticos</h2>
+            
+            <div class="exercise-box">
+                <h4>📝 Exercício 1: Contagem Regressiva com WHILE</h4>
+                <p>Crie um programa que faça uma contagem regressiva de 10 até 1 usando WHILE, depois imprima "Feliz Ano Novo!"</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public class ContagemRegressiva {
+    public static void main(String[] args) {
+        int contador = 10;
+        
+        while (contador >= 1) {
+            System.out.println(contador);
+            contador--;
+        }
+        
+        System.out.println("Feliz Ano Novo!");
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 2: Validação de Nota com DO-WHILE</h4>
+                <p>Peça ao usuário uma nota de 0 a 10. Continue pedindo até que ele digite um valor válido. Use DO-WHILE.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">import java.util.Scanner;
+
+public class ValidacaoNota {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        double nota;
+        
+        do {
+            System.out.print("Digite uma nota (0-10): ");
+            nota = sc.nextDouble();
+            
+            if (nota < 0 || nota > 10) {
+                System.out.println("Nota inválida! Tente novamente.\n");
+            }
+            
+        } while (nota < 0 || nota > 10);
+        
+        System.out.println("Nota válida: " + nota);
+        sc.close();
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 3: Tabuada com WHILE</h4>
+                <p>Peça um número ao usuário e mostre sua tabuada (de 1 a 10) usando WHILE.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">import java.util.Scanner;
+
+public class TabuadaWhile {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Digite um número: ");
+        int numero = sc.nextInt();
+        
+        int i = 1;
+        System.out.println("\n=== TABUADA DO " + numero + " ===");
+        
+        while (i <= 10) {
+            System.out.println(numero + " x " + i + " = " + (numero * i));
+            i++;
+        }
+        
+        sc.close();
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 4: Contador de Números Positivos</h4>
+                <p>Peça números ao usuário. Pare quando ele digitar um número negativo. Conte quantos números positivos foram digitados.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">import java.util.Scanner;
+
+public class ContadorPositivos {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int numero = 0;
+        int contador = 0;
+        
+        System.out.println("Digite números (negativo para parar):");
+        
+        while (numero >= 0) {
+            System.out.print("Número: ");
+            numero = sc.nextInt();
+            
+            if (numero >= 0) {
+                contador++;
+            }
+        }
+        
+        System.out.println("Total de números positivos: " + contador);
+        sc.close();
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 5: Sistema de Login com 3 Tentativas</h4>
+                <p>Crie um sistema que dá ao usuário 3 tentativas para acertar a senha. Use WHILE ou DO-WHILE.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">import java.util.Scanner;
+
+public class SistemaLogin {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String senhaCorreta = "senai2024";
+        String senha;
+        int tentativas = 0;
+        boolean acertou = false;
+        
+        while (tentativas < 3 && !acertou) {
+            System.out.print("Digite a senha: ");
+            senha = sc.nextLine();
+            tentativas++;
+            
+            if (senha.equals(senhaCorreta)) {
+                System.out.println("Login realizado com sucesso!");
+                acertou = true;
+            } else {
+                int restantes = 3 - tentativas;
+                if (restantes > 0) {
+                    System.out.println("Senha incorreta! " + restantes + " tentativa(s) restante(s).\n");
+                }
+            }
+        }
+        
+        if (!acertou) {
+            System.out.println("Acesso bloqueado! Número máximo de tentativas excedido.");
+        }
+        
+        sc.close();
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>11. Resumo Visual</h2>
+            
+            <div class="glass-box">
+                <h3>🔍 WHILE:</h3>
+                <p><strong>while (condição) { código }</strong></p>
+                <p>• Verifica a condição ANTES de executar</p>
+                <p>• Pode nunca executar (se condição for falsa desde o início)</p>
+                <p>• Ideal para validações e condições incertas</p>
+            </div>
+
+            <div class="glass-box">
+                <h3>🔍 DO-WHILE:</h3>
+                <p><strong>do { código } while (condição);</strong></p>
+                <p>• Executa ANTES de verificar a condição</p>
+                <p>• Sempre executa pelo menos UMA vez</p>
+                <p>• Ideal para menus e ações que precisam acontecer primeiro</p>
+            </div>
+
+            <div class="glass-box">
+                <h3>🌍 Uso no Mundo Real:</h3>
+                <p>• <strong>WHILE:</strong> Validar login, processar arquivos até o fim, aguardar resposta do servidor</p>
+                <p>• <strong>DO-WHILE:</strong> Menus interativos, jogos que precisam de pelo menos uma rodada, confirmações de usuário</p>
+                <p>• <strong>BREAK:</strong> Sair de loops aninhados, parar busca quando encontrar resultado</p>
+                <p>• <strong>CONTINUE:</strong> Pular itens inválidos, filtrar dados durante processamento</p>
+            </div>
+        </div>
+
+        <div class="conclusion-box">
+            <h2>🎯 Conclusão</h2>
+            <p>Dominar WHILE e DO-WHILE é essencial para criar programas dinâmicos e interativos. Eles complementam o FOR perfeitamente, dando flexibilidade para situações onde o número de repetições é desconhecido.</p>
+            <p style="margin-top: 15px;"><strong>Lembre-se:</strong> Use WHILE quando pode não precisar executar, e DO-WHILE quando precisa executar pelo menos uma vez!</p>
+            <p style="margin-top: 15px;"><strong>Continue praticando</strong> e logo você estará escolhendo o loop certo para cada situação naturalmente!</p>
+        </div>
+
+    </div>
+
+    <script>
+        // Inicializa o highlight.js
+        document.addEventListener('DOMContentLoaded', (event) => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>
