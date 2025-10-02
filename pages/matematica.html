@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operações Matemáticas em Java - Guia Completo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #FFF7E2;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #FFF7E2;
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #333333;
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin: 35px 0 15px 0;
+            color: #333333;
+            font-weight: 800;
+        }
+
+        h3 {
+            font-size: 1.2em;
+            margin: 20px 0 12px 0;
+            color: #333333;
+            font-weight: 700;
+        }
+
+        h4 {
+            font-size: 1.1em;
+            margin: 15px 0 10px 0;
+            color: #333333;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1em;
+            color: #333333;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        p {
+            line-height: 1.8;
+            margin: 12px 0;
+            color: #333333;
+            font-size: 1em;
+        }
+
+        .code-wrapper {
+            position: relative;
+            margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .code-header {
+            background: #2d2d2d;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .code-dot.red { background: #ff5f56; }
+        .code-dot.yellow { background: #ffbd2e; }
+        .code-dot.green { background: #27c93f; }
+
+        .code-lang {
+            color: #888;
+            font-size: 0.85em;
+            margin-left: auto;
+            font-family: 'Consolas', monospace;
+        }
+
+        pre {
+            margin: 0 !important;
+            border-radius: 0 !important;
+        }
+
+        pre code {
+            display: block;
+            padding: 25px !important;
+            background: #1e1e1e !important;
+            color: #d4d4d4;
+            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .glass-box {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(51, 51, 51, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-box h3 {
+            margin-top: 0;
+        }
+
+        .explanation-list {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .explanation-list li {
+            margin: 10px 0;
+            line-height: 1.7;
+            color: #333333;
+        }
+
+        .solid-box {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .solid-box h3 {
+            color: #FFF7E2;
+            margin-top: 0;
+        }
+
+        .solid-box p,
+        .solid-box li {
+            color: #FFF7E2;
+        }
+
+        .solid-box ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(51, 51, 51, 0.1);
+            color: #333333;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .exercise-box {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(51, 51, 51, 0.15);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.3s;
+        }
+
+        .exercise-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .exercise-box h4 {
+            margin-top: 0;
+        }
+
+        details {
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        summary {
+            font-weight: 700;
+            color: #333333;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            list-style: none;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::before {
+            content: "▶ ";
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        details[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        .solution {
+            margin-top: 10px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+        }
+
+        .highlight-text {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        .divider {
+            height: 2px;
+            background: rgba(51, 51, 51, 0.1);
+            margin: 30px 0;
+        }
+
+        .intro-text {
+            margin-bottom: 25px;
+        }
+
+        .syntax-header {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            margin: 25px 0 0 0;
+        }
+
+        .example-title {
+            font-weight: 700;
+            color: #333333;
+            margin: 25px 0 10px 0;
+            font-size: 1.15em;
+        }
+
+        .conclusion-box {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(51, 51, 51, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        code {
+            background: rgba(51, 51, 51, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        strong {
+            font-weight: 700;
+            color: #333333;
+        }
+
+        .operator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .operator-card {
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(51, 51, 51, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .operator-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .operator-symbol {
+            font-size: 2em;
+            font-weight: 800;
+            color: #333333;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="nav">
+                <a href="../index.html" class="nav-btn">JAVA Learning</a>
+                <a href="../index.html#inicio" class="nav-btn">Início</a>
+                <a href="../index.html#conteudo" class="nav-btn">• Conteúdo</a>
+                <a href="../index.html#roadmap" class="nav-btn">Roadmap</a>
+            </div>
+            
+            <h1>Operações Matemáticas em Java</h1>
+            <p class="subtitle">Guia completo sobre operadores aritméticos, relacionais, lógicos e a classe Math</p>
+        </div>
+
+        <div class="section">
+            <h2>1. Introdução às Operações Matemáticas</h2>
+            
+            <div class="intro-text">
+                <p>As operações matemáticas são fundamentais em programação. Java oferece uma ampla gama de operadores e funções matemáticas que permitem realizar cálculos simples e complexos.</p>
+                
+                <p>Neste guia, você aprenderá sobre os operadores aritméticos básicos, operadores de atribuição compostos, operadores relacionais e lógicos, além de explorar a poderosa classe Math do Java.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. Operadores Aritméticos Básicos</h2>
+
+            <p>Java possui cinco operadores aritméticos principais para realizar operações matemáticas:</p>
+
+            <div class="operator-grid">
+                <div class="operator-card">
+                    <div class="operator-symbol">+</div>
+                    <h4>Adição</h4>
+                    <p>Soma dois valores</p>
+                </div>
+                <div class="operator-card">
+                    <div class="operator-symbol">-</div>
+                    <h4>Subtração</h4>
+                    <p>Subtrai um valor de outro</p>
+                </div>
+                <div class="operator-card">
+                    <div class="operator-symbol">*</div>
+                    <h4>Multiplicação</h4>
+                    <p>Multiplica dois valores</p>
+                </div>
+                <div class="operator-card">
+                    <div class="operator-symbol">/</div>
+                    <h4>Divisão</h4>
+                    <p>Divide um valor por outro</p>
+                </div>
+                <div class="operator-card">
+                    <div class="operator-symbol">%</div>
+                    <h4>Módulo (Resto)</h4>
+                    <p>Retorna o resto da divisão</p>
+                </div>
+            </div>
+
+            <div class="syntax-header">Exemplos de Operadores Aritméticos:</div>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">public class OperadoresAritmeticos {
+    public static void main(String[] args) {
+        int a = 10;
+        int b = 3;
+        
+        // Operações básicas
+        int soma = a + b;           // 13
+        int subtracao = a - b;      // 7
+        int multiplicacao = a * b;  // 30
+        int divisao = a / b;        // 3 (divisão inteira)
+        int resto = a % b;          // 1 (resto da divisão)
+        
+        System.out.println("Soma: " + soma);
+        System.out.println("Subtração: " + subtracao);
+        System.out.println("Multiplicação: " + multiplicacao);
+        System.out.println("Divisão: " + divisao);
+        System.out.println("Resto: " + resto);
+        
+        // Divisão com ponto flutuante
+        double divisaoDecimal = (double) a / b;  // 3.333...
+        System.out.println("Divisão decimal: " + divisaoDecimal);
+    }
+}</code></pre>
+            </div>
+
+            <div class="glass-box">
+                <h3>Atenção à Divisão Inteira!</h3>
+                <p>Quando você divide dois números inteiros em Java, o resultado também é um inteiro (a parte decimal é descartada).</p>
+                <p><strong>Exemplo:</strong> <code>10 / 3 = 3</code> (não 3.333...)</p>
+                <p>Para obter resultado decimal, converta pelo menos um dos valores para <code>double</code>:</p>
+                <p><code>(double) 10 / 3 = 3.333...</code></p>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>3. Operadores de Incremento e Decremento</h2>
+
+            <p>Java oferece operadores especiais para aumentar ou diminuir o valor de uma variável em 1:</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Operador</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Exemplo</th>
+                </tr>
+                <tr>
+                    <td><strong>++</strong></td>
+                    <td>Incremento</td>
+                    <td>Aumenta o valor em 1</td>
+                    <td>x++ ou ++x</td>
+                </tr>
+                <tr>
+                    <td><strong>--</strong></td>
+                    <td>Decremento</td>
+                    <td>Diminui o valor em 1</td>
+                    <td>x-- ou --x</td>
+                </tr>
+            </table>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">public class IncrementoDecremento {
+    public static void main(String[] args) {
+        int x = 5;
+        
+        // Pós-incremento (usa primeiro, depois incrementa)
+        System.out.println("x = " + x);      // 5
+        System.out.println("x++ = " + x++);  // 5 (exibe 5, depois vira 6)
+        System.out.println("x = " + x);      // 6
+        
+        // Pré-incremento (incrementa primeiro, depois usa)
+        x = 5;
+        System.out.println("++x = " + ++x);  // 6 (incrementa para 6, depois exibe)
+        System.out.println("x = " + x);      // 6
+        
+        // Pós-decremento
+        x = 5;
+        System.out.println("x-- = " + x--);  // 5 (exibe 5, depois vira 4)
+        System.out.println("x = " + x);      // 4
+        
+        // Pré-decremento
+        x = 5;
+        System.out.println("--x = " + --x);  // 4 (decrementa para 4, depois exibe)
+        System.out.println("x = " + x);      // 4
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>4. Operadores de Atribuição Compostos</h2>
+
+            <p>Estes operadores combinam uma operação aritmética com atribuição, tornando o código mais conciso:</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Operador</th>
+                    <th>Equivalente a</th>
+                    <th>Exemplo</th>
+                </tr>
+                <tr>
+                    <td><strong>+=</strong></td>
+                    <td>x = x + valor</td>
+                    <td>x += 5</td>
+                </tr>
+                <tr>
+                    <td><strong>-=</strong></td>
+                    <td>x = x - valor</td>
+                    <td>x -= 3</td>
+                </tr>
+                <tr>
+                    <td><strong>*=</strong></td>
+                    <td>x = x * valor</td>
+                    <td>x *= 2</td>
+                </tr>
+                <tr>
+                    <td><strong>/=</strong></td>
+                    <td>x = x / valor</td>
+                    <td>x /= 4</td>
+                </tr>
+                <tr>
+                    <td><strong>%=</strong></td>
+                    <td>x = x % valor</td>
+                    <td>x %= 3</td>
+                </tr>
+            </table>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">public class OperadoresCompostos {
+    public static void main(String[] args) {
+        int saldo = 100;
+        
+        System.out.println("Saldo inicial: " + saldo);
+        
+        saldo += 50;  // Mesmo que: saldo = saldo + 50
+        System.out.println("Após depósito de 50: " + saldo);  // 150
+        
+        saldo -= 30;  // Mesmo que: saldo = saldo - 30
+        System.out.println("Após saque de 30: " + saldo);     // 120
+        
+        saldo *= 2;   // Mesmo que: saldo = saldo * 2
+        System.out.println("Após dobrar: " + saldo);          // 240
+        
+        saldo /= 3;   // Mesmo que: saldo = saldo / 3
+        System.out.println("Após dividir por 3: " + saldo);   // 80
+        
+        saldo %= 7;   // Mesmo que: saldo = saldo % 7
+        System.out.println("Resto da divisão por 7: " + saldo); // 3
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>5. Operadores Relacionais</h2>
+
+            <p>Operadores relacionais comparam dois valores e retornam um resultado booleano (true ou false):</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Operador</th>
+                    <th>Significado</th>
+                    <th>Exemplo</th>
+                    <th>Resultado</th>
+                </tr>
+                <tr>
+                    <td><strong>==</strong></td>
+                    <td>Igual a</td>
+                    <td>5 == 5</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td><strong>!=</strong></td>
+                    <td>Diferente de</td>
+                    <td>5 != 3</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td><strong>></strong></td>
+                    <td>Maior que</td>
+                    <td>7 > 5</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td><strong><</strong></td>
+                    <td>Menor que</td>
+                    <td>3 < 8</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td><strong>>=</strong></td>
+                    <td>Maior ou igual a</td>
+                    <td>5 >= 5</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td><strong><=</strong></td>
+                    <td>Menor ou igual a</td>
+                    <td>4 <= 6</td>
+                    <td>true</td>
+                </tr>
+            </table>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">public class OperadoresRelacionais {
+    public static void main(String[] args) {
+        int idade = 18;
+        int limiteIdade = 18;
+        
+        System.out.println("idade == limiteIdade: " + (idade == limiteIdade));  // true
+        System.out.println("idade != limiteIdade: " + (idade != limiteIdade));  // false
+        System.out.println("idade > limiteIdade: " + (idade > limiteIdade));    // false
+        System.out.println("idade < limiteIdade: " + (idade < limiteIdade));    // false
+        System.out.println("idade >= limiteIdade: " + (idade >= limiteIdade));  // true
+        System.out.println("idade <= limiteIdade: " + (idade <= limiteIdade));  // true
+        
+        // Uso prático em condicionais
+        if (idade >= limiteIdade) {
+            System.out.println("Pode votar!");
+        }
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>6. Operadores Lógicos</h2>
+
+            <p>Operadores lógicos são usados para combinar múltiplas condições:</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Operador</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Exemplo</th>
+                </tr>
+                <tr>
+                    <td><strong>&&</strong></td>
+                    <td>AND (E)</td>
+                    <td>Retorna true se ambas condições forem verdadeiras</td>
+                    <td>(x > 5) && (x < 10)</td>
+                </tr>
+                <tr>
+                    <td><strong>||</strong></td>
+                    <td>OR (OU)</td>
+                    <td>Retorna true se pelo menos uma condição for verdadeira</td>
+                    <td>(x < 5) || (x > 10)</td>
+                </tr>
+                <tr>
+                    <td><strong>!</strong></td>
+                    <td>NOT (NÃO)</td>
+                    <td>Inverte o valor booleano</td>
+                    <td>!(x == 5)</td>
+                </tr>
+            </table>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">public class OperadoresLogicos {
+    public static void main(String[] args) {
+        int idade = 25;
+        boolean temCarteira = true;
+        
+        // AND - ambas condições devem ser verdadeiras
+        if (idade >= 18 && temCarteira) {
+            System.out.println("Pode dirigir!");
+        }
+        
+        // OR - pelo menos uma condição deve ser verdadeira
+        boolean fimDeSemana = true;
+        boolean feriado = false;
+        
+        if (fimDeSemana || feriado) {
+            System.out.println("Não precisa trabalhar!");
+        }
+        
+        // NOT - inverte o valor
+        boolean chovendo = false;
+        
+        if (!chovendo) {
+            System.out.println("Pode sair sem guarda-chuva!");
+        }
+        
+        // Combinando operadores
+        int nota = 85;
+        int frequencia = 80;
+        
+        if (nota >= 70 && frequencia >= 75) {
+            System.out.println("Aprovado!");
+        }
+    }
+}</code></pre>
+            </div>
+
+            <div class="glass-box">
+                <h3>Tabela Verdade:</h3>
+                <p><strong>AND (&&):</strong></p>
+                <ul class="explanation-list">
+                    <li>true && true = true</li>
+                    <li>true && false = false</li>
+                    <li>false && true = false</li>
+                    <li>false && false = false</li>
+                </ul>
+                <p><strong>OR (||):</strong></p>
+                <ul class="explanation-list">
+                    <li>true || true = true</li>
+                    <li>true || false = true</li>
+                    <li>false || true = true</li>
+                    <li>false || false = false</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>7. A Classe Math</h2>
+
+            <p>A classe <code>Math</code> do Java fornece métodos para operações matemáticas avançadas:</p>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">public class ClasseMath {
+    public static void main(String[] args) {
+        // Constantes matemáticas
+        System.out.println("PI: " + Math.PI);      // 3.141592653589793
+        System.out.println("E: " + Math.E);        // 2.718281828459045
+        
+        // Potência e raiz
+        double potencia = Math.pow(2, 3);          // 2^3 = 8.0
+        double raiz = Math.sqrt(16);               // √16 = 4.0
+        double raizCubica = Math.cbrt(27);         // ∛27 = 3.0
+        
+        System.out.println("2^3 = " + potencia);
+        System.out.println("√16 = " + raiz);
+        System.out.println("∛27 = " + raizCubica);
+        
+        // Valor absoluto
+        int negativo = -15;
+        int absoluto = Math.abs(negativo);
+        System.out.println("Valor absoluto de -15: " + absoluto);  // 15
+        
+        // Arredondamento
+        double numero = 3.7;
+        long arredondado = Math.round(numero);      // 4
+        double arredondadoCima = Math.ceil(3.2);    // 4.0 (arredonda para cima)
+        double arredondadoBaixo = Math.floor(3.8);  // 3.0 (arredonda para baixo)
+        
+        System.out.println("Round de 3.7: " + arredondado);
+        System.out.println("Ceil de 3.2: " + arredondadoCima);
+        System.out.println("Floor de 3.8: " + arredondadoBaixo);
+        
+        // Máximo e Mínimo
+        int max = Math.max(10, 20);    // 20
+        int min = Math.min(10, 20);    // 10
+        
+        System.out.println("Máximo entre 10 e 20: " + max);
+        System.out.println("Mínimo entre 10 e 20: " + min);
+        
+        // Número aleatório (0.0 a 1.0)
+        double aleatorio = Math.random();
+        System.out.println("Número aleatório: " + aleatorio);
+        
+        // Número aleatório entre 1 e 100
+        int aleatorioInteiro = (int) (Math.random() * 100) + 1;
+        System.out.println("Número aleatório entre 1 e 100: " + aleatorioInteiro);
+    }
+}</code></pre>
+            </div>
+
+            <div class="glass-box">
+                <h3>Principais Métodos da Classe Math:</h3>
+                <ul class="explanation-list">
+                    <li><strong>Math.pow(base, expoente)</strong> - Potenciação</li>
+                    <li><strong>Math.sqrt(numero)</strong> - Raiz quadrada</li>
+                    <li><strong>Math.cbrt(numero)</strong> - Raiz cúbica</li>
+                    <li><strong>Math.abs(numero)</strong> - Valor absoluto</li>
+                    <li><strong>Math.round(numero)</strong> - Arredondamento</li>
+                    <li><strong>Math.ceil(numero)</strong> - Arredonda para cima</li>
+                    <li><strong>Math.floor(numero)</strong> - Arredonda para baixo</li>
+                    <li><strong>Math.max(a, b)</strong> - Retorna o maior valor</li>
+                    <li><strong>Math.min(a, b)</strong> - Retorna o menor valor</li>
+                    <li><strong>Math.random()</strong> - Número aleatório entre 0.0 e 1.0</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>8. Ordem de Precedência dos Operadores</h2>
+
+            <p>Quando múltiplos operadores aparecem em uma expressão, Java segue uma ordem específica de avaliação:</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Prioridade</th>
+                    <th>Operadores</th>
+                    <th>Descrição</th>
+                </tr>
+                <tr>
+                    <td>1 (Mais alta)</td>
+                    <td>( )</td>
+                    <td>Parênteses</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>++, --</td>
+                    <td>Incremento e Decremento</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>*, /, %</td>
+                    <td>Multiplicação, Divisão, Módulo</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>+, -</td>
+                    <td>Adição, Subtração</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td><, <=, >, >=</td>
+                    <td>Operadores Relacionais</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>==, !=</td>
+                    <td>Igualdade e Desigualdade</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>&&</td>
+                    <td>AND Lógico</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>||</td>
+                    <td>OR Lógico</td>
+                </tr>
+                <tr>
+                    <td>9 (Mais baixa)</td>
+                    <td>=, +=, -=, *=, /=, %=</td>
+                    <td>Atribuição</td>
+                </tr>
+            </table>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">public class Precedencia {
+    public static void main(String[] args) {
+        // Sem parênteses - segue ordem de precedência
+        int resultado1 = 10 + 5 * 2;
+        System.out.println("10 + 5 * 2 = " + resultado1);  // 20 (multiplicação primeiro)
+        
+        // Com parênteses - altera a precedência
+        int resultado2 = (10 + 5) * 2;
+        System.out.println("(10 + 5) * 2 = " + resultado2);  // 30 (soma primeiro)
+        
+        // Exemplo complexo
+        int resultado3 = 5 + 3 * 2 - 8 / 4;
+        // Passo 1: 3 * 2 = 6
+        // Passo 2: 8 / 4 = 2
+        // Passo 3: 5 + 6 = 11
+        // Passo 4: 11 - 2 = 9
+        System.out.println("5 + 3 * 2 - 8 / 4 = " + resultado3);  // 9
+        
+        // Use parênteses para clareza
+        int resultado4 = (5 + 3) * (2 - 8) / 4;
+        System.out.println("(5 + 3) * (2 - 8) / 4 = " + resultado4);  // -12
+    }
+}</code></pre>
+            </div>
+
+            <div class="solid-box">
+                <h3>Dica Importante:</h3>
+                <p>Use parênteses sempre que houver dúvida sobre a ordem de avaliação. Isso torna o código mais legível e evita erros.</p>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>9. Exemplos Práticos</h2>
+            
+            <p class="example-title">Exemplo 1: Calculadora de IMC</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">import java.util.Scanner;
+
+public class CalculadoraIMC {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Digite seu peso (kg): ");
+        double peso = sc.nextDouble();
+        
+        System.out.print("Digite sua altura (m): ");
+        double altura = sc.nextDouble();
+        
+        // Cálculo do IMC: peso / (altura²)
+        double imc = peso / Math.pow(altura, 2);
+        
+        // Arredonda para 2 casas decimais
+        imc = Math.round(imc * 100.0) / 100.0;
+        
+        System.out.println("Seu IMC é: " + imc);
+        
+        // Classificação
+        if (imc < 18.5) {
+            System.out.println("Classificação: Abaixo do peso");
+        } else if (imc < 25) {
+            System.out.println("Classificação: Peso normal");
+        } else if (imc < 30) {
+            System.out.println("Classificação: Sobrepeso");
+        } else {
+            System.out.println("Classificação: Obesidade");
+        }
+        
+        sc.close();
+    }
+}</code></pre>
+            </div>
+
+            <p class="example-title">Exemplo 2: Calculadora de Desconto</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">import java.util.Scanner;
+
+public class CalculadoraDesconto {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Digite o valor do produto: R$ ");
+        double valorOriginal = sc.nextDouble();
+        
+        System.out.print("Digite a porcentagem de desconto: ");
+        double percentualDesconto = sc.nextDouble();
+        
+        // Calcula o valor do desconto
+        double valorDesconto = valorOriginal * (percentualDesconto / 100);
+        
+        // Calcula o valor final
+        double valorFinal = valorOriginal - valorDesconto;
+        
+        System.out.println("\n=== RESUMO ===");
+        System.out.println("Valor original: R$ " + valorOriginal);
+        System.out.println("Desconto (" + percentualDesconto + "%): R$ " + valorDesconto);
+        System.out.println("Valor final: R$ " + valorFinal);
+        System.out.println("Você economizou: R$ " + valorDesconto);
+        
+        sc.close();
+    }
+}</code></pre>
+            </div>
+
+            <p class="example-title">Exemplo 3: Conversor de Temperatura</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">import java.util.Scanner;
+
+public class ConversorTemperatura {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("=== CONVERSOR DE TEMPERATURA ===");
+        System.out.println("1 - Celsius para Fahrenheit");
+        System.out.println("2 - Fahrenheit para Celsius");
+        System.out.print("Escolha uma opção: ");
+        
+        int opcao = sc.nextInt();
+        
+        if (opcao == 1) {
+            System.out.print("Digite a temperatura em Celsius: ");
+            double celsius = sc.nextDouble();
+            
+            // Fórmula: F = (C × 9/5) + 32
+            double fahrenheit = (celsius * 9.0 / 5.0) + 32;
+            
+            System.out.println(celsius + "°C = " + fahrenheit + "°F");
+            
+        } else if (opcao == 2) {
+            System.out.print("Digite a temperatura em Fahrenheit: ");
+            double fahrenheit = sc.nextDouble();
+            
+            // Fórmula: C = (F - 32) × 5/9
+            double celsius = (fahrenheit - 32) * 5.0 / 9.0;
+            
+            System.out.println(fahrenheit + "°F = " + celsius + "°C");
+            
+        } else {
+            System.out.println("Opção inválida!");
+        }
+        
+        sc.close();
+    }
+}</code></pre>
+            </div>
+
+            <p class="example-title">Exemplo 4: Jogo de Dados</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">import java.util.Scanner;
+
+public class JogoDados {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("=== JOGO DE DADOS ===");
+        System.out.print("Pressione ENTER para jogar os dados...");
+        sc.nextLine();
+        
+        // Gera números aleatórios de 1 a 6 para cada dado
+        int dado1 = (int) (Math.random() * 6) + 1;
+        int dado2 = (int) (Math.random() * 6) + 1;
+        
+        System.out.println("Dado 1: " + dado1);
+        System.out.println("Dado 2: " + dado2);
+        
+        int soma = dado1 + dado2;
+        System.out.println("Soma: " + soma);
+        
+        // Verifica resultados especiais
+        if (dado1 == dado2) {
+            System.out.println("DUPLA! Você tirou dois " + dado1 + "s!");
+        }
+        
+        if (soma == 7) {
+            System.out.println("SORTE! A soma deu 7!");
+        } else if (soma == 12) {
+            System.out.println("JACKPOT! Soma máxima!");
+        } else if (soma == 2) {
+            System.out.println("AZAR! Soma mínima!");
+        }
+        
+        sc.close();
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>10. Exercícios Práticos</h2>
+            
+            <div class="exercise-box">
+                <h4>Exercício 1: Média de Três Números</h4>
+                <p>Crie um programa que leia três números e calcule a média aritmética.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">import java.util.Scanner;
+
+public class MediaNumeros {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Digite o primeiro número: ");
+        double num1 = sc.nextDouble();
+        
+        System.out.print("Digite o segundo número: ");
+        double num2 = sc.nextDouble();
+        
+        System.out.print("Digite o terceiro número: ");
+        double num3 = sc.nextDouble();
+        
+        double media = (num1 + num2 + num3) / 3;
+        
+        System.out.println("A média é: " + media);
+        
+        sc.close();
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>Exercício 2: Par ou Ímpar</h4>
+                <p>Crie um programa que verifica se um número é par ou ímpar usando o operador módulo (%).</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">import java.util.Scanner;
+
+public class ParOuImpar {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Digite um número: ");
+        int numero = sc.nextInt();
+        
+        if (numero % 2 == 0) {
+            System.out.println(numero + " é PAR");
+        } else {
+            System.out.println(numero + " é ÍMPAR");
+        }
+        
+        sc.close();
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>Exercício 3: Área do Círculo</h4>
+                <p>Calcule a área de um círculo usando a fórmula: área = π × raio². Use Math.PI.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">import java.util.Scanner;
+
+public class AreaCirculo {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Digite o raio do círculo: ");
+        double raio = sc.nextDouble();
+        
+        double area = Math.PI * Math.pow(raio, 2);
+        
+        System.out.println("A área do círculo é: " + area);
+        
+        sc.close();
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>Exercício 4: Maior de Três Números</h4>
+                <p>Crie um programa que encontre o maior entre três números usando Math.max().</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">import java.util.Scanner;
+
+public class MaiorNumero {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Digite o primeiro número: ");
+        int num1 = sc.nextInt();
+        
+        System.out.print("Digite o segundo número: ");
+        int num2 = sc.nextInt();
+        
+        System.out.print("Digite o terceiro número: ");
+        int num3 = sc.nextInt();
+        
+        int maior = Math.max(num1, Math.max(num2, num3));
+        
+        System.out.println("O maior número é: " + maior);
+        
+        sc.close();
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>Exercício 5: Gerador de Senha Numérica</h4>
+                <p>Crie um programa que gere uma senha numérica aleatória de 4 dígitos usando Math.random().</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public class GeradorSenha {
+    public static void main(String[] args) {
+        System.out.println("Gerando senha numérica...");
+        
+        int senha = (int) (Math.random() * 10000);
+        
+        // Formata para sempre ter 4 dígitos
+        String senhaFormatada = String.format("%04d", senha);
+        
+        System.out.println("Sua senha: " + senhaFormatada);
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>11. Resumo Visual</h2>
+            
+            <div class="glass-box">
+                <h3>Operadores Aritméticos:</h3>
+                <p><strong>+ - * / %</strong></p>
+                <p>Lembre-se: divisão inteira descarta decimais!</p>
+            </div>
+
+            <div class="glass-box">
+                <h3>Operadores de Comparação:</h3>
+                <p><strong>== != > < >= <=</strong></p>
+                <p>Retornam true ou false</p>
+            </div>
+
+            <div class="glass-box">
+                <h3>Operadores Lógicos:</h3>
+                <p><strong>&& (E) || (OU) ! (NÃO)</strong></p>
+                <p>Combinam condições booleanas</p>
+            </div>
+
+            <div class="glass-box">
+                <h3>Classe Math - Principais Métodos:</h3>
+                <p><strong>pow(), sqrt(), abs(), round(), max(), min(), random()</strong></p>
+                <p>Funções matemáticas prontas para usar!</p>
+            </div>
+        </div>
+
+        <div class="conclusion-box">
+            <h2>Conclusão</h2>
+            <p>Dominar operações matemáticas em Java é essencial para resolver problemas do mundo real. Desde cálculos simples até operações complexas com a classe Math, você agora tem as ferramentas necessárias para criar programas poderosos.</p>
+            <p style="margin-top: 15px;"><strong>Continue praticando</strong> e logo você estará resolvendo problemas matemáticos complexos naturalmente!</p>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>
