@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git & GitHub em Java - Guia Completo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #FFF7E2;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #FFF7E2;
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            background: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #333333;
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin: 35px 0 15px 0;
+            color: #333333;
+            font-weight: 800;
+        }
+
+        h3 {
+            font-size: 1.2em;
+            margin: 20px 0 12px 0;
+            color: #333333;
+            font-weight: 700;
+        }
+
+        h4 {
+            font-size: 1.1em;
+            margin: 15px 0 10px 0;
+            color: #333333;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1em;
+            color: #333333;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        p {
+            line-height: 1.8;
+            margin: 12px 0;
+            color: #333333;
+            font-size: 1em;
+        }
+
+        .code-wrapper {
+            position: relative;
+            margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .code-header {
+            background: #2d2d2d;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .code-dot.red { background: #ff5f56; }
+        .code-dot.yellow { background: #ffbd2e; }
+        .code-dot.green { background: #27c93f; }
+
+        .code-lang {
+            color: #888;
+            font-size: 0.85em;
+            margin-left: auto;
+            font-family: 'Consolas', monospace;
+        }
+
+        pre {
+            margin: 0 !important;
+            border-radius: 0 !important;
+        }
+
+        pre code {
+            display: block;
+            padding: 25px !important;
+            background: #1e1e1e !important;
+            color: #d4d4d4;
+            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .glass-box {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(51, 51, 51, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-box h3 {
+            margin-top: 0;
+        }
+
+        .explanation-list {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .explanation-list li {
+            margin: 10px 0;
+            line-height: 1.7;
+            color: #333333;
+        }
+
+        .example-section {
+            margin: 30px 0;
+        }
+
+        .example-title {
+            font-weight: 700;
+            color: #333333;
+            margin: 25px 0 10px 0;
+            font-size: 1.15em;
+        }
+
+        .solid-box {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .solid-box h3,
+        .solid-box h4 {
+            color: #FFF7E2;
+            margin-top: 0;
+        }
+
+        .solid-box p,
+        .solid-box li {
+            color: #FFF7E2;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(51, 51, 51, 0.1);
+            color: #333333;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .exercise-box {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(51, 51, 51, 0.15);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.3s;
+        }
+
+        .exercise-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .exercise-box h4 {
+            margin-top: 0;
+        }
+
+        .highlight-text {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        strong {
+            font-weight: 700;
+            color: #333333;
+        }
+
+        .intro-text {
+            margin-bottom: 25px;
+        }
+
+        .syntax-header {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            margin: 25px 0 0 0;
+        }
+
+        .conclusion-box {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(51, 51, 51, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .divider {
+            height: 2px;
+            background: rgba(51, 51, 51, 0.1);
+            margin: 30px 0;
+        }
+
+        .markdown-content {
+            color: #333333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="nav">
+                <a href="../index.html" class="nav-btn">JAVA Learning</a>
+                <a href="../index.html#inicio" class="nav-btn">Início</a>
+                <a href="../index.html#conteudo" class="nav-btn">• Conteúdo</a>
+                <a href="../index.html#roadmap" class="nav-btn">Roadmap</a>
+            </div>
+            
+            <h1>Git & GitHub - Controle de Versão</h1>
+            <p class="subtitle">Domine o sistema de controle de versão mais usado no mundo e trabalhe com confiança em projetos profissionais</p>
+        </div>
+
+        <div class="section">
+            <h2>1. O Básico: Entendendo Git e GitHub</h2>
+            
+            <div class="intro-text">
+                <p>Se você está começando na programação profissional, vai ouvir muito falar em <strong>Git</strong> e <strong>GitHub</strong>. Mas não se preocupe - vamos desvendar esses conceitos de forma clara e prática.</p>
+                
+                <p>Imagine que você está escrevendo um livro e quer salvar diferentes versões enquanto escreve. Em vez de ter arquivos como "livro_v1", "livro_v2", "livro_FINAL", "livro_FINAL_v2" (isso sim é um pesadelo!), você teria um sistema que rastreia cada mudança. É exatamente isso que Git faz com código!</p>
+                
+                <p>Dominar Git e GitHub é uma habilidade essencial para qualquer desenvolvedor. Praticamente todas as empresas usam Git para gerenciar código, e GitHub é a plataforma mais popular para hospedar projetos.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. O que é Git?</h2>
+            
+            <h3>2.1. Definição</h3>
+            <p><strong>Git</strong> é um sistema de controle de versão distribuído. Isso significa que ele rastreia mudanças no código e permite que você trabalhe com histórico completo de alterações sem depender de um servidor central.</p>
+
+            <div class="glass-box">
+                <h3>Por que Git é importante?</h3>
+                <ul class="explanation-list">
+                    <li><strong>Histórico Completo:</strong> Veja cada mudança feita no projeto e por quem</li>
+                    <li><strong>Recuperação:</strong> Volte a qualquer versão anterior do código</li>
+                    <li><strong>Colaboração:</strong> Trabalhe com múltiplos desenvolvedores simultaneamente</li>
+                    <li><strong>Segurança:</strong> Cada desenvolvedor tem uma cópia completa do projeto</li>
+                    <li><strong>Branches:</strong> Trabalhe em features isoladas sem quebrar o código principal</li>
+                </ul>
+            </div>
+
+            <div class="syntax-header">Conceitos-chave do Git:</div>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code>Repository (Repositório)
+    └── Local: pasta do projeto no seu computador
+    └── Remoto: projeto no GitHub/servidor
+
+Commit (Confirmação)
+    └── Snapshot do código em um momento específico
+    └── Contém: código, autor, data, mensagem
+
+Branch (Ramificação)
+    └── Linha de desenvolvimento separada
+    └── main/master: branch principal
+    └── feature/*, bugfix/*: outras branches
+
+Working Directory
+    └── Seus arquivos no computador
+
+Staging Area
+    └── Arquivos preparados para commit
+
+Merge (Mesclagem)
+    └── Combinação de duas branches</code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. O que é GitHub?</h2>
+            
+            <p><strong>GitHub</strong> é uma plataforma web que hospeda repositórios Git. Enquanto Git é o sistema de controle de versão em si, GitHub é a nuvem onde você armazena seus projetos e colabora com outros desenvolvedores.</p>
+
+            <div class="glass-box">
+                <h3>GitHub oferece:</h3>
+                <ul class="explanation-list">
+                    <li><strong>Repositório Remoto:</strong> Backup seguro do seu código na nuvem</li>
+                    <li><strong>Colaboração:</strong> Convide outros para trabalhar no projeto</li>
+                    <li><strong>Pull Requests:</strong> Revise código antes de mergear</li>
+                    <li><strong>Issues:</strong> Rastreie bugs e tarefas</li>
+                    <li><strong>GitHub Pages:</strong> Hospede websites diretamente do GitHub</li>
+                    <li><strong>GitHub Actions:</strong> Automação de testes e deploy</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section example-section">
+            <h2>4. Instalação e Configuração</h2>
+            
+            <h3>4.1. Instalar Git</h3>
+            <p>Acesse <strong>git-scm.com</strong> e baixe a versão para seu sistema operacional.</p>
+
+            <p class="example-title">Verificar Instalação:</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code>git --version
+# Deve mostrar algo como: git version 2.40.0</code></pre>
+            </div>
+
+            <h3>4.2. Configurar Identidade</h3>
+            <p class="example-title">Comandos de Configuração:</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code>git config --global user.name "Seu Nome"
+git config --global user.email "seu.email@example.com"
+
+# Verificar configuração
+git config --list</code></pre>
+            </div>
+
+            <div class="glass-box">
+                <h3>Explicação:</h3>
+                <ul class="explanation-list">
+                    <li><strong>--global:</strong> Aplica para todos os repositórios do seu computador</li>
+                    <li><strong>user.name:</strong> Seu nome que aparecerá em cada commit</li>
+                    <li><strong>user.email:</strong> Email que será vinculado aos seus commits</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>5. Comandos Essenciais do Git</h2>
+            
+            <p class="example-title">5.1. Inicializar um Repositório</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code>cd /caminho/do/projeto
+git init
+
+# Resultado: Initialized empty Git repository in /caminho/do/projeto/.git/</code></pre>
+            </div>
+
+            <p class="example-title">5.2. Verificar Status</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code>git status
+
+# Mostra:
+# - Arquivos modificados (em vermelho)
+# - Arquivos no staging area (em verde)
+# - Branch atual</code></pre>
+            </div>
+
+            <p class="example-title">5.3. Adicionar Arquivos (Stage)</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code>git add Main.java          # Adiciona um arquivo específico
+git add .                   # Adiciona TODOS os arquivos modificados
+git add *.java             # Adiciona todos os arquivos .java</code></pre>
+            </div>
+
+            <div class="glass-box">
+                <h3>O que é o Staging Area?</h3>
+                <p>É uma "área de espera" onde você prepara arquivos antes de fazer um commit. Você pode adicionar alguns arquivos, remover outros, revisar mudanças, e só depois fazer o commit quando estiver satisfeito.</p>
+            </div>
+
+            <p class="example-title">5.4. Fazer Commit</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code>git commit -m "Adiciona função de login"
+
+# Mensagens boas seguem este padrão:
+# - Imperativo: "Adiciona" não "Adicionado" ou "Adicionar"
+# - Claro e descritivo
+# - Explica O QUÊ, não apenas HOW</code></pre>
+            </div>
+
+            <p class="example-title">5.5. Ver Histórico</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code>git log                    # Mostra histórico completo
+
+git log --oneline          # Resumido (uma linha por commit)
+
+git log -n 5              # Últimos 5 commits
+
+git log --author="Nome"   # Commits de um autor específico</code></pre>
+            </div>
+
+            <p class="example-title">5.6. Trabalhar com Branches</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code>git branch                           # Lista todas as branches
+
+git branch feature/login            # Cria nova branch
+
+git checkout feature/login          # Muda para a branch
+
+git checkout -b feature/login       # Cria E muda de uma vez
+
+git branch -d feature/login         # Deleta a branch</code></pre>
+            </div>
+
+            <p class="example-title">5.7. Fazer Merge</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code>git checkout main                    # Volta para branch principal
+
+git merge feature/login             # Mescla a feature na main
+
+# Se houver conflitos, resolva manualmente e depois:
+git add .
+git commit -m "Resolve conflitos e faz merge de feature/login"</code></pre>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>6. Trabalhando com GitHub</h2>
+            
+            <p class="example-title">6.1. Conectar a um Repositório Remoto</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code>git remote add origin https://github.com/seu-usuario/seu-repo.git
+
+git remote -v               # Verifica remotos adicionados</code></pre>
+            </div>
+
+            <p class="example-title">6.2. Enviar Código (Push)</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code>git push -u origin main         # Primeira vez (cria branch remota)
+
+git push                        # Próximas vezes (mais simples)</code></pre>
+            </div>
+
+            <p class="example-title">6.3. Clonar um Repositório</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code>git clone https://github.com/usuario/repositorio.git
+
+# Cria uma pasta com o projeto e um Git completo</code></pre>
+            </div>
+
+            <p class="example-title">6.4. Atualizar seu Código Local (Pull)</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code>git pull                    # Atualiza seu código local com mudanças do servidor</code></pre>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>7. Workflow Prático (Passo a Passo)</h2>
+            
+            <div class="glass-box">
+                <h3>Cenário: Você é contratado para adicionar feature de login</h3>
+                <p style="margin: 15px 0;"><strong>Passo 1:</strong> Clonar o projeto do GitHub</p>
+                <pre style="background: #1e1e1e; padding: 15px; border-radius: 8px; margin: 10px 0;"><code>git clone https://github.com/empresa/projeto.git
+cd projeto</code></pre>
+
+                <p style="margin: 15px 0;"><strong>Passo 2:</strong> Criar uma branch para sua feature</p>
+                <pre style="background: #1e1e1e; padding: 15px; border-radius: 8px; margin: 10px 0;"><code>git checkout -b feature/login</code></pre>
+
+                <p style="margin: 15px 0;"><strong>Passo 3:</strong> Fazer suas modificações e commits</p>
+                <pre style="background: #1e1e1e; padding: 15px; border-radius: 8px; margin: 10px 0;"><code>git add .
+git commit -m "Cria tela de login"
+git add .
+git commit -m "Adiciona validação de senha"</code></pre>
+
+                <p style="margin: 15px 0;"><strong>Passo 4:</strong> Enviar para GitHub</p>
+                <pre style="background: #1e1e1e; padding: 15px; border-radius: 8px; margin: 10px 0;"><code>git push -u origin feature/login</code></pre>
+
+                <p style="margin: 15px 0;"><strong>Passo 5:</strong> Criar Pull Request no GitHub (pela interface web)</p>
+                <p>GitHub automaticamente detectará sua branch e oferecerá a opção de criar PR</p>
+
+                <p style="margin: 15px 0;"><strong>Passo 6:</strong> Outros reviram e aprovam</p>
+                <p>Depois de aprovado, faz-se merge para a main</p>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>8. Comparação: Git vs GitHub</h2>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Aspecto</th>
+                    <th>Git</th>
+                    <th>GitHub</th>
+                </tr>
+                <tr>
+                    <td><strong>O que é?</strong></td>
+                    <td>Software de controle de versão</td>
+                    <td>Plataforma web para hospedar Git</td>
+                </tr>
+                <tr>
+                    <td><strong>Instalação</strong></td>
+                    <td>Instala no computador</td>
+                    <td>Acessa pelo navegador</td>
+                </tr>
+                <tr>
+                    <td><strong>Uso Local</strong></td>
+                    <td>Funciona offline</td>
+                    <td>Requer internet</td>
+                </tr>
+                <tr>
+                    <td><strong>Principais funções</strong></td>
+                    <td>Rastrear mudanças, branches, merges</td>
+                    <td>Armazenar, colaborar, reviews, issues</td>
+                </tr>
+                <tr>
+                    <td><strong>Competidores</strong></td>
+                    <td>Mercurial, SVN</td>
+                    <td>GitLab, Bitbucket, Gitea</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>9. Erros Comuns e Soluções</h2>
+            
+            <div class="solid-box">
+                <h3>❌ Erro 1: "fatal: not a git repository"</h3>
+                <div class="code-wrapper" style="margin: 15px 0;">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">bash</span>
+                    </div>
+                    <pre><code>git commit -m "Alguma coisa"
+# Erro: fatal: not a git repository</code></pre>
+                </div>
+                <p><strong>Solução:</strong> Você esqueceu de fazer <span class="highlight-text">git init</span> primeiro!</p>
+            </div>
+
+            <div class="solid-box">
+                <h3>❌ Erro 2: Merge Conflicts</h3>
+                <div class="code-wrapper" style="margin: 15px 0;">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">bash</span>
+                    </div>
+                    <pre><code>git merge feature/login
+# Erro: CONFLICT (content merge conflict)</code></pre>
+                </div>
+                <p><strong>Solução:</strong> Abra os arquivos em conflito, escolha qual versão manter, e faça commit!</p>
+            </div>
+
+            <div class="glass-box">
+                <h3>✅ Boas Práticas:</h3>
+                <ul class="explanation-list">
+                    <li>Sempre faça <span class="highlight-text">git pull</span> antes de começar a trabalhar</li>
+                    <li>Commits pequenos e frequentes (não um gigante no final)</li>
+                    <li>Mensagens de commit claras e em português ou inglês consistente</li>
+                    <li>Nunca trabalhe diretamente na main, use branches</li>
+                    <li>Revise código antes de mergear (code review)</li>
+                    <li>Use <span class="highlight-text">.gitignore</span> para ignorar arquivos desnecessários</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>10. Exercícios Práticos</h2>
+            
+            <div class="exercise-box">
+                <h4>📝 Exercício 1: Setup Inicial</h4>
+                <p>Crie um novo repositório local, configure seu nome/email, crie um arquivo Main.java com um "Hello World" e faça o primeiro commit.</p>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 2: Branches e Merge</h4>
+                <p>Crie uma branch chamada "feature/calcular", modifique um arquivo, faça commit, volta para main e faz merge.</p>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 3: GitHub</h4>
+                <p>Crie uma conta no GitHub, crie um novo repositório público e faça push do seu projeto local.</p>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 4: Clone e Colaboração</h4>
+                <p>Clone um repositório público do GitHub, faça uma modificação local e tente fazer push (você não conseguirá - isso é proposital! Fork depois e tente novamente).</p>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 5: Histórico</h4>
+                <p>Faça pelo menos 5 commits com mensagens diferentes. Use git log para visualizar o histórico completo e git log --oneline para ver resumido.</p>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="conclusion-box">
+            <h2>🎯 Conclusão</h2>
+            <p>Parabéns! Você agora tem os fundamentos de Git e GitHub. Esses conhecimentos serão essenciais em sua carreira como desenvolvedor. A prática leva à perfeição - quanto mais você usar Git, mais natural ficará.</p>
+            <p style="margin-top: 15px;"><strong>Próximos passos:</strong> Comece a usar Git em seus projetos pessoais, contribua em projetos open source no GitHub, e explore recursos avançados como rebase, cherry-pick e stash.</p>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>

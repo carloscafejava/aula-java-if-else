@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POO em Java - Guia Completo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #FFF7E2;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #FFF7E2;
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #333333;
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin: 35px 0 15px 0;
+            color: #333333;
+            font-weight: 800;
+        }
+
+        h3 {
+            font-size: 1.2em;
+            margin: 20px 0 12px 0;
+            color: #333333;
+            font-weight: 700;
+        }
+
+        h4 {
+            font-size: 1.1em;
+            margin: 15px 0 10px 0;
+            color: #333333;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1em;
+            color: #333333;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        p {
+            line-height: 1.8;
+            margin: 12px 0;
+            color: #333333;
+            font-size: 1em;
+        }
+
+        .code-wrapper {
+            position: relative;
+            margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .code-header {
+            background: #2d2d2d;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .code-dot.red { background: #ff5f56; }
+        .code-dot.yellow { background: #ffbd2e; }
+        .code-dot.green { background: #27c93f; }
+
+        .code-lang {
+            color: #888;
+            font-size: 0.85em;
+            margin-left: auto;
+            font-family: 'Consolas', monospace;
+        }
+
+        pre {
+            margin: 0 !important;
+            border-radius: 0 !important;
+        }
+
+        pre code {
+            display: block;
+            padding: 25px !important;
+            background: #1e1e1e !important;
+            color: #d4d4d4;
+            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .glass-box {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(51, 51, 51, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-box h3 {
+            margin-top: 0;
+        }
+
+        .explanation-list {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .explanation-list li {
+            margin: 10px 0;
+            line-height: 1.7;
+            color: #333333;
+        }
+
+        .solid-box {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .solid-box h3 {
+            color: #FFF7E2;
+            margin-top: 0;
+        }
+
+        .solid-box p,
+        .solid-box li {
+            color: #FFF7E2;
+        }
+
+        .solid-box ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(51, 51, 51, 0.1);
+            color: #333333;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .exercise-box {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(51, 51, 51, 0.15);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.3s;
+        }
+
+        .exercise-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .exercise-box h4 {
+            margin-top: 0;
+        }
+
+        details {
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        summary {
+            font-weight: 700;
+            color: #333333;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            list-style: none;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::before {
+            content: "▶ ";
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        details[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        .solution {
+            margin-top: 10px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+        }
+
+        .highlight-text {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        .divider {
+            height: 2px;
+            background: rgba(51, 51, 51, 0.1);
+            margin: 30px 0;
+        }
+
+        .intro-text {
+            margin-bottom: 25px;
+        }
+
+        .syntax-header {
+            background: #333333;
+            color: #FFF7E2;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            margin: 25px 0 0 0;
+        }
+
+        .example-title {
+            font-weight: 700;
+            color: #333333;
+            margin: 25px 0 10px 0;
+            font-size: 1.15em;
+        }
+
+        .example-section {
+            margin: 30px 0;
+        }
+
+        .conclusion-box {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(51, 51, 51, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        code {
+            background: rgba(51, 51, 51, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        strong {
+            font-weight: 700;
+            color: #333333;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="nav">
+                <a href="../index.html" class="nav-btn">JAVA Learning</a>
+                <a href="../index.html#inicio" class="nav-btn">Início</a>
+                <a href="../index.html#conteudo" class="nav-btn">• Conteúdo</a>
+                <a href="../index.html#roadmap" class="nav-btn">Roadmap</a>
+            </div>
+            
+            <h1>Programação Orientada a Objetos em Java</h1>
+            <p class="subtitle">Guia completo para dominar POO: Classes, Objetos, Encapsulamento, Herança e Polimorfismo</p>
+        </div>
+
+        <div class="section">
+            <h2>1. O Básico: Entendendo POO</h2>
+            
+            <div class="intro-text">
+                <p>Java é uma linguagem orientada a objetos e não é possível desenvolver nenhum software sem seguir o paradigma da orientação a objetos. Um sistema orientado a objetos é um conjunto de classes e objetos que interagem entre si, de modo a gerar um resultado esperado.</p>
+                
+                <p>Pense em um bolo de chocolate. A receita possui características que determinam a receita como os ingredientes. Imaginemos a receita como sendo a <strong>Classe</strong>, e o bolo pronto como sendo o <strong>objeto</strong>. Os ingredientes são os <strong>atributos</strong> da Classe Receita. O modo de preparo do bolo é o <strong>método</strong> que vamos utilizar para elaborar o bolo.</p>
+                
+                <p>O bolo pronto é único, pois se você fizer este mesmo bolo seguindo a mesma receita, provavelmente o seu bolo será diferente do meu. Estas características do bolo pertencem somente ao meu ou ao seu bolo, assim são atributos do objeto, também denominado de atributos de instância.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. Classes e Objetos: Os Fundamentos</h2>
+            
+            <h3>2.1. O que é uma Classe?</h3>
+            <p>Uma classe é como uma receita ou um modelo que define as características (atributos) e comportamentos (métodos) de um objeto. Podemos criar uma classe PESSOA que possui atributos e métodos:</p>
+
+            <div class="syntax-header">Estrutura Conceitual de uma Classe:</div>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">PESSOA
+    cor_de_olho
+    cor_de_cabelo
+    idade
+    
+    pinta_cor_cabelo()
+    faz_aniversario()</code></pre>
+            </div>
+
+            <h3>2.2. Criando Objetos (Instanciando)</h3>
+            <p>Ao instanciar uma classe PESSOA, obtemos o que chamamos de objeto:</p>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">daniela = new PESSOA();
+bosco = new PESSOA();
+
+// Cada objeto tem suas características particulares
+daniela.cor_de_olho = "verde";
+daniela.cor_de_cabelo = "castanho escuro";
+daniela.idade = 27;
+
+bosco.cor_de_olho = "castanho";</code></pre>
+            </div>
+
+            <div class="glass-box">
+                <h3>Explicação:</h3>
+                <ul class="explanation-list">
+                    <li><strong>new PESSOA()</strong> → Cria uma nova instância (objeto) da classe PESSOA</li>
+                    <li><strong>daniela e bosco</strong> → São variáveis que referenciam objetos diferentes da mesma classe</li>
+                    <li><strong>Operador ponto (.)</strong> → Usado para acessar atributos e métodos do objeto</li>
+                    <li><strong>Atributos</strong> → Cada objeto possui seus próprios valores</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>7. Modificadores de Acesso</h2>
+
+            <p>Java fornece modificadores de acesso para controlar a visibilidade de atributos e métodos:</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Modificador</th>
+                    <th>Descrição</th>
+                    <th>Visibilidade</th>
+                </tr>
+                <tr>
+                    <td><strong>private</strong></td>
+                    <td>Mais restritivo</td>
+                    <td>Acessível apenas dentro da própria classe</td>
+                </tr>
+                <tr>
+                    <td><strong>protected</strong></td>
+                    <td>Intermediário</td>
+                    <td>Acessível na própria classe e nas subclasses</td>
+                </tr>
+                <tr>
+                    <td><strong>package (default)</strong></td>
+                    <td>Sem modificador</td>
+                    <td>Acessível apenas no mesmo pacote</td>
+                </tr>
+                <tr>
+                    <td><strong>public</strong></td>
+                    <td>Menos restritivo</td>
+                    <td>Acessível de qualquer lugar</td>
+                </tr>
+            </table>
+
+            <div class="glass-box">
+                <h3>Sobre Protected:</h3>
+                <p>Protected deixa os atributos da classe pai visíveis, acessíveis "hierarquia abaixo". Mas para o restante do programa tem o mesmo efeito que private.</p>
+                <p><strong>Importante:</strong> "A herança permite que uma subclasse ganhe acesso a declarações protected de sua superclasse, mas o usuário não percebe isso, para o usuário (uma classe externa) o que continua existindo é o que é public".</p>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>8. Exercícios Práticos</h2>
+            
+            <div class="exercise-box">
+                <h4>📝 Exercício 1: Criar uma Classe Pessoa</h4>
+                <p>Crie uma classe <code>Pessoa</code> com atributos privados: nome (String), idade (int), e cpf (String). Adicione um construtor que recebe todos os parâmetros e crie getters e setters apropriados.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public class Pessoa {
+    private String nome;
+    private int idade;
+    private String cpf;
+    
+    // Construtor
+    public Pessoa(String nome, int idade, String cpf) {
+        this.nome = nome;
+        this.idade = idade;
+        this.cpf = cpf;
+    }
+    
+    // Getters e Setters
+    public String getNome() {
+        return this.nome;
+    }
+    
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
+    public int getIdade() {
+        return this.idade;
+    }
+    
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+    
+    public String getCpf() {
+        return this.cpf;
+    }
+    
+    // CPF não deve ter setter, pois não muda
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 2: Classe Carro com Métodos</h4>
+                <p>Crie uma classe <code>Carro</code> com atributos: marca, modelo, ano e velocidadeAtual. Adicione métodos para acelerar (aumenta velocidade em 10), frear (diminui velocidade em 10, não pode ser negativa) e mostrar status.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public class Carro {
+    private String marca;
+    private String modelo;
+    private int ano;
+    private int velocidadeAtual;
+    
+    public Carro(String marca, String modelo, int ano) {
+        this.marca = marca;
+        this.modelo = modelo;
+        this.ano = ano;
+        this.velocidadeAtual = 0;
+    }
+    
+    public void acelerar() {
+        this.velocidadeAtual += 10;
+        System.out.println("Acelerando! Velocidade: " + this.velocidadeAtual + " km/h");
+    }
+    
+    public void frear() {
+        if (this.velocidadeAtual >= 10) {
+            this.velocidadeAtual -= 10;
+        } else {
+            this.velocidadeAtual = 0;
+        }
+        System.out.println("Freando! Velocidade: " + this.velocidadeAtual + " km/h");
+    }
+    
+    public void mostrarStatus() {
+        System.out.println("Carro: " + this.marca + " " + this.modelo);
+        System.out.println("Ano: " + this.ano);
+        System.out.println("Velocidade Atual: " + this.velocidadeAtual + " km/h");
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 3: Herança - Animais</h4>
+                <p>Crie uma classe <code>Animal</code> com atributos nome e idade. Depois crie duas subclasses: <code>Cachorro</code> e <code>Gato</code>. Cada uma deve ter um método <code>emitirSom()</code> que imprime o som característico do animal.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public class Animal {
+    protected String nome;
+    protected int idade;
+    
+    public Animal(String nome, int idade) {
+        this.nome = nome;
+        this.idade = idade;
+    }
+    
+    public void emitirSom() {
+        System.out.println("O animal faz algum som...");
+    }
+}
+
+public class Cachorro extends Animal {
+    
+    public Cachorro(String nome, int idade) {
+        super(nome, idade);
+    }
+    
+    @Override
+    public void emitirSom() {
+        System.out.println(this.nome + " faz: Au au!");
+    }
+}
+
+public class Gato extends Animal {
+    
+    public Gato(String nome, int idade) {
+        super(nome, idade);
+    }
+    
+    @Override
+    public void emitirSom() {
+        System.out.println(this.nome + " faz: Miau!");
+    }
+}
+
+// Testando
+public class TesteAnimais {
+    public static void main(String[] args) {
+        Cachorro rex = new Cachorro("Rex", 5);
+        Gato mimi = new Gato("Mimi", 3);
+        
+        rex.emitirSom();  // Rex faz: Au au!
+        mimi.emitirSom(); // Mimi faz: Miau!
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 4: Conta Bancária Completa</h4>
+                <p>Crie uma classe <code>ContaBancaria</code> com saldo privado, métodos depositar, sacar (com validação) e consultarSaldo. Adicione um construtor que inicialize com saldo zero.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public class ContaBancaria {
+    private String titular;
+    private double saldo;
+    
+    public ContaBancaria(String titular) {
+        this.titular = titular;
+        this.saldo = 0.0;
+    }
+    
+    public void depositar(double valor) {
+        if (valor > 0) {
+            this.saldo += valor;
+            System.out.println("Depósito de R$ " + valor + " realizado com sucesso!");
+        } else {
+            System.out.println("Valor inválido para depósito!");
+        }
+    }
+    
+    public void sacar(double valor) {
+        if (valor > 0 && valor <= this.saldo) {
+            this.saldo -= valor;
+            System.out.println("Saque de R$ " + valor + " realizado com sucesso!");
+        } else if (valor > this.saldo) {
+            System.out.println("Saldo insuficiente!");
+        } else {
+            System.out.println("Valor inválido para saque!");
+        }
+    }
+    
+    public void consultarSaldo() {
+        System.out.println("Titular: " + this.titular);
+        System.out.println("Saldo atual: R$ " + this.saldo);
+    }
+    
+    public double getSaldo() {
+        return this.saldo;
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 5: Polimorfismo - Formas Geométricas</h4>
+                <p>Crie uma classe <code>Forma</code> com um método <code>calcularArea()</code>. Crie subclasses <code>Circulo</code> (com raio) e <code>Retangulo</code> (com largura e altura) que sobrescrevem o método calcularArea.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public class Forma {
+    public double calcularArea() {
+        return 0.0;
+    }
+}
+
+public class Circulo extends Forma {
+    private double raio;
+    
+    public Circulo(double raio) {
+        this.raio = raio;
+    }
+    
+    @Override
+    public double calcularArea() {
+        return Math.PI * Math.pow(this.raio, 2);
+    }
+}
+
+public class Retangulo extends Forma {
+    private double largura;
+    private double altura;
+    
+    public Retangulo(double largura, double altura) {
+        this.largura = largura;
+        this.altura = altura;
+    }
+    
+    @Override
+    public double calcularArea() {
+        return this.largura * this.altura;
+    }
+}
+
+// Testando Polimorfismo
+public class TesteFormas {
+    public static void main(String[] args) {
+        Forma[] formas = new Forma[2];
+        formas[0] = new Circulo(5);
+        formas[1] = new Retangulo(4, 6);
+        
+        for (Forma f : formas) {
+            System.out.println("Área: " + f.calcularArea());
+        }
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>9. Resumo dos Conceitos de POO</h2>
+            
+            <div class="glass-box">
+                <h3>🎓 Pilares da Programação Orientada a Objetos:</h3>
+                <ul class="explanation-list">
+                    <li><strong>Encapsulamento:</strong> Ocultar informações e proteger dados usando modificadores de acesso (private, protected, public)</li>
+                    <li><strong>Herança:</strong> Reutilizar código através da palavra-chave extends, criando hierarquias de classes</li>
+                    <li><strong>Polimorfismo:</strong> Objetos de diferentes classes podem responder ao mesmo método de formas diferentes</li>
+                    <li><strong>Abstração:</strong> Focar nas características essenciais, escondendo detalhes de implementação</li>
+                </ul>
+            </div>
+
+            <div class="glass-box">
+                <h3>🔑 Conceitos Importantes:</h3>
+                <ul class="explanation-list">
+                    <li><strong>Classe:</strong> Modelo ou receita que define atributos e métodos</li>
+                    <li><strong>Objeto:</strong> Instância de uma classe criada com <code>new</code></li>
+                    <li><strong>Atributos:</strong> Características/variáveis que definem o estado do objeto</li>
+                    <li><strong>Métodos:</strong> Comportamentos/ações que o objeto pode executar</li>
+                    <li><strong>Construtor:</strong> Método especial chamado ao criar um objeto</li>
+                    <li><strong>this:</strong> Referência ao objeto atual</li>
+                    <li><strong>super:</strong> Referência à classe pai</li>
+                    <li><strong>static:</strong> Pertence à classe, não aos objetos individuais</li>
+                </ul>
+            </div>
+
+            <div class="glass-box">
+                <h3>💡 Boas Práticas:</h3>
+                <ul class="explanation-list">
+                    <li>Sempre use <code>private</code> para atributos e forneça métodos públicos (getters/setters) quando necessário</li>
+                    <li>Não crie getters e setters desnecessários - só crie quando realmente precisar</li>
+                    <li>Use construtores para garantir que objetos sejam criados em estado válido</li>
+                    <li>Prefira composição sobre herança quando apropriado</li>
+                    <li>Mantenha alta coesão (responsabilidade única) e baixo acoplamento entre classes</li>
+                    <li>Use nomes descritivos para classes (substantivos), métodos (verbos) e atributos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>10. Comparação: POO vs Programação Procedimental</h2>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Aspecto</th>
+                    <th>POO</th>
+                    <th>Procedimental</th>
+                </tr>
+                <tr>
+                    <td><strong>Organização</strong></td>
+                    <td>Baseada em objetos e classes</td>
+                    <td>Baseada em funções e procedimentos</td>
+                </tr>
+                <tr>
+                    <td><strong>Dados</strong></td>
+                    <td>Encapsulados dentro de objetos</td>
+                    <td>Variáveis globais acessíveis por todos</td>
+                </tr>
+                <tr>
+                    <td><strong>Reutilização</strong></td>
+                    <td>Alta (herança e polimorfismo)</td>
+                    <td>Baixa (cópia de código)</td>
+                </tr>
+                <tr>
+                    <td><strong>Manutenção</strong></td>
+                    <td>Mais fácil (mudanças localizadas)</td>
+                    <td>Mais difícil (efeitos colaterais)</td>
+                </tr>
+                <tr>
+                    <td><strong>Exemplo</strong></td>
+                    <td>Java, C++, Python</td>
+                    <td>C, Pascal</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="conclusion-box">
+            <h2>🎯 Conclusão</h2>
+            <p>Parabéns por chegar até aqui! A Programação Orientada a Objetos é um dos conceitos mais importantes em Java. Através de <strong>classes</strong>, <strong>objetos</strong>, <strong>encapsulamento</strong>, <strong>herança</strong> e <strong>polimorfismo</strong>, você pode criar sistemas organizados, reutilizáveis e fáceis de manter.</p>
+            <p style="margin-top: 15px;"><strong>Continue praticando!</strong> A POO é um conceito que se aprende fazendo. Comece criando classes simples e vá aumentando a complexidade gradualmente.</p>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>
+
+        <div class="section">
+            <h2>3. Vantagens da Orientação a Objetos em Java</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Vantagem</th>
+                    <th>Descrição</th>
+                </tr>
+                <tr>
+                    <td><strong>Ocultação de Dados</strong></td>
+                    <td>Atribuindo restrições de acesso (private, public, protected), é inserido controle sobre quem pode manipular métodos e atributos</td>
+                </tr>
+                <tr>
+                    <td><strong>Encapsulamento</strong></td>
+                    <td>Se um método fora da classe quiser alterar um atributo, deve fazer isso chamando métodos GET e SET definidos na classe</td>
+                </tr>
+                <tr>
+                    <td><strong>Facilidade de Manutenção</strong></td>
+                    <td>A ocultação de dados torna o código mais simples ao entendimento. O encapsulamento facilita a distinção entre dados e ações</td>
+                </tr>
+                <tr>
+                    <td><strong>Reutilização de Código</strong></td>
+                    <td>Classes podem ser reutilizadas e estendidas, economizando tempo e esforço no desenvolvimento</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section example-section">
+            <h2>4. Exemplos Práticos</h2>
+            
+            <p class="example-title">Exemplo 1: Classe Conta Simples</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">class Conta {
+    private double saldo;
+    // ...
+}</code></pre>
+            </div>
+
+            <p>Com o atributo <code>saldo</code> marcado como <code>private</code>, o seguinte código NÃO compilará:</p>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">class TestaAcessoDireto {
+    public static void main(String[] args) {
+        Conta minhaConta = new Conta();
+        // Não compila! Você não pode acessar o atributo privado
+        minhaConta.saldo = 1000;
+    }
+}</code></pre>
+            </div>
+
+            <p class="example-title">Exemplo 2: Classe com Métodos Públicos</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">class Conta {
+    private double saldo;
+    private double limite;
+
+    public void saca(double quantidade) {
+        if (quantidade > this.saldo + this.limite) {
+            System.out.println("Não posso sacar fora do limite!");
+        } else {
+            this.saldo = this.saldo - quantidade;
+        }
+    }
+}</code></pre>
+            </div>
+
+            <p class="example-title">Exemplo 3: Getters e Setters</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">class Conta {
+    private String titular;
+    private double saldo;
+
+    public double getSaldo() {
+        return this.saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+    public String getTitular() {
+        return this.titular;
+    }
+
+    public void setTitular(String titular) {
+        this.titular = titular;
+    }
+}</code></pre>
+            </div>
+
+            <div class="solid-box">
+                <h3>⚠️ Importante sobre Getters e Setters:</h3>
+                <p>É uma má prática criar uma classe e, logo em seguida, fazer getters e setters para todos seus atributos. Você só deve criar um getter ou setter se tiver a real necessidade.</p>
+                <p>Repare que <code>setSaldo</code> não deveria ter sido criado, pois queremos que todos usem <code>deposita()</code> e <code>saca()</code>.</p>
+            </div>
+
+            <p class="example-title">Exemplo 4: Construtor</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">class Conta {
+    int numero;
+    String titular;
+    double saldo;
+    double limite;
+
+    // Construtor
+    Conta() {
+        System.out.println("Construindo uma conta.");
+    }
+}</code></pre>
+            </div>
+
+            <p>Quando fizermos <code>Conta c = new Conta();</code>, a mensagem "Construindo uma conta" aparecerá.</p>
+
+            <p class="example-title">Exemplo 5: Construtores com Parâmetros</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">class Conta {
+    String titular;
+    int numero;
+    double saldo;
+
+    // Construtor
+    Conta(String titular) {
+        this.titular = titular;
+    }
+
+    Conta(int numero, String titular) {
+        this(titular); // chama o construtor acima
+        this.numero = numero;
+    }
+}</code></pre>
+            </div>
+
+            <p class="example-title">Exemplo 6: Atributos Estáticos</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">class Conta {
+    private static int totalDeContas;
+    
+    Conta() {
+        Conta.totalDeContas = Conta.totalDeContas + 1;
+    }
+
+    public static int getTotalDeContas() {
+        return Conta.totalDeContas;
+    }
+}
+
+// Para acessar:
+int total = Conta.getTotalDeContas();</code></pre>
+            </div>
+
+            <div class="glass-box">
+                <h3>Entendendo Static:</h3>
+                <ul class="explanation-list">
+                    <li>Quando declaramos um atributo como <code>static</code>, ele passa a ser um atributo da <strong>classe</strong>, não de cada objeto</li>
+                    <li>A informação fica guardada pela classe, não é individual para cada objeto</li>
+                    <li>Para acessar, usamos o nome da classe ao invés de <code>this</code></li>
+                    <li>Métodos estáticos podem acessar apenas outros métodos e atributos estáticos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>5. Herança em Java</h2>
+
+            <p>A herança é um mecanismo que define variáveis e métodos comuns a todos os objetos de um certo tipo. A partir de uma determinada classe, pode-se ter subclasses e superclasses.</p>
+
+            <h3>5.1. Exemplo: Hierarquia de Funcionários</h3>
+            
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">class EmpregadoDaFaculdade {
+    private String nome;
+    private double salario;
+
+    double getGastos() {
+        return this.salario;
+    }
+
+    String getInfo() {
+        return "nome: " + this.nome + " com salário " + this.salario;
+    }
+}</code></pre>
+            </div>
+
+            <h3>5.2. Criando uma Subclasse</h3>
+            
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">class ProfessorDaFaculdade extends EmpregadoDaFaculdade {
+    private int horasDeAula;
+
+    double getGastos() {
+        return this.getSalario() + this.horasDeAula * 10;
+    }
+
+    String getInfo() {
+        String informacaoBasica = super.getInfo();
+        String informacao = informacaoBasica + " horas de aula: " +
+                            this.horasDeAula;
+        return informacao;
+    }
+}</code></pre>
+            </div>
+
+            <div class="glass-box">
+                <h3>Explicação da Herança:</h3>
+                <ul class="explanation-list">
+                    <li><strong>extends</strong> → Indica que ProfessorDaFaculdade herda de EmpregadoDaFaculdade</li>
+                    <li><strong>Reescrita de métodos</strong> → A classe filha pode sobrescrever métodos da classe mãe</li>
+                    <li><strong>super.getInfo()</strong> → Chama o método da classe mãe para reaproveitar código</li>
+                    <li><strong>Novos atributos</strong> → A classe filha pode ter seus próprios atributos (horasDeAula)</li>
+                </ul>
+            </div>
+
+            <h3>5.3. Exemplo com Hierarquia de Pontos</h3>
+            
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">//Classe Ponto
+class Ponto {
+    protected float x, y;
+
+    public Ponto(float ax, float ay) {
+        this.x = ax;
+        this.y = ay;
+    }
+
+    public void mostra() {
+        System.out.println("(" + this.x + "," + this.y + ")");
+    }
+}
+
+//Classe PtoMove
+class PtoMove extends Ponto {
+    
+    public PtoMove(float a, float b) {
+        super(a, b); // chamada do construtor da classe pai
+    }
+
+    public void move(float dx, float dy) {
+        this.x += dx;
+        this.y += dy;
+    }
+}
+
+//Classe PtoReflete
+class PtoReflete extends Ponto {
+    
+    public PtoReflete(float a, float b) {
+        super(a, b);
+    }
+
+    void reflete() {
+        this.x = -this.x;
+        this.y = -this.y;
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>6. Polimorfismo</h2>
+
+            <p>Polimorfismo é quando duas ou mais classes derivadas de uma mesma superclasse podem invocar métodos que possuem a mesma identificação (assinatura), mas comportamentos distintos.</p>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-lang">java</span>
+                </div>
+                <pre><code class="language-java">class GeradorDeRelatorio {
+    public void adiciona(EmpregadoDaFaculdade f) {
+        System.out.println(f.getInfo());
+        System.out.println(f.getGastos());
+    }
+}
+
+// Podemos passar qualquer tipo de EmpregadoDaFaculdade
+GeradorDeRelatorio relatorio = new GeradorDeRelatorio();
+relatorio.adiciona(new ProfessorDaFaculdade());
+relatorio.adiciona(new EmpregadoDaFaculdade());</code></pre>
+            </div>
+
+            <div class="solid-box">
+                <h3>✨ A Magia do Polimorfismo:</h3>
+                <p>Podemos passar para a classe GeradorDeRelatorio qualquer EmpregadoDaFaculdade! Vai funcionar tanto para professor, quanto para funcionário comum.</p>
+                <p>Quem programou a classe GeradorDeRelatorio nunca imaginou que existiria uma classe Reitor, e mesmo assim o sistema funciona quando criamos essa nova classe depois.</p>
+            </div>
+        </div>
+  <div class="section">
+            <h2>7. Modificadores de Acesso</h2>
+
+            <p>Java fornece modificadores de acesso para controlar a visibilidade de atributos e métodos:</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Modificador</th>
+                    <th>Descrição</th>
+                    <th>Visibilidade</th>
+                </tr>
+                <tr>
+                    <td><strong>private</strong></td>
+                    <td>Mais restritivo</td>
+                    <td>Acessível apenas dentro da própria classe</td>
+                </tr>
+                <tr>
+                    <td><strong>protected</strong></td>
+                    <td>Intermediário</td>
+                    <td>Acessível na própria classe e nas subclasses</td>
+                </tr>
+                <tr>
+                    <td><strong>package (default)</strong></td>
+                    <td>Sem modificador</td>
+                    <td>Acessível apenas no mesmo pacote</td>
+                </tr>
+                <tr>
+                    <td><strong>public</strong></td>
+                    <td>Menos restritivo</td>
+                    <td>Acessível de qualquer lugar</td>
+                </tr>
+            </table>
+
+            <div class="glass-box">
+                <h3>Sobre Protected:</h3>
+                <p>Protected deixa os atributos da classe pai visíveis, acessíveis "hierarquia abaixo". Mas para o restante do programa tem o mesmo efeito que private.</p>
+                <p><strong>Importante:</strong> "A herança permite que uma subclasse ganhe acesso a declarações protected de sua superclasse, mas o usuário não percebe isso, para o usuário (uma classe externa) o que continua existindo é o que é public".</p>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>8. Exercícios Práticos</h2>
+            
+            <div class="exercise-box">
+                <h4>📝 Exercício 1: Criar uma Classe Pessoa</h4>
+                <p>Crie uma classe <code>Pessoa</code> com atributos privados: nome (String), idade (int), e cpf (String). Adicione um construtor que recebe todos os parâmetros e crie getters e setters apropriados.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public class Pessoa {
+    private String nome;
+    private int idade;
+    private String cpf;
+    
+    // Construtor
+    public Pessoa(String nome, int idade, String cpf) {
+        this.nome = nome;
+        this.idade = idade;
+        this.cpf = cpf;
+    }
+    
+    // Getters e Setters
+    public String getNome() {
+        return this.nome;
+    }
+    
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
+    public int getIdade() {
+        return this.idade;
+    }
+    
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+    
+    public String getCpf() {
+        return this.cpf;
+    }
+    
+    // CPF não deve ter setter, pois não muda
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 2: Classe Carro com Métodos</h4>
+                <p>Crie uma classe <code>Carro</code> com atributos: marca, modelo, ano e velocidadeAtual. Adicione métodos para acelerar (aumenta velocidade em 10), frear (diminui velocidade em 10, não pode ser negativa) e mostrar status.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public class Carro {
+    private String marca;
+    private String modelo;
+    private int ano;
+    private int velocidadeAtual;
+    
+    public Carro(String marca, String modelo, int ano) {
+        this.marca = marca;
+        this.modelo = modelo;
+        this.ano = ano;
+        this.velocidadeAtual = 0;
+    }
+    
+    public void acelerar() {
+        this.velocidadeAtual += 10;
+        System.out.println("Acelerando! Velocidade: " + this.velocidadeAtual + " km/h");
+    }
+    
+    public void frear() {
+        if (this.velocidadeAtual >= 10) {
+            this.velocidadeAtual -= 10;
+        } else {
+            this.velocidadeAtual = 0;
+        }
+        System.out.println("Freando! Velocidade: " + this.velocidadeAtual + " km/h");
+    }
+    
+    public void mostrarStatus() {
+        System.out.println("Carro: " + this.marca + " " + this.modelo);
+        System.out.println("Ano: " + this.ano);
+        System.out.println("Velocidade Atual: " + this.velocidadeAtual + " km/h");
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 3: Herança - Animais</h4>
+                <p>Crie uma classe <code>Animal</code> com atributos nome e idade. Depois crie duas subclasses: <code>Cachorro</code> e <code>Gato</code>. Cada uma deve ter um método <code>emitirSom()</code> que imprime o som característico do animal.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public class Animal {
+    protected String nome;
+    protected int idade;
+    
+    public Animal(String nome, int idade) {
+        this.nome = nome;
+        this.idade = idade;
+    }
+    
+    public void emitirSom() {
+        System.out.println("O animal faz algum som...");
+    }
+}
+
+public class Cachorro extends Animal {
+    
+    public Cachorro(String nome, int idade) {
+        super(nome, idade);
+    }
+    
+    @Override
+    public void emitirSom() {
+        System.out.println(this.nome + " faz: Au au!");
+    }
+}
+
+public class Gato extends Animal {
+    
+    public Gato(String nome, int idade) {
+        super(nome, idade);
+    }
+    
+    @Override
+    public void emitirSom() {
+        System.out.println(this.nome + " faz: Miau!");
+    }
+}
+
+// Testando
+public class TesteAnimais {
+    public static void main(String[] args) {
+        Cachorro rex = new Cachorro("Rex", 5);
+        Gato mimi = new Gato("Mimi", 3);
+        
+        rex.emitirSom();  // Rex faz: Au au!
+        mimi.emitirSom(); // Mimi faz: Miau!
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 4: Conta Bancária Completa</h4>
+                <p>Crie uma classe <code>ContaBancaria</code> com saldo privado, métodos depositar, sacar (com validação) e consultarSaldo. Adicione um construtor que inicialize com saldo zero.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public class ContaBancaria {
+    private String titular;
+    private double saldo;
+    
+    public ContaBancaria(String titular) {
+        this.titular = titular;
+        this.saldo = 0.0;
+    }
+    
+    public void depositar(double valor) {
+        if (valor > 0) {
+            this.saldo += valor;
+            System.out.println("Depósito de R$ " + valor + " realizado com sucesso!");
+        } else {
+            System.out.println("Valor inválido para depósito!");
+        }
+    }
+    
+    public void sacar(double valor) {
+        if (valor > 0 && valor <= this.saldo) {
+            this.saldo -= valor;
+            System.out.println("Saque de R$ " + valor + " realizado com sucesso!");
+        } else if (valor > this.saldo) {
+            System.out.println("Saldo insuficiente!");
+        } else {
+            System.out.println("Valor inválido para saque!");
+        }
+    }
+    
+    public void consultarSaldo() {
+        System.out.println("Titular: " + this.titular);
+        System.out.println("Saldo atual: R$ " + this.saldo);
+    }
+    
+    public double getSaldo() {
+        return this.saldo;
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="exercise-box">
+                <h4>📝 Exercício 5: Polimorfismo - Formas Geométricas</h4>
+                <p>Crie uma classe <code>Forma</code> com um método <code>calcularArea()</code>. Crie subclasses <code>Circulo</code> (com raio) e <code>Retangulo</code> (com largura e altura) que sobrescrevem o método calcularArea.</p>
+                <details>
+                    <summary>Mostrar Solução</summary>
+                    <div class="solution">
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public class Forma {
+    public double calcularArea() {
+        return 0.0;
+    }
+}
+
+public class Circulo extends Forma {
+    private double raio;
+    
+    public Circulo(double raio) {
+        this.raio = raio;
+    }
+    
+    @Override
+    public double calcularArea() {
+        return Math.PI * Math.pow(this.raio, 2);
+    }
+}
+
+public class Retangulo extends Forma {
+    private double largura;
+    private double altura;
+    
+    public Retangulo(double largura, double altura) {
+        this.largura = largura;
+        this.altura = altura;
+    }
+    
+    @Override
+    public double calcularArea() {
+        return this.largura * this.altura;
+    }
+}
+
+// Testando Polimorfismo
+public class TesteFormas {
+    public static void main(String[] args) {
+        Forma[] formas = new Forma[2];
+        formas[0] = new Circulo(5);
+        formas[1] = new Retangulo(4, 6);
+        
+        for (Forma f : formas) {
+            System.out.println("Área: " + f.calcularArea());
+        }
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>9. Resumo dos Conceitos de POO</h2>
+            
+            <div class="glass-box">
+                <h3>🎓 Pilares da Programação Orientada a Objetos:</h3>
+                <ul class="explanation-list">
+                    <li><strong>Encapsulamento:</strong> Ocultar informações e proteger dados usando modificadores de acesso (private, protected, public)</li>
+                    <li><strong>Herança:</strong> Reutilizar código através da palavra-chave extends, criando hierarquias de classes</li>
+                    <li><strong>Polimorfismo:</strong> Objetos de diferentes classes podem responder ao mesmo método de formas diferentes</li>
+                    <li><strong>Abstração:</strong> Focar nas características essenciais, escondendo detalhes de implementação</li>
+                </ul>
+            </div>
+
+            <div class="glass-box">
+                <h3>🔑 Conceitos Importantes:</h3>
+                <ul class="explanation-list">
+                    <li><strong>Classe:</strong> Modelo ou receita que define atributos e métodos</li>
+                    <li><strong>Objeto:</strong> Instância de uma classe criada com <code>new</code></li>
+                    <li><strong>Atributos:</strong> Características/variáveis que definem o estado do objeto</li>
+                    <li><strong>Métodos:</strong> Comportamentos/ações que o objeto pode executar</li>
+                    <li><strong>Construtor:</strong> Método especial chamado ao criar um objeto</li>
+                    <li><strong>this:</strong> Referência ao objeto atual</li>
+                    <li><strong>super:</strong> Referência à classe pai</li>
+                    <li><strong>static:</strong> Pertence à classe, não aos objetos individuais</li>
+                </ul>
+            </div>
+
+            <div class="glass-box">
+                <h3>💡 Boas Práticas:</h3>
+                <ul class="explanation-list">
+                    <li>Sempre use <code>private</code> para atributos e forneça métodos públicos (getters/setters) quando necessário</li>
+                    <li>Não crie getters e setters desnecessários - só crie quando realmente precisar</li>
+                    <li>Use construtores para garantir que objetos sejam criados em estado válido</li>
+                    <li>Prefira composição sobre herança quando apropriado</li>
+                    <li>Mantenha alta coesão (responsabilidade única) e baixo acoplamento entre classes</li>
+                    <li>Use nomes descritivos para classes (substantivos), métodos (verbos) e atributos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>10. Comparação: POO vs Programação Procedimental</h2>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Aspecto</th>
+                    <th>POO</th>
+                    <th>Procedimental</th>
+                </tr>
+                <tr>
+                    <td><strong>Organização</strong></td>
+                    <td>Baseada em objetos e classes</td>
+                    <td>Baseada em funções e procedimentos</td>
+                </tr>
+                <tr>
+                    <td><strong>Dados</strong></td>
+                    <td>Encapsulados dentro de objetos</td>
+                    <td>Variáveis globais acessíveis por todos</td>
+                </tr>
+                <tr>
+                    <td><strong>Reutilização</strong></td>
+                    <td>Alta (herança e polimorfismo)</td>
+                    <td>Baixa (cópia de código)</td>
+                </tr>
+                <tr>
+                    <td><strong>Manutenção</strong></td>
+                    <td>Mais fácil (mudanças localizadas)</td>
+                    <td>Mais difícil (efeitos colaterais)</td>
+                </tr>
+                <tr>
+                    <td><strong>Exemplo</strong></td>
+                    <td>Java, C++, Python</td>
+                    <td>C, Pascal</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="conclusion-box">
+            <h2>🎯 Conclusão</h2>
+            <p>Parabéns por chegar até aqui! A Programação Orientada a Objetos é um dos conceitos mais importantes em Java. Através de <strong>classes</strong>, <strong>objetos</strong>, <strong>encapsulamento</strong>, <strong>herança</strong> e <strong>polimorfismo</strong>, você pode criar sistemas organizados, reutilizáveis e fáceis de manter.</p>
+            <p style="margin-top: 15px;"><strong>Continue praticando!</strong> A POO é um conceito que se aprende fazendo. Comece criando classes simples e vá aumentando a complexidade gradualmente.</p>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>
