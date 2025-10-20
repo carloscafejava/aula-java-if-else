@@ -1,856 +1,399 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <script defer src="/_vercel/insights/script.js"></script>
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="JAVA Learning - Hub de conteúdo completo para aprender Java do zero ao avançado">
+    <meta name="theme-color" content="#8B5A2B">
     <title>JAVA Learning - Hub de Conteúdo</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #FFF7E2;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .nav {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .nav-btn:hover {
-            background: #1a1a1a;
-            transform: translateY(-2px);
-        }
-
-        .nav-btn.active {
-            background: #1a1a1a;
-        }
-
-        .hero {
-            text-align: center;
-            margin-bottom: 60px;
-            padding: 40px 20px;
-        }
-
-        .hero h1 {
-            font-size: 3.5em;
-            color: #333333;
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
-
-        .hero p {
-            font-size: 1.3em;
-            color: #333333;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 2.2em;
-            color: #333333;
-            font-weight: 800;
-            margin: 60px 0 30px 0;
-            text-align: center;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: #333333;
-            font-size: 1.1em;
-            margin-bottom: 40px;
-            line-height: 1.6;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 2px solid rgba(51, 51, 51, 0.1);
-            border-radius: 15px;
-            padding: 30px;
-            transition: all 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-            display: block;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            border-color: rgba(51, 51, 51, 0.3);
-        }
-
-        .card.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .card.disabled:hover {
-            transform: none;
-            box-shadow: none;
-        }
-
-        .card-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .card h3 {
-            font-size: 1.4em;
-            color: #333333;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .card p {
-            color: #333333;
-            line-height: 1.6;
-            font-size: 0.95em;
-        }
-
-        .card-tag {
-            display: inline-block;
-            background: #333333;
-            color: #FFF7E2;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 600;
-            margin-top: 15px;
-        }
-
-        .card-tag.coming-soon {
-            background: rgba(51, 51, 51, 0.3);
-            color: #333333;
-        }
-
-        .roadmap-section {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(51, 51, 51, 0.1);
-            border-radius: 15px;
-            padding: 40px;
-            margin: 50px 0;
-        }
-
-        .roadmap-section h2 {
-            color: #333333;
-            font-size: 2em;
-            font-weight: 800;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .roadmap-columns {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-
-        .roadmap-column h3 {
-            color: #333333;
-            font-size: 1.5em;
-            font-weight: 800;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #333333;
-        }
-
-        .roadmap-item {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin: 12px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.3s;
-        }
-
-        .roadmap-item:hover {
-            transform: translateX(5px);
-        }
-
-        .roadmap-item.glass {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(10px);
-            color: #333333;
-            border: 2px solid rgba(51, 51, 51, 0.1);
-        }
-
-        .roadmap-number {
-            background: #FFF7E2;
-            color: #333333;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.1em;
-            flex-shrink: 0;
-        }
-
-        .roadmap-item.glass .roadmap-number {
-            background: #333333;
-            color: #FFF7E2;
-        }
-
-        .roadmap-content h4 {
-            font-size: 1.1em;
-            margin-bottom: 3px;
-        }
-
-        .roadmap-content p {
-            font-size: 0.9em;
-            opacity: 0.9;
-        }
-
-        .stats-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 40px 0;
-        }
-
-        .stat-box {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .stat-box:hover {
-            transform: scale(1.05);
-        }
-
-        .stat-number {
-            font-size: 3em;
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 80px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-        }
-
-        .footer p {
-            color: #333333;
-            font-size: 1em;
-            line-height: 1.6;
-        }
-
-        .category-section {
-            margin: 60px 0;
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.2em;
-            }
-
-            .hero p {
-                font-size: 1.1em;
-            }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .nav-btn {
-                width: 100%;
-                max-width: 300px;
-                text-align: center;
-            }
-
-            .roadmap-columns {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/index.css">
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script defer src="js/main.js"></script>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="nav">
-                <a href="#inicio" class="nav-btn active">JAVA Learning</a>
-                <a href="#inicio" class="nav-btn">Início</a>
-                <a href="#conteudo" class="nav-btn">• Conteúdo</a>
-                <a href="#roadmap" class="nav-btn">Roadmap</a>
-            </div>
-        </div>
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <!-- Logo SVG -->
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Logo JAVA Learning">
+                        <!-- Xícara de café -->
+                        <g id="cup">
+                            <!-- Base da xícara -->
+                            <ellipse cx="60" cy="80" rx="35" ry="8" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                            <!-- Corpo da xícara -->
+                            <path d="M 30 75 L 35 45 Q 35 30 60 28 Q 85 30 85 45 L 90 75" 
+                                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <!-- Alça -->
+                            <path d="M 90 55 Q 110 55 110 70 Q 110 85 90 85" 
+                                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        </g>
 
-        <section id="inicio" class="hero">
-            <h1>☕ JAVA Learning</h1>
-            <p>Seu hub completo para dominar Java do zero ao avançado.<br>
-            Estruturas de dados, POO, frameworks modernos e tudo que você precisa para se tornar um desenvolvedor Java completo!</p>
+                        <!-- Vapor estilizado -->
+                        <g id="steam" class="steam-effect">
+                            <!-- Vapor esquerdo -->
+                            <path d="M 45 20 Q 40 10 45 0" 
+                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+                            <!-- Vapor centro -->
+                            <path d="M 60 15 Q 55 0 60 -10" 
+                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+                            <!-- Vapor direito -->
+                            <path d="M 75 20 Q 80 10 75 0" 
+                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+                        </g>
+
+                        <!-- Círculo decorativo neon -->
+                        <circle cx="60" cy="60" r="50" fill="none" stroke="url(#neonGradient)" 
+                                stroke-width="1" opacity="0.4" class="neon-ring"/>
+
+                        <!-- Gradiente neon -->
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+
+                <!-- Título -->
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <!-- Toggle Modo Escuro/Claro -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- HERO SECTION -->
+        <section class="hero" id="inicio">
+            <h2>Seu Hub Completo para Dominar Java</h2>
+            <p>Do zero ao avançado: Estruturas de dados, POO, frameworks modernos e tudo que você precisa para se tornar um desenvolvedor Java completo.</p>
         </section>
 
-        <div class="stats-section">
+        <!-- STATS -->
+        <section class="stats-section">
             <div class="stat-box">
                 <div class="stat-number">50+</div>
-                <div class="stat-label">Tópicos Cobertos</div>
+                <div class="stat-label">Tópicos</div>
             </div>
             <div class="stat-box">
                 <div class="stat-number">100+</div>
-                <div class="stat-label">Exemplos Práticos</div>
+                <div class="stat-label">Exemplos</div>
             </div>
             <div class="stat-box">
                 <div class="stat-number">8</div>
-                <div class="stat-label">Níveis de Aprendizado</div>
+                <div class="stat-label">Níveis</div>
             </div>
-        </div>
+        </section>
 
-        <section id="conteudo">
-            <h2 class="section-title">📚 Fundamentos Básicos</h2>
-            <p class="section-subtitle">Comece sua jornada Java dominando os conceitos essenciais</p>
-            
-            <div class="cards-grid">
-                <a href="pages/ifelse.html" class="card">
-                    <span class="card-icon">🔀</span>
-                    <h3>Condicionais</h3>
-                    <p>IF, ELSE IF, ELSE e Switch Case. Aprenda a tomar decisões no seu código.</p>
-                    <span class="card-tag">Disponível</span>
-                </a>
+        <!-- CONTEÚDO -->
+        <section id="conteudo" class="content">
+            <!-- Fundamentos -->
+            <div class="category">
+                <h3 class="category-title">Fundamentos Básicos</h3>
+                <p class="category-subtitle">Comece sua jornada dominando os conceitos essenciais</p>
+                
+                <div class="cards-grid">
+                    <a href="pages/ifelse.html" class="card">
+                        <span class="card-icon">🔀</span>
+                        <h4>Condicionais</h4>
+                        <p>IF, ELSE IF, ELSE e Switch Case</p>
+                        <span class="card-tag">Disponível</span>
+                    </a>
 
-                <a href="pages/for.html" class="card">
-                    <span class="card-icon">🔄</span>
-                    <h3>Laços FOR</h3>
-                    <p>Domine loops e iterações. Contadores, arrays e loops aninhados.</p>
-                    <span class="card-tag">Disponível</span>
-                </a>
+                    <a href="pages/for.html" class="card">
+                        <span class="card-icon">🔄</span>
+                        <h4>Laços FOR</h4>
+                        <p>Loops, iterações e arrays</p>
+                        <span class="card-tag">Disponível</span>
+                    </a>
 
-                <a href="pages/while.html" class="card">
-                    <span class="card-icon">🔁</span>
-                    <h3>WHILE e DO-WHILE</h3>
-                    <p>Loops condicionais e validações dinâmicas.</p>
-                    <span class="card-tag ">Disponível</span>
-                </a>
+                    <a href="pages/while.html" class="card">
+                        <span class="card-icon">🔁</span>
+                        <h4>WHILE e DO-WHILE</h4>
+                        <p>Loops condicionais e validações</p>
+                        <span class="card-tag">Disponível</span>
+                    </a>
 
-                <a href="pages/tiposdedados.html" class="card">
-                    <span class="card-icon">🔢</span>
-                    <h3>Tipos de Dados</h3>
-                    <p>Primitivos, Strings, Type Casting e conversões.</p>
-                    <span class="card-tag ">Disponivel</span>
-                </a>
+                    <a href="pages/tiposdedados.html" class="card">
+                        <span class="card-icon">🔢</span>
+                        <h4>Tipos de Dados</h4>
+                        <p>Primitivos, Strings e conversões</p>
+                        <span class="card-tag">Disponível</span>
+                    </a>
 
-                <a href="pages/variaveis.html" class="card">
-                    <span class="card-icon">📊</span>
-                    <h3>Variáveis e Escopo</h3>
-                    <p>Declaração, inicialização e ciclo de vida das variáveis.</p>
-                     <span class="card-tag">Disponível</span>
-                </a>
-                <a href="pages/switch.html" class="card">
-                    <span class="card-icon">🔀</span>
-                    <h3>Switch Case</h3>
-                    <p>Estrutura de seleção múltipla. Alternativa elegante ao if-else encadeado para múltiplas opções.</p>
-                    <span class="card-tag">Disponível</span>
-                </a>
+                    <a href="pages/variaveis.html" class="card">
+                        <span class="card-icon">📊</span>
+                        <h4>Variáveis e Escopo</h4>
+                        <p>Declaração e ciclo de vida</p>
+                        <span class="card-tag">Disponível</span>
+                    </a>
 
-                <a href="pages/matematica.html" class="card">
-                    <span class="card-icon">🧮</span>
-                    <h3>Operações Matemáticas</h3>
-                    <p>Math operations, operadores aritméticos e lógicos.</p>
-                    <span class="card-tag">Disponível</span>
-                </a>
+                    <a href="pages/switch.html" class="card">
+                        <span class="card-icon">🔀</span>
+                        <h4>Switch Case</h4>
+                        <p>Seleção múltipla elegante</p>
+                        <span class="card-tag">Disponível</span>
+                    </a>
+
+                    <a href="pages/matematica.html" class="card">
+                        <span class="card-icon">🧮</span>
+                        <h4>Operações Matemáticas</h4>
+                        <p>Operadores aritméticos e lógicos</p>
+                        <span class="card-tag">Disponível</span>
+                    </a>
+                </div>
             </div>
 
-            <div class="category-section">
-                <h2 class="section-title">🎯 POO - Programação Orientada a Objetos</h2>
-                <p class="section-subtitle">Domine os pilares da programação moderna</p>
+            <!-- POO -->
+            <div class="category" id="poo">
+                <h3 class="category-title">POO - Programação Orientada a Objetos</h3>
+                <p class="category-subtitle">Domine os pilares da programação moderna</p>
                 
                 <div class="cards-grid">
                     <a href="pages/poo.html" class="card">
                         <span class="card-icon">🏗️</span>
-                        <h3>Classes e Objetos</h3>
-                        <p>Criação de classes, instanciação e atributos.</p>
-                        <span class="card-tag ">Disponível</span>
+                        <h4>Classes e Objetos</h4>
+                        <p>Criação, instanciação e atributos</p>
+                        <span class="card-tag">Disponível</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">🔒</span>
-                        <h3>Encapsulamento</h3>
-                        <p>Modificadores de acesso, getters e setters.</p>
+                        <h4>Encapsulamento</h4>
+                        <p>Modificadores e getters/setters</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">🧬</span>
-                        <h3>Herança</h3>
-                        <p>Hierarquia de classes, extends e super.</p>
+                        <h4>Herança</h4>
+                        <p>Hierarquia e reutilização</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">🎭</span>
-                        <h3>Polimorfismo</h3>
-                        <p>Sobrecarga, sobrescrita e binding dinâmico.</p>
+                        <h4>Polimorfismo</h4>
+                        <p>Sobrecarga e sobrescrita</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">🎨</span>
-                        <h3>Abstração</h3>
-                        <p>Classes abstratas e interfaces.</p>
+                        <h4>Abstração</h4>
+                        <p>Classes abstratas e interfaces</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">🔌</span>
-                        <h3>Interfaces</h3>
-                        <p>Contratos, implementação múltipla e default methods.</p>
+                        <h4>Interfaces</h4>
+                        <p>Contratos e implementação</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
                 </div>
             </div>
 
-            <div class="category-section">
-                <h2 class="section-title">📦 Estruturas de Dados</h2>
-                <p class="section-subtitle">Collections, Arrays e estruturas avançadas</p>
+            <!-- Estruturas de Dados -->
+            <div class="category" id="estruturas">
+                <h3 class="category-title">Estruturas de Dados</h3>
+                <p class="category-subtitle">Collections, Arrays e estruturas avançadas</p>
                 
                 <div class="cards-grid">
                     <a href="#" class="card disabled">
                         <span class="card-icon">📋</span>
-                        <h3>Arrays e ArrayList</h3>
-                        <p>Manipulação de listas e arrays dinâmicos.</p>
+                        <h4>Arrays e ArrayList</h4>
+                        <p>Listas dinâmicas e manipulação</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">🗂️</span>
-                        <h3>Set e Map</h3>
-                        <p>HashSet, TreeSet, HashMap e TreeMap.</p>
+                        <h4>Set e Map</h4>
+                        <p>HashSet, HashMap e variações</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">📚</span>
-                        <h3>Queue e Stack</h3>
-                        <p>Filas, pilhas e estruturas LIFO/FIFO.</p>
+                        <h4>Queue e Stack</h4>
+                        <p>Estruturas LIFO/FIFO</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">🔄</span>
-                        <h3>Iterator e Streams</h3>
-                        <p>Iteração e processamento funcional de coleções.</p>
+                        <h4>Iterator e Streams</h4>
+                        <p>Processamento funcional</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">🎁</span>
-                        <h3>Generics</h3>
-                        <p>Type safety e coleções genéricas.</p>
+                        <h4>Generics</h4>
+                        <p>Type safety e tipagem</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">❓</span>
-                        <h3>Optionals</h3>
-                        <p>Evite NullPointerException com Optional.</p>
+                        <h4>Optionals</h4>
+                        <p>Evite NullPointerException</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
                 </div>
             </div>
 
-            <div class="category-section">
-                <h2 class="section-title">⚡ Tópicos Avançados</h2>
-                <p class="section-subtitle">Programação funcional, concorrência e mais</p>
+            <!-- Avançado -->
+            <div class="category" id="avancado">
+                <h3 class="category-title">Tópicos Avançados</h3>
+                <p class="category-subtitle">Programação funcional, concorrência e mais</p>
                 
                 <div class="cards-grid">
                     <a href="#" class="card disabled">
                         <span class="card-icon">🔥</span>
-                        <h3>Lambda Expressions</h3>
-                        <p>Programação funcional e expressões lambda.</p>
+                        <h4>Lambda Expressions</h4>
+                        <p>Programação funcional moderna</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">🌊</span>
-                        <h3>Stream API</h3>
-                        <p>Processamento funcional de dados com streams.</p>
+                        <h4>Stream API</h4>
+                        <p>Processamento de dados</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">⚠️</span>
-                        <h3>Exception Handling</h3>
-                        <p>Try, catch, finally e tratamento de erros.</p>
+                        <h4>Exception Handling</h4>
+                        <p>Try, catch e tratamento</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">🧵</span>
-                        <h3>Threads e Concorrência</h3>
-                        <p>Multithreading, sincronização e virtual threads.</p>
+                        <h4>Threads</h4>
+                        <p>Multithreading e sincronização</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">💾</span>
-                        <h3>I/O Operations</h3>
-                        <p>Leitura e escrita de arquivos.</p>
+                        <h4>I/O Operations</h4>
+                        <p>Leitura e escrita</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">🔐</span>
-                        <h3>Cryptography</h3>
-                        <p>Criptografia e segurança em Java.</p>
+                        <h4>Cryptography</h4>
+                        <p>Segurança e criptografia</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
                 </div>
             </div>
 
-            <div class="category-section">
-                <h2 class="section-title">🚀 Frameworks e Ferramentas</h2>
-                <p class="section-subtitle">Spring Boot, testes e ferramentas essenciais</p>
+            <!-- Frameworks -->
+            <div class="category" id="frameworks">
+                <h3 class="category-title">Frameworks e Ferramentas</h3>
+                <p class="category-subtitle">Spring Boot, testes e ferramentas essenciais</p>
                 
                 <div class="cards-grid">
                     <a href="#" class="card disabled">
                         <span class="card-icon">🍃</span>
-                        <h3>Spring Boot</h3>
-                        <p>Framework mais popular para aplicações Java.</p>
+                        <h4>Spring Boot</h4>
+                        <p>Framework web mais popular</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">💉</span>
-                        <h3>Dependency Injection</h3>
-                        <p>Injeção de dependências e IoC.</p>
+                        <h4>Dependency Injection</h4>
+                        <p>Injeção de dependências</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">🗄️</span>
-                        <h3>JPA e Hibernate</h3>
-                        <p>Persistência de dados e ORM.</p>
+                        <h4>JPA e Hibernate</h4>
+                        <p>Persistência de dados</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">🧪</span>
-                        <h3>Testes - JUnit</h3>
-                        <p>Unit testing, mocking com Mockito.</p>
+                        <h4>Testes - JUnit</h4>
+                        <p>Unit testing e mocking</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">🔨</span>
-                        <h3>Maven e Gradle</h3>
-                        <p>Build tools e gerenciamento de dependências.</p>
+                        <h4>Maven e Gradle</h4>
+                        <p>Build tools e dependências</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
 
                     <a href="#" class="card disabled">
                         <span class="card-icon">📝</span>
-                        <h3>Logging</h3>
-                        <p>SLF4J, Logback e Log4j2.</p>
+                        <h4>Logging</h4>
+                        <p>SLF4J, Logback e Log4j</p>
                         <span class="card-tag coming-soon">Em breve</span>
                     </a>
                 </div>
             </div>
         </section>
 
-        <section id="roadmap" class="roadmap-section">
-            <h2>🗺️ Roadmap Completo Java</h2>
-            <p style="text-align: center; margin-bottom: 30px; color: #333333;">Caminho estruturado do iniciante ao desenvolvedor avançado</p>
-
-            <div class="roadmap-columns">
-                <div class="roadmap-column">
-                    <h3>🌱 Fundamentos</h3>
-                    
-                    <div class="roadmap-item">
-                        <div class="roadmap-number">1</div>
-                        <div class="roadmap-content">
-                            <h4>Sintaxe Básica</h4>
-                            <p>Variáveis, tipos e operadores</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-item">
-                        <div class="roadmap-number">2</div>
-                        <div class="roadmap-content">
-                            <h4>Estruturas Condicionais</h4>
-                            <p>IF, ELSE, Switch</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-item">
-                        <div class="roadmap-number">3</div>
-                        <div class="roadmap-content">
-                            <h4>Laços de Repetição</h4>
-                            <p>FOR, WHILE, DO-WHILE</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-item">
-                        <div class="roadmap-number">4</div>
-                        <div class="roadmap-content">
-                            <h4>Arrays e Strings</h4>
-                            <p>Manipulação básica</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-item">
-                        <div class="roadmap-number">5</div>
-                        <div class="roadmap-content">
-                            <h4>Métodos</h4>
-                            <p>Funções e parâmetros</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="roadmap-column">
-                    <h3>🎯 POO Intermediário</h3>
-                    
-                    <div class="roadmap-item glass">
-                        <div class="roadmap-number">6</div>
-                        <div class="roadmap-content">
-                            <h4>Classes e Objetos</h4>
-                            <p>Fundamentos de OOP</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-item glass">
-                        <div class="roadmap-number">7</div>
-                        <div class="roadmap-content">
-                            <h4>Encapsulamento</h4>
-                            <p>Modificadores de acesso</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-item glass">
-                        <div class="roadmap-number">8</div>
-                        <div class="roadmap-content">
-                            <h4>Herança</h4>
-                            <p>Extends e Super</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-item glass">
-                        <div class="roadmap-number">9</div>
-                        <div class="roadmap-content">
-                            <h4>Polimorfismo</h4>
-                            <p>Overloading e Overriding</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-item glass">
-                        <div class="roadmap-number">10</div>
-                        <div class="roadmap-content">
-                            <h4>Abstração</h4>
-                            <p>Classes abstratas e Interfaces</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="roadmap-column">
-                    <h3>⚡ Avançado</h3>
-                    
-                    <div class="roadmap-item">
-                        <div class="roadmap-number">11</div>
-                        <div class="roadmap-content">
-                            <h4>Collections Framework</h4>
-                            <p>List, Set, Map, Queue</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-item">
-                        <div class="roadmap-number">12</div>
-                        <div class="roadmap-content">
-                            <h4>Generics</h4>
-                            <p>Type safety</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-item">
-                        <div class="roadmap-number">13</div>
-                        <div class="roadmap-content">
-                            <h4>Exception Handling</h4>
-                            <p>Try-catch-finally</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-item">
-                        <div class="roadmap-number">14</div>
-                        <div class="roadmap-content">
-                            <h4>Lambda e Streams</h4>
-                            <p>Programação funcional</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-item">
-                        <div class="roadmap-number">15</div>
-                        <div class="roadmap-content">
-                            <h4>Threads</h4>
-                            <p>Concorrência</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="roadmap-column">
-                    <h3>🚀 Profissional</h3>
-                    
-                    <div class="roadmap-item glass">
-                        <div class="roadmap-number">16</div>
-                        <div class="roadmap-content">
-                            <h4>Spring Boot</h4>
-                            <p>Framework web</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-item glass">
-                        <div class="roadmap-number">17</div>
-                        <div class="roadmap-content">
-                            <h4>JPA / Hibernate</h4>
-                            <p>Persistência de dados</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-item glass">
-                        <div class="roadmap-number">18</div>
-                        <div class="roadmap-content">
-                            <h4>REST APIs</h4>
-                            <p>Web services</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-item glass">
-                        <div class="roadmap-number">19</div>
-                        <div class="roadmap-content">
-                            <h4>Testing</h4>
-                            <p>JUnit, Mockito, TDD</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-item glass">
-                        <div class="roadmap-number">20</div>
-                        <div class="roadmap-content">
-                            <h4>Build Tools</h4>
-                            <p>Maven, Gradle</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="footer">
-            <p><strong>☕ JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
-            <p style="margin-top: 10px;">Do básico ao avançado: Classes, POO, Collections, Spring Boot e muito mais!</p>
-            <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">Aprenda Java do jeito mais simples possível 🚀</p>
-        </div>
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>Do básico ao avançado: Classes, POO, Collections, Spring Boot e muito mais!</p>
+            <p>Aprenda Java do jeito mais simples possível</p>
+        </footer>
     </div>
-<script>
-        window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-    </script>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul>
+                <li><a href="#inicio" class="scroll-menu-link">Início</a></li>
+                <li><a href="#conteudo" class="scroll-menu-link">Fundamentos</a></li>
+                <li><a href="#poo" class="scroll-menu-link">POO</a></li>
+                <li><a href="#estruturas" class="scroll-menu-link">Estruturas</a></li>
+                <li><a href="#avancado" class="scroll-menu-link">Avançado</a></li>
+                <li><a href="#frameworks" class="scroll-menu-link">Frameworks</a></li>
+            </ul>
+        </nav>
+    </div>
+
     <script defer src="/_vercel/speed-insights/script.js"></script>
-
-    <script>
-        // Smooth scroll para âncoras
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Destacar nav item ativo baseado na seção
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('.nav-btn[href^="#"]');
-            
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= (sectionTop - 200)) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
-
-        // Prevenir clique em cards desabilitados
-        document.querySelectorAll('.card.disabled').forEach(card => {
-            card.addEventListener('click', (e) => {
-                e.preventDefault();
-            });
-        });
-    </script>
 </body>
 </html>

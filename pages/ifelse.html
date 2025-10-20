@@ -1,445 +1,140 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
     <title>IF, ELSE IF e ELSE em Java - Guia Completo</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #FFF7E2;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #FFF7E2;
-        }
-
-        .header {
-            margin-bottom: 40px;
-        }
-
-        .nav {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .nav-btn:hover {
-            background: #1a1a1a;
-            transform: translateY(-2px);
-        }
-
-        h1 {
-            font-size: 2em;
-            margin-bottom: 20px;
-            color: #333333;
-            font-weight: 800;
-        }
-
-        h2 {
-            font-size: 1.5em;
-            margin: 35px 0 15px 0;
-            color: #333333;
-            font-weight: 800;
-        }
-
-        h3 {
-            font-size: 1.2em;
-            margin: 20px 0 12px 0;
-            color: #333333;
-            font-weight: 700;
-        }
-
-        h4 {
-            font-size: 1.1em;
-            margin: 15px 0 10px 0;
-            color: #333333;
-            font-weight: 700;
-        }
-
-        .subtitle {
-            font-size: 1em;
-            color: #333333;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-
-        p {
-            line-height: 1.8;
-            margin: 12px 0;
-            color: #333333;
-            font-size: 1em;
-        }
-
-        .code-wrapper {
-            position: relative;
-            margin: 20px 0;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        .code-header {
-            background: #2d2d2d;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-bottom: 1px solid #3a3a3a;
-        }
-
-        .code-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-
-        .code-dot.red { background: #ff5f56; }
-        .code-dot.yellow { background: #ffbd2e; }
-        .code-dot.green { background: #27c93f; }
-
-        .code-lang {
-            color: #888;
-            font-size: 0.85em;
-            margin-left: auto;
-            font-family: 'Consolas', monospace;
-        }
-
-        pre {
-            margin: 0 !important;
-            border-radius: 0 !important;
-        }
-
-        pre code {
-            display: block;
-            padding: 25px !important;
-            background: #1e1e1e !important;
-            color: #d4d4d4;
-            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace;
-            font-size: 0.95em;
-            line-height: 1.6;
-            overflow-x: auto;
-        }
-
-        .section {
-            margin-bottom: 30px;
-        }
-
-        .glass-box {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(51, 51, 51, 0.1);
-            border-radius: 12px;
-            padding: 25px;
-            margin: 20px 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .glass-box h3 {
-            margin-top: 0;
-        }
-
-        .explanation-list {
-            margin: 15px 0;
-            padding-left: 20px;
-        }
-
-        .explanation-list li {
-            margin: 10px 0;
-            line-height: 1.7;
-            color: #333333;
-        }
-
-        .example-section {
-            margin: 30px 0;
-        }
-
-        .example-title {
-            font-weight: 700;
-            color: #333333;
-            margin: 25px 0 10px 0;
-            font-size: 1.15em;
-        }
-
-        .solid-box {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 20px;
-            border-radius: 12px;
-            margin: 20px 0;
-        }
-
-        .solid-box h3,
-        .solid-box h4 {
-            color: #FFF7E2;
-            margin-top: 0;
-        }
-
-        .solid-box p,
-        .solid-box li {
-            color: #FFF7E2;
-        }
-
-        .solid-box ul {
-            margin: 15px 0;
-            padding-left: 20px;
-        }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .comparison-table th {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 15px;
-            text-align: left;
-            font-weight: 700;
-        }
-
-        .comparison-table td {
-            padding: 15px;
-            border-bottom: 1px solid rgba(51, 51, 51, 0.1);
-            color: #333333;
-        }
-
-        .comparison-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .exercise-box {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(51, 51, 51, 0.15);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 15px 0;
-            transition: all 0.3s;
-        }
-
-        .exercise-box:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .exercise-box h4 {
-            margin-top: 0;
-        }
-
-        details {
-            margin-top: 15px;
-            cursor: pointer;
-        }
-
-        summary {
-            font-weight: 700;
-            color: #333333;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 8px;
-            list-style: none;
-        }
-
-        summary::-webkit-details-marker {
-            display: none;
-        }
-
-        summary::before {
-            content: "▶ ";
-            display: inline-block;
-            transition: transform 0.2s;
-        }
-
-        details[open] summary::before {
-            transform: rotate(90deg);
-        }
-
-        .solution {
-            margin-top: 10px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-        }
-
-        .highlight-text {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95em;
-        }
-
-        strong {
-            font-weight: 700;
-            color: #333333;
-        }
-
-        .intro-text {
-            margin-bottom: 25px;
-        }
-
-        .syntax-header {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: 700;
-            margin: 25px 0 0 0;
-        }
-
-        .conclusion-box {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(51, 51, 51, 0.2);
-            border-radius: 12px;
-            padding: 30px;
-            margin: 40px 0;
-            text-align: center;
-        }
-
-        .divider {
-            height: 2px;
-            background: rgba(51, 51, 51, 0.1);
-            margin: 30px 0;
-        }
-
-        code {
-            background: rgba(51, 51, 51, 0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95em;
-        }
-
-        @media (max-width: 768px) {
-            .nav {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .nav-btn {
-                width: 100%;
-                max-width: 300px;
-                text-align: center;
-            }
-
-            h1 {
-                font-size: 1.8em;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="nav">
-                <a href="../index.html" class="nav-btn">JAVA Learning</a>
-                <a href="../index.html#inicio" class="nav-btn">Início</a>
-                <a href="../index.html#conteudo" class="nav-btn">• Conteúdo</a>
-                <a href="../index.html#roadmap" class="nav-btn">Roadmap</a>
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <!-- Logo SVG -->
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Logo JAVA Learning">
+                        <g id="cup">
+                            <ellipse cx="60" cy="80" rx="35" ry="8" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                            <path d="M 30 75 L 35 45 Q 35 30 60 28 Q 85 30 85 45 L 90 75" 
+                                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M 90 55 Q 110 55 110 70 Q 110 85 90 85" 
+                                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        </g>
+                        <g id="steam" class="steam-effect">
+                            <path d="M 45 20 Q 40 10 45 0" 
+                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+                            <path d="M 60 15 Q 55 0 60 -10" 
+                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+                            <path d="M 75 20 Q 80 10 75 0" 
+                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+                        </g>
+                        <circle cx="60" cy="60" r="50" fill="none" stroke="url(#neonGradient)" 
+                                stroke-width="1" opacity="0.4" class="neon-ring"/>
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
             </div>
-            
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
             <h1>IF, ELSE IF e ELSE em Java</h1>
             <p class="subtitle">Guia completo para dominar estruturas condicionais em Java do jeito mais simples possível</p>
-        </div>
 
-        <div class="section">
-            <h2>1. O Básico: Entendendo as Condicionais</h2>
-            
-            <div class="intro-text">
-                <p>No mundo da programação, as estruturas condicionais são como a capacidade de tomar decisões no dia a dia. Imagine que você acorda e pensa: "Se estiver sol, vou à praia. Senão, se estiver nublado, vou ao parque. Caso contrário (se chover), vou ficar em casa."</p>
+            <div class="section">
+                <h2>1. O Básico: Entendendo as Condicionais</h2>
                 
-                <p>Em Java, e em outras linguagens, as estruturas if, else if e else permitem que seu programa siga diferentes caminhos lógicos dependendo de certas condições serem verdadeiras ou falsas. Elas são fundamentais para criar programas que reagem a entradas do usuário, condições do sistema ou valores de variáveis, tornando-os dinâmicos e inteligentes.</p>
-                
-                <p>Dominar as condicionais é um passo crucial para qualquer desenvolvedor, pois elas são a espinha dorsal da lógica de negócios em quase todo software que você encontrará.</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>2. IF, ELSE IF e ELSE: As Ferramentas da Decisão</h2>
-            
-            <h3>2.1. O que é if?</h3>
-            <p>O <code>if</code> (se) é a estrutura condicional mais básica. Ele testa uma única condição. Se a condição for verdadeira, o bloco de código dentro do if é executado. Se for falsa, o bloco é ignorado, e o programa continua sua execução a partir da linha seguinte ao if (ou else, se houver).</p>
-
-            <div class="syntax-header">Sintaxe do if:</div>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
+                <div class="intro-text">
+                    <p>No mundo da programação, as estruturas condicionais são como a capacidade de tomar decisões no dia a dia. Imagine que você acorda e pensa: "Se estiver sol, vou à praia. Senão, se estiver nublado, vou ao parque. Caso contrário (se chover), vou ficar em casa."</p>
+                    
+                    <p>Em Java, e em outras linguagens, as estruturas if, else if e else permitem que seu programa siga diferentes caminhos lógicos dependendo de certas condições serem verdadeiras ou falsas. Elas são fundamentais para criar programas que reagem a entradas do usuário, condições do sistema ou valores de variáveis, tornando-os dinâmicos e inteligentes.</p>
+                    
+                    <p>Dominar as condicionais é um passo crucial para qualquer desenvolvedor, pois elas são a espinha dorsal da lógica de negócios em quase todo software que você encontrará.</p>
                 </div>
-                <pre><code class="language-java">if (condicao) {
+            </div>
+
+            <div class="section">
+                <h2>2. IF, ELSE IF e ELSE: As Ferramentas da Decisão</h2>
+                
+                <h3>2.1. O que é if?</h3>
+                <p>O <code>if</code> (se) é a estrutura condicional mais básica. Ele testa uma única condição. Se a condição for verdadeira, o bloco de código dentro do if é executado. Se for falsa, o bloco é ignorado, e o programa continua sua execução a partir da linha seguinte ao if (ou else, se houver).</p>
+
+                <div class="syntax-header">Sintaxe do if:</div>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">if (condicao) {
     // Código a ser executado SOMENTE se a condicao for verdadeira
 }
 // O programa continua aqui, independentemente da condicao</code></pre>
-            </div>
-
-            <h3>2.2. O que é else?</h3>
-            <p>O <code>else</code> (senão) atua como uma "alternativa" ao if. Ele sempre vem junto com um if. Se a condição do if for falsa, o bloco de código dentro do else é executado. A lógica é simples: "Se isso for verdade, faça A. Senão, faça B."</p>
-
-            <div class="syntax-header">Sintaxe do if-else:</div>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
                 </div>
-                <pre><code class="language-java">if (condicao) {
+
+                <h3>2.2. O que é else?</h3>
+                <p>O <code>else</code> (senão) atua como uma "alternativa" ao if. Ele sempre vem junto com um if. Se a condição do if for falsa, o bloco de código dentro do else é executado. A lógica é simples: "Se isso for verdade, faça A. Senão, faça B."</p>
+
+                <div class="syntax-header">Sintaxe do if-else:</div>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">if (condicao) {
     // Código para quando a condicao for verdadeira
 } else {
     // Código para quando a condicao for falsa (a alternativa)
 }</code></pre>
-            </div>
-
-            <h3>2.3. O que é else if?</h3>
-            <p>O <code>else if</code> (senão se) é usado para testar múltiplas condições em sequência. Ele sempre vem depois de um if (ou outro else if). Se a condição do if inicial for falsa, o programa passa para o primeiro else if e testa sua condição. Se for verdadeira, executa seu bloco e pula o restante. Se for falsa, vai para o próximo else if (se houver), e assim por diante.</p>
-
-            <div class="syntax-header">Sintaxe do if-else if-else:</div>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
                 </div>
-                <pre><code class="language-java">if (primeiraCondicao) {
+
+                <h3>2.3. O que é else if?</h3>
+                <p>O <code>else if</code> (senão se) é usado para testar múltiplas condições em sequência. Ele sempre vem depois de um if (ou outro else if). Se a condição do if inicial for falsa, o programa passa para o primeiro else if e testa sua condição. Se for verdadeira, executa seu bloco e pula o restante. Se for falsa, vai para o próximo else if (se houver), e assim por diante.</p>
+
+                <div class="syntax-header">Sintaxe do if-else if-else:</div>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">if (primeiraCondicao) {
     // Executa se a primeira condição for verdadeira
 } else if (segundaCondicao) {
     // Executa se a primeira for falsa E a segunda for verdadeira
@@ -448,68 +143,68 @@
 } else {
     // Executa se TODAS as condições anteriores forem falsas (opcional)
 }</code></pre>
-            </div>
-
-            <div class="glass-box">
-                <strong>Comparação:</strong> O if é para uma decisão única. O if-else oferece dois caminhos. O if-else if-else permite múltiplos caminhos, testando um após o outro até encontrar uma condição verdadeira ou cair no else final.
-            </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="section">
-            <h2>3. Regras de Ouro das Condicionais em Java</h2>
-            
-            <h3>3.1. Estrutura dos Blocos com Chaves { }</h3>
-            <p>Em Java, os blocos de código associados a um if, else if ou else são delimitados por chaves <span class="highlight-text">{ }</span>. Embora seja possível omitir as chaves para um único comando, é uma má prática e altamente desencorajado.</p>
-            
-            <div class="solid-box">
-                <strong>Sempre use chaves { }:</strong> Isso melhora a legibilidade do código, evita erros quando você ou outro programador adicionar mais linhas de código no futuro e define claramente o escopo do bloco.
-            </div>
-
-            <h3>3.2. Comparando Valores: == vs .equals()</h3>
-            <p>Esta é uma das maiores fontes de erro para iniciantes em Java e crucial para entender.</p>
-            
-            <div class="glass-box">
-                <ul class="explanation-list">
-                    <li><strong>== (Operador de Comparação):</strong> Para tipos primitivos (int, double, boolean, char), ele compara os valores. Para objetos (como String), ele compara as referências de memória.</li>
-                    <li><strong>.equals() (Método de Objeto):</strong> É um método disponível para todos os objetos (incluindo String) que compara o conteúdo dos objetos.</li>
-                </ul>
-                <p style="margin-top: 15px;"><strong>A regra é:</strong> Sempre use <span class="highlight-text">.equals()</span> para comparar o conteúdo de objetos, especialmente Strings.</p>
-            </div>
-
-            <h3>3.3. Valores Aceitos nas Condições</h3>
-            <p>A expressão dentro dos parênteses de um if ou else if deve sempre resultar em um valor booleano (true ou false).</p>
-            
-            <ul class="explanation-list">
-                <li><strong>Variáveis booleanas:</strong> <span class="highlight-text">if (estaLogado)</span></li>
-                <li><strong>Operadores relacionais:</strong> (&lt;, &gt;, &lt;=, &gt;=, ==, !=) para comparar números</li>
-                <li><strong>Chamadas de método que retornam booleanos:</strong> <span class="highlight-text">if (minhaString.isEmpty())</span></li>
-                <li><strong>Operadores lógicos:</strong> (&&, ||, !) para combinar múltiplas condições</li>
-            </ul>
-
-            <h3>3.4. A Importância da Ordem das Condições</h3>
-            <p>Em uma cadeia de if-else if-else, as condições são avaliadas na ordem em que aparecem. A primeira condição que for verdadeira terá seu bloco executado, e as demais serão ignoradas.</p>
-            
-            <div class="glass-box">
-                <strong>Cuidado com a ordem:</strong> Coloque as condições mais específicas (ou restritivas) primeiro e as mais gerais por último.
-            </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="section example-section">
-            <h2>4. Exemplos Práticos</h2>
-            
-            <p class="example-title">Exemplo 1: Condição Simples com if</p>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
                 </div>
-                <pre><code class="language-java">public class ExemploIf {
+
+                <div class="glass-box">
+                    <strong>Comparação:</strong> O if é para uma decisão única. O if-else oferece dois caminhos. O if-else if-else permite múltiplos caminhos, testando um após o outro até encontrar uma condição verdadeira ou cair no else final.
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="section">
+                <h2>3. Regras de Ouro das Condicionais em Java</h2>
+                
+                <h3>3.1. Estrutura dos Blocos com Chaves { }</h3>
+                <p>Em Java, os blocos de código associados a um if, else if ou else são delimitados por chaves <span class="highlight-text">{ }</span>. Embora seja possível omitir as chaves para um único comando, é uma má prática e altamente desencorajado.</p>
+                
+                <div class="solid-box">
+                    <strong>Sempre use chaves { }:</strong> Isso melhora a legibilidade do código, evita erros quando você ou outro programador adicionar mais linhas de código no futuro e define claramente o escopo do bloco.
+                </div>
+
+                <h3>3.2. Comparando Valores: == vs .equals()</h3>
+                <p>Esta é uma das maiores fontes de erro para iniciantes em Java e crucial para entender.</p>
+                
+                <div class="glass-box">
+                    <ul class="explanation-list">
+                        <li><strong>== (Operador de Comparação):</strong> Para tipos primitivos (int, double, boolean, char), ele compara os valores. Para objetos (como String), ele compara as referências de memória.</li>
+                        <li><strong>.equals() (Método de Objeto):</strong> É um método disponível para todos os objetos (incluindo String) que compara o conteúdo dos objetos.</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>A regra é:</strong> Sempre use <span class="highlight-text">.equals()</span> para comparar o conteúdo de objetos, especialmente Strings.</p>
+                </div>
+
+                <h3>3.3. Valores Aceitos nas Condições</h3>
+                <p>A expressão dentro dos parênteses de um if ou else if deve sempre resultar em um valor booleano (true ou false).</p>
+                
+                <ul class="explanation-list">
+                    <li><strong>Variáveis booleanas:</strong> <span class="highlight-text">if (estaLogado)</span></li>
+                    <li><strong>Operadores relacionais:</strong> (&lt;, &gt;, &lt;=, &gt;=, ==, !=) para comparar números</li>
+                    <li><strong>Chamadas de método que retornam booleanos:</strong> <span class="highlight-text">if (minhaString.isEmpty())</span></li>
+                    <li><strong>Operadores lógicos:</strong> (&&, ||, !) para combinar múltiplas condições</li>
+                </ul>
+
+                <h3>3.4. A Importância da Ordem das Condições</h3>
+                <p>Em uma cadeia de if-else if-else, as condições são avaliadas na ordem em que aparecem. A primeira condição que for verdadeira terá seu bloco executado, e as demais serão ignoradas.</p>
+                
+                <div class="glass-box">
+                    <strong>Cuidado com a ordem:</strong> Coloque as condições mais específicas (ou restritivas) primeiro e as mais gerais por último.
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="section example-section">
+                <h2>4. Exemplos Práticos</h2>
+                
+                <p class="example-title">Exemplo 1: Condição Simples com if</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class ExemploIf {
     public static void main(String[] args) {
         int temperatura = 25; // Define a temperatura
 
@@ -519,17 +214,17 @@
         System.out.println("Fim do programa."); // Esta linha sempre executa
     }
 }</code></pre>
-            </div>
-
-            <p class="example-title">Exemplo 2: Uso de if e else</p>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
                 </div>
-                <pre><code class="language-java">public class ExemploIfElse {
+
+                <p class="example-title">Exemplo 2: Uso de if e else</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class ExemploIfElse {
     public static void main(String[] args) {
         boolean temCafe = false; // Define se há café
 
@@ -540,17 +235,17 @@
         }
     }
 }</code></pre>
-            </div>
-
-            <p class="example-title">Exemplo 3: Sistema de Notas Completo</p>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
                 </div>
-                <pre><code class="language-java">import java.util.Scanner;
+
+                <p class="example-title">Exemplo 3: Sistema de Notas Completo</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.Scanner;
 
 public class ExemploNotas {
     public static void main(String[] args) {
@@ -572,17 +267,17 @@ public class ExemploNotas {
         scanner.close();
     }
 }</code></pre>
-            </div>
-
-            <p class="example-title">Exemplo 4: Comparação de Strings</p>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
                 </div>
-                <pre><code class="language-java">String senhaCorreta = "senai123";
+
+                <p class="example-title">Exemplo 4: Comparação de Strings</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">String senhaCorreta = "senai123";
 String senhaDigitada = "senai123"; // Simula entrada do usuário
 
 if (senhaDigitada.equals(senhaCorreta)) { // Forma CORRETA de comparar Strings
@@ -590,17 +285,17 @@ if (senhaDigitada.equals(senhaCorreta)) { // Forma CORRETA de comparar Strings
 } else {
     System.out.println("Senha incorreta! Acesso negado.");
 }</code></pre>
-            </div>
-
-            <p class="example-title">Exemplo 5: Verificar Idade para Votar</p>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
                 </div>
-                <pre><code class="language-java">import java.util.Scanner;
+
+                <p class="example-title">Exemplo 5: Verificar Idade para Votar</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.Scanner;
 
 public class Eleitor {
     public static void main(String[] args) {
@@ -620,32 +315,32 @@ public class Eleitor {
         input.close();
     }
 }</code></pre>
+                </div>
             </div>
-        </div>
 
-        <div class="divider"></div>
+            <div class="divider"></div>
 
-        <div class="section">
-            <h2>5. Exercícios Práticos</h2>
-            
-            <div class="exercise-box">
-                <h4>📝 Exercício 1: Par ou Ímpar</h4>
-                <p>Crie um programa que peça um número inteiro ao usuário e diga se ele é par ou ímpar usando if e else.</p>
-                <details>
-                    <summary>Mostrar Solução</summary>
-                    <div class="solution">
-                        <div class="code-wrapper">
-                            <div class="code-header">
-                                <span class="code-dot red"></span>
-                                <span class="code-dot yellow"></span>
-                                <span class="code-dot green"></span>
-                                <span class="code-lang">java</span>
-                            </div>
-                            <pre><code class="language-java">import java.util.Scanner;
+            <div class="section">
+                <h2>5. Exercícios Práticos</h2>
+                
+                <div class="exercise-box">
+                    <h4>Exercício 1: Par ou Ímpar</h4>
+                    <p>Crie um programa que peça um número inteiro ao usuário e diga se ele é par ou ímpar usando if e else.</p>
+                    <details>
+                        <summary>Mostrar Solução</summary>
+                        <div class="solution">
+                            <div class="code-wrapper">
+                                <div class="code-header">
+                                    <span class="code-dot red"></span>
+                                    <span class="code-dot yellow"></span>
+                                    <span class="code-dot green"></span>
+                                    <span class="code-lang">java</span>
+                                </div>
+                                <pre><code class="language-java">import java.util.Scanner;
 
 public class ParOuImpar {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+                        Scanner sc = new Scanner(System.in);
         System.out.print("Digite um número inteiro: ");
         int num = sc.nextInt();
 
@@ -657,25 +352,25 @@ public class ParOuImpar {
         sc.close();
     }
 }</code></pre>
-                        </div>
-                    </div>
-                </details>
-            </div>
-
-            <div class="exercise-box">
-                <h4>📝 Exercício 2: Dia da Semana</h4>
-                <p>Escreva um programa que peça um número de 1 a 7 e imprima o dia da semana correspondente. Use if-else if-else.</p>
-                <details>
-                    <summary>Mostrar Solução</summary>
-                    <div class="solution">
-                        <div class="code-wrapper">
-                            <div class="code-header">
-                                <span class="code-dot red"></span>
-                                <span class="code-dot yellow"></span>
-                                <span class="code-dot green"></span>
-                                <span class="code-lang">java</span>
                             </div>
-                            <pre><code class="language-java">import java.util.Scanner;
+                        </div>
+                    </details>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 2: Dia da Semana</h4>
+                    <p>Escreva um programa que peça um número de 1 a 7 e imprima o dia da semana correspondente. Use if-else if-else.</p>
+                    <details>
+                        <summary>Mostrar Solução</summary>
+                        <div class="solution">
+                            <div class="code-wrapper">
+                                <div class="code-header">
+                                    <span class="code-dot red"></span>
+                                    <span class="code-dot yellow"></span>
+                                    <span class="code-dot green"></span>
+                                    <span class="code-lang">java</span>
+                                </div>
+                                <pre><code class="language-java">import java.util.Scanner;
 
 public class DiaDaSemana {
     public static void main(String[] args) {
@@ -703,25 +398,25 @@ public class DiaDaSemana {
         sc.close();
     }
 }</code></pre>
-                        </div>
-                    </div>
-                </details>
-            </div>
-
-            <div class="exercise-box">
-                <h4>📝 Exercício 3: Login Simples</h4>
-                <p>Crie um programa que peça um nome de usuário e uma senha. Se o usuário for "aluno" e a senha for "senai123", imprima "Login bem-sucedido". Use .equals() para as Strings.</p>
-                <details>
-                    <summary>Mostrar Solução</summary>
-                    <div class="solution">
-                        <div class="code-wrapper">
-                            <div class="code-header">
-                                <span class="code-dot red"></span>
-                                <span class="code-dot yellow"></span>
-                                <span class="code-dot green"></span>
-                                <span class="code-lang">java</span>
                             </div>
-                            <pre><code class="language-java">import java.util.Scanner;
+                        </div>
+                    </details>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 3: Login Simples</h4>
+                    <p>Crie um programa que peça um nome de usuário e uma senha. Se o usuário for "aluno" e a senha for "senai123", imprima "Login bem-sucedido". Use .equals() para as Strings.</p>
+                    <details>
+                        <summary>Mostrar Solução</summary>
+                        <div class="solution">
+                            <div class="code-wrapper">
+                                <div class="code-header">
+                                    <span class="code-dot red"></span>
+                                    <span class="code-dot yellow"></span>
+                                    <span class="code-dot green"></span>
+                                    <span class="code-lang">java</span>
+                                </div>
+                                <pre><code class="language-java">import java.util.Scanner;
 
 public class Login {
     public static void main(String[] args) {
@@ -739,11 +434,72 @@ public class Login {
         sc.close();
     }
 }</code></pre>
+                            </div>
                         </div>
-                    </div>
-                </details>
+                    </details>
+                </div>
             </div>
 
-            <div class="exercise-box">
-                <h4>📝 Exercício 4: Verificador de Triângulo</h4>
-                <p>Dados três lados de um triângulo, determine se é Equilátero (3 lados iguais), Isósceles (2 lados igu
+            <div class="divider"></div>
+
+            <div class="section">
+                <h2>6. Resumo Visual</h2>
+                
+                <div class="glass-box">
+                    <h3>Fluxo de Decisão:</h3>
+                    <p><strong>if (condição1) → else if (condição2) → else if (condição3) → else</strong></p>
+                    <p>• Testa a primeira condição</p>
+                    <p>• Se false, testa a próxima</p>
+                    <p>• Executa apenas um bloco</p>
+                    <p>• else final é opcional</p>
+                </div>
+
+                <div class="glass-box">
+                    <h3>Uso no Mundo Real:</h3>
+                    <p>• Validação de dados (usuário, senha)</p>
+                    <p>• Cálculo de taxas ou descontos</p>
+                    <p>• Controle de acesso</p>
+                    <p>• Processamento de formulários</p>
+                    <p>• Tratamento de erros</p>
+                    <p>• Classificação de dados</p>
+                </div>
+            </div>
+
+            <div class="conclusion-box">
+                <h2>Conclusão</h2>
+                <p>Parabéns por chegar até aqui! Dominar as estruturas condicionais (if, else if, else) é essencial para qualquer programador Java. Elas são a base para criar programas que tomam decisões e reagem a diferentes situações.</p>
+                <p style="margin-top: 15px;"><strong>Continue praticando</strong> e você logo estará usando condicionais naturalmente em seus projetos!</p>
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>Do básico ao avançado: Classes, POO, Collections, Spring Boot e muito mais!</p>
+            <p>Aprenda Java do jeito mais simples possível</p>
+        </footer>
+    </div>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul>
+            </ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>

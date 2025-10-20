@@ -1,0 +1,651 @@
+/* ============================================
+   PÁGINAS DE CONTEÚDO - ESTILOS ESPECÍFICOS
+   ============================================ */
+
+/* ============================================
+   SEÇÕES E TIPOGRAFIA
+   ============================================ */
+
+.section {
+    margin-bottom: var(--space-3xl);
+}
+
+.section h2 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: var(--font-weight-extra-bold);
+    color: var(--color-accent);
+    margin: var(--space-2xl) 0 var(--space-lg) 0;
+    padding-bottom: var(--space-md);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.section h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    margin: var(--space-xl) 0 var(--space-md) 0;
+}
+
+.section h4 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    margin: var(--space-lg) 0 var(--space-md) 0;
+}
+
+.section p {
+    color: var(--color-text);
+    margin: var(--space-md) 0;
+    line-height: 1.8;
+}
+
+.intro-text {
+    margin-bottom: var(--space-xl);
+}
+
+.intro-text p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+}
+
+/* ============================================
+   CÓDIGO E SYNTAX HIGHLIGHTING
+   ============================================ */
+
+.code-wrapper {
+    position: relative;
+    margin: var(--space-xl) 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    border: 2px solid var(--color-border);
+}
+
+.code-header {
+    background-color: var(--color-bg-card);
+    padding: var(--space-md) var(--space-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.code-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.code-dot.red {
+    background: #FF5F56;
+}
+
+.code-dot.yellow {
+    background: #FFBD2E;
+}
+
+.code-dot.green {
+    background: #27C93F;
+}
+
+.code-lang {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-xs);
+    margin-left: auto;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+pre {
+    margin: 0 !important;
+    border-radius: 0 !important;
+}
+
+pre code {
+    display: block;
+    padding: var(--space-xl) !important;
+    background: #1e1e1e !important;
+    color: #d4d4d4;
+    font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace !important;
+    font-size: 0.95em;
+    line-height: 1.6;
+    overflow-x: auto;
+}
+
+/* Highlight.js customização */
+.hljs-string,
+.hljs-attr-value {
+    color: #ce9178;
+}
+
+.hljs-number,
+.hljs-literal {
+    color: #b5cea8;
+}
+
+.hljs-attr-name {
+    color: #9cdcfe;
+}
+
+.hljs-title {
+    color: #4ec9b0;
+}
+
+.hljs-keyword {
+    color: #569cd6;
+}
+
+/* ============================================
+   CAIXAS DE CONTEÚDO
+   ============================================ */
+
+.glass-box {
+    background-color: var(--color-bg-card);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    margin: var(--space-xl) 0;
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(10px);
+}
+
+.glass-box h3 {
+    margin-top: 0;
+    color: var(--color-accent);
+}
+
+.glass-box h4 {
+    color: var(--color-accent);
+}
+
+.glass-box p {
+    color: var(--color-text);
+}
+
+.glass-box ul,
+.glass-box ol {
+    color: var(--color-text);
+}
+
+.solid-box {
+    background-color: var(--color-bg-card);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    margin: var(--space-xl) 0;
+    box-shadow: var(--shadow-md);
+}
+
+.solid-box h3,
+.solid-box h4 {
+    color: var(--color-accent);
+    margin-top: 0;
+}
+
+.solid-box p,
+.solid-box li {
+    color: var(--color-text);
+}
+
+/* ============================================
+   LISTAS E EXPLICAÇÕES
+   ============================================ */
+
+.explanation-list {
+    margin: var(--space-lg) 0;
+    padding-left: var(--space-xl);
+}
+
+.explanation-list li {
+    margin: var(--space-md) 0;
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.explanation-list strong {
+    color: var(--color-accent);
+    font-weight: var(--font-weight-bold);
+}
+
+/* ============================================
+   TABELAS
+   ============================================ */
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--space-xl) 0;
+    background-color: var(--color-bg-card);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.comparison-table th {
+    background-color: rgba(0, 212, 255, 0.15);
+    border-bottom: 2px solid var(--color-border);
+    color: var(--color-accent);
+    padding: var(--space-lg);
+    text-align: left;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-base);
+}
+
+.comparison-table td {
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
+    font-size: var(--font-size-base);
+}
+
+.comparison-table tr:last-child td {
+    border-bottom: none;
+}
+
+.comparison-table strong {
+    color: var(--color-accent);
+    font-weight: var(--font-weight-bold);
+}
+
+/* ============================================
+   EXERCÍCIOS
+   ============================================ */
+
+.exercise-box {
+    background-color: var(--color-bg-card);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    margin: var(--space-lg) 0;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
+}
+
+.exercise-box:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-accent);
+    background-color: rgba(0, 212, 255, 0.05);
+}
+
+.exercise-box h4 {
+    margin-top: 0;
+    color: var(--color-accent);
+}
+
+.exercise-box p {
+    color: var(--color-text);
+    margin-bottom: 0;
+}
+
+/* ============================================
+   TEXTOS DESTACADOS
+   ============================================ */
+
+.highlight-text {
+    background-color: rgba(0, 212, 255, 0.15);
+    color: var(--color-accent);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.95em;
+    font-weight: var(--font-weight-medium);
+    border: 1px solid var(--color-border);
+}
+
+strong {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent);
+}
+
+/* ============================================
+   HEADERS E TÍTULOS ESPECIAIS
+   ============================================ */
+
+.syntax-header {
+    background-color: rgba(0, 212, 255, 0.1);
+    color: var(--color-accent);
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--color-accent);
+    font-weight: var(--font-weight-bold);
+    margin: var(--space-xl) 0 var(--space-md) 0;
+    font-size: var(--font-size-base);
+}
+
+.example-title {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent);
+    margin: var(--space-xl) 0 var(--space-md) 0;
+    font-size: var(--font-size-lg);
+    border-left: 3px solid var(--color-accent);
+    padding-left: var(--space-md);
+}
+
+.example-section {
+    margin: var(--space-2xl) 0;
+}
+
+/* ============================================
+   CAIXA DE CONCLUSÃO
+   ============================================ */
+
+.conclusion-box {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 153, 255, 0.05) 100%);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    margin: var(--space-2xl) 0;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+}
+
+.conclusion-box h2 {
+    color: var(--color-accent);
+    margin-top: 0;
+    border: none;
+    padding-bottom: var(--space-lg);
+}
+
+.conclusion-box p {
+    color: var(--color-text);
+    font-size: var(--font-size-lg);
+    line-height: 1.8;
+}
+
+.conclusion-box strong {
+    color: var(--color-accent);
+}
+
+/* ============================================
+   DIVISORES
+   ============================================ */
+
+.divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+    margin: var(--space-2xl) 0;
+}
+
+/* ============================================
+   CONTEÚDO PRINCIPAL
+   ============================================ */
+
+.content {
+    margin: var(--space-2xl) 0;
+}
+
+.content > h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: var(--font-weight-extra-bold);
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-alt) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--space-md);
+    text-align: center;
+}
+
+.content > .subtitle {
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    margin-bottom: var(--space-2xl);
+    line-height: 1.8;
+}
+
+/* ============================================
+   RESPONSIVIDADE - Tablet (768px)
+   ============================================ */
+
+@media (max-width: 768px) {
+    .section {
+        margin-bottom: var(--space-2xl);
+    }
+
+    .section h2 {
+        font-size: 1.5rem;
+        margin: var(--space-xl) 0 var(--space-md) 0;
+    }
+
+    .section h3 {
+        font-size: 1.1rem;
+    }
+
+    .section p {
+        font-size: var(--font-size-base);
+    }
+
+    .code-wrapper {
+        margin: var(--space-lg) 0;
+    }
+
+    .code-header {
+        padding: var(--space-md);
+        gap: var(--space-sm);
+    }
+
+    pre code {
+        padding: var(--space-lg) !important;
+        font-size: 0.9em;
+    }
+
+    .glass-box,
+    .solid-box {
+        padding: var(--space-lg);
+        margin: var(--space-lg) 0;
+    }
+
+    .comparison-table {
+        font-size: 0.95rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: var(--space-md);
+    }
+
+    .exercise-box {
+        padding: var(--space-md);
+        margin: var(--space-md) 0;
+    }
+
+    .exercise-box h4 {
+        font-size: 1rem;
+    }
+
+    .example-title {
+        font-size: 1.1rem;
+    }
+
+    .conclusion-box {
+        padding: var(--space-xl);
+        margin: var(--space-xl) 0;
+    }
+
+    .conclusion-box h2 {
+        font-size: 1.5rem;
+    }
+
+    .conclusion-box p {
+        font-size: 1rem;
+    }
+
+    .content > h1 {
+        font-size: 1.8rem;
+    }
+
+    .content > .subtitle {
+        font-size: 1rem;
+    }
+}
+
+/* ============================================
+   RESPONSIVIDADE - Mobile (480px)
+   ============================================ */
+
+@media (max-width: 480px) {
+    .section {
+        margin-bottom: var(--space-xl);
+    }
+
+    .section h2 {
+        font-size: 1.3rem;
+        margin: var(--space-lg) 0 var(--space-md) 0;
+        padding-bottom: var(--space-sm);
+    }
+
+    .section h3 {
+        font-size: 1rem;
+        margin: var(--space-lg) 0 var(--space-sm) 0;
+    }
+
+    .section h4 {
+        font-size: 0.95rem;
+        margin: var(--space-md) 0 var(--space-sm) 0;
+    }
+
+    .section p {
+        font-size: 0.95rem;
+        margin: var(--space-sm) 0;
+    }
+
+    .intro-text p {
+        font-size: 0.95rem;
+    }
+
+    .code-wrapper {
+        margin: var(--space-lg) 0;
+        border-radius: var(--radius-md);
+    }
+
+    .code-header {
+        padding: var(--space-sm) var(--space-md);
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+    }
+
+    .code-dot {
+        width: 10px;
+        height: 10px;
+    }
+
+    .code-lang {
+        font-size: 0.7rem;
+        margin-left: auto;
+    }
+
+    pre code {
+        padding: var(--space-lg) var(--space-md) !important;
+        font-size: 0.85em;
+        line-height: 1.5;
+    }
+
+    .glass-box,
+    .solid-box {
+        padding: var(--space-lg);
+        margin: var(--space-lg) 0;
+        border-radius: var(--radius-md);
+    }
+
+    .glass-box h3,
+    .glass-box h4,
+    .solid-box h3,
+    .solid-box h4 {
+        font-size: 1rem;
+        margin: var(--space-md) 0 var(--space-sm) 0;
+    }
+
+    .explanation-list {
+        margin: var(--space-md) 0;
+        padding-left: var(--space-lg);
+    }
+
+    .explanation-list li {
+        margin: var(--space-sm) 0;
+        font-size: 0.95rem;
+    }
+
+    .comparison-table {
+        font-size: 0.85rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: var(--space-sm);
+    }
+
+    .comparison-table th {
+        font-size: 0.9rem;
+    }
+
+    .exercise-box {
+        padding: var(--space-lg);
+        margin: var(--space-md) 0;
+        border-radius: var(--radius-md);
+    }
+
+    .exercise-box h4 {
+        font-size: 0.95rem;
+        margin: 0 0 var(--space-sm) 0;
+    }
+
+    .exercise-box p {
+        font-size: 0.9rem;
+    }
+
+    .highlight-text {
+        font-size: 0.85em;
+        padding: 2px 6px;
+    }
+
+    .syntax-header {
+        padding: var(--space-md);
+        margin: var(--space-lg) 0 var(--space-md) 0;
+        font-size: 0.95rem;
+        border-left-width: 3px;
+    }
+
+    .example-title {
+        font-size: 1rem;
+        margin: var(--space-lg) 0 var(--space-md) 0;
+    }
+
+    .conclusion-box {
+        padding: var(--space-lg);
+        margin: var(--space-lg) 0;
+        border-radius: var(--radius-md);
+    }
+
+    .conclusion-box h2 {
+        font-size: 1.3rem;
+        margin-bottom: var(--space-md);
+        padding-bottom: var(--space-md);
+    }
+
+    .conclusion-box p {
+        font-size: 0.95rem;
+        margin: var(--space-sm) 0;
+    }
+
+    .conclusion-box p:last-child {
+        margin-bottom: 0;
+    }
+
+    .divider {
+        margin: var(--space-xl) 0;
+    }
+
+    .content > h1 {
+        font-size: 1.5rem;
+        margin-bottom: var(--space-sm);
+    }
+
+    .content > .subtitle {
+        font-size: 0.95rem;
+        margin-bottom: var(--space-xl);
+    }
+}

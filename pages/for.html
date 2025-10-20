@@ -1,376 +1,131 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
     <title>Laço FOR em Java - Guia Completo</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #FFF7E2;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #FFF7E2;
-        }
-
-        .header {
-            margin-bottom: 40px;
-        }
-
-        .nav {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .nav-btn:hover {
-            background: #1a1a1a;
-            transform: translateY(-2px);
-        }
-
-        h1 {
-            font-size: 2em;
-            margin-bottom: 20px;
-            color: #333333;
-            font-weight: 800;
-        }
-
-        h2 {
-            font-size: 1.5em;
-            margin: 35px 0 15px 0;
-            color: #333333;
-            font-weight: 800;
-        }
-
-        h3 {
-            font-size: 1.2em;
-            margin: 20px 0 12px 0;
-            color: #333333;
-            font-weight: 700;
-        }
-
-        h4 {
-            font-size: 1.1em;
-            margin: 15px 0 10px 0;
-            color: #333333;
-            font-weight: 700;
-        }
-
-        .subtitle {
-            font-size: 1em;
-            color: #333333;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-
-        p {
-            line-height: 1.8;
-            margin: 12px 0;
-            color: #333333;
-            font-size: 1em;
-        }
-
-        .code-wrapper {
-            position: relative;
-            margin: 20px 0;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        .code-header {
-            background: #2d2d2d;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-bottom: 1px solid #3a3a3a;
-        }
-
-        .code-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-
-        .code-dot.red { background: #ff5f56; }
-        .code-dot.yellow { background: #ffbd2e; }
-        .code-dot.green { background: #27c93f; }
-
-        .code-lang {
-            color: #888;
-            font-size: 0.85em;
-            margin-left: auto;
-            font-family: 'Consolas', monospace;
-        }
-
-        pre {
-            margin: 0 !important;
-            border-radius: 0 !important;
-        }
-
-        pre code {
-            display: block;
-            padding: 25px !important;
-            background: #1e1e1e !important;
-            color: #d4d4d4;
-            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace;
-            font-size: 0.95em;
-            line-height: 1.6;
-            overflow-x: auto;
-        }
-
-        .section {
-            margin-bottom: 30px;
-        }
-
-        .glass-box {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(51, 51, 51, 0.1);
-            border-radius: 12px;
-            padding: 25px;
-            margin: 20px 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .glass-box h3 {
-            margin-top: 0;
-        }
-
-        .explanation-list {
-            margin: 15px 0;
-            padding-left: 20px;
-        }
-
-        .explanation-list li {
-            margin: 10px 0;
-            line-height: 1.7;
-            color: #333333;
-        }
-
-        .example-section {
-            margin: 30px 0;
-        }
-
-        .example-title {
-            font-weight: 700;
-            color: #333333;
-            margin: 25px 0 10px 0;
-            font-size: 1.15em;
-        }
-
-        .solid-box {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 20px;
-            border-radius: 12px;
-            margin: 20px 0;
-        }
-
-        .solid-box h3,
-        .solid-box h4 {
-            color: #FFF7E2;
-            margin-top: 0;
-        }
-
-        .solid-box p,
-        .solid-box li {
-            color: #FFF7E2;
-        }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .comparison-table th {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 15px;
-            text-align: left;
-            font-weight: 700;
-        }
-
-        .comparison-table td {
-            padding: 15px;
-            border-bottom: 1px solid rgba(51, 51, 51, 0.1);
-            color: #333333;
-        }
-
-        .comparison-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .exercise-box {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(51, 51, 51, 0.15);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 15px 0;
-            transition: all 0.3s;
-        }
-
-        .exercise-box:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .exercise-box h4 {
-            margin-top: 0;
-        }
-
-        .highlight-text {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95em;
-        }
-
-        strong {
-            font-weight: 700;
-            color: #333333;
-        }
-
-        .intro-text {
-            margin-bottom: 25px;
-        }
-
-        .syntax-header {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: 700;
-            margin: 25px 0 0 0;
-        }
-
-        .conclusion-box {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(51, 51, 51, 0.2);
-            border-radius: 12px;
-            padding: 30px;
-            margin: 40px 0;
-            text-align: center;
-        }
-
-        .divider {
-            height: 2px;
-            background: rgba(51, 51, 51, 0.1);
-            margin: 30px 0;
-        }
-
-        .markdown-content {
-            color: #333333;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="nav">
-                <a href="../index.html" class="nav-btn">JAVA Learning</a>
-                <a href="../index.html#inicio" class="nav-btn">Início</a>
-                <a href="../index.html#conteudo" class="nav-btn">• Conteúdo</a>
-                <a href="../index.html#roadmap" class="nav-btn">Roadmap</a>
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <!-- Logo SVG -->
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Logo JAVA Learning">
+                        <g id="cup">
+                            <ellipse cx="60" cy="80" rx="35" ry="8" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                            <path d="M 30 75 L 35 45 Q 35 30 60 28 Q 85 30 85 45 L 90 75" 
+                                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M 90 55 Q 110 55 110 70 Q 110 85 90 85" 
+                                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        </g>
+                        <g id="steam" class="steam-effect">
+                            <path d="M 45 20 Q 40 10 45 0" 
+                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+                            <path d="M 60 15 Q 55 0 60 -10" 
+                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+                            <path d="M 75 20 Q 80 10 75 0" 
+                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+                        </g>
+                        <circle cx="60" cy="60" r="50" fill="none" stroke="url(#neonGradient)" 
+                                stroke-width="1" opacity="0.4" class="neon-ring"/>
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
             </div>
-            
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
             <h1>Laço FOR em Java</h1>
             <p class="subtitle">Guia completo para dominar laços de repetição em Java do jeito mais simples possível</p>
-        </div>
 
-        <div class="section">
-            <h2>1. O Básico: Entendendo o FOR</h2>
-            
-            <div class="intro-text">
-                <p>No mundo da programação, os laços de repetição são como a capacidade de tomar decisões várias vezes seguidas. Imagine que você precisa imprimir os números de 1 a 100. Você não vai escrever 100 linhas de código, certo?</p>
+            <div class="section">
+                <h2>1. O Básico: Entendendo o FOR</h2>
                 
-                <p>Em Java, e em outras linguagens, o laço <strong>for</strong> permite que seu programa execute um bloco de código múltiplas vezes de forma controlada. Ele é fundamental para criar programas que processam listas, fazem cálculos repetitivos ou executam qualquer tarefa que precise ser feita várias vezes.</p>
-                
-                <p>Dominar o laço for é um passo crucial para qualquer desenvolvedor, pois ele é a espinha dorsal da lógica de repetição em quase todo software que você encontrará.</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>2. FOR: A Ferramenta da Repetição Controlada</h2>
-            
-            <h3>2.1. O que é for?</h3>
-            <p>O <strong>for</strong> é a estrutura de repetição mais usada em Java quando sabemos exatamente quantas vezes queremos que um código seja executado. Ele organiza tudo de forma clara: onde começar, quando parar e como progredir.</p>
-
-            <div class="syntax-header">Sintaxe básica:</div>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
+                <div class="intro-text">
+                    <p>No mundo da programação, os laços de repetição são como a capacidade de tomar decisões várias vezes seguidas. Imagine que você precisa imprimir os números de 1 a 100. Você não vai escrever 100 linhas de código, certo?</p>
+                    
+                    <p>Em Java, e em outras linguagens, o laço <strong>for</strong> permite que seu programa execute um bloco de código múltiplas vezes de forma controlada. Ele é fundamental para criar programas que processam listas, fazem cálculos repetitivos ou executam qualquer tarefa que precise ser feita várias vezes.</p>
+                    
+                    <p>Dominar o laço for é um passo crucial para qualquer desenvolvedor, pois ele é a espinha dorsal da lógica de repetição em quase todo software que você encontrará.</p>
                 </div>
-                <pre><code class="language-java">for (inicialização; condição; atualização) {
+            </div>
+
+            <div class="section">
+                <h2>2. FOR: A Ferramenta da Repetição Controlada</h2>
+                
+                <h3>2.1. O que é for?</h3>
+                <p>O <strong>for</strong> é a estrutura de repetição mais usada em Java quando sabemos exatamente quantas vezes queremos que um código seja executado. Ele organiza tudo de forma clara: onde começar, quando parar e como progredir.</p>
+
+                <div class="syntax-header">Sintaxe básica:</div>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">for (inicialização; condição; atualização) {
     // bloco de código a ser executado
 }</code></pre>
-            </div>
-
-            <div class="glass-box">
-                <h3>Explicação de cada parte:</h3>
-                <ul class="explanation-list">
-                    <li><strong>Inicialização</strong> → Define a variável de controle e seu valor inicial (ex: <span class="highlight-text">int i = 0</span>)</li>
-                    <li><strong>Condição</strong> → Enquanto for verdadeira, o loop continua executando (ex: <span class="highlight-text">i < 10</span>)</li>
-                    <li><strong>Atualização</strong> → Modifica a variável de controle após cada iteração (ex: <span class="highlight-text">i++</span>)</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="section example-section">
-            <h2>3. Exemplos Práticos</h2>
-            
-            <p class="example-title">Exemplo 1: Contagem de 1 a 10</p>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
                 </div>
-                <pre><code class="language-java">for (int i = 1; i <= 10; i++) {
+
+                <div class="glass-box">
+                    <h3>Explicação de cada parte:</h3>
+                    <ul class="explanation-list">
+                        <li><strong>Inicialização</strong> → Define a variável de controle e seu valor inicial (ex: <span class="highlight-text">int i = 0</span>)</li>
+                        <li><strong>Condição</strong> → Enquanto for verdadeira, o loop continua executando (ex: <span class="highlight-text">i < 10</span>)</li>
+                        <li><strong>Atualização</strong> → Modifica a variável de controle após cada iteração (ex: <span class="highlight-text">i++</span>)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section example-section">
+                <h2>3. Exemplos Práticos</h2>
+                
+                <p class="example-title">Exemplo 1: Contagem de 1 a 10</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">for (int i = 1; i <= 10; i++) {
     System.out.println("Número: " + i);
 }
 
@@ -380,33 +135,33 @@
 // Número: 3
 // ...
 // Número: 10</code></pre>
-            </div>
-
-            <p class="example-title">Exemplo 2: Contagem Regressiva</p>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
                 </div>
-                <pre><code class="language-java">for (int i = 10; i >= 1; i--) {
+
+                <p class="example-title">Exemplo 2: Contagem Regressiva</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">for (int i = 10; i >= 1; i--) {
     System.out.println(i);
 }
-System.out.println("🚀 Lançamento!");
+System.out.println("Lançamento!");
 
-// Saída: 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 🚀 Lançamento!</code></pre>
-            </div>
-
-            <p class="example-title">Exemplo 3: Incremento de 2 em 2 (Números Pares)</p>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
+// Saída: 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, Lançamento!</code></pre>
                 </div>
-                <pre><code class="language-java">for (int i = 0; i <= 20; i += 2) {
+
+                <p class="example-title">Exemplo 3: Incremento de 2 em 2 (Números Pares)</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">for (int i = 0; i <= 20; i += 2) {
     System.out.println("Número par: " + i);
 }
 
@@ -415,17 +170,17 @@ System.out.println("🚀 Lançamento!");
 //        Número par: 4
 //        ...
 //        Número par: 20</code></pre>
-            </div>
-
-            <p class="example-title">Exemplo 4: Soma de Números</p>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
                 </div>
-                <pre><code class="language-java">int soma = 0;
+
+                <p class="example-title">Exemplo 4: Soma de Números</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">int soma = 0;
 
 for (int i = 1; i <= 10; i++) {
     soma += i;
@@ -435,17 +190,17 @@ for (int i = 1; i <= 10; i++) {
 System.out.println("Soma final: " + soma);
 
 // Saída final: Soma final: 55</code></pre>
-            </div>
-
-            <p class="example-title">Exemplo 5: Tabuada do 7</p>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
                 </div>
-                <pre><code class="language-java">System.out.println("=== TABUADA DO 7 ===");
+
+                <p class="example-title">Exemplo 5: Tabuada do 7</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">System.out.println("=== TABUADA DO 7 ===");
 
 for (int i = 1; i <= 10; i++) {
     int resultado = 7 * i;
@@ -457,17 +212,17 @@ for (int i = 1; i <= 10; i++) {
 // 7 x 2 = 14
 // 7 x 3 = 21
 // ...</code></pre>
-            </div>
-
-            <p class="example-title">Exemplo 6: FOR Aninhado (Padrão de Asteriscos)</p>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
                 </div>
-                <pre><code class="language-java">for (int linha = 1; linha <= 5; linha++) {
+
+                <p class="example-title">Exemplo 6: FOR Aninhado (Padrão de Asteriscos)</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">for (int linha = 1; linha <= 5; linha++) {
     for (int coluna = 1; coluna <= linha; coluna++) {
         System.out.print("* ");
     }
@@ -480,163 +235,191 @@ for (int i = 1; i <= 10; i++) {
 // * * *
 // * * * *
 // * * * * *</code></pre>
+                </div>
             </div>
-        </div>
 
-        <div class="divider"></div>
+            <div class="divider"></div>
 
-        <div class="section">
-            <h2>4. Diferenças entre FOR e WHILE</h2>
-            
-            <table class="comparison-table">
-                <tr>
-                    <th>Aspecto</th>
-                    <th>FOR</th>
-                    <th>WHILE</th>
-                </tr>
-                <tr>
-                    <td><strong>Quando usar?</strong></td>
-                    <td>Quando sabemos quantas vezes vamos repetir</td>
-                    <td>Quando não sabemos exatamente quantas repetições</td>
-                </tr>
-                <tr>
-                    <td><strong>Estrutura</strong></td>
-                    <td>Inicialização, condição e atualização juntas</td>
-                    <td>Apenas a condição no cabeçalho</td>
-                </tr>
-                <tr>
-                    <td><strong>Exemplo típico</strong></td>
-                    <td>Contadores, tabuadas, padrões</td>
-                    <td>Validação de entrada do usuário</td>
-                </tr>
-                <tr>
-                    <td><strong>Legibilidade</strong></td>
-                    <td>Mais claro quando há contador fixo</td>
-                    <td>Mais claro para condições dinâmicas</td>
-                </tr>
-            </table>
-        </div>
+            <div class="section">
+                <h2>4. Diferenças entre FOR e WHILE</h2>
+                
+                <table class="comparison-table">
+                    <tr>
+                        <th>Aspecto</th>
+                        <th>FOR</th>
+                        <th>WHILE</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Quando usar?</strong></td>
+                        <td>Quando sabemos quantas vezes vamos repetir</td>
+                        <td>Quando não sabemos exatamente quantas repetições</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Estrutura</strong></td>
+                        <td>Inicialização, condição e atualização juntas</td>
+                        <td>Apenas a condição no cabeçalho</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Exemplo típico</strong></td>
+                        <td>Contadores, tabuadas, padrões</td>
+                        <td>Validação de entrada do usuário</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Legibilidade</strong></td>
+                        <td>Mais claro quando há contador fixo</td>
+                        <td>Mais claro para condições dinâmicas</td>
+                    </tr>
+                </table>
+            </div>
 
-        <div class="divider"></div>
+            <div class="divider"></div>
 
-        <div class="section">
-            <h2>5. Erros Comuns e Boas Práticas</h2>
-            
-            <div class="solid-box">
-                <h3>❌ Erro 1: Loop Infinito</h3>
-                <div class="code-wrapper" style="margin: 15px 0;">
-                    <div class="code-header">
-                        <span class="code-dot red"></span>
-                        <span class="code-dot yellow"></span>
-                        <span class="code-dot green"></span>
-                        <span class="code-lang">java</span>
-                    </div>
-                    <pre><code class="language-java">// ERRADO! Esqueceu de atualizar o 'i'
+            <div class="section">
+                <h2>5. Erros Comuns e Boas Práticas</h2>
+                
+                <div class="solid-box">
+                    <h3>Erro 1: Loop Infinito</h3>
+                    <div class="code-wrapper" style="margin: 15px 0;">
+                        <div class="code-header">
+                            <span class="code-dot red"></span>
+                            <span class="code-dot yellow"></span>
+                            <span class="code-dot green"></span>
+                            <span class="code-lang">java</span>
+                        </div>
+                        <pre><code class="language-java">// ERRADO! Esqueceu de atualizar o 'i'
 for (int i = 0; i < 10; ) {
     System.out.println(i);
     // Loop infinito! i nunca aumenta
 }</code></pre>
-                </div>
-                <p><strong>Solução:</strong> Sempre inclua a atualização da variável de controle (i++)</p>
-            </div>
-
-            <div class="solid-box">
-                <h3>❌ Erro 2: Condição Incorreta</h3>
-                <div class="code-wrapper" style="margin: 15px 0;">
-                    <div class="code-header">
-                        <span class="code-dot red"></span>
-                        <span class="code-dot yellow"></span>
-                        <span class="code-dot green"></span>
-                        <span class="code-lang">java</span>
                     </div>
-                    <pre><code class="language-java">// CUIDADO! Pode gerar erro de índice
+                    <p><strong>Solução:</strong> Sempre inclua a atualização da variável de controle (i++)</p>
+                </div>
+
+                <div class="solid-box">
+                    <h3>Erro 2: Condição Incorreta</h3>
+                    <div class="code-wrapper" style="margin: 15px 0;">
+                        <div class="code-header">
+                            <span class="code-dot red"></span>
+                            <span class="code-dot yellow"></span>
+                            <span class="code-dot green"></span>
+                            <span class="code-lang">java</span>
+                        </div>
+                        <pre><code class="language-java">// CUIDADO! Pode gerar erro de índice
 int[] numeros = {10, 20, 30, 40, 50};
 
 for (int i = 0; i <= numeros.length; i++) {
     System.out.println(numeros[i]); // Erro quando i = 5
 }</code></pre>
+                    </div>
+                    <p><strong>Correção:</strong> Use <span class="highlight-text">i < numeros.length</span> ao invés de <span class="highlight-text">i <= numeros.length</span></p>
                 </div>
-                <p><strong>Correção:</strong> Use <span class="highlight-text">i < numeros.length</span> ao invés de <span class="highlight-text">i <= numeros.length</span></p>
+
+                <div class="glass-box">
+                    <h3>Boas Práticas:</h3>
+                    <ul class="explanation-list">
+                        <li>Use nomes de variáveis descritivos quando necessário (<span class="highlight-text">contador</span>, <span class="highlight-text">indice</span>)</li>
+                        <li>Sempre verifique se a condição de parada está correta</li>
+                        <li>Evite modificar a variável de controle dentro do corpo do loop</li>
+                        <li>Prefira <span class="highlight-text">i++</span> ao invés de <span class="highlight-text">i = i + 1</span> para incrementos simples</li>
+                        <li>Use loops aninhados com cuidado para não afetar a performance</li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="glass-box">
-                <h3>✅ Boas Práticas:</h3>
-                <ul class="explanation-list">
-                    <li>Use nomes de variáveis descritivos quando necessário (<span class="highlight-text">contador</span>, <span class="highlight-text">indice</span>)</li>
-                    <li>Sempre verifique se a condição de parada está correta</li>
-                    <li>Evite modificar a variável de controle dentro do corpo do loop</li>
-                    <li>Prefira <span class="highlight-text">i++</span> ao invés de <span class="highlight-text">i = i + 1</span> para incrementos simples</li>
-                    <li>Use loops aninhados com cuidado para não afetar a performance</li>
-                </ul>
-            </div>
-        </div>
+            <div class="divider"></div>
 
-        <div class="divider"></div>
+            <div class="section">
+                <h2>6. Exercícios Práticos</h2>
+                
+                <div class="exercise-box">
+                    <h4>Exercício 1: Números Ímpares</h4>
+                    <p>Crie um loop for que imprime apenas os números ímpares de 1 a 30.</p>
+                </div>
 
-        <div class="section">
-            <h2>6. Exercícios Práticos</h2>
-            
-            <div class="exercise-box">
-                <h4>📝 Exercício 1: Números Ímpares</h4>
-                <p>Crie um loop for que imprime apenas os números ímpares de 1 a 30.</p>
-            </div>
+                <div class="exercise-box">
+                    <h4>Exercício 2: Fatorial</h4>
+                    <p>Calcule o fatorial de 5 (5! = 5 × 4 × 3 × 2 × 1) usando um loop for.</p>
+                </div>
 
-            <div class="exercise-box">
-                <h4>📝 Exercício 2: Fatorial</h4>
-                <p>Calcule o fatorial de 5 (5! = 5 × 4 × 3 × 2 × 1) usando um loop for.</p>
-            </div>
+                <div class="exercise-box">
+                    <h4>Exercício 3: Padrão de Quadrados</h4>
+                    <p>Use loops aninhados para criar um quadrado 4x4 com o símbolo #.</p>
+                </div>
 
-            <div class="exercise-box">
-                <h4>📝 Exercício 3: Padrão de Quadrados</h4>
-                <p>Use loops aninhados para criar um quadrado 4x4 com o símbolo #.</p>
-            </div>
+                <div class="exercise-box">
+                    <h4>Exercício 4: Contagem Específica</h4>
+                    <p>Imprima todos os múltiplos de 5 entre 0 e 100 usando um loop for.</p>
+                </div>
 
-            <div class="exercise-box">
-                <h4>📝 Exercício 4: Contagem Específica</h4>
-                <p>Imprima todos os múltiplos de 5 entre 0 e 100 usando um loop for.</p>
+                <div class="exercise-box">
+                    <h4>Exercício 5: Média de Números</h4>
+                    <p>Calcule a média dos números de 1 a 20 usando um loop for.</p>
+                </div>
             </div>
 
-            <div class="exercise-box">
-                <h4>📝 Exercício 5: Média de Números</h4>
-                <p>Calcule a média dos números de 1 a 20 usando um loop for.</p>
+            <div class="divider"></div>
+
+            <div class="section">
+                <h2>7. Resumo Visual</h2>
+                
+                <div class="glass-box">
+                    <h3>Estrutura do FOR:</h3>
+                    <p><strong>for (início; condição; atualização) { código }</strong></p>
+                    <p>• <strong>início:</strong> executa uma vez no começo</p>
+                    <p>• <strong>condição:</strong> verifica antes de cada iteração</p>
+                    <p>• <strong>atualização:</strong> executa após cada iteração</p>
+                </div>
+
+                <div class="glass-box">
+                    <h3>Uso no Mundo Real:</h3>
+                    <p>• Processar itens de um carrinho de compras</p>
+                    <p>• Validar campos de formulários</p>
+                    <p>• Gerar relatórios com múltiplos registros</p>
+                    <p>• Percorrer resultados de banco de dados</p>
+                    <p>• Criar animações e efeitos em jogos</p>
+                    <p>• Calcular estatísticas e médias</p>
+                </div>
             </div>
-        </div>
 
-        <div class="divider"></div>
-
-        <div class="section">
-            <h2>7. Resumo Visual</h2>
-            
-            <div class="glass-box">
-                <h3>🔍 Estrutura do FOR:</h3>
-                <p><strong>for (início; condição; atualização) { código }</strong></p>
-                <p>• <strong>início:</strong> executa uma vez no começo</p>
-                <p>• <strong>condição:</strong> verifica antes de cada iteração</p>
-                <p>• <strong>atualização:</strong> executa após cada iteração</p>
+            <div class="conclusion-box">
+                <h2>Conclusão</h2>
+                <p>Parabéns por chegar até aqui! Dominar o laço <strong>for</strong> é essencial para qualquer programador Java. Ele está presente em praticamente todos os códigos, desde aplicações simples até sistemas complexos.</p>
+                <p style="margin-top: 15px;"><strong>Continue praticando</strong> e você logo estará usando loops naturalmente em seus projetos!</p>
             </div>
 
-            <div class="glass-box">
-                <h3>🌍 Uso no Mundo Real:</h3>
-                <p>• Processar itens de um carrinho de compras</p>
-                <p>• Validar campos de formulários</p>
-                <p>• Gerar relatórios com múltiplos registros</p>
-                <p>• Percorrer resultados de banco de dados</p>
-                <p>• Criar animações e efeitos em jogos</p>
-                <p>• Calcular estatísticas e médias</p>
-            </div>
-        </div>
+        </section>
 
-        <div class="conclusion-box">
-            <h2>🎯 Conclusão</h2>
-            <p>Parabéns por chegar até aqui! Dominar o laço <strong>for</strong> é essencial para qualquer programador Java. Ele está presente em praticamente todos os códigos, desde aplicações simples até sistemas complexos.</p>
-            <p style="margin-top: 15px;"><strong>Continue praticando</strong> e você logo estará usando loops naturalmente em seus projetos!</p>
-        </div>
-
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>Do básico ao avançado: Classes, POO, Collections, Spring Boot e muito mais!</p>
+            <p>Aprenda Java do jeito mais simples possível</p>
+        </footer>
     </div>
 
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul>
+                <li><a href="../index.html" class="scroll-menu-link">Voltar ao Início</a></li>
+                <li><a href="../index.html#conteudo" class="scroll-menu-link">Fundamentos</a></li>
+                <li><a href="../index.html#poo" class="scroll-menu-link">POO</a></li>
+                <li><a href="../index.html#estruturas" class="scroll-menu-link">Estruturas</a></li>
+                <li><a href="../index.html#avancado" class="scroll-menu-link">Avançado</a></li>
+                <li><a href="../index.html#frameworks" class="scroll-menu-link">Frameworks</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
     <script>
-        // Inicializa o highlight.js
-        document.addEventListener('DOMContentLoaded', (event) => {
+        document.addEventListener('DOMContentLoaded', () => {
             hljs.highlightAll();
         });
     </script>
