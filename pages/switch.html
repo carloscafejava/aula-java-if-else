@@ -1,420 +1,125 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Switch Case em Java - Guia Completo</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="Switch Case em Java - Guia completo sobre estruturas de seleção múltipla">
+    <meta name="theme-color" content="#8B5A2B">
+    <title>Switch Case em Java</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #FFF7E2;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #FFF7E2;
-        }
-
-        .header {
-            margin-bottom: 40px;
-        }
-
-        .nav {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .nav-btn:hover {
-            background: #1a1a1a;
-            transform: translateY(-2px);
-        }
-
-        h1 {
-            font-size: 2em;
-            margin-bottom: 20px;
-            color: #333333;
-            font-weight: 800;
-        }
-
-        h2 {
-            font-size: 1.5em;
-            margin: 35px 0 15px 0;
-            color: #333333;
-            font-weight: 800;
-        }
-
-        h3 {
-            font-size: 1.2em;
-            margin: 20px 0 12px 0;
-            color: #333333;
-            font-weight: 700;
-        }
-
-        h4 {
-            font-size: 1.1em;
-            margin: 15px 0 10px 0;
-            color: #333333;
-            font-weight: 700;
-        }
-
-        .subtitle {
-            font-size: 1em;
-            color: #333333;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-
-        p {
-            line-height: 1.8;
-            margin: 12px 0;
-            color: #333333;
-            font-size: 1em;
-        }
-
-        .code-wrapper {
-            position: relative;
-            margin: 20px 0;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        .code-header {
-            background: #2d2d2d;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-bottom: 1px solid #3a3a3a;
-        }
-
-        .code-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-
-        .code-dot.red { background: #ff5f56; }
-        .code-dot.yellow { background: #ffbd2e; }
-        .code-dot.green { background: #27c93f; }
-
-        .code-lang {
-            color: #888;
-            font-size: 0.85em;
-            margin-left: auto;
-            font-family: 'Consolas', monospace;
-        }
-
-        pre {
-            margin: 0 !important;
-            border-radius: 0 !important;
-        }
-
-        pre code {
-            display: block;
-            padding: 25px !important;
-            background: #1e1e1e !important;
-            color: #d4d4d4;
-            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace;
-            font-size: 0.95em;
-            line-height: 1.6;
-            overflow-x: auto;
-        }
-
-        .section {
-            margin-bottom: 30px;
-        }
-
-        .glass-box {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(51, 51, 51, 0.1);
-            border-radius: 12px;
-            padding: 25px;
-            margin: 20px 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .glass-box h3 {
-            margin-top: 0;
-        }
-
-        .explanation-list {
-            margin: 15px 0;
-            padding-left: 20px;
-        }
-
-        .explanation-list li {
-            margin: 10px 0;
-            line-height: 1.7;
-            color: #333333;
-        }
-
-        .solid-box {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 20px;
-            border-radius: 12px;
-            margin: 20px 0;
-        }
-
-        .solid-box h3 {
-            color: #FFF7E2;
-            margin-top: 0;
-        }
-
-        .solid-box p,
-        .solid-box li {
-            color: #FFF7E2;
-        }
-
-        .solid-box ul {
-            margin: 15px 0;
-            padding-left: 20px;
-        }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .comparison-table th {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 15px;
-            text-align: left;
-            font-weight: 700;
-        }
-
-        .comparison-table td {
-            padding: 15px;
-            border-bottom: 1px solid rgba(51, 51, 51, 0.1);
-            color: #333333;
-        }
-
-        .comparison-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .exercise-box {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(51, 51, 51, 0.15);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 15px 0;
-            transition: all 0.3s;
-        }
-
-        .exercise-box:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .exercise-box h4 {
-            margin-top: 0;
-        }
-
-        details {
-            margin-top: 15px;
-            cursor: pointer;
-        }
-
-        summary {
-            font-weight: 700;
-            color: #333333;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 8px;
-            list-style: none;
-        }
-
-        summary::-webkit-details-marker {
-            display: none;
-        }
-
-        summary::before {
-            content: "▶ ";
-            display: inline-block;
-            transition: transform 0.2s;
-        }
-
-        details[open] summary::before {
-            transform: rotate(90deg);
-        }
-
-        .solution {
-            margin-top: 10px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-        }
-
-        .highlight-text {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95em;
-        }
-
-        .divider {
-            height: 2px;
-            background: rgba(51, 51, 51, 0.1);
-            margin: 30px 0;
-        }
-
-        .intro-text {
-            margin-bottom: 25px;
-        }
-
-        .syntax-header {
-            background: #333333;
-            color: #FFF7E2;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: 700;
-            margin: 25px 0 0 0;
-        }
-
-        .example-title {
-            font-weight: 700;
-            color: #333333;
-            margin: 25px 0 10px 0;
-            font-size: 1.15em;
-        }
-
-        .conclusion-box {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(51, 51, 51, 0.2);
-            border-radius: 12px;
-            padding: 30px;
-            margin: 40px 0;
-            text-align: center;
-        }
-
-        code {
-            background: rgba(51, 51, 51, 0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95em;
-        }
-
-        strong {
-            font-weight: 700;
-            color: #333333;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="nav">
-                <a href="../index.html" class="nav-btn">JAVA Learning</a>
-                <a href="../index.html#inicio" class="nav-btn">Início</a>
-                <a href="../index.html#conteudo" class="nav-btn">• Conteúdo</a>
-                <a href="../index.html#roadmap" class="nav-btn">Roadmap</a>
-            </div>
-            
-            <h1>Switch Case em Java</h1>
-            <p class="subtitle">Guia completo para dominar a estrutura de seleção múltipla em Java</p>
-        </div>
-
-        <div class="section">
-            <h2>1. O que é Switch Case?</h2>
-            
-            <div class="intro-text">
-                <p>O <strong>switch case</strong> é uma estrutura de controle que permite executar diferentes blocos de código baseado no valor de uma variável ou expressão. É uma alternativa mais elegante ao uso de múltiplos if-else if quando você precisa comparar uma variável com vários valores possíveis.</p>
-                
-                <p>Imagine um menu de opções: em vez de escrever vários if-else if para cada opção (1, 2, 3, 4...), o switch case torna o código mais limpo e fácil de ler.</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>2. Sintaxe Básica</h2>
-
-            <div class="syntax-header">Estrutura do Switch Case:</div>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    </svg>
                 </div>
-                <pre><code class="language-java">switch (expressao) {
+
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
+            <h1>Switch Case em Java</h1>
+            <p class="subtitle">Guia completo para dominar a estrutura de seleção múltipla</p>
+
+            <section class="section">
+                <h2>1. O que é Switch Case?</h2>
+                <div class="intro-text">
+                    <p>O <strong>switch case</strong> é uma estrutura de controle que permite executar diferentes blocos de código baseado no valor de uma variável ou expressão. É uma alternativa mais elegante ao uso de múltiplos if-else if quando você precisa comparar uma variável com vários valores possíveis.</p>
+                    <p>Imagine um menu de opções: em vez de escrever vários if-else if para cada opção (1, 2, 3, 4...), o switch case torna o código mais limpo e fácil de ler.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>2. Sintaxe Básica</h2>
+                <div class="syntax-header">Estrutura do Switch Case:</div>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">switch (expressao) {
     case valor1:
         // código executado se expressao == valor1
         break;
     case valor2:
         // código executado se expressao == valor2
         break;
-    case valor3:
-        // código executado se expressao == valor3
-        break;
     default:
         // código executado se nenhum case corresponder
 }</code></pre>
-            </div>
-
-            <div class="glass-box">
-                <h3>Componentes do Switch:</h3>
-                <ul class="explanation-list">
-                    <li><strong>switch (expressao):</strong> A variável ou expressão a ser testada</li>
-                    <li><strong>case valor:</strong> Cada valor possível para comparação</li>
-                    <li><strong>break:</strong> Sai do switch após executar o case</li>
-                    <li><strong>default:</strong> Executado quando nenhum case corresponde (opcional)</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="section">
-            <h2>3. Exemplos Práticos</h2>
-            
-            <p class="example-title">Exemplo 1: Menu de Opções</p>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
                 </div>
-                <pre><code class="language-java">import java.util.Scanner;
+
+                <div class="glass-box">
+                    <h3>Componentes do Switch:</h3>
+                    <ul class="explanation-list">
+                        <li><strong>switch (expressao):</strong> A variável ou expressão a ser testada</li>
+                        <li><strong>case valor:</strong> Cada valor possível para comparação</li>
+                        <li><strong>break:</strong> Sai do switch após executar o case</li>
+                        <li><strong>default:</strong> Executado quando nenhum case corresponde (opcional)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <section class="section">
+                <h2>3. Exemplos Práticos</h2>
+                
+                <p class="example-title">Exemplo 1: Menu de Opções</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.Scanner;
 
 public class MenuOpcoes {
     public static void main(String[] args) {
@@ -445,85 +150,61 @@ public class MenuOpcoes {
             default:
                 System.out.println("Opção inválida!");
         }
-        
         sc.close();
     }
 }</code></pre>
-            </div>
-
-            <p class="example-title">Exemplo 2: Dias da Semana</p>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
                 </div>
-                <pre><code class="language-java">public class DiaSemana {
+
+                <p class="example-title">Exemplo 2: Dias da Semana</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class DiaSemana {
     public static void main(String[] args) {
         int dia = 3;
         String nomeDia;
         
         switch (dia) {
-            case 1:
-                nomeDia = "Domingo";
-                break;
-            case 2:
-                nomeDia = "Segunda-feira";
-                break;
-            case 3:
-                nomeDia = "Terça-feira";
-                break;
-            case 4:
-                nomeDia = "Quarta-feira";
-                break;
-            case 5:
-                nomeDia = "Quinta-feira";
-                break;
-            case 6:
-                nomeDia = "Sexta-feira";
-                break;
-            case 7:
-                nomeDia = "Sábado";
-                break;
-            default:
-                nomeDia = "Dia inválido";
+            case 1: nomeDia = "Domingo"; break;
+            case 2: nomeDia = "Segunda-feira"; break;
+            case 3: nomeDia = "Terça-feira"; break;
+            case 4: nomeDia = "Quarta-feira"; break;
+            case 5: nomeDia = "Quinta-feira"; break;
+            case 6: nomeDia = "Sexta-feira"; break;
+            case 7: nomeDia = "Sábado"; break;
+            default: nomeDia = "Dia inválido";
         }
         
         System.out.println("Dia: " + nomeDia);
     }
 }</code></pre>
-            </div>
-
-            <p class="example-title">Exemplo 3: Switch com String (Java 7+)</p>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
                 </div>
-                <pre><code class="language-java">public class SwitchString {
+
+                <p class="example-title">Exemplo 3: Switch com String (Java 7+)</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class SwitchString {
     public static void main(String[] args) {
         String mes = "Janeiro";
         
         switch (mes) {
-            case "Janeiro":
-            case "Março":
-            case "Maio":
-            case "Julho":
-            case "Agosto":
-            case "Outubro":
-            case "Dezembro":
+            case "Janeiro": case "Março": case "Maio":
+            case "Julho": case "Agosto": case "Outubro": case "Dezembro":
                 System.out.println(mes + " tem 31 dias");
                 break;
             case "Fevereiro":
                 System.out.println(mes + " tem 28 ou 29 dias");
                 break;
-            case "Abril":
-            case "Junho":
-            case "Setembro":
-            case "Novembro":
+            case "Abril": case "Junho": case "Setembro": case "Novembro":
                 System.out.println(mes + " tem 30 dias");
                 break;
             default:
@@ -531,17 +212,17 @@ public class MenuOpcoes {
         }
     }
 }</code></pre>
-            </div>
-
-            <p class="example-title">Exemplo 4: Calculadora Simples</p>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span class="code-dot red"></span>
-                    <span class="code-dot yellow"></span>
-                    <span class="code-dot green"></span>
-                    <span class="code-lang">java</span>
                 </div>
-                <pre><code class="language-java">import java.util.Scanner;
+
+                <p class="example-title">Exemplo 4: Calculadora Simples</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.Scanner;
 
 public class Calculadora {
     public static void main(String[] args) {
@@ -549,188 +230,134 @@ public class Calculadora {
         
         System.out.print("Digite o primeiro número: ");
         double num1 = sc.nextDouble();
-        
         System.out.print("Digite o operador (+, -, *, /): ");
         char operador = sc.next().charAt(0);
-        
         System.out.print("Digite o segundo número: ");
         double num2 = sc.nextDouble();
         
-        double resultado;
-        
         switch (operador) {
-            case '+':
-                resultado = num1 + num2;
-                System.out.println("Resultado: " + resultado);
-                break;
-            case '-':
-                resultado = num1 - num2;
-                System.out.println("Resultado: " + resultado);
-                break;
-            case '*':
-                resultado = num1 * num2;
-                System.out.println("Resultado: " + resultado);
-                break;
+            case '+': System.out.println("Resultado: " + (num1 + num2)); break;
+            case '-': System.out.println("Resultado: " + (num1 - num2)); break;
+            case '*': System.out.println("Resultado: " + (num1 * num2)); break;
             case '/':
-                if (num2 != 0) {
-                    resultado = num1 / num2;
-                    System.out.println("Resultado: " + resultado);
-                } else {
-                    System.out.println("Erro: Divisão por zero!");
-                }
+                if (num2 != 0) System.out.println("Resultado: " + (num1 / num2));
+                else System.out.println("Erro: Divisão por zero!");
                 break;
-            default:
-                System.out.println("Operador inválido!");
+            default: System.out.println("Operador inválido!");
         }
-        
         sc.close();
     }
 }</code></pre>
-            </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="section">
-            <h2>4. Switch vs If-Else</h2>
-            
-            <table class="comparison-table">
-                <tr>
-                    <th>Aspecto</th>
-                    <th>Switch Case</th>
-                    <th>If-Else</th>
-                </tr>
-                <tr>
-                    <td><strong>Uso</strong></td>
-                    <td>Comparar uma variável com múltiplos valores exatos</td>
-                    <td>Qualquer tipo de condição complexa</td>
-                </tr>
-                <tr>
-                    <td><strong>Legibilidade</strong></td>
-                    <td>Mais limpo para múltiplas opções</td>
-                    <td>Melhor para condições complexas</td>
-                </tr>
-                <tr>
-                    <td><strong>Performance</strong></td>
-                    <td>Mais rápido com muitos cases</td>
-                    <td>Pode ser mais lento</td>
-                </tr>
-                <tr>
-                    <td><strong>Tipos suportados</strong></td>
-                    <td>int, char, String, enum</td>
-                    <td>Qualquer tipo booleano</td>
-                </tr>
-            </table>
-
-            <div class="glass-box">
-                <h3>Quando usar cada um:</h3>
-                <p><strong>Use Switch quando:</strong></p>
-                <ul class="explanation-list">
-                    <li>Comparar uma variável com 3 ou mais valores específicos</li>
-                    <li>Os valores são constantes (números, strings, enums)</li>
-                    <li>Quer código mais legível para múltiplas opções</li>
-                </ul>
-                <p><strong>Use If-Else quando:</strong></p>
-                <ul class="explanation-list">
-                    <li>Precisa de condições complexas (>, <, &&, ||)</li>
-                    <li>Trabalha com intervalos de valores</li>
-                    <li>Tem apenas 1 ou 2 condições para verificar</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="section">
-            <h2>5. Regras e Características Importantes</h2>
-            
-            <div class="solid-box">
-                <h3>Regra 1: Sempre use break!</h3>
-                <p>Sem o <span class="highlight-text">break</span>, o código continua executando os próximos cases (fall-through).</p>
-                <div class="code-wrapper" style="margin-top: 15px;">
-                    <div class="code-header">
-                        <span class="code-dot red"></span>
-                        <span class="code-dot yellow"></span>
-                        <span class="code-dot green"></span>
-                        <span class="code-lang">java</span>
-                    </div>
-                    <pre><code class="language-java">int numero = 2;
-
-switch (numero) {
-    case 1:
-        System.out.println("Um");
-        // SEM break - continua para o próximo!
-    case 2:
-        System.out.println("Dois");
-        // SEM break - continua para o próximo!
-    case 3:
-        System.out.println("Três");
-        break;
-}
-
-// Saída:
-// Dois
-// Três</code></pre>
                 </div>
-            </div>
+            </section>
 
-            <div class="solid-box">
-                <h3>Regra 2: Fall-through intencional</h3>
-                <p>Às vezes, o fall-through é útil para agrupar cases com a mesma ação:</p>
-                <div class="code-wrapper" style="margin-top: 15px;">
-                    <div class="code-header">
-                        <span class="code-dot red"></span>
-                        <span class="code-dot yellow"></span>
-                        <span class="code-dot green"></span>
-                        <span class="code-lang">java</span>
-                    </div>
-                    <pre><code class="language-java">char letra = 'a';
+            <div class="divider"></div>
+
+            <section class="section">
+                <h2>4. Switch vs If-Else</h2>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Aspecto</th>
+                        <th>Switch Case</th>
+                        <th>If-Else</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Uso</strong></td>
+                        <td>Comparar uma variável com múltiplos valores exatos</td>
+                        <td>Qualquer tipo de condição complexa</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Legibilidade</strong></td>
+                        <td>Mais limpo para múltiplas opções</td>
+                        <td>Melhor para condições complexas</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Performance</strong></td>
+                        <td>Mais rápido com muitos cases</td>
+                        <td>Pode ser mais lento</td>
+                    </tr>
+                </table>
+
+                <div class="glass-box">
+                    <h3>Quando usar cada um:</h3>
+                    <p><strong>Use Switch quando:</strong></p>
+                    <ul class="explanation-list">
+                        <li>Comparar uma variável com 3 ou mais valores específicos</li>
+                        <li>Os valores são constantes (números, strings, enums)</li>
+                        <li>Quer código mais legível para múltiplas opções</li>
+                    </ul>
+                    <p><strong>Use If-Else quando:</strong></p>
+                    <ul class="explanation-list">
+                        <li>Precisa de condições complexas (>, <, &&, ||)</li>
+                        <li>Trabalha com intervalos de valores</li>
+                        <li>Tem apenas 1 ou 2 condições para verificar</li>
+                    </ul>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <section class="section">
+                <h2>5. Regras Importantes</h2>
+                
+                <div class="solid-box">
+                    <h3>Regra 1: Sempre use break!</h3>
+                    <p>Sem o <span class="highlight-text">break</span>, o código continua executando os próximos cases (fall-through).</p>
+                </div>
+
+                <div class="solid-box">
+                    <h3>Regra 2: Fall-through intencional</h3>
+                    <p>Às vezes, o fall-through é útil para agrupar cases com a mesma ação:</p>
+                    <div class="code-wrapper" style="margin-top: 15px;">
+                        <div class="code-header">
+                            <span class="code-dot red"></span>
+                            <span class="code-dot yellow"></span>
+                            <span class="code-dot green"></span>
+                            <span class="code-lang">java</span>
+                        </div>
+                        <pre><code class="language-java">char letra = 'a';
 
 switch (letra) {
-    case 'a':
-    case 'e':
-    case 'i':
-    case 'o':
-    case 'u':
+    case 'a': case 'e': case 'i': case 'o': case 'u':
         System.out.println("É uma vogal");
         break;
     default:
         System.out.println("É uma consoante");
 }</code></pre>
+                    </div>
                 </div>
-            </div>
 
-            <div class="glass-box">
-                <h3>Tipos permitidos no Switch:</h3>
-                <ul class="explanation-list">
-                    <li><strong>byte, short, int, char</strong> - tipos primitivos</li>
-                    <li><strong>String</strong> - desde Java 7</li>
-                    <li><strong>Enum</strong> - enumerações</li>
-                    <li><strong>Wrapper classes</strong> - Byte, Short, Integer, Character</li>
-                </ul>
-                <p style="margin-top: 15px;"><strong>Não aceita:</strong> long, float, double, boolean</p>
-            </div>
-        </div>
+                <div class="glass-box">
+                    <h3>Tipos permitidos no Switch:</h3>
+                    <ul class="explanation-list">
+                        <li><strong>Primitivos:</strong> byte, short, int, char</li>
+                        <li><strong>String:</strong> desde Java 7</li>
+                        <li><strong>Enum:</strong> enumerações</li>
+                        <li><strong>Wrapper classes:</strong> Byte, Short, Integer, Character</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>Não aceita:</strong> long, float, double, boolean</p>
+                </div>
+            </section>
 
-        <div class="divider"></div>
+            <div class="divider"></div>
 
-        <div class="section">
-            <h2>6. Exercícios Práticos</h2>
-            
-            <div class="exercise-box">
-                <h4>Exercício 1: Conversor de Notas</h4>
-                <p>Crie um programa que converta uma nota numérica (0-10) em conceito (A, B, C, D, E) usando switch.</p>
-                <details>
-                    <summary>Mostrar Solução</summary>
-                    <div class="solution">
-                        <div class="code-wrapper">
-                            <div class="code-header">
-                                <span class="code-dot red"></span>
-                                <span class="code-dot yellow"></span>
-                                <span class="code-dot green"></span>
-                                <span class="code-lang">java</span>
-                            </div>
-                            <pre><code class="language-java">import java.util.Scanner;
+            <section class="section">
+                <h2>6. Exercícios Práticos</h2>
+                
+                <div class="exercise-box">
+                    <h4>Exercício 1: Conversor de Notas</h4>
+                    <p>Crie um programa que converta uma nota numérica (0-10) em conceito (A, B, C, D, E) usando switch.</p>
+                    <details>
+                        <summary>Mostrar Solução</summary>
+                        <div class="solution">
+                            <div class="code-wrapper">
+                                <div class="code-header">
+                                    <span class="code-dot red"></span>
+                                    <span class="code-dot yellow"></span>
+                                    <span class="code-dot green"></span>
+                                    <span class="code-lang">java</span>
+                                </div>
+                                <pre><code class="language-java">import java.util.Scanner;
 
 public class ConceituadorNotas {
     public static void main(String[] args) {
@@ -739,25 +366,19 @@ public class ConceituadorNotas {
         int nota = sc.nextInt();
         
         switch (nota) {
-            case 10:
-            case 9:
+            case 10: case 9:
                 System.out.println("Conceito: A - Excelente");
                 break;
-            case 8:
-            case 7:
+            case 8: case 7:
                 System.out.println("Conceito: B - Bom");
                 break;
-            case 6:
-            case 5:
+            case 6: case 5:
                 System.out.println("Conceito: C - Regular");
                 break;
-            case 4:
-            case 3:
+            case 4: case 3:
                 System.out.println("Conceito: D - Insuficiente");
                 break;
-            case 2:
-            case 1:
-            case 0:
+            case 2: case 1: case 0:
                 System.out.println("Conceito: E - Reprovado");
                 break;
             default:
@@ -766,25 +387,25 @@ public class ConceituadorNotas {
         sc.close();
     }
 }</code></pre>
-                        </div>
-                    </div>
-                </details>
-            </div>
-
-            <div class="exercise-box">
-                <h4>Exercício 2: Sistema de Estações</h4>
-                <p>Crie um switch que receba um número de mês (1-12) e informe qual estação do ano corresponde.</p>
-                <details>
-                    <summary>Mostrar Solução</summary>
-                    <div class="solution">
-                        <div class="code-wrapper">
-                            <div class="code-header">
-                                <span class="code-dot red"></span>
-                                <span class="code-dot yellow"></span>
-                                <span class="code-dot green"></span>
-                                <span class="code-lang">java</span>
                             </div>
-                            <pre><code class="language-java">import java.util.Scanner;
+                        </div>
+                    </details>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 2: Sistema de Estações</h4>
+                    <p>Crie um switch que receba um número de mês (1-12) e informe qual estação do ano corresponde.</p>
+                    <details>
+                        <summary>Mostrar Solução</summary>
+                        <div class="solution">
+                            <div class="code-wrapper">
+                                <div class="code-header">
+                                    <span class="code-dot red"></span>
+                                    <span class="code-dot yellow"></span>
+                                    <span class="code-dot green"></span>
+                                    <span class="code-lang">java</span>
+                                </div>
+                                <pre><code class="language-java">import java.util.Scanner;
 
 public class Estacoes {
     public static void main(String[] args) {
@@ -793,131 +414,81 @@ public class Estacoes {
         int mes = sc.nextInt();
         
         switch (mes) {
-            case 12:
-            case 1:
-            case 2:
-                System.out.println("Verão");
-                break;
-            case 3:
-            case 4:
-            case 5:
-                System.out.println("Outono");
-                break;
-            case 6:
-            case 7:
-            case 8:
-                System.out.println("Inverno");
-                break;
-            case 9:
-            case 10:
-            case 11:
-                System.out.println("Primavera");
-                break;
-            default:
-                System.out.println("Mês inválido!");
+            case 12: case 1: case 2: System.out.println("Verão"); break;
+            case 3: case 4: case 5: System.out.println("Outono"); break;
+            case 6: case 7: case 8: System.out.println("Inverno"); break;
+            case 9: case 10: case 11: System.out.println("Primavera"); break;
+            default: System.out.println("Mês inválido!");
         }
         sc.close();
     }
 }</code></pre>
-                        </div>
-                    </div>
-                </details>
-            </div>
-
-            <div class="exercise-box">
-                <h4>Exercício 3: Cardápio de Lanchonete</h4>
-                <p>Crie um menu com 5 opções de lanches e seus preços. Use switch para exibir o preço do item escolhido.</p>
-                <details>
-                    <summary>Mostrar Solução</summary>
-                    <div class="solution">
-                        <div class="code-wrapper">
-                            <div class="code-header">
-                                <span class="code-dot red"></span>
-                                <span class="code-dot yellow"></span>
-                                <span class="code-dot green"></span>
-                                <span class="code-lang">java</span>
                             </div>
-                            <pre><code class="language-java">import java.util.Scanner;
-
-public class Lanchonete {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        
-        System.out.println("=== CARDÁPIO ===");
-        System.out.println("1 - Hambúrguer");
-        System.out.println("2 - Pizza");
-        System.out.println("3 - Hot Dog");
-        System.out.println("4 - Sanduíche");
-        System.out.println("5 - Refrigerante");
-        System.out.print("Escolha um item: ");
-        
-        int opcao = sc.nextInt();
-        
-        switch (opcao) {
-            case 1:
-                System.out.println("Hambúrguer - R$ 15,00");
-                break;
-            case 2:
-                System.out.println("Pizza - R$ 35,00");
-                break;
-            case 3:
-                System.out.println("Hot Dog - R$ 8,00");
-                break;
-            case 4:
-                System.out.println("Sanduíche - R$ 12,00");
-                break;
-            case 5:
-                System.out.println("Refrigerante - R$ 5,00");
-                break;
-            default:
-                System.out.println("Opção inválida!");
-        }
-        sc.close();
-    }
-}</code></pre>
                         </div>
-                    </div>
-                </details>
+                    </details>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 3: Cardápio de Lanchonete</h4>
+                    <p>Crie um menu com 5 opções de lanches e seus preços usando switch.</p>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <section class="section">
+                <h2>7. Resumo Visual</h2>
+                
+                <div class="glass-box">
+                    <h3>Estrutura do Switch Case:</h3>
+                    <p><strong>switch (variavel) { case valor: código; break; }</strong></p>
+                    <p>• <strong>switch:</strong> inicia a estrutura</p>
+                    <p>• <strong>case:</strong> cada opção possível</p>
+                    <p>• <strong>break:</strong> sai do switch (não esqueça!)</p>
+                    <p>• <strong>default:</strong> executado quando nenhum case corresponde</p>
+                </div>
+
+                <div class="glass-box">
+                    <h3>Uso no Mundo Real:</h3>
+                    <p>• Menus de aplicações e sistemas</p>
+                    <p>• Processamento de comandos do usuário</p>
+                    <p>• Conversão de códigos e categorias</p>
+                    <p>• Seleção de operações em calculadoras</p>
+                    <p>• Roteamento de ações baseadas em tipo</p>
+                    <p>• Estados de máquinas de estado</p>
+                </div>
+            </section>
+
+            <div class="conclusion-box">
+                <h2>Conclusão</h2>
+                <p>O Switch Case é uma ferramenta poderosa para tornar seu código mais limpo e legível quando você precisa comparar uma variável com múltiplos valores. Ele é especialmente útil para menus, categorização e seleção de opções.</p>
+                <p style="margin-top: 15px;"><strong>Lembre-se:</strong> Use switch para valores específicos e múltiplas opções. Use if-else para condições complexas e intervalos!</p>
             </div>
-        </div>
+        </section>
 
-        <div class="divider"></div>
-
-        <div class="section">
-            <h2>7. Resumo Visual</h2>
-            
-            <div class="glass-box">
-                <h3>Estrutura do Switch Case:</h3>
-                <p><strong>switch (variavel) { case valor: código; break; }</strong></p>
-                <p>• <strong>switch:</strong> inicia a estrutura</p>
-                <p>• <strong>case:</strong> cada opção possível</p>
-                <p>• <strong>break:</strong> sai do switch (não esqueça!)</p>
-                <p>• <strong>default:</strong> executado quando nenhum case corresponde</p>
-            </div>
-
-            <div class="glass-box">
-                <h3>Uso no Mundo Real:</h3>
-                <p>• Menus de aplicações e sistemas</p>
-                <p>• Processamento de comandos do usuário</p>
-                <p>• Conversão de códigos e categorias</p>
-                <p>• Seleção de operações em calculadoras</p>
-                <p>• Roteamento de ações baseadas em tipo</p>
-                <p>• Estados de máquinas de estado</p>
-            </div>
-        </div>
-
-        <div class="conclusion-box">
-            <h2>Conclusão</h2>
-            <p>O Switch Case é uma ferramenta poderosa para tornar seu código mais limpo e legível quando você precisa comparar uma variável com múltiplos valores. Ele é especialmente útil para menus, categorização e seleção de opções.</p>
-            <p style="margin-top: 15px;"><strong>Lembre-se:</strong> Use switch para valores específicos e múltiplas opções. Use if-else para condições complexas e intervalos!</p>
-        </div>
-
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>Do básico ao avançado: Classes, POO, Collections, Spring Boot e muito mais!</p>
+            <p>Aprenda Java do jeito mais simples possível</p>
+        </footer>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            hljs.highlightAll();
-        });
-    </script>
+    <!-- SCROLL TO TOP & MENU -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul></ul>
+        </nav>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script defer src="../js/main.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

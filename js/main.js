@@ -85,16 +85,27 @@ function gerarMenu() {
     });
 
     function abrirMenu() {
-        menu.classList.add('visible');
-        btn.classList.add('menu-open');
-        menuOpen = true;
-    }
+    const menu = document.getElementById('scrollMenu');
+    menu.classList.add('visible');
+}
 
-    function fecharMenu() {
-        menu.classList.remove('visible');
-        btn.classList.remove('menu-open');
-        menuOpen = false;
-    }
+function fecharMenu() {
+    const menu = document.getElementById('scrollMenu');
+    menu.classList.remove('visible');
+}
+
+
+    // function abrirMenu() {
+    //     menu.classList.add('visible');
+    //     btn.classList.add('menu-open');
+    //     menuOpen = true;
+    // }
+
+    // function fecharMenu() {
+    //     menu.classList.remove('visible');
+    //     btn.classList.remove('menu-open');
+    //     menuOpen = false;
+    // }
 
     // Clicar em um link do menu
     menu.addEventListener('click', function(e) {

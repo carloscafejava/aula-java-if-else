@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
+    <meta name="description" content="IF, ELSE IF e ELSE em Java - Guia completo para dominar estruturas condicionais em Java do zero ao avançado">
+    <meta name="theme-color" content="#8B5A2B">
     <title>IF, ELSE IF e ELSE em Java - Guia Completo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
-    <link rel="stylesheet" href="../css/pages.css">
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 </head>
 <body>
@@ -17,38 +19,47 @@
             <div class="header-content">
                 <!-- Logo SVG -->
                 <div class="logo-wrapper">
-                    <svg class="logo" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Logo JAVA Learning">
-                        <g id="cup">
-                            <ellipse cx="60" cy="80" rx="35" ry="8" fill="none" stroke="currentColor" stroke-width="2.5"/>
-                            <path d="M 30 75 L 35 45 Q 35 30 60 28 Q 85 30 85 45 L 90 75" 
-                                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M 90 55 Q 110 55 110 70 Q 110 85 90 85" 
-                                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                        </g>
-                        <g id="steam" class="steam-effect">
-                            <path d="M 45 20 Q 40 10 45 0" 
-                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-                            <path d="M 60 15 Q 55 0 60 -10" 
-                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
-                            <path d="M 75 20 Q 80 10 75 0" 
-                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-                        </g>
-                        <circle cx="60" cy="60" r="50" fill="none" stroke="url(#neonGradient)" 
-                                stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
                         <defs>
                             <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
                                 <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
                             </linearGradient>
                         </defs>
+                        
+                        <!-- Xícara (corpo) -->
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        
+                        <!-- Base da xícara -->
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        
+                        <!-- Alça da xícara (lado direito) -->
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        
+                        <!-- Líquido dentro da xícara -->
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        
+                        <!-- Vapor esquerdo -->
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        
+                        <!-- Vapor centro -->
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        
+                        <!-- Vapor direito -->
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        
+                        <!-- Anel neon -->
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
                     </svg>
                 </div>
 
+                <!-- Título -->
                 <div class="header-text">
                     <h1>JAVA Learning</h1>
                     <p class="subtitle">Hub de Conteúdo</p>
                 </div>
 
+                <!-- Toggle Modo Escuro/Claro -->
                 <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
                     <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <circle cx="12" cy="12" r="5"></circle>
@@ -89,7 +100,7 @@
                 <h2>2. IF, ELSE IF e ELSE: As Ferramentas da Decisão</h2>
                 
                 <h3>2.1. O que é if?</h3>
-                <p>O <code>if</code> (se) é a estrutura condicional mais básica. Ele testa uma única condição. Se a condição for verdadeira, o bloco de código dentro do if é executado. Se for falsa, o bloco é ignorado, e o programa continua sua execução a partir da linha seguinte ao if (ou else, se houver).</p>
+                <p>O <strong>if</strong> (se) é a estrutura condicional mais básica. Ele testa uma única condição. Se a condição for verdadeira, o bloco de código dentro do if é executado. Se for falsa, o bloco é ignorado, e o programa continua sua execução a partir da linha seguinte ao if (ou else, se houver).</p>
 
                 <div class="syntax-header">Sintaxe do if:</div>
                 <div class="code-wrapper">
@@ -106,7 +117,7 @@
                 </div>
 
                 <h3>2.2. O que é else?</h3>
-                <p>O <code>else</code> (senão) atua como uma "alternativa" ao if. Ele sempre vem junto com um if. Se a condição do if for falsa, o bloco de código dentro do else é executado. A lógica é simples: "Se isso for verdade, faça A. Senão, faça B."</p>
+                <p>O <strong>else</strong> (senão) atua como uma "alternativa" ao if. Ele sempre vem junto com um if. Se a condição do if for falsa, o bloco de código dentro do else é executado. A lógica é simples: "Se isso for verdade, faça A. Senão, faça B."</p>
 
                 <div class="syntax-header">Sintaxe do if-else:</div>
                 <div class="code-wrapper">
@@ -124,7 +135,7 @@
                 </div>
 
                 <h3>2.3. O que é else if?</h3>
-                <p>O <code>else if</code> (senão se) é usado para testar múltiplas condições em sequência. Ele sempre vem depois de um if (ou outro else if). Se a condição do if inicial for falsa, o programa passa para o primeiro else if e testa sua condição. Se for verdadeira, executa seu bloco e pula o restante. Se for falsa, vai para o próximo else if (se houver), e assim por diante.</p>
+                <p>O <strong>else if</strong> (senão se) é usado para testar múltiplas condições em sequência. Ele sempre vem depois de um if (ou outro else if). Se a condição do if inicial for falsa, o programa passa para o primeiro else if e testa sua condição. Se for verdadeira, executa seu bloco e pula o restante. Se for falsa, vai para o próximo else if (se houver), e assim por diante.</p>
 
                 <div class="syntax-header">Sintaxe do if-else if-else:</div>
                 <div class="code-wrapper">
@@ -206,12 +217,12 @@
                     </div>
                     <pre><code class="language-java">public class ExemploIf {
     public static void main(String[] args) {
-        int temperatura = 25; // Define a temperatura
+        int temperatura = 25;
 
-        if (temperatura > 20) { // Condição: Se temperatura for maior que 20...
-            System.out.println("Está calor hoje!"); // ...então imprime esta mensagem
+        if (temperatura > 20) {
+            System.out.println("Está calor hoje!");
         }
-        System.out.println("Fim do programa."); // Esta linha sempre executa
+        System.out.println("Fim do programa.");
     }
 }</code></pre>
                 </div>
@@ -226,11 +237,11 @@
                     </div>
                     <pre><code class="language-java">public class ExemploIfElse {
     public static void main(String[] args) {
-        boolean temCafe = false; // Define se há café
+        boolean temCafe = false;
 
-        if (temCafe) { // Condição: Se temCafe for verdadeiro...
+        if (temCafe) {
             System.out.println("Que bom, vou tomar café!");
-        } else { // Senão (se temCafe for falso)...
+        } else {
             System.out.println("Preciso fazer mais café.");
         }
     }
@@ -254,13 +265,13 @@ public class ExemploNotas {
         System.out.print("Digite a nota do aluno (0-100): ");
         int nota = scanner.nextInt();
 
-        if (nota >= 90) { // Primeira condição: Se nota for 90 ou mais...
+        if (nota >= 90) {
             System.out.println("Excelente! Conceito A.");
-        } else if (nota >= 70) { // Senão, se nota for 70 ou mais...
+        } else if (nota >= 70) {
             System.out.println("Muito bom! Conceito B.");
-        } else if (nota >= 50) { // Senão, se nota for 50 ou mais...
+        } else if (nota >= 50) {
             System.out.println("Aprovado! Conceito C.");
-        } else { // Senão (se nenhuma das anteriores for verdadeira)...
+        } else {
             System.out.println("Reprovado. Precisa estudar mais.");
         }
         
@@ -278,9 +289,9 @@ public class ExemploNotas {
                         <span class="code-lang">java</span>
                     </div>
                     <pre><code class="language-java">String senhaCorreta = "senai123";
-String senhaDigitada = "senai123"; // Simula entrada do usuário
+String senhaDigitada = "senai123";
 
-if (senhaDigitada.equals(senhaCorreta)) { // Forma CORRETA de comparar Strings
+if (senhaDigitada.equals(senhaCorreta)) {
     System.out.println("Senha correta! Acesso permitido.");
 } else {
     System.out.println("Senha incorreta! Acesso negado.");
@@ -326,117 +337,16 @@ public class Eleitor {
                 <div class="exercise-box">
                     <h4>Exercício 1: Par ou Ímpar</h4>
                     <p>Crie um programa que peça um número inteiro ao usuário e diga se ele é par ou ímpar usando if e else.</p>
-                    <details>
-                        <summary>Mostrar Solução</summary>
-                        <div class="solution">
-                            <div class="code-wrapper">
-                                <div class="code-header">
-                                    <span class="code-dot red"></span>
-                                    <span class="code-dot yellow"></span>
-                                    <span class="code-dot green"></span>
-                                    <span class="code-lang">java</span>
-                                </div>
-                                <pre><code class="language-java">import java.util.Scanner;
-
-public class ParOuImpar {
-    public static void main(String[] args) {
-                        Scanner sc = new Scanner(System.in);
-        System.out.print("Digite um número inteiro: ");
-        int num = sc.nextInt();
-
-        if (num % 2 == 0) {
-            System.out.println("O número " + num + " é PAR.");
-        } else {
-            System.out.println("O número " + num + " é ÍMPAR.");
-        }
-        sc.close();
-    }
-}</code></pre>
-                            </div>
-                        </div>
-                    </details>
                 </div>
 
                 <div class="exercise-box">
                     <h4>Exercício 2: Dia da Semana</h4>
                     <p>Escreva um programa que peça um número de 1 a 7 e imprima o dia da semana correspondente. Use if-else if-else.</p>
-                    <details>
-                        <summary>Mostrar Solução</summary>
-                        <div class="solution">
-                            <div class="code-wrapper">
-                                <div class="code-header">
-                                    <span class="code-dot red"></span>
-                                    <span class="code-dot yellow"></span>
-                                    <span class="code-dot green"></span>
-                                    <span class="code-lang">java</span>
-                                </div>
-                                <pre><code class="language-java">import java.util.Scanner;
-
-public class DiaDaSemana {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Digite um número de 1 a 7: ");
-        int dia = sc.nextInt();
-
-        if (dia == 1) {
-            System.out.println("Domingo");
-        } else if (dia == 2) {
-            System.out.println("Segunda-feira");
-        } else if (dia == 3) {
-            System.out.println("Terça-feira");
-        } else if (dia == 4) {
-            System.out.println("Quarta-feira");
-        } else if (dia == 5) {
-            System.out.println("Quinta-feira");
-        } else if (dia == 6) {
-            System.out.println("Sexta-feira");
-        } else if (dia == 7) {
-            System.out.println("Sábado");
-        } else {
-            System.out.println("Número inválido.");
-        }
-        sc.close();
-    }
-}</code></pre>
-                            </div>
-                        </div>
-                    </details>
                 </div>
 
                 <div class="exercise-box">
                     <h4>Exercício 3: Login Simples</h4>
                     <p>Crie um programa que peça um nome de usuário e uma senha. Se o usuário for "aluno" e a senha for "senai123", imprima "Login bem-sucedido". Use .equals() para as Strings.</p>
-                    <details>
-                        <summary>Mostrar Solução</summary>
-                        <div class="solution">
-                            <div class="code-wrapper">
-                                <div class="code-header">
-                                    <span class="code-dot red"></span>
-                                    <span class="code-dot yellow"></span>
-                                    <span class="code-dot green"></span>
-                                    <span class="code-lang">java</span>
-                                </div>
-                                <pre><code class="language-java">import java.util.Scanner;
-
-public class Login {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Usuário: ");
-        String usuario = sc.nextLine();
-        System.out.print("Senha: ");
-        String senha = sc.nextLine();
-
-        if (usuario.equals("aluno") && senha.equals("senai123")) {
-            System.out.println("Login bem-sucedido!");
-        } else {
-            System.out.println("Usuário ou senha inválidos.");
-        }
-        sc.close();
-    }
-}</code></pre>
-                            </div>
-                        </div>
-                    </details>
                 </div>
             </div>
 
@@ -491,6 +401,12 @@ public class Login {
         
         <nav class="scroll-menu" id="scrollMenu">
             <ul>
+                <li><a href="../index.html" class="scroll-menu-link">Voltar ao Início</a></li>
+                <li><a href="../index.html#conteudo" class="scroll-menu-link">Fundamentos</a></li>
+                <li><a href="../index.html#poo" class="scroll-menu-link">POO</a></li>
+                <li><a href="../index.html#estruturas" class="scroll-menu-link">Estruturas</a></li>
+                <li><a href="../index.html#avancado" class="scroll-menu-link">Avançado</a></li>
+                <li><a href="../index.html#frameworks" class="scroll-menu-link">Frameworks</a></li>
             </ul>
         </nav>
     </div>

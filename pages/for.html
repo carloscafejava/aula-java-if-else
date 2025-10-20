@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
+    <meta name="description" content="Laço FOR em Java - Guia completo para dominar laços de repetição em Java do zero ao avançado">
+    <meta name="theme-color" content="#8B5A2B">
     <title>Laço FOR em Java - Guia Completo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
     <link rel="stylesheet" href="../css/index.css">
@@ -17,38 +19,47 @@
             <div class="header-content">
                 <!-- Logo SVG -->
                 <div class="logo-wrapper">
-                    <svg class="logo" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Logo JAVA Learning">
-                        <g id="cup">
-                            <ellipse cx="60" cy="80" rx="35" ry="8" fill="none" stroke="currentColor" stroke-width="2.5"/>
-                            <path d="M 30 75 L 35 45 Q 35 30 60 28 Q 85 30 85 45 L 90 75" 
-                                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M 90 55 Q 110 55 110 70 Q 110 85 90 85" 
-                                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                        </g>
-                        <g id="steam" class="steam-effect">
-                            <path d="M 45 20 Q 40 10 45 0" 
-                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-                            <path d="M 60 15 Q 55 0 60 -10" 
-                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
-                            <path d="M 75 20 Q 80 10 75 0" 
-                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-                        </g>
-                        <circle cx="60" cy="60" r="50" fill="none" stroke="url(#neonGradient)" 
-                                stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
                         <defs>
                             <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
                                 <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
                             </linearGradient>
                         </defs>
+                        
+                        <!-- Xícara (corpo) -->
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        
+                        <!-- Base da xícara -->
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        
+                        <!-- Alça da xícara (lado direito) -->
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        
+                        <!-- Líquido dentro da xícara -->
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        
+                        <!-- Vapor esquerdo -->
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        
+                        <!-- Vapor centro -->
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        
+                        <!-- Vapor direito -->
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        
+                        <!-- Anel neon -->
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
                     </svg>
                 </div>
 
+                <!-- Título -->
                 <div class="header-text">
                     <h1>JAVA Learning</h1>
                     <p class="subtitle">Hub de Conteúdo</p>
                 </div>
 
+                <!-- Toggle Modo Escuro/Claro -->
                 <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
                     <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <circle cx="12" cy="12" r="5"></circle>
@@ -279,7 +290,7 @@ for (int i = 1; i <= 10; i++) {
                 
                 <div class="solid-box">
                     <h3>Erro 1: Loop Infinito</h3>
-                    <div class="code-wrapper" style="margin: 15px 0;">
+                    <div class="code-wrapper">
                         <div class="code-header">
                             <span class="code-dot red"></span>
                             <span class="code-dot yellow"></span>
@@ -297,7 +308,7 @@ for (int i = 0; i < 10; ) {
 
                 <div class="solid-box">
                     <h3>Erro 2: Condição Incorreta</h3>
-                    <div class="code-wrapper" style="margin: 15px 0;">
+                    <div class="code-wrapper">
                         <div class="code-header">
                             <span class="code-dot red"></span>
                             <span class="code-dot yellow"></span>

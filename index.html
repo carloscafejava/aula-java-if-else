@@ -16,45 +16,38 @@
         <!-- HEADER -->
         <header class="header">
             <div class="header-content">
-                <!-- Logo SVG -->
+                <!-- Logo SVG Xícara de Café com Cores do Tema -->
                 <div class="logo-wrapper">
-                    <svg class="logo" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Logo JAVA Learning">
-                        <!-- Xícara de café -->
-                        <g id="cup">
-                            <!-- Base da xícara -->
-                            <ellipse cx="60" cy="80" rx="35" ry="8" fill="none" stroke="currentColor" stroke-width="2.5"/>
-                            <!-- Corpo da xícara -->
-                            <path d="M 30 75 L 35 45 Q 35 30 60 28 Q 85 30 85 45 L 90 75" 
-                                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <!-- Alça -->
-                            <path d="M 90 55 Q 110 55 110 70 Q 110 85 90 85" 
-                                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                        </g>
-
-                        <!-- Vapor estilizado -->
-                        <g id="steam" class="steam-effect">
-                            <!-- Vapor esquerdo -->
-                            <path d="M 45 20 Q 40 10 45 0" 
-                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-                            <!-- Vapor centro -->
-                            <path d="M 60 15 Q 55 0 60 -10" 
-                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
-                            <!-- Vapor direito -->
-                            <path d="M 75 20 Q 80 10 75 0" 
-                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-                        </g>
-
-                        <!-- Círculo decorativo neon -->
-                        <circle cx="60" cy="60" r="50" fill="none" stroke="url(#neonGradient)" 
-                                stroke-width="1" opacity="0.4" class="neon-ring"/>
-
-                        <!-- Gradiente neon -->
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
                         <defs>
-                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
-                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
-                            </linearGradient>
+                            <style>
+                                .cup-body { fill: none; stroke: var(--color-accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+                                .cup-handle { fill: none; stroke: var(--color-accent); stroke-width: 3; stroke-linecap: round; }
+                                .cup-liquid { fill: var(--color-accent); opacity: 0.4; }
+                                .steam-line { stroke: var(--color-accent); stroke-width: 2; fill: none; opacity: 0.6; stroke-linecap: round; }
+                            </style>
                         </defs>
+                        
+                        <!-- Xícara (corpo) -->
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z"/>
+                        
+                        <!-- Base da xícara -->
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8"/>
+                        
+                        <!-- Alça da xícara (lado direito) -->
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150"/>
+                        
+                        <!-- Líquido dentro da xícara -->
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z"/>
+                        
+                        <!-- Vapor esquerdo -->
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30"/>
+                        
+                        <!-- Vapor centro -->
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15"/>
+                        
+                        <!-- Vapor direito -->
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30"/>
                     </svg>
                 </div>
 
