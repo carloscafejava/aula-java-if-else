@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="Encapsulamento - Pilar fundamental da POO - Guia completo com exemplos práticos em Java">
+    <meta name="theme-color" content="#8B5A2B">
+    <title>Encapsulamento - Programação Orientada a Objetos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <!-- Logo SVG -->
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    </svg>
+                </div>
+
+                <!-- Título -->
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <!-- Toggle Modo Escuro/Claro -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
+            <h1>Encapsulamento</h1>
+            <p class="subtitle">O Primeiro Pilar da Programação Orientada a Objetos - Proteja seus dados</p>
+
+            <!-- INTRODUÇÃO -->
+            <div class="section">
+                <h2>1. O que é Encapsulamento?</h2>
+                
+                <div class="intro-text">
+                    <p><strong>Encapsulamento</strong> é o conceito de <strong>esconder os detalhes internos</strong> de um objeto e controlar o acesso aos seus dados através de métodos públicos. É como uma cápsula que protege dados privados, permitindo que apenas o necessário seja acessado de fora.</p>
+                    
+                    <p>Imagine uma cápsula de remédio: você não precisa saber exactamente como o medicamento está dentro, você só precisa engolir a cápsula. Da mesma forma, em POO, os usuários da classe não precisam saber como os dados estão organizados internamente.</p>
+                    
+                    <p>O encapsulamento oferece <strong>segurança, controle e flexibilidade</strong> no design de suas classes.</p>
+                </div>
+            </div>
+
+            <!-- MODIFICADORES DE ACESSO -->
+            <div class="section">
+                <h2>2. Modificadores de Acesso</h2>
+                
+                <p>Em Java, existem quatro níveis de visibilidade para membros de uma classe:</p>
+
+                <div class="glass-box">
+                    <h3>public</h3>
+                    <p><strong>Acessível de qualquer lugar do código</strong></p>
+                    <p style="font-style: italic; color: var(--color-text-secondary);">Usar para: métodos que você quer que outros usem</p>
+                </div>
+
+                <div class="glass-box">
+                    <h3>private</h3>
+                    <p><strong>Acessível apenas dentro da própria classe</strong></p>
+                    <p style="font-style: italic; color: var(--color-text-secondary);">Usar para: dados sensíveis e lógica interna</p>
+                </div>
+
+                <div class="glass-box">
+                    <h3>protected</h3>
+                    <p><strong>Acessível dentro do pacote e por subclasses</strong></p>
+                    <p style="font-style: italic; color: var(--color-text-secondary);">Usar para: dados que subclasses precisam acessar</p>
+                </div>
+
+                <div class="glass-box">
+                    <h3>default (sem modificador)</h3>
+                    <p><strong>Acessível apenas dentro do mesmo pacote</strong></p>
+                    <p style="font-style: italic; color: var(--color-text-secondary);">Usar para: membros do pacote</p>
+                </div>
+
+                <h3>Tabela de Visibilidade</h3>
+                <div style="overflow-x: auto;">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Modificador</th>
+                                <th>Mesma Classe</th>
+                                <th>Mesmo Pacote</th>
+                                <th>Subclasse (outro pacote)</th>
+                                <th>Outro Pacote</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="highlight-text">public</span></td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight-text">protected</span></td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✗</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight-text">default</span></td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✗</td>
+                                <td>✗</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight-text">private</span></td>
+                                <td>✓</td>
+                                <td>✗</td>
+                                <td>✗</td>
+                                <td>✗</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- SEM ENCAPSULAMENTO -->
+            <div class="section">
+                <h2>3. Sem Encapsulamento (❌ Errado)</h2>
+                
+                <p>Vamos ver um exemplo de código <strong>SEM</strong> encapsulamento e seus problemas:</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class ContaBancaria {
+    // Dados públicos - PÉSSIMA PRÁTICA!
+    public String titular;
+    public double saldo;
+    public String numero;
+    
+    public ContaBancaria(String titular, double saldo, String numero) {
+        this.titular = titular;
+        this.saldo = saldo;
+        this.numero = numero;
+    }
+}</code></pre>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #ef4444;">
+                    <h3 style="color: #ef4444;">Problemas desta Abordagem:</h3>
+                    <ul class="explanation-list">
+                        <li><strong>Sem Proteção:</strong> Qualquer um pode modificar o saldo diretamente</li>
+                        <li><strong>Sem Validação:</strong> Não há verificação se os valores são válidos</li>
+                        <li><strong>Sem Controle:</strong> Impossível rastrear mudanças nos dados</li>
+                        <li><strong>Sem Flexibilidade:</strong> Se precisar mudar a implementação, quebra todo código dependente</li>
+                    </ul>
+                </div>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Código danoso possível SEM encapsulamento
+ContaBancaria conta = new ContaBancaria("João", 1000, "12345");
+
+// Alguém pode fazer isto:
+conta.saldo = -9999; // ERRO! Saldo negativo absurdo
+conta.titular = null; // ERRO! Sem titular
+conta.saldo = Double.POSITIVE_INFINITY; // ERRO! Valor infinito</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- COM ENCAPSULAMENTO -->
+            <div class="section">
+                <h2>4. Com Encapsulamento (✓ Correto)</h2>
+                
+                <p>Agora vamos ver o mesmo código <strong>COM</strong> encapsulamento:</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class ContaBancaria {
+    // Dados PRIVADOS - Protegidos!
+    private String titular;
+    private double saldo;
+    private String numero;
+    
+    // Construtor
+    public ContaBancaria(String titular, double saldo, String numero) {
+        setTitular(titular);       // Usa setter para validar
+        setSaldo(saldo);           // Usa setter para validar
+        this.numero = numero;
+    }
+    
+    // GETTERS - Apenas para LEITURA
+    public String getTitular() {
+        return this.titular;
+    }
+    
+    public double getSaldo() {
+        return this.saldo;
+    }
+    
+    public String getNumero() {
+        return this.numero;
+    }
+    
+    // SETTERS - Com VALIDAÇÃO
+    public void setTitular(String titular) {
+        if (titular != null && !titular.isEmpty()) {
+            this.titular = titular;
+        } else {
+            System.out.println("Erro: Titular inválido!");
+        }
+    }
+    
+    public void setSaldo(double saldo) {
+        if (saldo >= 0) {
+            this.saldo = saldo;
+        } else {
+            System.out.println("Erro: Saldo não pode ser negativo!");
+        }
+    }
+    
+    // Métodos específicos para operações seguras
+    public void depositar(double valor) {
+        if (valor > 0) {
+            this.saldo += valor;
+            System.out.println("Depósito de R$ " + valor + " realizado com sucesso!");
+        } else {
+            System.out.println("Erro: Valor deve ser positivo!");
+        }
+    }
+    
+    public boolean sacar(double valor) {
+        if (valor > 0 && valor <= this.saldo) {
+            this.saldo -= valor;
+            System.out.println("Saque de R$ " + valor + " realizado com sucesso!");
+            return true;
+        } else {
+            System.out.println("Erro: Saque inválido!");
+            return false;
+        }
+    }
+}</code></pre>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #4ade80;">
+                    <h3 style="color: #4ade80;">Benefícios do Encapsulamento:</h3>
+                    <ul class="explanation-list">
+                        <li><strong>✓ Proteção:</strong> Dados privados não podem ser acessados diretamente</li>
+                        <li><strong>✓ Validação:</strong> Setters garantem que dados são válidos</li>
+                        <li><strong>✓ Controle:</strong> Podemos rastrear e controlar todas as mudanças</li>
+                        <li><strong>✓ Flexibilidade:</strong> Mudanças internas não afetam código externo</li>
+                        <li><strong>✓ Segurança:</strong> Lógica de negócio protegida dentro da classe</li>
+                    </ul>
+                </div>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Usando a classe COM encapsulamento
+ContaBancaria conta = new ContaBancaria("Maria", 1000, "54321");
+
+// Operações seguras
+conta.depositar(500);        // Funciona: 500 > 0
+conta.sacar(200);            // Funciona: 200 <= 1500
+
+// Tentativas perigosas são bloqueadas
+conta.sacar(5000);           // Bloqueado: não há saldo
+conta.depositar(-100);       // Bloqueado: valor negativo
+conta.setTitular("");        // Bloqueado: vazio
+
+// Acesso seguro aos dados
+System.out.println(conta.getSaldo());     // Apenas LEITURA</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- GETTERS E SETTERS DETALHADO -->
+            <div class="section">
+                <h2>5. Getters e Setters - Em Profundidade</h2>
+                
+                <p>Getters e Setters são métodos especiais que permitem acessar e modificar atributos privados de forma controlada:</p>
+
+                <h3>O que é um Getter?</h3>
+                <p>Um <strong>getter</strong> é um método que <strong>retorna o valor</strong> de um atributo privado. É usado apenas para <strong>LEITURA</strong>.</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">private String nome;
+private int idade;
+
+// Getters - Retornam valores (apenas leitura)
+public String getNome() {
+    return this.nome;
+}
+
+public int getIdade() {
+    return this.idade;
+}
+
+// Uso:
+Pessoa pessoa = new Pessoa("João", 30);
+String nome = pessoa.getNome();  // Lê o valor
+int idade = pessoa.getIdade();   // Lê o valor</code></pre>
+                </div>
+
+                <h3>O que é um Setter?</h3>
+                <p>Um <strong>setter</strong> é um método que <strong>modifica o valor</strong> de um atributo privado. Geralmente inclui validação.</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Setters - Modificam valores com validação
+public void setNome(String nome) {
+    if (nome != null && !nome.isEmpty()) {
+        this.nome = nome;
+    } else {
+        System.out.println("Erro: Nome inválido!");
+    }
+}
+
+public void setIdade(int idade) {
+    if (idade > 0 && idade < 150) {
+        this.idade = idade;
+    } else {
+        System.out.println("Erro: Idade inválida!");
+    }
+}
+
+// Uso:
+Pessoa pessoa = new Pessoa("João", 30);
+pessoa.setNome("Carlos");    // Modifica se válido
+pessoa.setIdade(35);         // Modifica se válido
+pessoa.setIdade(-5);         // REJEITADO: Idade negativa!</code></pre>
+                </div>
+
+                <h3>Padrão de Nomenclatura</h3>
+                <ul class="explanation-list">
+                    <li><strong>Getter:</strong> <span class="highlight-text">get</span> + Nome do Atributo (ex: <span class="highlight-text">getSaldo()</span>)</li>
+                    <li><strong>Setter:</strong> <span class="highlight-text">set</span> + Nome do Atributo (ex: <span class="highlight-text">setSaldo()</span>)</li>
+                    <li><strong>Boolean:</strong> <span class="highlight-text">is</span> + Nome (ex: <span class="highlight-text">isAtivo()</span>)</li>
+                </ul>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- ENCAPSULAMENTO PRÁTICO -->
+            <div class="section">
+                <h2>6. Exemplo Prático Completo: Classe Aluno</h2>
+                
+                <p>Vamos criar uma classe completa e bem encapsulada:</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class Aluno {
+    private String matricula;
+    private String nome;
+    private double[] notas;
+    private double media;
+    private boolean aprovado;
+    
+    public Aluno(String matricula, String nome) {
+        this.matricula = matricula;
+        setNome(nome);
+        this.notas = new double[4];
+        this.media = 0;
+        this.aprovado = false;
+    }
+    
+    // ========== GETTERS ==========
+    public String getMatricula() {
+        return this.matricula;
+    }
+    
+    public String getNome() {
+        return this.nome;
+    }
+    
+    public double getMedia() {
+        return this.media;
+    }
+    
+    public boolean isAprovado() {
+        return this.aprovado;
+    }
+    
+    // ========== SETTERS ==========
+    public void setNome(String nome) {
+        if (nome != null && nome.trim().length() >= 3) {
+            this.nome = nome;
+        } else {
+            throw new IllegalArgumentException("Nome deve ter pelo menos 3 caracteres!");
+        }
+    }
+    
+    // ========== MÉTODOS ESPECÍFICOS ==========
+    public void adicionarNota(int posicao, double nota) {
+        if (posicao >= 0 && posicao < 4 && nota >= 0 && nota <= 10) {
+            this.notas[posicao] = nota;
+            calcularMedia();
+        } else {
+            System.out.println("Erro: Posição ou nota inválida!");
+        }
+    }
+    
+    private void calcularMedia() {
+        double soma = 0;
+        for (double nota : this.notas) {
+            soma += nota;
+        }
+        this.media = soma / 4;
+        this.aprovado = this.media >= 6.0;
+    }
+    
+    public void exibirBoletim() {
+        System.out.println("========== BOLETIM DO ALUNO ==========");
+        System.out.println("Matrícula: " + this.matricula);
+        System.out.println("Nome: " + this.nome);
+        System.out.println("Média: " + String.format("%.2f", this.media));
+        System.out.println("Status: " + (this.aprovado ? "APROVADO" : "REPROVADO"));
+        System.out.println("====================================");
+    }
+}</code></pre>
+                </div>
+
+                <h3>Usando a Classe Aluno:</h3>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">Aluno aluno = new Aluno("2024001", "Carlos Silva");
+
+aluno.adicionarNota(0, 8.5);
+aluno.adicionarNota(1, 7.0);
+aluno.adicionarNota(2, 9.0);
+aluno.adicionarNota(3, 6.5);
+
+System.out.println("Média: " + aluno.getMedia());
+System.out.println("Aprovado: " + aluno.isAprovado());
+
+aluno.exibirBoletim();</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- BOAS PRÁTICAS -->
+            <div class="section">
+                <h2>7. Boas Práticas de Encapsulamento</h2>
+
+                <h3>✓ FAÇA:</h3>
+                <ul class="explanation-list">
+                    <li>Use <span class="highlight-text">private</span> por padrão para atributos</li>
+                    <li>Crie getters/setters apenas quando necessário</li>
+                    <li>Valide dados nos setters</li>
+                    <li>Use nomes descritivos e padronizados</li>
+                    <li>Forneça métodos públicos úteis e seguros</li>
+                    <li>Documente o comportamento esperado</li>
+                </ul>
+
+                <h3>✗ EVITE:</h3>
+                <ul class="explanation-list">
+                    <li>Deixar atributos públicos</li>
+                    <li>Criar getter/setter para tudo</li>
+                    <li>Getter que retorna array mutável</li>
+                    <li>Setter sem validação</li>
+                    <li>Expor lógica interna complexa</li>
+                    <li>Nomes muito genéricos como "dados"</li>
+                </ul>
+            </div>
+
+            <!-- EXEMPLO CUIDADO COM ARRAYS -->
+            <div class="section">
+                <h3>Cuidado com Arrays e Objetos Mutáveis</h3>
+                
+                <p>Retornar um array ou objeto diretamente permite que outros o modifiquem. Use <strong>cópia</strong>:</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class Turma {
+    private Aluno[] alunos = new Aluno[30];
+    
+    // ❌ ERRADO - Retorna referência ao array original
+    public Aluno[] getAlunos() {
+        return this.alunos;  // Alguém pode modificar!
+    }
+    
+    // ✓ CORRETO - Retorna cópia do array
+    public Aluno[] getAlunos() {
+        return this.alunos.clone();
+    }
+    
+    // ✓ MELHOR - Retorna unmodifiable list
+    public List<Aluno> getAlunosList() {
+        return Collections.unmodifiableList(Arrays.asList(this.alunos));
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- MAIS EXEMPLOS -->
+            <div class="section">
+                <h2>8. Mais Exemplos de Encapsulamento</h2>
+                
+                <p>Aqui estão mais exemplos práticos e detalhados:</p>
+
+                <h3 class="example-title">Exemplo 1: Classe Produto</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class Produto {
+    private String codigo;
+    private String nome;
+    private double preco;
+    private int estoque;
+    
+    public Produto(String codigo, String nome, double preco, int estoque) {
+        this.codigo = codigo;
+        setNome(nome);
+        setPreco(preco);
+        setEstoque(estoque);
+    }
+    
+    // Getters
+    public String getCodigo() { return this.codigo; }
+    public String getNome() { return this.nome; }
+    public double getPreco() { return this.preco; }
+    public int getEstoque() { return this.estoque; }
+    
+    // Setters com validação
+    public void setNome(String nome) {
+        if (nome != null && !nome.isEmpty()) {
+            this.nome = nome;
+        } else {
+            throw new IllegalArgumentException("Nome não pode ser vazio!");
+        }
+    }
+    
+    public void setPreco(double preco) {
+        if (preco > 0) {
+            this.preco = preco;
+        } else {
+            throw new IllegalArgumentException("Preço deve ser positivo!");
+        }
+    }
+    
+    public void setEstoque(int estoque) {
+        if (estoque >= 0) {
+            this.estoque = estoque;
+        } else {
+            throw new IllegalArgumentException("Estoque não pode ser negativo!");
+        }
+    }
+    
+    // Métodos de negócio
+    public void adicionarEstoque(int quantidade) {
+        if (quantidade > 0) {
+            this.estoque += quantidade;
+            System.out.println(quantidade + " unidades adicionadas!");
+        }
+    }
+    
+    public boolean removerEstoque(int quantidade) {
+        if (quantidade > 0 && quantidade <= this.estoque) {
+            this.estoque -= quantidade;
+            System.out.println(quantidade + " unidades removidas!");
+            return true;
+        }
+        System.out.println("Estoque insuficiente!");
+        return false;
+    }
+    
+    public double calcularValorTotal() {
+        return this.preco * this.estoque;
+    }
+}</code></pre>
+                </div>
+
+                <h3 class="example-title">Exemplo 2: Classe Carro</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class Carro {
+    private String marca;
+    private String modelo;
+    private int ano;
+    private double velocidadeAtual;
+    private double velocidadeMaxima;
+    private boolean ligado;
+    private double combustivel;
+    
+    public Carro(String marca, String modelo, int ano, double velocidadeMaxima) {
+        this.marca = marca;
+        this.modelo = modelo;
+        this.ano = ano;
+        this.velocidadeMaxima = velocidadeMaxima;
+        this.velocidadeAtual = 0;
+        this.ligado = false;
+        this.combustivel = 100;
+    }
+    
+    // Getters
+    public String getMarca() { return this.marca; }
+    public String getModelo() { return this.modelo; }
+    public int getAno() { return this.ano; }
+    public double getVelocidadeAtual() { return this.velocidadeAtual; }
+    public double getVelocidadeMaxima() { return this.velocidadeMaxima; }
+    public boolean isLigado() { return this.ligado; }
+    public double getCombustivel() { return this.combustivel; }
+    
+    // Métodos de operação
+    public void ligar() {
+        if (!this.ligado && this.combustivel > 0) {
+            this.ligado = true;
+            System.out.println(this.marca + " " + this.modelo + " foi ligado!");
+        }
+    }
+    
+    public void desligar() {
+        if (this.ligado && this.velocidadeAtual == 0) {
+            this.ligado = false;
+            System.out.println("Carro desligado!");
+        }
+    }
+    
+    public void acelerar(double incremento) {
+        if (!this.ligado) {
+            System.out.println("Carro está desligado!");
+            return;
+        }
+        double novaVelocidade = this.velocidadeAtual + incremento;
+        if (novaVelocidade <= this.velocidadeMaxima) {
+            this.velocidadeAtual = novaVelocidade;
+            this.combustivel -= (incremento / 10);
+            System.out.println("Acelerou para " + String.format("%.1f", this.velocidadeAtual) + " km/h");
+        }
+    }
+    
+    public void abastecerCombustivel(double litros) {
+        if (litros > 0) {
+            this.combustivel = Math.min(this.combustivel + litros, 100);
+            System.out.println("Abastecido com " + litros + " litros!");
+        }
+    }
+}</code></pre>
+                </div>
+
+                <h3 class="example-title">Exemplo 3: Classe ContaBancaria com Juros</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class ContaBancaria {
+    private String numero;
+    private String titular;
+    private double saldo;
+    private double taxaJuros;
+    
+    public ContaBancaria(String numero, String titular, double saldo, double taxaJuros) {
+        this.numero = numero;
+        setTitular(titular);
+        setSaldo(saldo);
+        setTaxaJuros(taxaJuros);
+    }
+    
+    // Getters
+    public String getNumero() { return this.numero; }
+    public String getTitular() { return this.titular; }
+    public double getSaldo() { return this.saldo; }
+    public double getTaxaJuros() { return this.taxaJuros; }
+    
+    // Setters com validação
+    public void setTitular(String titular) {
+        if (titular != null && !titular.trim().isEmpty()) {
+            this.titular = titular;
+        } else {
+            throw new IllegalArgumentException("Titular inválido!");
+        }
+    }
+    
+    public void setSaldo(double saldo) {
+        if (saldo >= 0) {
+            this.saldo = saldo;
+        } else {
+            throw new IllegalArgumentException("Saldo não pode ser negativo!");
+        }
+    }
+    
+    public void setTaxaJuros(double taxa) {
+        if (taxa >= 0 && taxa < 100) {
+            this.taxaJuros = taxa;
+        } else {
+            throw new IllegalArgumentException("Taxa de juros inválida!");
+        }
+    }
+    
+    // Operações bancárias
+    public boolean depositar(double valor) {
+        if (valor > 0) {
+            this.saldo += valor;
+            System.out.println("Depósito de R$ " + String.format("%.2f", valor) + " realizado!");
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean sacar(double valor) {
+        if (valor > 0 && valor <= this.saldo) {
+            this.saldo -= valor;
+            System.out.println("Saque de R$ " + String.format("%.2f", valor) + " realizado!");
+            return true;
+        }
+        return false;
+    }
+    
+    public void aplicarJuros() {
+        double jurosCalculados = this.saldo * (this.taxaJuros / 100);
+        this.saldo += jurosCalculados;
+        System.out.println("Juros de R$ " + String.format("%.2f", jurosCalculados) + " aplicados!");
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- COMPARAÇÃO IMUTABILIDADE -->
+            <div class="section">
+                <h2>9. Encapsulamento vs Imutabilidade</h2>
+                
+                <p><strong>Encapsulamento</strong> permite mudar dados com segurança. <strong>Imutabilidade</strong> não permite mudar nada depois de criado:</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 20px 0;">
+                    <div class="solid-box">
+                        <h3>Com Encapsulamento (Mutável)</h3>
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public class Pessoa {
+    private String nome;
+    
+    public Pessoa(String nome) {
+        this.nome = nome;
+    }
+    
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
+    public String getNome() {
+        return this.nome;
+    }
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="solid-box">
+                        <h3>Com Imutabilidade (Imutável)</h3>
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-lang">java</span>
+                            </div>
+                            <pre><code class="language-java">public final class Pessoa {
+    private final String nome;
+    
+    public Pessoa(String nome) {
+        this.nome = nome;
+    }
+    
+    public String getNome() {
+        return this.nome;
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- ERROS COMUNS -->
+            <div class="section">
+                <h2>10. Erros Comuns em Encapsulamento</h2>
+
+                <h3 style="color: #ef4444;">❌ Erro 1: Criar getter/setter para tudo</h3>
+                <p>Nem todo atributo precisa de getter/setter. Se não há necessidade de acessar, deixe privado.</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Desnecessário
+private int contador;
+public int getContador() { return contador; }
+public void setContador(int c) { contador = c; }
+
+// Melhor - usar apenas internamente
+private int contador;</code></pre>
+                </div>
+
+                <h3 style="color: #ef4444;">❌ Erro 2: Setter sem validação</h3>
+                <p>Um setter sem validação é tão perigoso quanto um atributo público.</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Ruim
+public void setIdade(int idade) {
+    this.idade = idade;
+}
+
+// Bom
+public void setIdade(int idade) {
+    if (idade > 0 && idade < 150) {
+        this.idade = idade;
+    }
+}</code></pre>
+                </div>
+
+                <h3 style="color: #ef4444;">❌ Erro 3: Retornar arrays sem copiar</h3>
+                <p>Retornar arrays permite que outros os modifiquem. Clone sempre.</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Ruim
+public int[] getDados() {
+    return this.dados;
+}
+
+// Bom
+public int[] getDados() {
+    return this.dados.clone();
+}</code></pre>
+                </div>
+
+                <h3 style="color: #ef4444;">❌ Erro 4: Atributos públicos</h3>
+                <p>Nunca deixe atributos públicos. Sempre use private e controle via métodos.</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Terrível
+public class Conta {
+    public double saldo;
+}
+
+// Correto
+public class Conta {
+    private double saldo;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXERCÍCIOS -->
+            <div class="section">
+                <h2>11. Exercícios Práticos</h2>
+                
+                <div class="exercise-box">
+                    <h4>Exercício 1: Classe Livro</h4>
+                    <p>Crie uma classe <strong>Livro</strong> com atributos: ISBN, título, autor, preço e quantidade em estoque. Implemente getters, setters com validação e métodos para adicionar/remover do estoque.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 2: Classe Funcionário</h4>
+                    <p>Crie uma classe <strong>Funcionário</strong> com: matrícula, nome, salário base e departamento. Implemente método para calcular salário com bônus (10% se departamento for vendas). Use encapsulamento completo.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 3: Classe Temperatura</h4>
+                    <p>Crie uma classe <strong>Temperatura</strong> que armazena temperatura em Celsius. Implemente getters para Celsius, Fahrenheit e Kelvin. Use encapsulamento para validar valores.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 4: Classe Retângulo</h4>
+                    <p>Crie uma classe <strong>Retângulo</strong> com largura e altura privadas. Implemente métodos para calcular área, perímetro e aumentar/diminuir dimensões com validação.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- CONCLUSÃO -->
+            <div class="conclusion-box">
+                <h2>Conclusão</h2>
+                <p>O <strong>encapsulamento</strong> é o primeiro passo para escrever código profissional e seguro em Java. Proteja seus dados com <span class="highlight-text">private</span>, controle acesso com <span class="highlight-text">getters/setters</span> e sempre valide seus dados.</p>
+                <p>Lembre-se: <strong>dados privados + métodos públicos = código seguro e flexível</strong>!</p>
+                <p><strong>Próximos passos:</strong> Estude os outros pilares - Herança, Polimorfismo e Abstração - para se tornar um mestre em POO!</p>
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>Encapsulamento: Proteja seus dados, organize seu código!</p>
+            <p>Do básico ao avançado: POO, Collections, Spring Boot e muito mais!</p>
+        </footer>
+    </div>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul></ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="Arrays e ArrayList - Estruturas de Dados, Listas Dinâmicas e Collections Framework">
+    <meta name="theme-color" content="#8B5A2B">
+    <title>Arrays e ArrayList - Estruturas de Dados em Java</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <!-- Logo SVG -->
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    </svg>
+                </div>
+
+                <!-- Título -->
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <!-- Toggle Modo Escuro/Claro -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
+            <h1>📦 Arrays e ArrayList</h1>
+            <p class="subtitle">Estruturas de Dados, Listas Dinâmicas e Collections Framework</p>
+
+            <!-- INTRODUÇÃO -->
+            <div class="section">
+                <h2>1. O que são Arrays e ArrayList?</h2>
+                
+                <div class="intro-text">
+                    <p><strong>Arrays</strong> e <strong>ArrayList</strong> são estruturas de dados fundamentais em Java para armazenar coleções de elementos. Ambos permitem acessar elementos via índice, mas têm diferenças importantes.</p>
+                    
+                    <p>Um <strong>Array</strong> é uma coleção de tamanho <strong>fixo</strong>, definido na criação. Um <strong>ArrayList</strong> é uma coleção de tamanho <strong>dinâmico</strong>, que cresce automaticamente.</p>
+                    
+                    <p>Escolher a estrutura correta é fundamental para escrever código eficiente e mantível.</p>
+                </div>
+            </div>
+
+            <!-- COMPARAÇÃO RÁPIDA -->
+            <div class="section">
+                <h2>2. Comparação Rápida</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Array</h3>
+                    <ul class="explanation-list">
+                        <li><strong>Tamanho:</strong> Fixo, definido na criação</li>
+                        <li><strong>Tipos:</strong> Primitivos e objetos</li>
+                        <li><strong>Desempenho:</strong> Muito rápido (O1)</li>
+                        <li><strong>Flexibilidade:</strong> Baixa</li>
+                        <li><strong>Redimensionamento:</strong> Manual</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #10b981;">
+                    <h3>ArrayList</h3>
+                    <ul class="explanation-list">
+                        <li><strong>Tamanho:</strong> Dinâmico, cresce automaticamente</li>
+                        <li><strong>Tipos:</strong> Apenas objetos</li>
+                        <li><strong>Desempenho:</strong> Rápido, com sobrecarga mínima</li>
+                        <li><strong>Flexibilidade:</strong> Muito alta</li>
+                        <li><strong>Redimensionamento:</strong> Automático</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- ARRAYS -->
+            <div class="section">
+                <h2>3. Arrays em Java</h2>
+
+                <p>Um array é uma coleção de elementos do <strong>mesmo tipo</strong> armazenados em posições contíguas de memória. O tamanho é definido na criação e não pode ser alterado.</p>
+
+                <h3>Declaração e Inicialização:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Declaração de array de inteiros
+int[] numeros = new int[5];
+
+// Declaração com inicialização
+int[] pares = {2, 4, 6, 8, 10};
+
+// Array de Strings
+String[] nomes = new String[3];
+nomes[0] = "Ana";
+nomes[1] = "Bruno";
+nomes[2] = "Carlos";
+
+// Array de doubles
+double[] notas = {7.5, 8.0, 9.5, 6.5};
+
+// Acessar elementos
+System.out.println(pares[0]);      // 2
+System.out.println(nomes.length);  // 3
+
+// Percorrer com for tradicional
+for (int i = 0; i < pares.length; i++) {
+    System.out.println(pares[i]);
+}
+
+// For-each
+for (int num : pares) {
+    System.out.println(num);
+}</code></pre>
+                </div>
+
+                <h3>Operações com Arrays:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.Arrays;
+
+int[] numeros = {5, 2, 8, 1, 9};
+
+// Ordenar array
+Arrays.sort(numeros);
+System.out.println(Arrays.toString(numeros)); // [1, 2, 5, 8, 9]
+
+// Buscar elemento (array deve estar ordenado)
+int indice = Arrays.binarySearch(numeros, 5);
+
+// Preencher array
+Arrays.fill(numeros, 10);
+
+// Copiar array
+int[] copia = Arrays.copyOf(numeros, numeros.length);
+
+// Copiar parte do array
+int[] parte = Arrays.copyOfRange(numeros, 1, 4);
+
+// Comparar arrays
+int[] arr1 = {1, 2, 3};
+int[] arr2 = {1, 2, 3};
+System.out.println(Arrays.equals(arr1, arr2)); // true</code></pre>
+                </div>
+
+                <h3>Arrays Multidimensionais:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Array bidimensional (matriz)
+int[][] matriz = new int[3][3];
+
+// Inicializar matriz
+int[][] tabuleiro = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+
+// Acessar elementos
+System.out.println(tabuleiro[0][0]); // 1
+System.out.println(tabuleiro[1][2]); // 6
+
+// Percorrer matriz
+for (int i = 0; i < tabuleiro.length; i++) {
+    for (int j = 0; j < tabuleiro[i].length; j++) {
+        System.out.print(tabuleiro[i][j] + " ");
+    }
+    System.out.println();
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- ARRAYLIST -->
+            <div class="section">
+                <h2>4. ArrayList em Java</h2>
+
+                <p>Um <strong>ArrayList</strong> é uma implementação de List da Collections Framework que funciona como um array dinâmico. Cresce e diminui automaticamente conforme você adiciona ou remove elementos.</p>
+
+                <h3>Declaração e Inicialização:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
+
+// Declaração básica
+ArrayList<String> nomes = new ArrayList<>();
+
+// Com capacidade inicial
+ArrayList<Integer> numeros = new ArrayList<>(10);
+
+// Usando interface List (boa prática)
+List<String> frutas = new ArrayList<>();
+
+// ArrayList com inicialização de valores
+ArrayList<String> cores = new ArrayList<>();
+cores.add("Vermelho");
+cores.add("Verde");
+cores.add("Azul");
+
+// Usando Arrays.asList para inicializar
+List<String> capitais = new ArrayList<>(
+    Arrays.asList("Brasília", "Rio", "São Paulo")
+);</code></pre>
+                </div>
+
+                <h3>Métodos Principais:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">ArrayList<String> tarefas = new ArrayList<>();
+
+// ✅ ADD - Adicionar elemento
+tarefas.add("Estudar Java");
+tarefas.add("Fazer exercícios");
+tarefas.add(1, "Revisar POO");  // Inserir na posição 1
+
+// ✅ GET - Obter elemento por índice
+String primeira = tarefas.get(0);
+
+// ✅ SET - Modificar elemento
+tarefas.set(0, "Aprender ArrayList");
+
+// ✅ REMOVE - Remover por índice
+tarefas.remove(1);
+// Remover por objeto
+tarefas.remove("Fazer exercícios");
+
+// ✅ SIZE - Obter tamanho
+System.out.println(tarefas.size());
+
+// ✅ CONTAINS - Verificar se contém
+if (tarefas.contains("Aprender ArrayList")) {
+    System.out.println("Encontrado!");
+}
+
+// ✅ INDEXOF - Encontrar índice
+int indice = tarefas.indexOf("Aprender ArrayList");
+
+// ✅ ISEMPTY - Verificar se está vazio
+System.out.println(tarefas.isEmpty());
+
+// ✅ CLEAR - Limpar lista
+tarefas.clear();
+
+// ✅ ADDALL - Adicionar múltiplos elementos
+tarefas.addAll(Arrays.asList("Ler", "Escrever", "Pensar"));</code></pre>
+                </div>
+
+                <h3>Iteração sobre ArrayList:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">ArrayList<String> linguagens = new ArrayList<>(
+    Arrays.asList("Java", "Python", "JavaScript", "C++")
+);
+
+// 1️⃣ For tradicional
+for (int i = 0; i < linguagens.size(); i++) {
+    System.out.println(linguagens.get(i));
+}
+
+// 2️⃣ For-each
+for (String lang : linguagens) {
+    System.out.println(lang);
+}
+
+// 3️⃣ Iterator
+import java.util.Iterator;
+Iterator<String> iterator = linguagens.iterator();
+while (iterator.hasNext()) {
+    System.out.println(iterator.next());
+}
+
+// 4️⃣ forEach com lambda (Java 8+)
+linguagens.forEach(lang -> System.out.println(lang));
+
+// 5️⃣ Stream API (Java 8+)
+linguagens.stream()
+    .forEach(System.out::println);</code></pre>
+                </div>
+
+                <h3>Ordenação e Busca:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.Collections;
+
+ArrayList<Integer> numeros = new ArrayList<>(
+    Arrays.asList(5, 2, 8, 1, 9, 3)
+);
+
+// Ordenar em ordem crescente
+Collections.sort(numeros);
+
+// Ordenar em ordem decrescente
+Collections.sort(numeros, Collections.reverseOrder());
+
+// Encontrar máximo
+int maximo = Collections.max(numeros);
+
+// Encontrar mínimo
+int minimo = Collections.min(numeros);
+
+// Embaralhar
+Collections.shuffle(numeros);
+
+// Busca binária (lista deve estar ordenada)
+Collections.sort(numeros);
+int indice = Collections.binarySearch(numeros, 5);
+
+// Inverter ordem
+Collections.reverse(numeros);</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXEMPLO PRÁTICO -->
+            <div class="section">
+                <h2>5. Exemplo Prático: Sistema de Alunos</h2>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.ArrayList;
+import java.util.Collections;
+
+public class Aluno {
+    private String nome;
+    private double media;
+    
+    public Aluno(String nome, double media) {
+        this.nome = nome;
+        this.media = media;
+    }
+    
+    public String getNome() { return nome; }
+    public double getMedia() { return media; }
+    
+    @Override
+    public String toString() {
+        return nome + " - Média: " + media;
+    }
+}
+
+public class SistemaAlunos {
+    private ArrayList<Aluno> alunos;
+    
+    public SistemaAlunos() {
+        alunos = new ArrayList<>();
+    }
+    
+    public void adicionarAluno(String nome, double media) {
+        alunos.add(new Aluno(nome, media));
+    }
+    
+    public void listarAlunos() {
+        for (Aluno a : alunos) {
+            System.out.println(a);
+        }
+    }
+    
+    public void removerAluno(String nome) {
+        alunos.removeIf(a -> a.getNome().equals(nome));
+    }
+    
+    public int getTotalAlunos() {
+        return alunos.size();
+    }
+}
+
+// Uso
+public class Main {
+    public static void main(String[] args) {
+        SistemaAlunos sistema = new SistemaAlunos();
+        
+        sistema.adicionarAluno("Ana", 8.5);
+        sistema.adicionarAluno("Bruno", 7.0);
+        sistema.adicionarAluno("Carlos", 9.5);
+        
+        System.out.println("Total: " + sistema.getTotalAlunos());
+        sistema.listarAlunos();
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- QUANDO USAR -->
+            <div class="section">
+                <h2>6. Quando Usar Array vs ArrayList?</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>✓ Use Array quando:</h3>
+                    <ul class="explanation-list">
+                        <li>Conhece o tamanho exato dos dados</li>
+                        <li>Precisa armazenar tipos primitivos</li>
+                        <li>Máximo desempenho é crítico</li>
+                        <li>Trabalha com matrizes multidimensionais</li>
+                        <li>O tamanho nunca muda durante execução</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #10b981;">
+                    <h3>✓ Use ArrayList quando:</h3>
+                    <ul class="explanation-list">
+                        <li>O tamanho é desconhecido ou variável</li>
+                        <li>Adiciona/remove elementos frequentemente</li>
+                        <li>Quer usar métodos prontos (sort, contains, etc)</li>
+                        <li>Trabalha com Collections Framework</li>
+                        <li>Flexibilidade é mais importante que desempenho</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXERCÍCIOS -->
+            <div class="section">
+                <h2>7. Exercícios Práticos</h2>
+                
+                <div class="exercise-box">
+                    <h4>Exercício 1: Calculadora de Notas</h4>
+                    <p>Use ArrayList para armazenar notas de alunos. Calcule média, maior nota, menor nota e quantos alunos passaram (média ≥ 6).</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 2: Gerenciador de Produtos</h4>
+                    <p>Crie um sistema que use ArrayList para adicionar, remover e listar produtos. Implemente busca por nome e ordenação por preço.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 3: Manipulação de Arrays</h4>
+                    <p>Crie um programa que trabalhe com array de inteiros: ordenação, busca, inversão e cálculo de soma/média.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 4: Lista de Tarefas</h4>
+                    <p>Implemente um sistema de tarefas com ArrayList. Funcionalidades: adicionar, remover, marcar como concluída e listar.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- CONCLUSÃO -->
+            <div class="conclusion-box">
+                <h2>Conclusão</h2>
+                <p><strong>Arrays</strong> e <strong>ArrayList</strong> são estruturas fundamentais para armazenar e manipular coleções de dados em Java.</p>
+                <p>Escolha a estrutura certa depende do seu caso de uso:</p>
+                <ul class="explanation-list">
+                    <li><strong>Arrays</strong> para dados fixos e desempenho crítico</li>
+                    <li><strong>ArrayList</strong> para flexibilidade e facilidade de manipulação</li>
+                </ul>
+                <p>Para a maioria dos novos projetos, <strong>ArrayList é a melhor escolha</strong>. Arrays apenas para otimizações específicas.</p>
+                <p>Domine essas estruturas e você estará pronto para trabalhar com Collections mais avançadas! 🎓</p>
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>Arrays e ArrayList: Estruturas de Dados, Collections, Gerenciamento!</p>
+            <p>Do básico ao avançado: POO, Collections, Spring Boot e muito mais!</p>
+        </footer>
+    </div>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul></ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="Polimorfismo - Terceiro pilar da POO - Um mesmo método, múltiplos comportamentos">
+    <meta name="theme-color" content="#8B5A2B">
+    <title>Polimorfismo - Programação Orientada a Objetos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <!-- Logo SVG -->
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    </svg>
+                </div>
+
+                <!-- Título -->
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <!-- Toggle Modo Escuro/Claro -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
+            <h1>Polimorfismo</h1>
+            <p class="subtitle">O Terceiro Pilar da Programação Orientada a Objetos - Um mesmo método, múltiplos comportamentos</p>
+
+            <!-- INTRODUÇÃO -->
+            <div class="section">
+                <h2>1. O que é Polimorfismo?</h2>
+                
+                <div class="intro-text">
+                    <p><strong>Polimorfismo</strong> vem do grego "poli" (muitos) + "morphos" (formas). É a capacidade de um objeto assumir múltiplas formas ou um mesmo método ter comportamentos diferentes.</p>
+                    
+                    <p>Em outras palavras, polimorfismo permite que você <strong>use a mesma interface para diferentes tipos de dados</strong>, e cada tipo responde de forma apropriada.</p>
+                    
+                    <p>Existem dois tipos principais de polimorfismo: <strong>Polimorfismo de Compilação (Sobrecarga)</strong> e <strong>Polimorfismo de Execução (Sobrescrita)</strong>.</p>
+                </div>
+            </div>
+
+            <!-- TIPOS DE POLIMORFISMO -->
+            <div class="section">
+                <h2>2. Tipos de Polimorfismo</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>1. Polimorfismo de Compilação (Compile-time)</h3>
+                    <p><strong>Sobrecarga (Overload):</strong> Múltiplos métodos com mesmo nome, mas <strong>parâmetros diferentes</strong>. Decidido em tempo de compilação.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>2. Polimorfismo de Execução (Runtime)</h3>
+                    <p><strong>Sobrescrita (Override):</strong> Subclasses implementam métodos da classe pai de forma diferente. Decidido em tempo de execução.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- SOBRECARGA -->
+            <div class="section">
+                <h2>3. Polimorfismo de Compilação - Sobrecarga (Overload)</h2>
+
+                <p>Sobrecarga permite ter múltiplos métodos com o <strong>mesmo nome</strong>, mas diferindo em:</p>
+                <ul class="explanation-list">
+                    <li><strong>Número de parâmetros:</strong> Diferentes quantidades de argumentos</li>
+                    <li><strong>Tipo de parâmetros:</strong> Tipos diferentes nos mesmos índices</li>
+                    <li><strong>Ordem de parâmetros:</strong> Mesmos tipos em ordem diferente</li>
+                </ul>
+
+                <h3>Exemplo 1: Número de Parâmetros</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class Calculadora {
+    // Método com 2 parâmetros
+    public int somar(int a, int b) {
+        return a + b;
+    }
+    
+    // Método com 3 parâmetros (OVERLOAD)
+    public int somar(int a, int b, int c) {
+        return a + b + c;
+    }
+    
+    // Método com 4 parâmetros (OVERLOAD)
+    public int somar(int a, int b, int c, int d) {
+        return a + b + c + d;
+    }
+}
+
+// Uso
+Calculadora calc = new Calculadora();
+System.out.println(calc.somar(5, 3));        // 8
+System.out.println(calc.somar(5, 3, 2));     // 10
+System.out.println(calc.somar(5, 3, 2, 1));  // 11</code></pre>
+                </div>
+
+                <h3>Exemplo 2: Tipo de Parâmetros</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class Impressora {
+    // Imprime inteiro
+    public void imprimir(int valor) {
+        System.out.println("Imprimindo inteiro: " + valor);
+    }
+    
+    // Imprime double (OVERLOAD)
+    public void imprimir(double valor) {
+        System.out.println("Imprimindo double: " + valor);
+    }
+    
+    // Imprime String (OVERLOAD)
+    public void imprimir(String valor) {
+        System.out.println("Imprimindo string: " + valor);
+    }
+    
+    // Imprime boolean (OVERLOAD)
+    public void imprimir(boolean valor) {
+        System.out.println("Imprimindo boolean: " + valor);
+    }
+}
+
+// Uso - Java escolhe o método correto
+Impressora printer = new Impressora();
+printer.imprimir(42);           // Imprimindo inteiro: 42
+printer.imprimir(3.14);         // Imprimindo double: 3.14
+printer.imprimir("Olá");        // Imprimindo string: Olá
+printer.imprimir(true);         // Imprimindo boolean: true</code></pre>
+                </div>
+
+                <h3>Exemplo 3: Ordem de Parâmetros</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class Coordenadas {
+    // Método com String, int
+    public void exibir(String nome, int valor) {
+        System.out.println(nome + ": " + valor);
+    }
+    
+    // Método com int, String (OVERLOAD - ordem diferente)
+    public void exibir(int valor, String nome) {
+        System.out.println("Valor " + valor + " de " + nome);
+    }
+}
+
+// Uso
+Coordenadas coord = new Coordenadas();
+coord.exibir("X", 10);      // X: 10
+coord.exibir(10, "X");      // Valor 10 de X</code></pre>
+                </div>
+
+                <h3>⚠️ O que NÃO é Sobrecarga:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// ERRADO - Apenas mudar tipo de retorno NÃO é sobrecarga
+public int calcular(int a) { return a; }
+public double calcular(int a) { // ERRO! Mesma assinatura
+    return a;
+}
+
+// CORRETO - Sobrecarga
+public int calcular(int a) { return a; }
+public int calcular(int a, int b) { return a + b; }
+
+// CORRETO - Sobrecarga
+public int calcular(int a) { return a; }
+public int calcular(String a) { return Integer.parseInt(a); }</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- SOBRESCRITA -->
+            <div class="section">
+                <h2>4. Polimorfismo de Execução - Sobrescrita (Override)</h2>
+
+                <p>Sobrescrita ocorre quando uma subclasse redefine um método da classe pai. Decide-se qual método chamar em <strong>tempo de execução</strong> baseado no tipo real do objeto.</p>
+
+                <h3>Exemplo Básico:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Classe Pai
+public class Animal {
+    public void fazer som() {
+        System.out.println("Som genérico de animal");
+    }
+}
+
+// Subclasse 1
+public class Cachorro extends Animal {
+    @Override
+    public void fazer som() {
+        System.out.println("Au au au!");
+    }
+}
+
+// Subclasse 2
+public class Gato extends Animal {
+    @Override
+    public void fazer som() {
+        System.out.println("Miau miau!");
+    }
+}
+
+// Subclasse 3
+public class Cow extends Animal {
+    @Override
+    public void fazer som() {
+        System.out.println("Muuuuu!");
+    }
+}
+
+// Uso - Polimorfismo em ação!
+Animal animal1 = new Cachorro();
+Animal animal2 = new Gato();
+Animal animal3 = new Cow();
+
+animal1.fazer som(); // Au au au!
+animal2.fazer som(); // Miau miau!
+animal3.fazer som(); // Muuuuu!</code></pre>
+                </div>
+
+                <h3>Exemplo Prático: Sistema de Pagamentos</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Classe Pai
+public abstract class FormaPagamento {
+    protected double valor;
+    
+    public FormaPagamento(double valor) {
+        this.valor = valor;
+    }
+    
+    public abstract double calcularTotal();
+    
+    public abstract void processar();
+}
+
+// Cartão de Crédito
+public class CartaoCredito extends FormaPagamento {
+    private double taxa;
+    
+    public CartaoCredito(double valor, double taxa) {
+        super(valor);
+        this.taxa = taxa;
+    }
+    
+    @Override
+    public double calcularTotal() {
+        return valor + (valor * taxa / 100); // Adiciona taxa
+    }
+    
+    @Override
+    public void processar() {
+        System.out.println("Processando cartão de crédito...");
+        System.out.println("Total: R$ " + String.format("%.2f", calcularTotal()));
+    }
+}
+
+// PIX
+public class Pix extends FormaPagamento {
+    public Pix(double valor) {
+        super(valor);
+    }
+    
+    @Override
+    public double calcularTotal() {
+        return valor; // Sem taxa
+    }
+    
+    @Override
+    public void processar() {
+        System.out.println("Processando PIX...");
+        System.out.println("Total: R$ " + String.format("%.2f", calcularTotal()));
+    }
+}
+
+// Boleto
+public class Boleto extends FormaPagamento {
+    private double juros;
+    
+    public Boleto(double valor, double juros) {
+        super(valor);
+        this.juros = juros;
+    }
+    
+    @Override
+    public double calcularTotal() {
+        return valor + juros; // Adiciona juros fixos
+    }
+    
+    @Override
+    public void processar() {
+        System.out.println("Gerando boleto...");
+        System.out.println("Total: R$ " + String.format("%.2f", calcularTotal()));
+    }
+}
+
+// Uso
+FormaPagamento pagamento1 = new CartaoCredito(100, 3.5);
+FormaPagamento pagamento2 = new Pix(100);
+FormaPagamento pagamento3 = new Boleto(100, 5);
+
+pagamento1.processar(); // Cartão com 3.5% de taxa
+pagamento2.processar(); // PIX sem taxa
+pagamento3.processar(); // Boleto com R$ 5 de juros</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- POLIMORFISMO EM ARRAYS -->
+            <div class="section">
+                <h2>5. Polimorfismo em Arrays e Collections</h2>
+
+                <p>Uma das maiores vantagens do polimorfismo é poder trabalhar com múltiplos tipos de forma uniforme:</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Processando diferentes tipos com a mesma interface
+FormaPagamento[] pagamentos = new FormaPagamento[3];
+
+pagamentos[0] = new CartaoCredito(100, 3.5);
+pagamentos[1] = new Pix(150);
+pagamentos[2] = new Boleto(200, 5);
+
+// Loop único - processa todos corretamente
+double totalArrecadado = 0;
+for (FormaPagamento p : pagamentos) {
+    p.processar();
+    totalArrecadado += p.calcularTotal();
+}
+
+System.out.println("\nTotal Arrecadado: R$ " + 
+    String.format("%.2f", totalArrecadado));</code></pre>
+                </div>
+
+                <h3>Com Collections (List):</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.ArrayList;
+import java.util.List;
+
+// Polimorfismo com List
+List<FormaPagamento> pagamentos = new ArrayList<>();
+
+pagamentos.add(new CartaoCredito(100, 3.5));
+pagamentos.add(new Pix(150));
+pagamentos.add(new Boleto(200, 5));
+pagamentos.add(new Pix(75));
+pagamentos.add(new CartaoCredito(50, 2.8));
+
+// Processar todos
+double totalRecebido = 0;
+for (FormaPagamento p : pagamentos) {
+    p.processar();
+    totalRecebido += p.calcularTotal();
+}
+
+System.out.println("\n=== RESUMO ===");
+System.out.println("Total de Pagamentos: " + pagamentos.size());
+System.out.println("Total Recebido: R$ " + 
+    String.format("%.2f", totalRecebido));</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- CASTING -->
+            <div class="section">
+                <h2>6. Casting de Tipos (Conversão)</h2>
+
+                <p>Às vezes precisamos converter uma referência para tipo mais específico (Downcasting) ou verificar o tipo real:</p>
+
+                <h3>Upcasting (Automático):</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Upcasting - Conversão automática para classe pai
+Cachorro dog = new Cachorro();
+Animal animal = dog; // Automático - não precisa cast
+
+// Pode chamar apenas métodos de Animal
+animal.fazer som();</code></pre>
+                </div>
+
+                <h3>Downcasting (Manual):</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Downcasting - Conversão manual para classe filha
+Animal animal = new Cachorro();
+
+// ERRADO - Não pode fazer downcasting sem verificar
+// Cachorro dog = animal; // ERRO!
+
+// CORRETO - Usar instanceof primeiro
+if (animal instanceof Cachorro) {
+    Cachorro dog = (Cachorro) animal; // Downcasting com cast
+    dog.trazer(); // Método específico de Cachorro
+}
+
+// SEGURO - Java 16+ com Pattern Matching
+if (animal instanceof Cachorro dog) {
+    dog.trazer(); // Já convertido automaticamente
+}</code></pre>
+                </div>
+
+                <h3>Exemplo Prático com instanceof:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">List<FormaPagamento> pagamentos = new ArrayList<>();
+pagamentos.add(new CartaoCredito(100, 3.5));
+pagamentos.add(new Pix(150));
+pagamentos.add(new Boleto(200, 5));
+
+// Processamento diferenciado por tipo
+for (FormaPagamento p : pagamentos) {
+    if (p instanceof CartaoCredito) {
+        CartaoCredito cc = (CartaoCredito) p;
+        System.out.println("Cartão processado com segurança máxima");
+    } else if (p instanceof Pix) {
+        Pix pix = (Pix) p;
+        System.out.println("PIX processado instantaneamente");
+    } else if (p instanceof Boleto) {
+        Boleto boleto = (Boleto) p;
+        System.out.println("Boleto gerado para envio");
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- MÉTODOS ABSTRATOS -->
+            <div class="section">
+                <h2>7. Classes Abstratas e Métodos Abstratos</h2>
+
+                <p>Classes abstratas forçam subclasses a implementar certos métodos, garantindo polimorfismo correto:</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Classe Abstrata - Não pode ser instanciada
+public abstract class Funcionario {
+    protected String nome;
+    protected double salarioBase;
+    
+    public Funcionario(String nome, double salarioBase) {
+        this.nome = nome;
+        this.salarioBase = salarioBase;
+    }
+    
+    // Método abstrato - deve ser implementado
+    public abstract double calcularSalario();
+    
+    // Método concreto
+    public final void exibir() {
+        System.out.println("Nome: " + nome);
+        System.out.println("Salário: R$ " + 
+            String.format("%.2f", calcularSalario()));
+    }
+}
+
+// Subclasse concreta
+public class Gerente extends Funcionario {
+    private double bonus;
+    
+    public Gerente(String nome, double salarioBase, double bonus) {
+        super(nome, salarioBase);
+        this.bonus = bonus;
+    }
+    
+    @Override
+    public double calcularSalario() {
+        return salarioBase + bonus;
+    }
+}
+
+// Subclasse concreta
+public class Desenvolvedor extends Funcionario {
+    private int anosExperiencia;
+    
+    public Desenvolvedor(String nome, double salarioBase, int anos) {
+        super(nome, salarioBase);
+        this.anosExperiencia = anos;
+    }
+    
+    @Override
+    public double calcularSalario() {
+        double aumento = (anosExperiencia * 0.05); // 5% por ano
+        return salarioBase + (salarioBase * aumento);
+    }
+}
+
+// Uso
+Funcionario[] funcionarios = new Funcionario[2];
+funcionarios[0] = new Gerente("Maria", 5000, 2000);
+funcionarios[1] = new Desenvolvedor("João", 4000, 5);
+
+for (Funcionario f : funcionarios) {
+    f.exibir();
+    System.out.println();
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- INTERFACES -->
+            <div class="section">
+                <h2>8. Interfaces - Polimorfismo Total</h2>
+
+                <p>Interfaces definem um contrato que classes devem seguir, permitindo máxima flexibilidade:</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Interface - Contrato
+public interface Veiculo {
+    void ligar();
+    void desligar();
+    void acelerar();
+}
+
+// Implementação 1
+public class Carro implements Veiculo {
+    @Override
+    public void ligar() {
+        System.out.println("Carro ligando: Vruuuum!");
+    }
+    
+    @Override
+    public void desligar() {
+        System.out.println("Carro desligando");
+    }
+    
+    @Override
+    public void acelerar() {
+        System.out.println("Carro acelerando: Vrrrrrroooom!");
+    }
+}
+
+// Implementação 2
+public class Bicicleta implements Veiculo {
+    @Override
+    public void ligar() {
+        System.out.println("Bicicleta pronta!");
+    }
+    
+    @Override
+    public void desligar() {
+        System.out.println("Bicicleta parada");
+    }
+    
+    @Override
+    public void acelerar() {
+        System.out.println("Bicicleta pedalando mais rápido!");
+    }
+}
+
+// Implementação 3
+public class Moto implements Veiculo {
+    @Override
+    public void ligar() {
+        System.out.println("Moto ligando: Trrrrr!");
+    }
+    
+    @Override
+    public void desligar() {
+        System.out.println("Moto desligada");
+    }
+    
+    @Override
+    public void acelerar() {
+        System.out.println("Moto acelerando: Vrroooom!");
+    }
+}
+
+// Uso
+Veiculo[] veiculos = new Veiculo[3];
+veiculos[0] = new Carro();
+veiculos[1] = new Bicicleta();
+veiculos[2] = new Moto();
+
+for (Veiculo v : veiculos) {
+    v.ligar();
+    v.acelerar();
+    v.desligar();
+    System.out.println();
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- BOAS PRÁTICAS -->
+            <div class="section">
+                <h2>9. Boas Práticas com Polimorfismo</h2>
+
+                <h3>✓ FAÇA:</h3>
+                <ul class="explanation-list">
+                    <li>Use polimorfismo para escrever código mais flexível</li>
+                    <li>Use <span class="highlight-text">@Override</span> ao sobrescrever métodos</li>
+                    <li>Prefira trabalhar com tipos pai (interfaces/classes abstratas)</li>
+                    <li>Use sobrecarga quando o método faz a mesma coisa com tipos diferentes</li>
+                    <li>Implemente interfaces quando há múltiplos comportamentos</li>
+                    <li>Use <span class="highlight-text">instanceof</span> para downcast seguro</li>
+                    <li>Documente bem o comportamento esperado de métodos polimórficos</li>
+                </ul>
+
+                <h3>✗ EVITE:</h3>
+                <ul class="explanation-list">
+                    <li>Sobrecarga com muitas variações (máximo 3-4)</li>
+                    <li>Mudar significado do método ao sobrescrever</li>
+                    <li>Downcasting sem verificar tipo primeiro</li>
+                    <li>Criar métodos com nomes semelhantes para confundir</li>
+                    <li>Usar polimorfismo quando a lógica é muito diferente</li>
+                    <li>Sobrescrever métodos finais</li>
+                </ul>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- ERROS COMUNS -->
+            <div class="section">
+                <h2>10. Erros Comuns com Polimorfismo</h2>
+
+                <h3 style="color: #ef4444;">❌ Erro 1: ClassCastException</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// ERRADO
+Animal animal = new Gato();
+Cachorro dog = (Cachorro) animal; // ClassCastException!
+
+// CORRETO
+Animal animal = new Gato();
+if (animal instanceof Cachorro) {
+    Cachorro dog = (Cachorro) animal;
+} else if (animal instanceof Gato) {
+    Gato gato = (Gato) animal;
+}</code></pre>
+                </div>
+
+                <h3 style="color: #ef4444;">❌ Erro 2: Não usar @Override</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class Animal {
+    public void fazer som() {
+        System.out.println("Som genérico");
+    }
+}
+
+// RUIM - Sem @Override
+public class Cachorro extends Animal {
+    public void fazerSom() { // ERRO! Digitação
+        System.out.println("Au au!");
+    }
+}
+
+// BOM - Com @Override (erro seria detectado)
+public class Cachorro extends Animal {
+    @Override
+    public void fazer som() {
+        System.out.println("Au au!");
+    }
+}</code></pre>
+                </div>
+
+                <h3 style="color: #ef4444;">❌ Erro 3: Sobrecarga conflitante</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// ERRADO - Ambíguo
+public class Processar {
+    public void executar(int valor) { }
+    public void executar(Integer valor) { } // Confunde!
+}
+
+// Chamada ambígua
+Processar p = new Processar();
+p.executar(5); // Qual método chama?
+
+// CORRETO - Claro
+public class Processar {
+    public void executarInteiro(int valor) { }
+    public void executarObjeto(Integer valor) { }
+}</code></pre>
+                </div>
+
+                <h3 style="color: #ef4444;">❌ Erro 4: Mudar assinatura na subclasse</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// ERRADO - Mudou parâmetros
+public class Animal {
+    public void fazer som() { }
+}
+
+public class Cachorro extends Animal {
+    @Override
+    public void fazer som(String tipo) { // ERRO! Assinatura diferente!
+    }
+}
+
+// CORRETO - Mantém assinatura
+public class Cachorro extends Animal {
+    @Override
+    public void fazer som() {
+        System.out.println("Au au!");
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- COMPARAÇÃO -->
+            <div class="section">
+                <h2>11. Comparação - Sobrecarga vs Sobrescrita</h2>
+
+                <div style="overflow-x: auto;">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Aspecto</th>
+                                <th>Sobrecarga (Overload)</th>
+                                <th>Sobrescrita (Override)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Tipo</strong></td>
+                                <td>Polimorfismo de Compilação</td>
+                                <td>Polimorfismo de Execução</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Nome</strong></td>
+                                <td>Mesmo nome</td>
+                                <td>Mesmo nome</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Assinatura</strong></td>
+                                <td>Diferente (parâmetros)</td>
+                                <td>Igual</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Classe</strong></td>
+                                <td>Mesma classe ou herança</td>
+                                <td>Classe filha</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Decisão</strong></td>
+                                <td>Tempo de compilação</td>
+                                <td>Tempo de execução</td>
+                            </tr>
+                            <tr>
+                                <td><strong>@Override</strong></td>
+                                <td>Não necessário</td>
+                                <td>Recomendado</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Exemplo</strong></td>
+                                <td><span class="highlight-text">soma(int, int)</span> e <span class="highlight-text">soma(int, int, int)</span></td>
+                                <td><span class="highlight-text">fazer som()</span> em Cachorro e Gato</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXERCÍCIOS -->
+            <div class="section">
+                <h2>12. Exercícios Práticos</h2>
+                
+                <div class="exercise-box">
+                    <h4>Exercício 1: Sistema de Formas</h4>
+                    <p>Crie interface <strong>Forma</strong> com método <strong>calcularArea()</strong>. Implemente em <strong>Circulo</strong>, <strong>Quadrado</strong> e <strong>Triangulo</strong>. Use polimorfismo para calcular área total.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 2: Operações Matemáticas</h4>
+                    <p>Crie classe com métodos sobrecarregados <strong>somar()</strong> que aceita: int+int, double+double, String+String (concatenação), e int+double.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 3: Sistema de Aparelhos</h4>
+                    <p>Crie classe abstrata <strong>Eletronico</strong> com método <strong>funcionar()</strong>. Implemente em <strong>TV</strong>, <strong>Microondas</strong>, <strong>Geladeira</strong>. Use polimorfismo.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 4: Gestor de Documentos</h4>
+                    <p>Crie interface <strong>Documento</strong> com método <strong>visualizar()</strong>. Implemente em <strong>PDF</strong>, <strong>Word</strong>, <strong>Imagem</strong>. Processe array de documentos.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- RESUMO -->
+            <div class="section">
+                <h2>13. Resumo - Conceitos Principais</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Polimorfismo</h3>
+                    <p>Capacidade de um objeto assumir múltiplas formas ou um método ter múltiplos comportamentos.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Sobrecarga (Overload)</h3>
+                    <p>Múltiplos métodos com mesmo nome mas parâmetros diferentes. Decidido em tempo de compilação.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Sobrescrita (Override)</h3>
+                    <p>Subclasse redefine método da classe pai. Decidido em tempo de execução. Use <span class="highlight-text">@Override</span>.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Upcasting</h3>
+                    <p>Conversão automática de tipo específico para tipo mais geral (subclasse → superclasse).</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Downcasting</h3>
+                    <p>Conversão manual de tipo geral para tipo específico. Use <span class="highlight-text">instanceof</span> primeiro.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Classes Abstratas</h3>
+                    <p>Definem contrato que subclasses devem seguir. Não podem ser instanciadas.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Interfaces</h3>
+                    <p>Permitem máxima flexibilidade. Classes podem implementar múltiplas interfaces.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- CONCLUSÃO -->
+            <div class="conclusion-box">
+                <h2>Conclusão</h2>
+                <p><strong>Polimorfismo</strong> é o que torna o código orientado a objetos realmente poderoso e flexível. Permite escrever código que funciona com múltiplos tipos de forma elegante.</p>
+                <p>Os três pilares trabalham juntos:</p>
+                <ul class="explanation-list">
+                    <li><strong>Encapsulamento:</strong> Protege dados</li>
+                    <li><strong>Herança:</strong> Reutiliza código</li>
+                    <li><strong>Polimorfismo:</strong> Oferece flexibilidade</li>
+                </ul>
+                <p><strong>Próximo passo:</strong> Estude <strong>Abstração</strong> - o quarto pilar - para completar sua compreensão de POO!</p>
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>Polimorfismo: Flexibilidade e poder em suas mãos!</p>
+            <p>Do básico ao avançado: POO, Collections, Spring Boot e muito mais!</p>
+        </footer>
+    </div>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul></ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="Herança - Segundo pilar da POO - Reutilize código, organize classes hierarquicamente">
+    <meta name="theme-color" content="#8B5A2B">
+    <title>Herança - Programação Orientada a Objetos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <!-- Logo SVG -->
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    </svg>
+                </div>
+
+                <!-- Título -->
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <!-- Toggle Modo Escuro/Claro -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
+            <h1>Herança</h1>
+            <p class="subtitle">O Segundo Pilar da Programação Orientada a Objetos - Reutilize código, organize hierarquias</p>
+
+            <!-- INTRODUÇÃO -->
+            <div class="section">
+                <h2>1. O que é Herança?</h2>
+                
+                <div class="intro-text">
+                    <p><strong>Herança</strong> é o mecanismo que permite que uma classe <strong>herde características e comportamentos</strong> de outra classe. A classe que é herdada é chamada <strong>Classe Pai (Superclasse)</strong>, e a classe que herda é chamada <strong>Classe Filha (Subclasse)</strong>.</p>
+                    
+                    <p>A herança promove <strong>reutilização de código</strong> e permite criar <strong>hierarquias de classes</strong> que representam relacionamentos do mundo real.</p>
+                    
+                    <p>Exemplo: Uma classe <span class="highlight-text">Veiculo</span> pode ser a Superclasse, e <span class="highlight-text">Carro</span>, <span class="highlight-text">Moto</span> e <span class="highlight-text">Caminhao</span> podem ser Subclasses que herdam dela.</p>
+                </div>
+            </div>
+
+            <!-- SINTAXE BÁSICA -->
+            <div class="section">
+                <h2>2. Sintaxe Básica de Herança</h2>
+                
+                <p>Em Java, usamos a palavra-chave <span class="highlight-text">extends</span> para criar uma classe filha:</p>
+
+                <div class="syntax-header">Sintaxe:</div>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Classe Pai (Superclasse)
+public class Veiculo {
+    protected String marca;
+    protected String modelo;
+    protected int ano;
+    
+    public Veiculo(String marca, String modelo, int ano) {
+        this.marca = marca;
+        this.modelo = modelo;
+        this.ano = ano;
+    }
+    
+    public void exibir() {
+        System.out.println("Marca: " + marca);
+        System.out.println("Modelo: " + modelo);
+        System.out.println("Ano: " + ano);
+    }
+}
+
+// Classe Filha (Subclasse)
+public class Carro extends Veiculo {
+    private int numPortas;
+    
+    public Carro(String marca, String modelo, int ano, int numPortas) {
+        super(marca, modelo, ano); // Chama o construtor da classe pai
+        this.numPortas = numPortas;
+    }
+    
+    public void exibir() {
+        super.exibir(); // Chama o método da classe pai
+        System.out.println("Número de Portas: " + numPortas);
+    }
+}</code></pre>
+                </div>
+
+                <h3>Conceitos Importantes:</h3>
+                <ul class="explanation-list">
+                    <li><strong>extends:</strong> Palavra-chave que indica herança</li>
+                    <li><strong>super:</strong> Referencia a classe pai (construtor, métodos)</li>
+                    <li><strong>protected:</strong> Modificador que permite acesso na classe e subclasses</li>
+                </ul>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- HERANÇA SIMPLES -->
+            <div class="section">
+                <h2>3. Herança Simples - Exemplo Prático</h2>
+                
+                <p>Vamos criar um sistema de Animais com herança simples:</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Classe Pai - Animal
+public class Animal {
+    protected String nome;
+    protected int idade;
+    protected String cor;
+    
+    public Animal(String nome, int idade, String cor) {
+        this.nome = nome;
+        this.idade = idade;
+        this.cor = cor;
+    }
+    
+    public void fazer som() {
+        System.out.println("Som genérico de animal");
+    }
+    
+    public void dormir() {
+        System.out.println(nome + " está dormindo...");
+    }
+    
+    public void comer() {
+        System.out.println(nome + " está comendo...");
+    }
+    
+    public void info() {
+        System.out.println("Nome: " + nome);
+        System.out.println("Idade: " + idade);
+        System.out.println("Cor: " + cor);
+    }
+}
+
+// Classe Filha - Cachorro
+public class Cachorro extends Animal {
+    private String raca;
+    
+    public Cachorro(String nome, int idade, String cor, String raca) {
+        super(nome, idade, cor); // Chama construtor da classe pai
+        this.raca = raca;
+    }
+    
+    @Override // Anotação que indica sobrescrita de método
+    public void fazer som() {
+        System.out.println(nome + " faz: Au au au!");
+    }
+    
+    public void trazer() {
+        System.out.println(nome + " está trazendo a bola!");
+    }
+    
+    @Override
+    public void info() {
+        super.info();
+        System.out.println("Raça: " + raca);
+    }
+}
+
+// Classe Filha - Gato
+public class Gato extends Animal {
+    private boolean pelos_longos;
+    
+    public Gato(String nome, int idade, String cor, boolean pelos_longos) {
+        super(nome, idade, cor);
+        this.pelos_longos = pelos_longos;
+    }
+    
+    @Override
+    public void fazer som() {
+        System.out.println(nome + " faz: Miau miau!");
+    }
+    
+    public void arranhar() {
+        System.out.println(nome + " está arranhando!");
+    }
+    
+    @Override
+    public void info() {
+        super.info();
+        System.out.println("Pelos Longos: " + (pelos_longos ? "Sim" : "Não"));
+    }
+}
+
+// Classe Filha - Passaro
+public class Passaro extends Animal {
+    private double altitude;
+    
+    public Passaro(String nome, int idade, String cor) {
+        super(nome, idade, cor);
+        this.altitude = 0;
+    }
+    
+    @Override
+    public void fazer som() {
+        System.out.println(nome + " faz: Piu piu!");
+    }
+    
+    public void voar(double alt) {
+        this.altitude = alt;
+        System.out.println(nome + " está voando a " + alt + " metros!");
+    }
+    
+    @Override
+    public void info() {
+        super.info();
+        System.out.println("Altitude Atual: " + altitude + "m");
+    }
+}</code></pre>
+                </div>
+
+                <h3>Usando as Classes:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">Cachorro dog = new Cachorro("Rex", 5, "Marrom", "Labrador");
+Gato gato = new Gato("Mimi", 3, "Branco", true);
+Passaro passaro = new Passaro("Tweety", 2, "Amarelo");
+
+// Métodos herdados da classe pai
+dog.dormir();      // Rex está dormindo...
+gato.comer();      // Mimi está comendo...
+
+// Métodos sobrescritos (overridden)
+dog.fazer som();   // Rex faz: Au au au!
+gato.fazer som();  // Mimi faz: Miau miau!
+passaro.fazer som(); // Tweety faz: Piu piu!
+
+// Métodos específicos da subclasse
+dog.trazer();      // Rex está trazendo a bola!
+gato.arranhar();   // Mimi está arranhando!
+passaro.voar(100); // Tweety está voando a 100 metros!
+
+// Informações completas
+dog.info();
+gato.info();
+passaro.info();</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- SUPER E THIS -->
+            <div class="section">
+                <h2>4. Super e This - Referências Importantes</h2>
+
+                <h3>Palavra-chave THIS</h3>
+                <p>Referencia o objeto atual da classe. É usado para diferenciar atributos da classe de parâmetros.</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class Pessoa {
+    private String nome;
+    
+    public Pessoa(String nome) {
+        this.nome = nome; // this.nome = atributo da classe
+    }
+    
+    public void setNome(String nome) {
+        this.nome = nome; // this diferencia do parâmetro
+    }
+    
+    public void exibir() {
+        System.out.println("Meu nome é: " + this.nome);
+    }
+}</code></pre>
+                </div>
+
+                <h3>Palavra-chave SUPER</h3>
+                <p>Referencia a classe pai. É usado para chamar construtores e métodos da classe pai.</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class Funcionario extends Pessoa {
+    private double salario;
+    
+    public Funcionario(String nome, double salario) {
+        super(nome); // Chama construtor da classe pai
+        this.salario = salario;
+    }
+    
+    @Override
+    public void exibir() {
+        super.exibir(); // Chama método da classe pai
+        System.out.println("Salário: R$ " + salario);
+    }
+    
+    public void aumentarSalario(double percentual) {
+        this.salario = this.salario + (this.salario * percentual / 100);
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- OVERRIDE vs OVERLOAD -->
+            <div class="section">
+                <h2>5. @Override - Sobrescrita de Métodos</h2>
+
+                <p>A anotação <span class="highlight-text">@Override</span> indica que você está sobrescrevendo um método da classe pai. Não é obrigatória, mas é uma boa prática.</p>
+
+                <h3>Exemplo de Sobrescrita:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class Veiculo {
+    protected String marca;
+    
+    public void acelerar() {
+        System.out.println("Veículo acelerando...");
+    }
+}
+
+public class Carro extends Veiculo {
+    @Override
+    public void acelerar() {
+        System.out.println("Carro acelerando: Vruuuuuum!");
+    }
+}
+
+public class Bicicleta extends Veiculo {
+    @Override
+    public void acelerar() {
+        System.out.println("Bicicleta acelerando: Pedalando mais rápido!");
+    }
+}
+
+// Uso
+Veiculo carro = new Carro();
+carro.acelerar(); // Carro acelerando: Vruuuuuum!
+
+Veiculo bicicleta = new Bicicleta();
+bicicleta.acelerar(); // Bicicleta acelerando: Pedalando mais rápido!</code></pre>
+                </div>
+
+                <h3>Regras para Sobrescrita:</h3>
+                <ul class="explanation-list">
+                    <li><strong>Assinatura igual:</strong> Nome e parâmetros devem ser iguais</li>
+                    <li><strong>Tipo de retorno:</strong> Deve ser o mesmo ou um subtipo (Covariant)</li>
+                    <li><strong>Acessibilidade:</strong> Não pode ser mais restritiva</li>
+                    <li><strong>Exceções:</strong> Pode lançar menos exceções, não mais</li>
+                </ul>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- MODIFIED PROTECTED -->
+            <div class="section">
+                <h2>6. Modificador protected em Herança</h2>
+
+                <p>O modificador <span class="highlight-text">protected</span> permite que membros sejam acessados dentro da classe e por subclasses, mesmo em pacotes diferentes:</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class Pessoa {
+    private String cpf;           // Não é acessível em subclasses
+    protected String nome;         // Acessível em subclasses
+    public String email;           // Acessível em qualquer lugar
+    
+    public void exibir() {
+        System.out.println(cpf);   // OK - mesma classe
+        System.out.println(nome);  // OK - mesma classe
+        System.out.println(email); // OK - mesma classe
+    }
+}
+
+public class Funcionario extends Pessoa {
+    public void info() {
+        // System.out.println(cpf);   // ERRO - private não herda
+        System.out.println(nome);     // OK - protected herda
+        System.out.println(email);    // OK - public herda
+    }
+}
+
+// Em outro pacote
+Pessoa p = new Pessoa();
+p.email = "test@mail.com"; // OK - public
+// p.nome = "João";        // ERRO - protected (não em subclasse)
+// p.cpf = "123456789";    // ERRO - private</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- HIERARQUIA -->
+            <div class="section">
+                <h2>7. Criando Hierarquias de Classes</h2>
+
+                <p>Vamos criar uma hierarquia completa de Funcionários em uma empresa:</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Classe Base
+public class Funcionario {
+    protected String matricula;
+    protected String nome;
+    protected double salarioBase;
+    
+    public Funcionario(String matricula, String nome, double salarioBase) {
+        this.matricula = matricula;
+        this.nome = nome;
+        this.salarioBase = salarioBase;
+    }
+    
+    public double calcularSalario() {
+        return salarioBase;
+    }
+    
+    public void exibir() {
+        System.out.println("Matrícula: " + matricula);
+        System.out.println("Nome: " + nome);
+        System.out.println("Salário: R$ " + String.format("%.2f", calcularSalario()));
+    }
+}
+
+// Funcionário Horista
+public class Horista extends Funcionario {
+    private double valorHora;
+    private int horasTrabalhadas;
+    
+    public Horista(String matricula, String nome, double valorHora) {
+        super(matricula, nome, 0);
+        this.valorHora = valorHora;
+        this.horasTrabalhadas = 0;
+    }
+    
+    public void registrarHoras(int horas) {
+        this.horasTrabalhadas += horas;
+    }
+    
+    @Override
+    public double calcularSalario() {
+        return valorHora * horasTrabalhadas;
+    }
+}
+
+// Funcionário Mensalista
+public class Mensalista extends Funcionario {
+    private int faltas;
+    
+    public Mensalista(String matricula, String nome, double salarioBase) {
+        super(matricula, nome, salarioBase);
+        this.faltas = 0;
+    }
+    
+    public void registrarFalta() {
+        this.faltas++;
+    }
+    
+    @Override
+    public double calcularSalario() {
+        double desconto = (salarioBase / 30) * faltas;
+        return salarioBase - desconto;
+    }
+}
+
+// Gerente (estende Mensalista)
+public class Gerente extends Mensalista {
+    private double gratificacao;
+    
+    public Gerente(String matricula, String nome, double salarioBase, double gratificacao) {
+        super(matricula, nome, salarioBase);
+        this.gratificacao = gratificacao;
+    }
+    
+    @Override
+    public double calcularSalario() {
+        return super.calcularSalario() + gratificacao;
+    }
+    
+    @Override
+    public void exibir() {
+        super.exibir();
+        System.out.println("Cargo: Gerente");
+    }
+}
+
+// Diretor (estende Gerente)
+public class Diretor extends Gerente {
+    private double bonus;
+    
+    public Diretor(String matricula, String nome, double salarioBase, double gratificacao, double bonus) {
+        super(matricula, nome, salarioBase, gratificacao);
+        this.bonus = bonus;
+    }
+    
+    @Override
+    public double calcularSalario() {
+        return super.calcularSalario() + bonus;
+    }
+    
+    @Override
+    public void exibir() {
+        super.exibir();
+        System.out.println("Cargo: Diretor");
+    }
+}</code></pre>
+                </div>
+
+                <h3>Usando a Hierarquia:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Criando funcionários
+Horista horista = new Horista("001", "João", 50);
+horista.registrarHoras(160); // 160 horas no mês
+
+Mensalista mensalista = new Mensalista("002", "Maria", 3000);
+mensalista.registrarFalta();
+mensalista.registrarFalta();
+
+Gerente gerente = new Gerente("003", "Carlos", 5000, 1000);
+
+Diretor diretor = new Diretor("004", "Ana", 8000, 2000, 5000);
+
+// Exibindo informações
+horista.exibir();
+mensalista.exibir();
+gerente.exibir();
+diretor.exibir();</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- HERANÇA COM INTERFACES -->
+            <div class="section">
+                <h2>8. Tipo de Dados e Polimorfismo</h2>
+
+                <p>Um objeto pode ser referenciado como tipo de qualquer classe pai na hierarquia:</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Polymorphism - Um único tipo para múltiplos objetos
+Funcionario[] funcionarios = new Funcionario[4];
+
+funcionarios[0] = new Horista("001", "João", 50);
+funcionarios[1] = new Mensalista("002", "Maria", 3000);
+funcionarios[2] = new Gerente("003", "Carlos", 5000, 1000);
+funcionarios[3] = new Diretor("004", "Ana", 8000, 2000, 5000);
+
+// Processando todos uniformemente
+for (Funcionario f : funcionarios) {
+    f.exibir();
+    System.out.println();
+}
+
+// Cada um calcula seu salário corretamente (polimorfismo)
+double folha = 0;
+for (Funcionario f : funcionarios) {
+    folha += f.calcularSalario();
+}
+System.out.println("Total da Folha: R$ " + String.format("%.2f", folha));</code></pre>
+                </div>
+
+                <h3>Verificar Tipo com instanceof:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">for (Funcionario f : funcionarios) {
+    if (f instanceof Diretor) {
+        Diretor d = (Diretor) f; // Cast explícito
+        System.out.println(d.nome + " é Diretor!");
+    } else if (f instanceof Gerente) {
+        System.out.println(f.nome + " é Gerente!");
+    } else if (f instanceof Mensalista) {
+        System.out.println(f.nome + " é Mensalista!");
+    } else if (f instanceof Horista) {
+        System.out.println(f.nome + " é Horista!");
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- RESTRIÇÕES -->
+            <div class="section">
+                <h2>9. Restrições e Limitações da Herança</h2>
+
+                <h3>❌ Herança Múltipla NÃO é permitida em Java:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// ERRO - Herança Múltipla não é permitida!
+// public class Pato extends Ave, Nadador { }
+
+// SOLUÇÃO - Use Interfaces (veremos depois)
+public interface Ave {
+    void voar();
+}
+
+public interface Nadador {
+    void nadar();
+}
+
+public class Pato implements Ave, Nadador {
+    @Override
+    public void voar() {
+        System.out.println("Pato voando!");
+    }
+    
+    @Override
+    public void nadar() {
+        System.out.println("Pato nadando!");
+    }
+}</code></pre>
+                </div>
+
+                <h3>❌ Herança em Cadeia Muito Profunda é ruim:</h3>
+                <p>Evite hierarquias muito profundas (mais de 3-4 níveis). Fica difícil de entender e manter:</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Ruim - Muito profundo
+public class A {}
+public class B extends A {}
+public class C extends B {}
+public class D extends C {}
+public class E extends D {}
+public class F extends E {}
+
+// Melhor - Hierarquia mais rasa
+public class Animal {}
+public class Mamifero extends Animal {}
+public class Cachorro extends Mamifero {}</code></pre>
+                </div>
+
+                <h3>⚠️ Herança vs Composição:</h3>
+                <p>Nem sempre herança é a melhor escolha. Às vezes, usar <strong>composição</strong> (ter um objeto dentro de outro) é melhor:</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Com Herança (problemático)
+public class Veiculo {}
+public class Carro extends Veiculo {} // Carro É UM Veículo
+public class Garagem extends Veiculo {} // ERRADO! Garagem NÃO É UM Veículo
+
+// Com Composição (correto)
+public class Garagem {
+    private List<Veiculo> veiculos; // Garagem TEM veículos
+}
+
+// Dica: Use "É UM" para herança, "TEM UM" para composição</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- BOAS PRÁTICAS -->
+            <div class="section">
+                <h2>10. Boas Práticas com Herança</h2>
+
+                <h3>✓ FAÇA:</h3>
+                <ul class="explanation-list">
+                    <li>Use herança apenas quando há relacionamento "É UM" real</li>
+                    <li>Mantenha hierarquias simples e rasas</li>
+                    <li>Use <span class="highlight-text">@Override</span> ao sobrescrever métodos</li>
+                    <li>Use <span class="highlight-text">protected</span> para membros que subclasses precisam acessar</li>
+                    <li>Chame <span class="highlight-text">super()</span> no construtor da subclasse</li>
+                    <li>Considere usar composição como alternativa</li>
+                    <li>Documente comportamentos esperados em métodos</li>
+                </ul>
+
+                <h3>✗ EVITE:</h3>
+                <ul class="explanation-list">
+                    <li>Criar hierarquias profundas (mais de 4 níveis)</li>
+                    <li>Herança apenas para reutilizar código</li>
+                    <li>Deixar atributos importantes como public</li>
+                    <li>Quebrar o contrato da classe pai em subclasses</li>
+                    <li>Usar herança quando composição seria melhor</li>
+                    <li>Sobrescrever métodos sem necessidade</li>
+                </ul>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- ERROS COMUNS -->
+            <div class="section">
+                <h2>11. Erros Comuns em Herança</h2>
+
+                <h3 style="color: #ef4444;">❌ Erro 1: Não chamar super() no construtor</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Ruim
+public class Funcionario extends Pessoa {
+    public Funcionario(String nome) {
+        this.nome = nome; // ERRO - nome não foi inicializado na classe pai!
+    }
+}
+
+// Correto
+public class Funcionario extends Pessoa {
+    public Funcionario(String nome) {
+        super(nome); // Chama construtor da classe pai
+    }
+}</code></pre>
+                </div>
+
+                <h3 style="color: #ef4444;">❌ Erro 2: Mudar assinatura de método</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public class Animal {
+    public void fazer som(String tipo) {
+        System.out.println("Som: " + tipo);
+    }
+}
+
+// Errado - Mudou a assinatura!
+public class Cachorro extends Animal {
+    public void fazer som() { // ERRO - sem parâmetro!
+        System.out.println("Au au!");
+    }
+}
+
+// Correto - Mantém a assinatura
+public class Cachorro extends Animal {
+    @Override
+    public void fazer som(String tipo) {
+        System.out.println("Cachorro faz: Au au!");
+    }
+}</code></pre>
+                </div>
+
+                <h3 style="color: #ef4444;">❌ Erro 3: Deixar atributos como public</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Ruim
+public class Pessoa {
+    public String nome; // Public - fácil de mudar indevidamente
+}
+
+public class Funcionario extends Pessoa {
+    public void info() {
+        nome = null; // Alguém pode fazer isso!
+    }
+}
+
+// Correto
+public class Pessoa {
+    protected String nome; // Protected - controlado
+}
+
+public class Funcionario extends Pessoa {
+    public void setNome(String nome) {
+        if (nome != null && !nome.isEmpty()) {
+            this.nome = nome; // Com validação
+        }
+    }
+}</code></pre>
+                </div>
+
+                <h3 style="color: #ef4444;">❌ Erro 4: Herança quando deveria ser composição</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Errado - Garagem não É UM Carro
+public class Carro {
+    protected String marca;
+}
+
+public class Garagem extends Carro { // ERRADO!
+    // Garagem não faz sentido como Carro
+}
+
+// Correto - Composição
+public class Garagem {
+    private List<Carro> carros;
+    
+    public void adicionarCarro(Carro carro) {
+        carros.add(carro);
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXERCÍCIOS -->
+            <div class="section">
+                <h2>12. Exercícios Práticos</h2>
+                
+                <div class="exercise-box">
+                    <h4>Exercício 1: Hierarquia de Formas Geométricas</h4>
+                    <p>Crie uma classe <strong>Forma</strong> com método <strong>calcularArea()</strong>. Crie subclasses <strong>Retangulo</strong>, <strong>Circulo</strong> e <strong>Triangulo</strong>. Cada uma deve sobrescrever o método.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 2: Sistema de Contas Bancárias</h4>
+                    <p>Crie classe <strong>Conta</strong> e subclasses <strong>ContaCorrente</strong>, <strong>ContaPoupanca</strong> e <strong>ContaSalario</strong>. Cada uma tem regras diferentes para saques e taxas.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 3: Hierarquia de Eletrônicos</h4>
+                    <p>Crie classe <strong>Eletronico</strong> e subclasses como <strong>Computador</strong>, <strong>Smartphone</strong>, <strong>Tablet</strong>. Implemente métodos para ligar, desligar e especificações.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 4: Herança com Validação</h4>
+                    <p>Crie classe <strong>Pessoa</strong> e subclasses <strong>Aluno</strong> e <strong>Professor</strong>. Use encapsulamento + herança. Cada um tem validações específicas.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- RESUMO -->
+            <div class="section">
+                <h2>13. Resumo - Conceitos Principais</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>O que é Herança?</h3>
+                    <p>Mecanismo que permite reutilizar código criando relacionamentos hierárquicos entre classes.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Classe Pai (Superclasse)</h3>
+                    <p>Classe que fornece atributos e métodos para subclasses.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Classe Filha (Subclasse)</h3>
+                    <p>Classe que herda de outra. Pode adicionar novos atributos/métodos ou sobrescrever.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Palavra-chave extends</h3>
+                    <p>Usada para indicar herança: <span class="highlight-text">public class Filha extends Pai {}</span></p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Super e This</h3>
+                    <p><strong>super</strong> referencia a classe pai, <strong>this</strong> referencia o objeto atual.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>@Override</h3>
+                    <p>Anotação que indica sobrescrita de método da classe pai (boa prática).</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Protected</h3>
+                    <p>Modificador que permite acesso em subclasses, mesmo em pacotes diferentes.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- CONCLUSÃO -->
+            <div class="conclusion-box">
+                <h2>Conclusão</h2>
+                <p><strong>Herança</strong> é fundamental para criar código reutilizável e bem organizado. Use para criar relacionamentos naturais entre classes, mantendo hierarquias simples.</p>
+                <p>Lembre-se: <strong>"É UM" = Herança | "TEM UM" = Composição</strong>!</p>
+                <p><strong>Próximo passo:</strong> Estude <strong>Polimorfismo</strong> - o terceiro pilar que trabalha junto com herança!</p>
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>Herança: Reutilize código, organize hierarquias!</p>
+            <p>Do básico ao avançado: POO, Collections, Spring Boot e muito mais!</p>
+        </footer>
+    </div>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul></ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>
