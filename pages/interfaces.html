@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="Interfaces - Contratos, Implementação Múltipla e Polimorfismo Avançado">
+    <meta name="theme-color" content="#8B5A2B">
+    <title>Interfaces - Programação Orientada a Objetos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <!-- Logo SVG -->
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    </svg>
+                </div>
+
+                <!-- Título -->
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <!-- Toggle Modo Escuro/Claro -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
+            <h1>🎯 Interfaces</h1>
+            <p class="subtitle">Contratos, Implementação Múltipla e Polimorfismo Avançado</p>
+
+            <!-- INTRODUÇÃO -->
+            <div class="section">
+                <h2>1. O que é uma Interface?</h2>
+                
+                <div class="intro-text">
+                    <p>Uma <strong>interface</strong> é um contrato que define um conjunto de métodos que uma classe <strong>deve implementar</strong>. Ela estabelece o que fazer, mas não como fazer.</p>
+                    
+                    <p>Interfaces são ferramentas poderosas para criar código <strong>desacoplado</strong>, <strong>reutilizável</strong> e <strong>flexível</strong>.</p>
+                    
+                    <p>Uma classe pode implementar <strong>múltiplas interfaces</strong>, o que oferece máxima flexibilidade e evita o problema da herança múltipla.</p>
+                </div>
+            </div>
+
+            <!-- CONCEITOS -->
+            <div class="section">
+                <h2>2. Características das Interfaces</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Contrato</h3>
+                    <p>Define quais métodos uma classe <strong>deve implementar</strong>, sem especificar como.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Públicas</h3>
+                    <p>Todos os métodos de uma interface são implicitamente <strong>public</strong>.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Múltiplas Implementações</h3>
+                    <p>Uma classe pode implementar <strong>várias interfaces</strong> simultaneamente.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Polimorfismo</h3>
+                    <p>Diferentes classes implementam a mesma interface e podem ser usadas <strong>intercambiavelmente</strong>.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- SINTAXE BÁSICA -->
+            <div class="section">
+                <h2>3. Sintaxe de uma Interface</h2>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Definindo uma Interface
+public interface Animal {
+    // Método abstrato (sem corpo)
+    void fazer_som();
+    
+    // Método com corpo (default method - Java 8+)
+    default void dormir() {
+        System.out.println("Zzzzz...");
+    }
+    
+    // Constante (implicitamente final e static)
+    int NUMERO_DE_PATAS = 4;
+}
+
+// Implementando a interface
+public class Cachorro implements Animal {
+    @Override
+    public void fazer_som() {
+        System.out.println("Au au!");
+    }
+    
+    @Override
+    public void dormir() {
+        System.out.println("Cachorro dormindo...");
+    }
+}
+
+// Uso
+public class Main {
+    public static void main(String[] args) {
+        Animal dog = new Cachorro();
+        dog.fazer_som();  // Au au!
+        dog.dormir();     // Cachorro dormindo...
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- MÚLTIPLAS INTERFACES -->
+            <div class="section">
+                <h2>4. Implementação Múltipla</h2>
+
+                <p>Uma das maiores vantagens das interfaces é que uma classe pode implementar <strong>várias interfaces</strong>, oferecendo máxima flexibilidade.</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Múltiplas interfaces
+public interface Terrestre {
+    void andar();
+}
+
+public interface Aquatico {
+    void nadar();
+}
+
+public interface Aereo {
+    void voar();
+}
+
+// Classe implementa múltiplas interfaces
+public class Pato implements Terrestre, Aquatico, Aereo {
+    @Override
+    public void andar() {
+        System.out.println("Pato andando...");
+    }
+    
+    @Override
+    public void nadar() {
+        System.out.println("Pato nadando...");
+    }
+    
+    @Override
+    public void voar() {
+        System.out.println("Pato voando...");
+    }
+}
+
+// Uso
+public class Main {
+    public static void main(String[] args) {
+        Pato pato = new Pato();
+        pato.andar();  // Pato andando...
+        pato.nadar();  // Pato nadando...
+        pato.voar();   // Pato voando...
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- POLIMORFISMO -->
+            <div class="section">
+                <h2>5. Polimorfismo com Interfaces</h2>
+
+                <p>Uma das maiores vantagens das interfaces é permitir <strong>polimorfismo</strong> - diferentes classes implementam a mesma interface e podem ser usadas de forma intercambiável.</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Interface define o contrato
+public interface Veiculo {
+    void acelerar();
+    void frear();
+}
+
+// Diferentes implementações
+public class Carro implements Veiculo {
+    @Override
+    public void acelerar() {
+        System.out.println("Carro acelerou - Vrummm!");
+    }
+    
+    @Override
+    public void frear() {
+        System.out.println("Carro freou");
+    }
+}
+
+public class Moto implements Veiculo {
+    @Override
+    public void acelerar() {
+        System.out.println("Moto acelerou - Rooooom!");
+    }
+    
+    @Override
+    public void frear() {
+        System.out.println("Moto freou");
+    }
+}
+
+// Polimorfismo em ação
+public class Garagem {
+    public static void testar(Veiculo v) {
+        v.acelerar();
+        v.frear();
+    }
+    
+    public static void main(String[] args) {
+        Veiculo[] veiculos = {
+            new Carro(),
+            new Moto()
+        };
+        
+        for (Veiculo v : veiculos) {
+            testar(v);  // Polimorfismo!
+        }
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXEMPLO PRÁTICO -->
+            <div class="section">
+                <h2>6. Exemplo Prático: Sistema de Pagamento</h2>
+
+                <p>Vamos criar um sistema que aceita múltiplas formas de pagamento usando interfaces:</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public interface FormaPagamento {
+    void processar(double valor);
+    String obterNome();
+}
+
+public class CartaoCredito implements FormaPagamento {
+    private String numero;
+    
+    public CartaoCredito(String numero) {
+        this.numero = numero;
+    }
+    
+    @Override
+    public void processar(double valor) {
+        System.out.println("💳 Cartão: " + numero);
+        System.out.println("   Valor: R$ " + valor);
+        System.out.println("   ✓ Aprovado!");
+    }
+    
+    @Override
+    public String obterNome() {
+        return "Cartão de Crédito";
+    }
+}
+
+public class Pix implements FormaPagamento {
+    private String chave;
+    
+    public Pix(String chave) {
+        this.chave = chave;
+    }
+    
+    @Override
+    public void processar(double valor) {
+        System.out.println("📱 PIX para: " + chave);
+        System.out.println("   Valor: R$ " + valor);
+        System.out.println("   ✓ Realizado!");
+    }
+    
+    @Override
+    public String obterNome() {
+        return "PIX";
+    }
+}
+
+// Uso
+public class Caixa {
+    public static void processar(FormaPagamento metodo, double valor) {
+        System.out.println("--- " + metodo.obterNome() + " ---");
+        metodo.processar(valor);
+    }
+    
+    public static void main(String[] args) {
+        processar(new CartaoCredito("1234-5678"), 150.00);
+        processar(new Pix("email@exemplo.com"), 200.00);
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- DEFAULT METHODS -->
+            <div class="section">
+                <h2>7. Default Methods (Java 8+)</h2>
+
+                <p>A partir do Java 8, interfaces podem ter métodos com implementação padrão usando a palavra-chave <code>default</code>. Isso permite adicionar novos métodos sem quebrar classes existentes.</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public interface Notificacao {
+    void enviar(String mensagem);
+    
+    // Default method - tem implementação
+    default void registrarLog(String msg) {
+        System.out.println("[LOG] " + msg);
+    }
+    
+    // Static method - pertence à interface
+    static void info() {
+        System.out.println("Sistema de notificações v1.0");
+    }
+}
+
+public class EmailNotificacao implements Notificacao {
+    @Override
+    public void enviar(String mensagem) {
+        System.out.println("📧 Email: " + mensagem);
+        registrarLog("Email enviado");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Notificacao.info();
+        
+        Notificacao email = new EmailNotificacao();
+        email.enviar("Olá!");
+    }
+}</code></pre>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #10b981;">
+                    <h3>✅ Vantagens dos Default Methods:</h3>
+                    <ul class="explanation-list">
+                        <li>Adicionar novos métodos sem quebrar código legado</li>
+                        <li>Fornecer implementações padrão opcionais</li>
+                        <li>Manter retrocompatibilidade</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- INTERFACE VS CLASSE ABSTRATA -->
+            <div class="section">
+                <h2>8. Interfaces vs Classes Abstratas</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Use Classe Abstrata quando:</h3>
+                    <ul class="explanation-list">
+                        <li>Há hierarquia clara de classes</li>
+                        <li>Compartilhamento de código e estado</li>
+                        <li>Modificadores de acesso diversos</li>
+                        <li>Exemplo: Animal → Cachorro, Gato</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #10b981;">
+                    <h3>Use Interface quando:</h3>
+                    <ul class="explanation-list">
+                        <li>Classes sem relacionamento compartilham comportamento</li>
+                        <li>Máxima flexibilidade e desacoplamento</li>
+                        <li>Implementação múltipla necessária</li>
+                        <li>Exemplo: Ligavel (Microondas, TV, Carro)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXERCÍCIOS -->
+            <div class="section">
+                <h2>9. Exercícios Práticos</h2>
+                
+                <div class="exercise-box">
+                    <h4>Exercício 1: Sistema de Reprodução</h4>
+                    <p>Crie interface <strong>Reprodutor</strong> com métodos <strong>play()</strong>, <strong>pause()</strong>, <strong>stop()</strong>. Implemente em <strong>Musica</strong>, <strong>Video</strong> e <strong>Podcast</strong>.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 2: Formas Geométricas</h4>
+                    <p>Crie interface <strong>Forma</strong> com métodos <strong>calcularArea()</strong> e <strong>calcularPerimetro()</strong>. Implemente em <strong>Circulo</strong>, <strong>Quadrado</strong> e <strong>Triangulo</strong>.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 3: Múltiplas Interfaces</h4>
+                    <p>Crie interfaces <strong>Persistivel</strong> (salvar/carregar) e <strong>Validavel</strong> (validar). Implemente ambas em uma classe <strong>Usuario</strong>.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 4: Sistema de Dispositivos</h4>
+                    <p>Crie interface <strong>Ligavel</strong> (ligar/desligar). Implemente em <strong>Microondas</strong>, <strong>TV</strong>, <strong>Computador</strong> e <strong>Refrigerador</strong>.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- RESUMO -->
+            <div class="section">
+                <h2>10. Resumo - Os 4 Pilares da POO</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>1. Encapsulamento</h3>
+                    <p>Protege dados com private, controla acesso com getters/setters.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>2. Herança</h3>
+                    <p>Reutiliza código criando relacionamentos hierárquicos entre classes.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>3. Polimorfismo</h3>
+                    <p>Um mesmo método com múltiplos comportamentos (sobrecarga e sobrescrita).</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>4. Abstração</h3>
+                    <p>Esconde complexidade, mostra apenas o essencial (classes abstratas e interfaces).</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- CONCLUSÃO -->
+            <div class="conclusion-box">
+                <h2>Conclusão</h2>
+                <p><strong>Interfaces</strong> são fundamentais para criar código orientado a objetos profissional, flexível e maintível.</p>
+                <p>Elas definem <strong>contratos de comportamento</strong>, permitindo que diferentes classes forneçam suas próprias implementações.</p>
+                <ul class="explanation-list">
+                    <li>✓ Interfaces definem o QUÊ, não o COMO</li>
+                    <li>✓ Uma classe pode implementar múltiplas interfaces</li>
+                    <li>✓ Interfaces promovem polimorfismo e desacoplamento</li>
+                    <li>✓ Default methods adicionam funcionalidade sem quebrar código</li>
+                    <li>✓ Escolha interfaces para máxima flexibilidade</li>
+                </ul>
+                <p><strong>🚀 Domine interfaces e você dominará o design orientado a objetos!</strong></p>
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>Interfaces: Contratos, Flexibilidade, Polimorfismo!</p>
+            <p>Do básico ao avançado: POO, Collections, Spring Boot e muito mais!</p>
+        </footer>
+    </div>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul></ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>
