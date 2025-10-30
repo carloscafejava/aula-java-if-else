@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="APIs - Conceitos, Arquitetura, REST, HTTP, Autenticação e Integração">
+    <meta name="theme-color" content="#8B5A2B">
+    <title>APIs - Guia Completo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <!-- Logo SVG -->
+                <div class="logo-wrapper">
+                      <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    </svg>
+                </div>
+
+                <!-- Título -->
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <!-- Toggle Modo Escuro/Claro -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
+            <h1>🔌 APIs - Interface de Programação de Aplicações</h1>
+            <p class="subtitle">Conceitos, Arquitetura, Protocolos e Integração</p>
+
+            <!-- INTRODUÇÃO -->
+            <div class="section">
+                <h2>1. O que é uma API?</h2>
+                
+                <div class="intro-text">
+                    <p><strong>API (Application Programming Interface)</strong> é um conjunto de regras e especificações que permite que diferentes aplicações se comuniquem e compartilhem dados e funcionalidades. É como um contrato entre sistemas.</p>
+                    
+                    <p>Uma API funciona como um <strong>intermediário</strong>: você (cliente) não precisa conhecer como a funcionalidade é implementada internamente; você simplesmente solicita algo específico (faz uma requisição) e recebe o resultado (resposta).</p>
+                    
+                    <p>Pense em uma API como um <strong>garçom em um restaurante</strong>: você pede o que deseja, ele não precisa conhecer cada detalhe da cozinha, mas sabe como comunicar sua requisição e entregar o resultado.</p>
+                </div>
+            </div>
+
+            <!-- COMPARAÇÃO RÁPIDA -->
+            <div class="section">
+                <h2>2. Conceitos Fundamentais</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Cliente (Client)</h3>
+                    <ul class="explanation-list">
+                        <li><strong>Função:</strong> Solicita dados ou funcionalidades</li>
+                        <li><strong>Exemplos:</strong> Website, app mobile, outro backend</li>
+                        <li><strong>Ação:</strong> Envia requisições HTTP</li>
+                        <li><strong>Responsabilidade:</strong> Formatar dados corretamente</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #10b981;">
+                    <h3>Servidor (Server)</h3>
+                    <ul class="explanation-list">
+                        <li><strong>Função:</strong> Fornece dados ou funcionalidades</li>
+                        <li><strong>Exemplos:</strong> Backend em Java, Node.js, Python</li>
+                        <li><strong>Ação:</strong> Processa requisições e retorna respostas</li>
+                        <li><strong>Responsabilidade:</strong> Validar e processar dados</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- TIPOS DE APIs -->
+            <div class="section">
+                <h2>3. Tipos de APIs</h2>
+
+                <p>Existem diferentes tipos de APIs, cada uma com suas características, vantagens e casos de uso específicos.</p>
+
+                <h3>REST API (Representational State Transfer):</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">http</span>
+                    </div>
+                    <pre><code class="language-http">// Mais popular e recomendada
+// Usa URLs para representar recursos
+// Métodos HTTP para operações (GET, POST, PUT, DELETE)
+
+GET /api/usuarios           // Listar todos
+GET /api/usuarios/123       // Obter um específico
+POST /api/usuarios          // Criar novo
+PUT /api/usuarios/123       // Atualizar
+DELETE /api/usuarios/123    // Deletar
+
+// Características:
+// ✓ Simples e intuitiva
+// ✓ Escalável
+// ✓ Stateless (sem estado)
+// ✓ Cacheable</code></pre>
+                </div>
+
+                <!-- <h3>GraphQL:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">graphql</span>
+                    </div>
+                    <pre><code class="language-graphql">// Você pede EXATAMENTE o que precisa
+// Sem dados desnecessários (over-fetching)
+// Sem múltiplas requisições (under-fetching)
+
+query {
+  usuario(id: 123) {
+    nome
+    email
+    posts {
+      titulo
+      conteudo
+    }
+  }
+}
+
+// Características:
+// ✓ Flexível
+// ✓ Eficiente em dados
+// ✓ Autodocumentado
+// ✗ Mais complexo que REST</code></pre>
+                </div> -->
+
+                <h3>SOAP (Simple Object Access Protocol):</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">xml</span>
+                    </div>
+                    <pre><code class="language-xml">&lt;?xml version="1.0"?&gt;
+&lt;soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/"&gt;
+  &lt;soap:Body&gt;
+    &lt;GetUsuario&gt;
+      &lt;id&gt;123&lt;/id&gt;
+    &lt;/GetUsuario&gt;
+  &lt;/soap:Body&gt;
+&lt;/soap:Envelope&gt;
+
+// Características:
+// ✓ Muito seguro
+// ✓ Padrão W3C
+// ✗ Pesado e complexo
+// ✗ Menos usado atualmente (legado)</code></pre>
+                </div>
+
+                <h3>Webhook:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// A aplicação envia dados automaticamente quando algo acontece
+// Orientada a eventos
+// O servidor inicia a comunicação (não o cliente)
+
+// Exemplo: Pagamento confirmado
+POST https://seu-app.com/webhooks/pagamento
+Content-Type: application/json
+
+{
+  "evento": "pagamento_confirmado",
+  "id_pagamento": "pay_123",
+  "valor": 150.00,
+  "timestamp": "2025-10-29T14:30:00Z"
+}
+
+// Características:
+// ✓ Orientado a eventos
+// ✓ Tempo real
+// ✓ Reduz polling
+// ✗ Requer tratamento de erros robusto</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- PROTOCOLOS HTTP -->
+            <div class="section">
+                <h2>4. Protocolo HTTP e Métodos</h2>
+
+                <p>A maioria das APIs modernas usa <strong>HTTP</strong> como protocolo de transporte. Os principais métodos são:</p>
+
+                <h3>Métodos HTTP e Operações:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">http</span>
+                    </div>
+                    <pre><code class="language-http">// GET - Recuperar dados (READ)
+GET /api/usuarios
+GET /api/usuarios/123
+Características: Seguro, Idempotente, Cacheável
+
+// POST - Criar novo recurso (CREATE)
+POST /api/usuarios
+Body: { "nome": "João", "email": "joao@mail.com" }
+Características: Não-idempotente, Pode ter efeitos colaterais
+
+// PUT - Atualizar completamente (UPDATE)
+PUT /api/usuarios/123
+Body: { "nome": "João Silva", "email": "joao.silva@mail.com" }
+Características: Idempotente, Substitui tudo
+
+// PATCH - Atualizar parcialmente (PARTIAL UPDATE)
+PATCH /api/usuarios/123
+Body: { "nome": "João Silva" }
+Características: Idempotente, Atualiza apenas campos enviados
+
+// DELETE - Remover recurso (DELETE)
+DELETE /api/usuarios/123
+Características: Idempotente, Remove permanentemente
+
+// HEAD - Como GET mas sem body
+HEAD /api/usuarios
+Características: Verifica disponibilidade sem dados
+
+// OPTIONS - Descreve opções de comunicação
+OPTIONS /api/usuarios
+Características: Usado para CORS pré-flight</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- STATUS CODES -->
+            <div class="section">
+                <h2>5. Códigos de Status HTTP</h2>
+
+                <h3>Status Codes - Categorizados:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">http</span>
+                    </div>
+                    <pre><code class="language-http">// 2xx - SUCESSO ✓
+200 OK              - Requisição bem-sucedida
+201 Created         - Recurso criado com sucesso
+204 No Content      - Sucesso mas sem conteúdo no corpo
+202 Accepted        - Requisição aceita mas ainda processando
+
+// 3xx - REDIRECIONAMENTO ↻
+301 Moved Permanently    - Mudou permanentemente
+302 Found                - Mudou temporariamente
+304 Not Modified         - Dados não alterados (use cache)
+307 Temporary Redirect   - Redireção temporária
+
+// 4xx - ERRO DO CLIENTE ✗
+400 Bad Request          - Requisição inválida
+401 Unauthorized         - Autenticação necessária
+403 Forbidden            - Autenticado mas sem permissão
+404 Not Found            - Recurso não encontrado
+409 Conflict             - Conflito (ex: email duplicado)
+429 Too Many Requests    - Rate limit excedido
+
+// 5xx - ERRO DO SERVIDOR ⚠
+500 Internal Server Error    - Erro interno no servidor
+503 Service Unavailable      - Serviço temporariamente indisponível
+504 Gateway Timeout          - Timeout na comunicação</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXEMPLO PRÁTICO -->
+            <div class="section">
+                <h2>6. Exemplo Prático: REST API com Spring Boot</h2>
+
+                <p>Vamos criar uma REST API completa de gerenciamento de usuários em Java com Spring Boot.</p>
+
+                <h3>Modelo (Entidade):</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import javax.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
+
+@Data
+@Entity
+@Table(name = "usuarios")
+public class Usuario {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(nullable = false)
+    private String nome;
+    
+    @Column(nullable = false, unique = true)
+    private String email;
+    
+    @Column(nullable = false)
+    private String senha;
+    
+    private boolean ativo = true;
+    
+    @Column(name = "criado_em", updatable = false)
+    private LocalDateTime criadoEm = LocalDateTime.now();
+    
+    @Column(name = "atualizado_em")
+    private LocalDateTime atualizadoEm;
+}</code></pre>
+                </div>
+
+                <h3>Repositório (Data Access):</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+    Usuario findByEmail(String email);
+    
+    boolean existsByEmail(String email);
+}</code></pre>
+                </div>
+
+                <h3>Controlador (REST Endpoints):</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.time.LocalDateTime;
+
+@RestController
+@RequestMapping("/api/usuarios")
+@CrossOrigin(origins = "*")
+public class UsuarioController {
+    
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    
+    // GET - Listar todos
+    @GetMapping
+    public ResponseEntity<List<Usuario>> listarTodos() {
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        return ResponseEntity.ok(usuarios);
+    }
+    
+    // GET - Buscar por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> buscarPorId(@PathVariable Long id) {
+        return usuarioRepository.findById(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+    
+    // POST - Criar novo usuário
+    @PostMapping
+    public ResponseEntity<?> criar(@RequestBody Usuario usuario) {
+        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body("Email já registrado");
+        }
+        usuario.setCriadoEm(LocalDateTime.now());
+        usuario.setAtualizado(LocalDateTime.now());
+        Usuario salvo = usuarioRepository.save(usuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
+    }
+    
+    // PUT - Atualizar completamente
+    @PutMapping("/{id}")
+    public ResponseEntity<?> atualizar(
+        @PathVariable Long id, 
+        @RequestBody Usuario usuarioAtualizado) {
+        
+        return usuarioRepository.findById(id)
+            .map(usuario -> {
+                usuario.setNome(usuarioAtualizado.getNome());
+                usuario.setEmail(usuarioAtualizado.getEmail());
+                usuario.setAtivo(usuarioAtualizado.isAtivo());
+                usuario.setAtualizadoEm(LocalDateTime.now());
+                Usuario salvo = usuarioRepository.save(usuario);
+                return ResponseEntity.ok(salvo);
+            })
+            .orElse(ResponseEntity.notFound().build());
+    }
+    
+    // PATCH - Atualizar parcialmente
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> atualizarParcial(
+        @PathVariable Long id,
+        @RequestBody Usuario usuarioAtualizado) {
+        
+        return usuarioRepository.findById(id)
+            .map(usuario -> {
+                if (usuarioAtualizado.getNome() != null) {
+                    usuario.setNome(usuarioAtualizado.getNome());
+                }
+                if (usuarioAtualizado.getEmail() != null) {
+                    usuario.setEmail(usuarioAtualizado.getEmail());
+                }
+                usuario.setAtualizadoEm(LocalDateTime.now());
+                Usuario salvo = usuarioRepository.save(usuario);
+                return ResponseEntity.ok(salvo);
+            })
+            .orElse(ResponseEntity.notFound().build());
+    }
+    
+    // DELETE - Remover usuário
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        if (usuarioRepository.existsById(id)) {
+            usuarioRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+}</code></pre>
+                </div>
+
+                <h3>Exemplos de Requisições:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">http</span>
+                    </div>
+                    <pre><code class="language-http">// 1️⃣ GET - Listar todos os usuários
+GET http://localhost:8080/api/usuarios
+Accept: application/json
+
+Resposta 200 OK:
+[
+  {
+    "id": 1,
+    "nome": "Ana Silva",
+    "email": "ana@example.com",
+    "ativo": true,
+    "criadoEm": "2025-10-29T10:30:00"
+  },
+  {
+    "id": 2,
+    "nome": "Bruno Costa",
+    "email": "bruno@example.com",
+    "ativo": true,
+    "criadoEm": "2025-10-29T11:15:00"
+  }
+]
+
+---
+
+// 2️⃣ GET - Buscar usuário específico
+GET http://localhost:8080/api/usuarios/1
+Accept: application/json
+
+Resposta 200 OK:
+{
+  "id": 1,
+  "nome": "Ana Silva",
+  "email": "ana@example.com",
+  "ativo": true,
+  "criadoEm": "2025-10-29T10:30:00"
+}
+
+---
+
+// 3️⃣ POST - Criar novo usuário
+POST http://localhost:8080/api/usuarios
+Content-Type: application/json
+
+{
+  "nome": "Carlos Souza",
+  "email": "carlos@example.com",
+  "senha": "senha123"
+}
+
+Resposta 201 Created:
+{
+  "id": 3,
+  "nome": "Carlos Souza",
+  "email": "carlos@example.com",
+  "ativo": true,
+  "criadoEm": "2025-10-29T14:45:00"
+}
+
+---
+
+// 4️⃣ PUT - Atualizar usuário completamente
+PUT http://localhost:8080/api/usuarios/1
+Content-Type: application/json
+
+{
+  "nome": "Ana Silva Santos",
+  "email": "ana.silva@example.com",
+  "ativo": true
+}
+
+Resposta 200 OK: (usuário atualizado)
+
+---
+
+// 5️⃣ PATCH - Atualizar apenas o nome
+PATCH http://localhost:8080/api/usuarios/1
+Content-Type: application/json
+
+{
+  "nome": "Ana S. Santos"
+}
+
+Resposta 200 OK: (apenas nome atualizado)
+
+---
+
+// 6️⃣ DELETE - Remover usuário
+DELETE http://localhost:8080/api/usuarios/1
+
+Resposta 204 No Content</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- AUTENTICAÇÃO -->
+            <div class="section">
+                <h2>7. Autenticação e Segurança</h2>
+
+                <p>APIs precisam proteger dados sensíveis. Existem várias estratégias de autenticação:</p>
+
+                <h3>Basic Auth:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">http</span>
+                    </div>
+                    <pre><code class="language-http">// Envia usuário e senha em cada requisição (Base64)
+GET /api/usuarios HTTP/1.1
+Authorization: Basic dXN1YXJpbzpzZW5oYQ==
+
+// dXN1YXJpbzpzZW5oYQ== é base64 de "usuario:senha"
+// ✓ Simples
+// ✗ Inseguro sem HTTPS
+// ✗ Credenciais em toda requisição</code></pre>
+                </div>
+
+                <h3>Bearer Token:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">http</span>
+                    </div>
+                    <pre><code class="language-http">// Cliente obtém token após autenticação
+// Envia token em cada requisição
+
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "email": "usuario@example.com",
+  "senha": "senha123"
+}
+
+Resposta 200 OK:
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "tipo": "Bearer",
+  "expiraEm": "2025-10-30T14:30:00"
+}
+
+---
+
+// Usar token em requisições subsequentes
+GET /api/usuarios
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...</code></pre>
+                </div>
+
+                <h3>JWT (JSON Web Token):</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import java.util.Date;
+
+public class JwtUtil {
+    private static final String SECRET_KEY = "sua_chave_super_secreta_aqui_com_minimo_32_caracteres";
+    private static final long EXPIRATION_TIME = 86400000; // 24 horas
+    
+    // Gerar token
+    public static String gerarToken(String email, Long usuarioId) {
+        return Jwts.builder()
+            .setSubject(email)
+            .claim("usuarioId", usuarioId)
+            .setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+            .signWith(
+                Keys.hmacShaKeyFor(SECRET_KEY.getBytes()),
+                SignatureAlgorithm.HS256
+            )
+            .compact();
+    }
+    
+    // Validar e extrair email do token
+    public static String extrairEmail(String token) {
+        return Jwts.parserBuilder()
+            .setSigningKey(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
+            .build()
+            .parseClaimsJws(token)
+            .getBody()
+            .getSubject();
+    }
+    
+    // Validar se token é válido
+    public static boolean validarToken(String token) {
+        try {
+            Jwts.parserBuilder()
+                .setSigningKey(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
+                .build()
+                .parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- BOAS PRÁTICAS -->
+            <div class="section">
+                <h2>8. Boas Práticas para APIs</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>✓ Versionamento de API</h3>
+                    <ul class="explanation-list">
+                        <li>Use versões na URL: /api/v1/usuarios</li>
+                        <li>Permite evoluir sem quebrar clientes antigos</li>
+                        <li>Facilita migração gradual</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #10b981;">
+                    <h3>✓ Nomes Descritivos e Consistentes</h3>
+                    <ul class="explanation-list">
+                        <li>Use substantivos para endpoints: /usuarios, /produtos</li>
+                        <li>Evite verbos: /obterUsuarios ❌ → /usuarios ✓</li>
+                        <li>Use plural: /produtos não /produto</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #f59e0b;">
+                    <h3>✓ Tratamento de Erros</h3>
+                    <ul class="explanation-list">
+                        <li>Retorne mensagens claras e úteis</li>
+                        <li>Use status codes apropriados</li>
+                        <li>Padronize o formato de erro em JSON</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #ef4444;">
+                    <h3>✓ Documentação</h3>
+                    <ul class="explanation-list">
+                        <li>Use Swagger/OpenAPI para gerar documentação automática</li>
+                        <li>Documente todos os endpoints</li>
+                        <li>Inclua exemplos de requisição e resposta</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXERCÍCIOS -->
+            <div class="section">
+                <h2>9. Exercícios Práticos</h2>
+                
+                <div class="exercise-box">
+                    <h4>Exercício 1: API de Tarefas</h4>
+                    <p>Crie uma REST API com CRUD completo (Create, Read, Update, Delete) para gerenciar tarefas. Use Spring Boot, JPA e MySQL.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 2: Integração com API Externa</h4>
+                    <p>Use RestTemplate ou WebClient para integrar sua aplicação com uma API pública (ex: ViaCEP para endereços). Trate erros corretamente.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 3: Autenticação com JWT</h4>
+                    <p>Implemente autenticação JWT em uma API existente. Crie endpoints de login e proteja outros endpoints verificando o token.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 4: Documentação com Swagger</h4>
+                    <p>Configure Swagger/SpringFox em um projeto Spring Boot. Documente todos os endpoints com descrições, parâmetros e exemplos.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 5: Tratamento Centralizado de Erros</h4>
+                    <p>Crie um @ControllerAdvice que padroniza respostas de erro em JSON com mensagens claras e status codes apropriados.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- CONCLUSÃO -->
+            <div class="conclusion-box">
+                <h2>Conclusão</h2>
+                <p><strong>APIs</strong> são a espinha dorsal da web moderna e comunicação entre sistemas. Entender seus conceitos é essencial para qualquer desenvolvedor.</p>
+                <p>Pontos-chave para lembrar:</p>
+                <ul class="explanation-list">
+                    <li><strong>REST</strong> é o padrão mais popular para APIs web</li>
+                    <li><strong>HTTP métodos</strong> definem as operações (GET, POST, PUT, DELETE, PATCH)</li>
+                    <li><strong>Status codes</strong> comunicam o resultado da operação</li>
+                    <li><strong>Autenticação</strong> é essencial para proteger dados</li>
+                    <li><strong>Documentação</strong> e <strong>boas práticas</strong> tornam a API usável e mantível</li>
+                </ul>
+                <p>Pratique criando suas próprias APIs e integrando-se com APIs de terceiros. Isso é um dos conhecimentos mais valiosos no desenvolvimento moderno! 🚀</p>
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>APIs: REST, GraphQL, Autenticação, Segurança, Integração!</p>
+            <p>Do conceito à implementação: APIs escaláveis, seguras e bem documentadas!</p>
+        </footer>
+    </div>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul></ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>
