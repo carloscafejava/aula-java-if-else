@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="SQL - Conceitos, Operações, JOINs, Agregações e Manipulação de Dados">
+    <meta name="theme-color" content="#8B5A2B">
+    <title>SQL - Guia Completo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <!-- Logo SVG -->
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    </svg>
+                </div>
+
+                <!-- Título -->
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <!-- Toggle Modo Escuro/Claro -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
+            <h1>📊 SQL - Linguagem de Consulta Estruturada</h1>
+            <p class="subtitle">Conceitos, Operações, JOINs, Agregações e Manipulação de Dados</p>
+
+            <!-- INTRODUÇÃO -->
+            <div class="section">
+                <h2>1. O que é SQL?</h2>
+                
+                <div class="intro-text">
+                    <p><strong>SQL (Structured Query Language)</strong> é a linguagem padrão para gerenciar e manipular dados em bancos de dados relacionais. Ela permite consultar, inserir, atualizar e deletar dados de forma eficiente e segura.</p>
+
+                    <p>SQL é utilizada para interagir com diversos sistemas de gerenciamento de banco de dados (SGBD), como MySQL, PostgreSQL, SQL Server, Oracle e SQLite. Uma das principais características do SQL é sua sintaxe simples e intuitiva, tornando-a acessível mesmo para iniciantes.</p>
+
+                    <p>Os dados em um banco de dados SQL são organizados em <strong>tabelas</strong>, que contêm <strong>linhas</strong> (registros) e <strong>colunas</strong> (campos ou atributos). Cada tabela representa uma entidade, como Usuários, Produtos ou Pedidos.</p>
+
+                    <p>As operações fundamentais em SQL são conhecidas como <strong>CRUD</strong>:</p>
+                    <ul>
+                        <li><strong>CREATE (CREATE):</strong> inserir novos dados</li>
+                        <li><strong>READ (SELECT):</strong> consultar dados existentes</li>
+                        <li><strong>UPDATE (UPDATE):</strong> modificar dados existentes</li>
+                        <li><strong>DELETE (DELETE):</strong> remover dados</li>
+                    </ul>
+
+                    <p>Além do CRUD básico, SQL oferece recursos avançados como <strong>JOINs</strong> para combinar dados de múltiplas tabelas, <strong>agregações</strong> para calcular resumos (como somas e médias), <strong>subconsultas</strong> e <strong>índices</strong> para otimizar o desempenho das consultas.</p>
+
+                    <p>SQL também é responsável pela <strong>integridade de dados</strong> através de restrições, garantindo que os dados armazenados sejam precisos e consistentes. Isso inclui chaves primárias, chaves estrangeiras e validações de dados.</p>
+
+                    <p>Em resumo, SQL é a linguagem fundamental para qualquer desenvolvedor que trabalhe com dados, tornando imprescindível seu domínio para desenvolvimento de aplicações robustas e escaláveis.</p>
+                </div>
+            </div>
+
+            <!-- CONCEITOS FUNDAMENTAIS -->
+            <div class="section">
+                <h2>2. Conceitos Fundamentais</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Banco de Dados (Database)</h3>
+                    <ul class="explanation-list">
+                        <li><strong>Definição:</strong> Coleção organizada de dados relacionados</li>
+                        <li><strong>Função:</strong> Armazenar informações de forma estruturada</li>
+                        <li><strong>Exemplo:</strong> sistema de vendas, rede social, e-commerce</li>
+                        <li><strong>Acesso:</strong> Via SQL ou ORM (Object-Relational Mapping)</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #10b981;">
+                    <h3>Tabela (Table)</h3>
+                    <ul class="explanation-list">
+                        <li><strong>Definição:</strong> Estrutura de dois níveis com colunas e linhas</li>
+                        <li><strong>Linhas:</strong> Registros ou tuplas (dados individuais)</li>
+                        <li><strong>Colunas:</strong> Campos ou atributos (tipos de dados)</li>
+                        <li><strong>Exemplo:</strong> Tabela usuários com colunas: id, nome, email</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #f59e0b;">
+                    <h3>Chave Primária (Primary Key)</h3>
+                    <ul class="explanation-list">
+                        <li><strong>Função:</strong> Identificador único de cada registro</li>
+                        <li><strong>Características:</strong> Não pode ser nula, deve ser única</li>
+                        <li><strong>Exemplo:</strong> id em uma tabela de usuários</li>
+                        <li><strong>Utilidade:</strong> Garante integridade e permite busca rápida</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #ef4444;">
+                    <h3>Chave Estrangeira (Foreign Key)</h3>
+                    <ul class="explanation-list">
+                        <li><strong>Função:</strong> Conecta registros entre tabelas diferentes</li>
+                        <li><strong>Características:</strong> Referencia a chave primária de outra tabela</li>
+                        <li><strong>Exemplo:</strong> usuario_id em uma tabela de pedidos</li>
+                        <li><strong>Utilidade:</strong> Mantém relacionamentos e integridade referencial</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- TIPOS DE DADOS -->
+            <div class="section">
+                <h2>3. Tipos de Dados em SQL</h2>
+
+                <p>SQL oferece diferentes tipos de dados para armazenar informações específicas. Escolher o tipo correto é fundamental para otimizar o desempenho e garantir a integridade dos dados.</p>
+
+                <h3>Tipos de Dados Comuns:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">sql</span>
+                    </div>
+                    <pre><code class="language-sql">-- NUMÉRICOS
+INT, INTEGER        -- Números inteiros (-2147483648 a 2147483647)
+BIGINT             -- Números inteiros grandes
+SMALLINT           -- Números inteiros pequenos
+DECIMAL(p, s)      -- Números decimais precisos (ex: DECIMAL(10, 2))
+FLOAT              -- Números decimais com ponto flutuante
+
+-- TEXTUAIS
+VARCHAR(n)         -- Texto variável até n caracteres
+CHAR(n)            -- Texto fixo com n caracteres
+TEXT               -- Texto longo sem limite
+
+-- DATAS E HORÁRIOS
+DATE               -- Data (YYYY-MM-DD)
+TIME               -- Hora (HH:MM:SS)
+DATETIME           -- Data e hora
+TIMESTAMP          -- Timestamp automático
+
+-- BOOLEANOS
+BOOLEAN            -- TRUE ou FALSE (ou 1 ou 0)
+
+-- ESPECIAIS
+BLOB               -- Dados binários (imagens, arquivos)
+JSON               -- Dados em formato JSON
+UUID               -- Identificador único global</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- OPERAÇÕES BÁSICAS -->
+            <div class="section">
+                <h2>4. Operações Básicas - CRUD</h2>
+
+                <h3>CREATE TABLE - Criar Tabela:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">sql</span>
+                    </div>
+                    <pre><code class="language-sql">CREATE TABLE usuarios (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    data_nascimento DATE,
+    ativo BOOLEAN DEFAULT TRUE,
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Constraints (Restrições):
+-- NOT NULL    - Campo obrigatório
+-- UNIQUE      - Valor único (não pode repetir)
+-- PRIMARY KEY - Identificador único da tabela
+-- FOREIGN KEY - Referência a outra tabela
+-- DEFAULT     - Valor padrão
+-- CHECK       - Validação customizada</code></pre>
+                </div>
+
+                <h3>INSERT - Inserir Dados:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">sql</span>
+                    </div>
+                    <pre><code class="language-sql">-- Inserir um registro
+INSERT INTO usuarios (nome, email, senha, data_nascimento)
+VALUES ('Ana Silva', 'ana@example.com', 'senha123', '1995-05-15');
+
+-- Inserir múltiplos registros
+INSERT INTO usuarios (nome, email, senha, data_nascimento) VALUES
+('Bruno Costa', 'bruno@example.com', 'senha456', '1990-08-20'),
+('Carlos Souza', 'carlos@example.com', 'senha789', '1992-03-10'),
+('Diana Lima', 'diana@example.com', 'senha000', '1998-11-25');
+
+-- Inserir com SELECT (copiar dados de outra tabela)
+INSERT INTO usuarios_backup
+SELECT * FROM usuarios WHERE ativo = TRUE;</code></pre>
+                </div>
+
+                <h3>SELECT - Consultar Dados:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">sql</span>
+                    </div>
+                    <pre><code class="language-sql">-- Selecionar todas as colunas
+SELECT * FROM usuarios;
+
+-- Selecionar colunas específicas
+SELECT id, nome, email FROM usuarios;
+
+-- Com WHERE (filtrar)
+SELECT * FROM usuarios WHERE ativo = TRUE;
+SELECT * FROM usuarios WHERE nome LIKE 'A%'; -- Começa com A
+SELECT * FROM usuarios WHERE id > 5 AND ativo = TRUE;
+
+-- Com ORDER BY (ordenar)
+SELECT * FROM usuarios ORDER BY nome ASC;  -- Ascendente
+SELECT * FROM usuarios ORDER BY id DESC;   -- Descendente
+
+-- Com LIMIT (limitar resultados)
+SELECT * FROM usuarios LIMIT 10;
+SELECT * FROM usuarios LIMIT 10 OFFSET 5;  -- Paginação
+
+-- Com DISTINCT (valores únicos)
+SELECT DISTINCT cidade FROM usuarios;
+
+-- Combinando cláusulas
+SELECT nome, email FROM usuarios 
+WHERE ativo = TRUE 
+ORDER BY nome ASC 
+LIMIT 20;</code></pre>
+                </div>
+
+                <h3>UPDATE - Atualizar Dados:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">sql</span>
+                    </div>
+                    <pre><code class="language-sql">-- Atualizar um registro específico
+UPDATE usuarios SET nome = 'Ana Silva Santos' WHERE id = 1;
+
+-- Atualizar múltiplos campos
+UPDATE usuarios 
+SET nome = 'Ana Silva Santos', email = 'ana.silva@example.com'
+WHERE id = 1;
+
+-- Atualizar vários registros
+UPDATE usuarios SET ativo = FALSE WHERE criado_em < '2020-01-01';
+
+-- Usando expressões
+UPDATE usuarios SET email = LOWER(email);
+UPDATE pedidos SET total = quantidade * preco WHERE status = 'pendente';</code></pre>
+                </div>
+
+                <h3>DELETE - Deletar Dados:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">sql</span>
+                    </div>
+                    <pre><code class="language-sql">-- Deletar um registro
+DELETE FROM usuarios WHERE id = 5;
+
+-- Deletar múltiplos registros
+DELETE FROM usuarios WHERE ativo = FALSE AND criado_em < '2020-01-01';
+
+-- Deletar todos (cuidado!)
+DELETE FROM usuarios;
+
+-- Usar DROP TABLE para deletar a tabela inteira
+DROP TABLE usuarios;</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- JOINs -->
+            <div class="section">
+                <h2>5. JOINs - Combinando Tabelas</h2>
+
+                <p>JOINs permitem combinar dados de múltiplas tabelas baseado em relacionamentos. Existem diferentes tipos de JOINs com comportamentos distintos.</p>
+
+                <h3>Estrutura de Exemplo:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">sql</span>
+                    </div>
+                    <pre><code class="language-sql">-- Tabela: usuarios
+id | nome           | email
+1  | Ana Silva      | ana@example.com
+2  | Bruno Costa    | bruno@example.com
+3  | Carlos Souza   | carlos@example.com
+
+-- Tabela: pedidos
+id | usuario_id | produto      | valor
+1  | 1          | Notebook     | 3000.00
+2  | 2          | Mouse        | 150.00
+3  | 1          | Teclado      | 450.00
+4  | 5          | Monitor      | 1200.00</code></pre>
+                </div>
+
+                <h3>INNER JOIN:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">sql</span>
+                    </div>
+                    <pre><code class="language-sql">-- Retorna apenas registros que existem em AMBAS as tabelas
+SELECT usuarios.nome, pedidos.produto, pedidos.valor
+FROM usuarios
+INNER JOIN pedidos ON usuarios.id = pedidos.usuario_id;
+
+-- Resultado:
+-- Ana Silva | Notebook | 3000.00
+-- Bruno Costa | Mouse | 150.00
+-- Ana Silva | Teclado | 450.00
+-- (Usuário 5 não aparece pois não existe em usuarios)</code></pre>
+                </div>
+
+                <h3>LEFT JOIN:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">sql</span>
+                    </div>
+                    <pre><code class="language-sql">-- Retorna TODOS os registros da tabela esquerda + correspondências da direita
+SELECT usuarios.nome, pedidos.produto, pedidos.valor
+FROM usuarios
+LEFT JOIN pedidos ON usuarios.id = pedidos.usuario_id;
+
+-- Resultado:
+-- Ana Silva | Notebook | 3000.00
+-- Ana Silva | Teclado | 450.00
+-- Bruno Costa | Mouse | 150.00
+-- Carlos Souza | NULL | NULL
+-- (Carlos Souza aparece mesmo sem pedidos)</code></pre>
+                </div>
+
+                <h3>RIGHT JOIN:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">sql</span>
+                    </div>
+                    <pre><code class="language-sql">-- Retorna TODOS os registros da tabela direita + correspondências da esquerda
+SELECT usuarios.nome, pedidos.produto, pedidos.valor
+FROM usuarios
+RIGHT JOIN pedidos ON usuarios.id = pedidos.usuario_id;
+
+-- Resultado:
+-- Ana Silva | Notebook | 3000.00
+-- Bruno Costa | Mouse | 150.00
+-- Ana Silva | Teclado | 450.00
+-- NULL | Monitor | 1200.00
+-- (Monitor aparece mesmo que usuario_id 5 não exista em usuarios)</code></pre>
+                </div>
+
+                <h3>FULL OUTER JOIN:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">sql</span>
+                    </div>
+                    <pre><code class="language-sql">-- Retorna TODOS os registros de AMBAS as tabelas
+SELECT usuarios.nome, pedidos.produto, pedidos.valor
+FROM usuarios
+FULL OUTER JOIN pedidos ON usuarios.id = pedidos.usuario_id;
+
+-- Resultado: Combina LEFT + RIGHT
+-- Ana Silva | Notebook | 3000.00
+-- Ana Silva | Teclado | 450.00
+-- Bruno Costa | Mouse | 150.00
+-- Carlos Souza | NULL | NULL
+-- NULL | Monitor | 1200.00</code></pre>
+                </div>
+
+                <h3>CROSS JOIN:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">sql</span>
+                    </div>
+                    <pre><code class="language-sql">-- Retorna o produto cartesiano (todas as combinações)
+SELECT usuarios.nome, pedidos.produto
+FROM usuarios
+CROSS JOIN pedidos;
+
+-- Resultado: 3 usuários × 4 pedidos = 12 linhas
+-- Ana Silva | Notebook
+-- Ana Silva | Mouse
+-- Ana Silva | Teclado
+-- Ana Silva | Monitor
+-- Bruno Costa | Notebook
+-- ... (todas as combinações)</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- AGREGAÇÕES -->
+            <div class="section">
+                <h2>6. Funções de Agregação</h2>
+
+                <p>Funções de agregação calculam resumos a partir de múltiplos registros, como contagem, soma, média, máximo e mínimo.</p>
+
+                <h3>Funções Principais:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">sql</span>
+                    </div>
+                    <pre><code class="language-sql">-- COUNT - Contar registros
+SELECT COUNT(*) AS total_usuarios FROM usuarios;
+SELECT COUNT(id) AS usuarios_com_id FROM usuarios;
+SELECT COUNT(DISTINCT cidade) AS cidades_unicas FROM usuarios;
+
+-- SUM - Somar valores
+SELECT SUM(valor) AS valor_total FROM pedidos;
+SELECT SUM(valor) AS valor_total FROM pedidos WHERE status = 'concluído';
+
+-- AVG - Calcular média
+SELECT AVG(valor) AS valor_medio FROM pedidos;
+SELECT AVG(idade) AS idade_media FROM usuarios;
+
+-- MAX e MIN - Máximo e mínimo
+SELECT MAX(valor) AS maior_pedido FROM pedidos;
+SELECT MIN(valor) AS menor_pedido FROM pedidos;
+SELECT MAX(criado_em) AS pedido_mais_recente FROM pedidos;
+
+-- GROUP BY - Agrupar e agregar
+SELECT usuario_id, COUNT(*) AS total_pedidos, SUM(valor) AS valor_total
+FROM pedidos
+GROUP BY usuario_id;
+
+-- GROUP BY com HAVING (filtrar grupos)
+SELECT usuario_id, COUNT(*) AS total_pedidos
+FROM pedidos
+GROUP BY usuario_id
+HAVING COUNT(*) > 2;  -- Apenas usuários com mais de 2 pedidos
+
+-- Combinações úteis
+SELECT 
+  usuarios.nome,
+  COUNT(pedidos.id) AS total_pedidos,
+  SUM(pedidos.valor) AS valor_gasto,
+  AVG(pedidos.valor) AS valor_medio
+FROM usuarios
+LEFT JOIN pedidos ON usuarios.id = pedidos.usuario_id
+GROUP BY usuarios.id, usuarios.nome;</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXEMPLO PRÁTICO -->
+            <div class="section">
+                <h2>7. Exemplo Prático Completo</h2>
+
+                <p>Vamos criar um sistema de e-commerce com múltiplas tabelas relacionadas.</p>
+
+                <h3>Schema do Banco de Dados:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">sql</span>
+                    </div>
+                    <pre><code class="language-sql">-- Tabela: usuarios
+CREATE TABLE usuarios (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    telefone VARCHAR(20),
+    cidade VARCHAR(100),
+    estado VARCHAR(2),
+    ativo BOOLEAN DEFAULT TRUE,
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabela: categorias
+CREATE TABLE categorias (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL UNIQUE,
+    descricao TEXT
+);
+
+-- Tabela: produtos
+CREATE TABLE produtos (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(150) NOT NULL,
+    descricao TEXT,
+    preco DECIMAL(10, 2) NOT NULL,
+    estoque INT DEFAULT 0,
+    categoria_id INT NOT NULL,
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+);
+
+-- Tabela: pedidos
+CREATE TABLE pedidos (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    usuario_id INT NOT NULL,
+    status ENUM('pendente', 'confirmado', 'enviado', 'entregue', 'cancelado') DEFAULT 'pendente',
+    valor_total DECIMAL(10, 2) NOT NULL,
+    data_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data_entrega DATE,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+
+-- Tabela: itens_pedido
+CREATE TABLE itens_pedido (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    pedido_id INT NOT NULL,
+    produto_id INT NOT NULL,
+    quantidade INT NOT NULL,
+    preco_unitario DECIMAL(10, 2) NOT NULL,
+    subtotal DECIMAL(10, 2) GENERATED ALWAYS AS (quantidade * preco_unitario) STORED,
+    FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
+    FOREIGN KEY (produto_id) REFERENCES produtos(id)
+);</code></pre>
+                </div>
+
+                <h3>Inserindo Dados:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">sql</span>
+                    </div>
+                    <pre><code class="language-sql">-- Inserir categorias
+INSERT INTO categorias (nome, descricao) VALUES
+('Eletrônicos', 'Produtos eletrônicos em geral'),
+('Livros', 'Livros e e-books'),
+('Roupas', 'Vestuário e acessórios');
+
+-- Inserir produtos
+INSERT INTO produtos (nome, descricao, preco, estoque, categoria_id) VALUES
+('Notebook Dell', 'Intel i7, 16GB RAM', 3500.00, 10, 1),
+('Mouse Logitech', 'Wireless, 1600 DPI', 150.00, 50, 1),
+('Clean Code', 'Livro sobre código limpo', 89.90, 25, 2),
+('Camiseta Básica', '100% algodão', 45.00, 100, 3);
+
+-- Inserir usuários
+INSERT INTO usuarios (nome, email, senha, telefone, cidade, estado) VALUES
+('Ana Silva', 'ana@example.com', 'senha123', '11987654321', 'São Paulo', 'SP'),
+('Bruno Costa', 'bruno@example.com', 'senha456', '21987654321', 'Rio de Janeiro', 'RJ'),
+('Diana Lima', 'diana@example.com', 'senha789', '85987654321', 'Fortaleza', 'CE');
+
+-- Inserir pedido
+INSERT INTO pedidos (usuario_id, status, valor_total) VALUES
+(1, 'confirmado', 3650.00);
+
+-- Inserir itens do pedido
+INSERT INTO itens_pedido (pedido_id, produto_id, quantidade, preco_unitario) VALUES
+(1, 1, 1, 3500.00),
+(1, 2, 1, 150.00);</code></pre>
+                </div>
+
+                <h3>Consultas Complexas:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">sql</span>
+                    </div>
+                    <pre><code class="language-sql">-- 1️⃣ Listar pedidos com detalhes do usuário
+SELECT 
+  p.id,
+  u.nome AS usuario,
+  u.email,
+  p.status,
+  p.valor_total,
+  p.data_pedido
+FROM pedidos p
+JOIN usuarios u ON p.usuario_id = u.id
+ORDER BY p.data_pedido DESC;
+
+---
+
+-- 2️⃣ Listar itens de um pedido específico
+SELECT 
+  ip.id,
+  pro.nome AS produto,
+  ip.quantidade,
+  ip.preco_unitario,
+  ip.subtotal
+FROM itens_pedido ip
+JOIN produtos pro ON ip.produto_id = pro.id
+WHERE ip.pedido_id = 1
+ORDER BY ip.id;
+
+---
+
+-- 3️⃣ Calcular total gasto por usuário
+SELECT 
+  u.nome,
+  COUNT(p.id) AS total_pedidos,
+  SUM(p.valor_total) AS valor_total_gasto,
+  AVG(p.valor_total) AS ticket_medio,
+  MAX(p.data_pedido) AS ultimo_pedido
+FROM usuarios u
+LEFT JOIN pedidos p ON u.id = p.usuario_id
+GROUP BY u.id, u.nome
+ORDER BY valor_total_gasto DESC;
+
+---
+
+-- 4️⃣ Produtos mais vendidos
+SELECT 
+  pro.nome,
+  cat.nome AS categoria,
+  SUM(ip.quantidade) AS quantidade_vendida,
+  SUM(ip.subtotal) AS valor_total
+FROM itens_pedido ip
+JOIN produtos pro ON ip.produto_id = pro.id
+JOIN categorias cat ON pro.categoria_id = cat.id
+GROUP BY pro.id, pro.nome, cat.nome
+ORDER BY quantidade_vendida DESC;
+
+---
+
+-- 5️⃣ Usuários que não fizeram pedidos
+SELECT u.* FROM usuarios u
+LEFT JOIN pedidos p ON u.id = p.usuario_id
+WHERE p.id IS NULL;
+
+---
+
+-- 6️⃣ Relatório de vendas por categoria
+SELECT 
+  cat.nome AS categoria,
+  COUNT(DISTINCT p.id) AS total_pedidos,
+  COUNT(ip.id) AS total_itens,
+  SUM(ip.subtotal) AS valor_total
+FROM categorias cat
+LEFT JOIN produtos pro ON cat.id = pro.categoria_id
+LEFT JOIN itens_pedido ip ON pro.id = ip.produto_id
+LEFT JOIN pedidos p ON ip.pedido_id = p.id
+GROUP BY cat.id, cat.nome
+ORDER BY valor_total DESC;</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- BOAS PRÁTICAS -->
+            <div class="section">
+                <h2>8. Boas Práticas em SQL</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>✓ Use Índices</h3>
+                    <ul class="explanation-list">
+                        <li>Crie índices em colunas frequentemente consultadas</li>
+                        <li>Indexe chaves primárias e estrangeiras automaticamente</li>
+                        <li>Use índices com moderação para não impactar INSERT/UPDATE</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #10b981;">
+                    <h3>✓ Normalização de Dados</h3>
+                    <ul class="explanation-list">
+                        <li>Organize dados em tabelas relacionadas (evite redundância)</li>
+                        <li>Use de 1ª até 3ª forma normal (normalização adequada)</li>
+                        <li>Reduza espaço de armazenamento e erros de inconsistência</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #f59e0b;">
+                    <h3>✓ Segurança - Prepared Statements</h3>
+                    <ul class="explanation-list">
+                        <li>Use prepared statements para evitar SQL Injection</li>
+                        <li>Nunca concatene strings em SQL</li>
+                        <li>Valide e sanitize entrada do usuário</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #ef4444;">
+                    <h3>✓ Performance e Otimização</h3>
+                    <ul class="explanation-list">
+                        <li>Use EXPLAIN para analisar plano de execução</li>
+                        <li>Evite SELECT * (especifique colunas necessárias)</li>
+                        <li>Limite resultados com LIMIT quando apropriado</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXERCÍCIOS -->
+            <div class="section">
+                <h2>9. Exercícios Práticos</h2>
+                
+                <div class="exercise-box">
+                    <h4>Exercício 1: Banco de Dados de Biblioteca</h4>
+                    <p>Crie um banco de dados com tabelas: autores, livros, empréstimos e usuários. Implemente consultas para listar livros por autor, histórico de empréstimos e usuários com mais atrasos.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 2: Relatórios Mensais</h4>
+                    <p>Desenvolva queries para gerar relatórios de vendas mensais, produtos mais lucrativos, e comparação de desempenho entre períodos.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 3: Otimização de Queries</h4>
+                    <p>Pegue um conjunto de queries ineficientes e otimize-as usando índices, EXPLAIN e reformulação de lógica SQL.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 4: Integridade de Dados</h4>
+                    <p>Implemente constraints, triggers e validações para garantir a integridade referencial e dados consistentes.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 5: Backup e Restauração</h4>
+                    <p>Pratique backup e restauração de bancos de dados, versionamento de schema e migrations.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- CONCLUSÃO -->
+            <div class="conclusion-box">
+                <h2>Conclusão</h2>
+                <p><strong>SQL</strong> é a linguagem fundamental para qualquer desenvolvedor que trabalhe com dados. Dominar SQL é essencial para criar aplicações eficientes, seguras e escaláveis.</p>
+                <p>Pontos-chave para lembrar:</p>
+                <ul class="explanation-list">
+                    <li><strong>CRUD</strong> são as operações básicas (Create, Read, Update, Delete)</li>
+                    <li><strong>JOINs</strong> combinam dados de múltiplas tabelas de forma poderosa</li>
+                    <li><strong>Agregações</strong> calculam resumos a partir de dados</li>
+                    <li><strong>Índices</strong> e <strong>normalização</strong> otimizam desempenho</li>
+                    <li><strong>Segurança</strong> (prepared statements) protege contra SQL Injection</li>
+                </ul>
+                <p>Pratique criando seus próprios bancos de dados, começando simples e evoluindo para estruturas mais complexas. SQL é uma habilidade que se aprimora com a prática! 🚀</p>
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>SQL: CRUD, JOINs, Agregações, Integridade, Otimização!</p>
+            <p>Do conceito à implementação: Bancos de dados robustos, seguros e bem estruturados!</p>
+        </footer>
+    </div>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul></ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>
