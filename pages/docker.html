@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="Docker Compose - Orquestração de Containers, MySQL, PostgreSQL e Desenvolvimento">
+    <meta name="theme-color" content="#8B5A2B">
+    <title>Docker Compose - Guia Completo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <!-- Logo SVG -->
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    </svg>
+                </div>
+
+                <!-- Título -->
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <!-- Toggle Modo Escuro/Claro -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
+            <h1>🐳 Docker Compose - Orquestração de Containers</h1>
+            <p class="subtitle">Conceitos, Configuração, MySQL, PostgreSQL e Desenvolvimento Local</p>
+
+            <!-- INTRODUÇÃO -->
+            <div class="section">
+                <h2>1. O que é Docker Compose?</h2>
+                
+                <div class="intro-text">
+                    <p><strong>Docker Compose</strong> é uma ferramenta que permite definir e executar aplicações multi-container com Docker. Com um único arquivo YAML, você pode descrever todos os serviços, redes e volumes necessários para sua aplicação.</p>
+
+                    <p>Em vez de executar múltiplos comandos `docker run`, você define tudo em um arquivo `docker-compose.yml` e inicia com um simples comando: `docker-compose up`.</p>
+
+                    <p>Docker Compose é ideal para desenvolvimento local, testes, e ambientes de staging. Permite que você defina uma stack completa (banco de dados, cache, web server, etc) com facilidade e reprodutibilidade.</p>
+
+                    <p>Os principais benefícios do Docker Compose são:</p>
+                    <ul>
+                        <li><strong>Simplicidade:</strong> Uma único arquivo para toda a stack</li>
+                        <li><strong>Reprodutibilidade:</strong> Mesmo ambiente em qualquer máquina</li>
+                        <li><strong>Isolamento:</strong> Containers isolados em redes próprias</li>
+                        <li><strong>Facilidade:</strong> Sem necessidade de lembrar comandos complexos</li>
+                        <li><strong>Velocidade:</strong> Inicie múltiplos serviços com um comando</li>
+                    </ul>
+
+                    <p>O fluxo de trabalho é simples: você escreve um `docker-compose.yml` descrevendo os serviços, depois executa `docker-compose up` para iniciá-los. Todos os containers são criados, conectados em rede e iniciados automaticamente.</p>
+
+                    <p>Docker Compose é especialmente útil para criar ambientes de desenvolvimento que espelham o ambiente de produção, permitindo que problemas sejam detectados mais cedo.</p>
+
+                    <p>Em resumo, Docker Compose simplifica o gerenciamento de múltiplos containers, tornando o desenvolvimento mais rápido, previsível e collaborativo! 🚀</p>
+                </div>
+            </div>
+
+            <!-- CONCEITOS FUNDAMENTAIS -->
+            <div class="section">
+                <h2>2. Conceitos Fundamentais</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Serviço (Service)</h3>
+                    <ul class="explanation-list">
+                        <li><strong>Definição:</strong> Um container ou grupo de containers relacionados</li>
+                        <li><strong>Exemplos:</strong> MySQL, Redis, Node.js, Nginx</li>
+                        <li><strong>Configuração:</strong> Definido no docker-compose.yml</li>
+                        <li><strong>Comunicação:</strong> Serviços se comunicam por nome de serviço</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #10b981;">
+                    <h3>Volume (Volume)</h3>
+                    <ul class="explanation-list">
+                        <li><strong>Definição:</strong> Armazenamento persistente para dados</li>
+                        <li><strong>Tipos:</strong> Volumes nomeados ou mounts de host</li>
+                        <li><strong>Uso:</strong> Dados de banco de dados, arquivos de aplicação</li>
+                        <li><strong>Persistência:</strong> Dados survivem ao restart do container</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #f59e0b;">
+                    <h3>Rede (Network)</h3>
+                    <ul class="explanation-list">
+                        <li><strong>Definição:</strong> Conexão entre containers</li>
+                        <li><strong>Padrão:</strong> Rede bridge automática por projeto</li>
+                        <li><strong>DNS:</strong> Serviços se resolvem por nome</li>
+                        <li><strong>Isolamento:</strong> Cada projeto tem sua própria rede</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #ef4444;">
+                    <h3>Arquivo docker-compose.yml</h3>
+                    <ul class="explanation-list">
+                        <li><strong>Formato:</strong> YAML (indentação importa!)</li>
+                        <li><strong>Versão:</strong> Especifica compatibilidade (v3.x é padrão)</li>
+                        <li><strong>Localização:</strong> Raiz do projeto</li>
+                        <li><strong>Nomes:</strong> docker-compose.yml ou docker-compose.yaml</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- INSTALAÇÃO -->
+            <div class="section">
+                <h2>3. Instalação do Docker e Docker Compose</h2>
+
+                <h3>Windows e Mac (Desktop):</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">bash</span>
+                    </div>
+                    <pre><code class="language-bash"># Docker Desktop já inclui Docker Compose
+# Download em: https://www.docker.com/products/docker-desktop
+
+# Verificar instalação
+docker --version
+docker-compose --version
+
+# Deve retornar algo como:
+# Docker version 24.0.0, build abcdef
+# Docker Compose version 2.20.0</code></pre>
+                </div>
+
+                <h3>Linux (Ubuntu/Debian):</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">bash</span>
+                    </div>
+                    <pre><code class="language-bash"># Instalar Docker
+sudo apt update
+sudo apt install docker.io
+
+# Instalar Docker Compose
+sudo apt install docker-compose
+
+# Adicionar usuário ao grupo docker (para não usar sudo)
+sudo usermod -aG docker $USER
+newgrp docker
+
+# Testar instalação
+docker --version
+docker-compose --version</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- ESTRUTURA BÁSICA -->
+            <div class="section">
+                <h2>4. Estrutura do docker-compose.yml</h2>
+
+                <h3>Arquivo Básico:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">yaml</span>
+                    </div>
+                    <pre><code class="language-yaml">version: '3.8'  # Versão do Compose
+
+services:
+  # Nome do serviço (como você irá referenciar)
+  mysql:
+    image: mysql:8.0                 # Imagem Docker a usar
+    container_name: meu-mysql        # Nome do container
+    environment:                      # Variáveis de ambiente
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: meu_banco
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: senha123
+    ports:
+      - "3306:3306"                 # Porta host:container
+    volumes:
+      - mysql_data:/var/lib/mysql   # Volume para persistência
+    networks:
+      - minha_rede                   # Rede customizada
+
+volumes:
+  # Define volumes que serão criados
+  mysql_data:
+    driver: local
+
+networks:
+  # Define redes customizadas
+  minha_rede:
+    driver: bridge</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXEMPLO: MYSQL -->
+            <div class="section">
+                <h2>5. Exemplo Prático: MySQL com Docker Compose</h2>
+
+                <p>Vamos criar um ambiente MySQL completo para desenvolvimento.</p>
+
+                <h3>docker-compose.yml - MySQL Simples:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">yaml</span>
+                    </div>
+                    <pre><code class="language-yaml">version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-dev
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: dev_db
+      MYSQL_USER: dev_user
+      MYSQL_PASSWORD: dev_pass123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - dev_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  dev_network:
+    driver: bridge</code></pre>
+                </div>
+
+                <h3>Iniciar e Gerenciar:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">bash</span>
+                    </div>
+                    <pre><code class="language-bash"># Iniciar os containers em background
+docker-compose up -d
+
+# Ver status dos containers
+docker-compose ps
+
+# Ver logs
+docker-compose logs -f mysql
+
+# Acessar o MySQL
+docker-compose exec mysql mysql -u root -p dev_db
+
+# Parar os containers
+docker-compose stop
+
+# Parar e remover containers
+docker-compose down
+
+# Remover também os volumes (CUIDADO - apaga dados!)
+docker-compose down -v</code></pre>
+                </div>
+
+                <h3>Arquivo init.sql (Inicializar banco):</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">sql</span>
+                    </div>
+                    <pre><code class="language-sql">-- Arquivo: init.sql
+-- Será executado automaticamente ao criar o container
+
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO usuarios (nome, email) VALUES
+('Ana Silva', 'ana@example.com'),
+('Bruno Costa', 'bruno@example.com'),
+('Carlos Souza', 'carlos@example.com');</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXEMPLO: POSTGRESQL -->
+            <div class="section">
+                <h2>6. PostgreSQL com Docker Compose</h2>
+
+                <p>Alternativa ao MySQL com mais recursos avançados.</p>
+
+                <h3>docker-compose.yml - PostgreSQL:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">yaml</span>
+                    </div>
+                    <pre><code class="language-yaml">version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres-dev
+    environment:
+      POSTGRES_USER: dev_user
+      POSTGRES_PASSWORD: dev_pass123
+      POSTGRES_DB: dev_db
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - dev_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dev_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # PgAdmin - Interface web para gerenciar PostgreSQL
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin-dev
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    networks:
+      - dev_network
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  dev_network:
+    driver: bridge</code></pre>
+                </div>
+
+                <h3>Acessar PgAdmin:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">bash</span>
+                    </div>
+                    <pre><code class="language-bash"># Iniciar
+docker-compose up -d
+
+# Acessar PgAdmin em: http://localhost:5050
+# Email: admin@example.com
+# Senha: admin123
+
+# Conectar ao PostgreSQL:
+# Host: postgres (nome do serviço)
+# Port: 5432
+# Database: dev_db
+# User: dev_user
+# Password: dev_pass123
+
+# Ou via CLI
+docker-compose exec postgres psql -U dev_user -d dev_db</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- STACK COMPLETA -->
+            <div class="section">
+                <h2>7. Stack Completa: Aplicação + Banco + Redis</h2>
+
+                <p>Um exemplo real com múltiplos serviços para uma aplicação Java/Spring Boot.</p>
+
+                <h3>docker-compose.yml - Stack Completa:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">yaml</span>
+                    </div>
+                    <pre><code class="language-yaml">version: '3.8'
+
+services:
+  # Banco de Dados MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: app-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: app_db
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: app_pass123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # Cache Redis
+  redis:
+    image: redis:7-alpine
+    container_name: app-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - app_network
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Aplicação Java/Spring Boot
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app-server
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/app_db?useSSL=false
+      SPRING_DATASOURCE_USERNAME: app_user
+      SPRING_DATASOURCE_PASSWORD: app_pass123
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./src:/app/src
+    networks:
+      - app_network
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  app_network:
+    driver: bridge</code></pre>
+                </div>
+
+                <h3>Dockerfile (para a aplicação Spring Boot):</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">dockerfile</span>
+                    </div>
+                    <pre><code class="language-dockerfile">FROM maven:3.9-eclipse-temurin-17 AS builder
+
+WORKDIR /app
+
+# Copiar arquivos do projeto
+COPY pom.xml .
+COPY src ./src
+
+# Build da aplicação
+RUN mvn clean package -DskipTests
+
+# Estágio final
+FROM eclipse-temurin:17-jre
+
+WORKDIR /app
+
+# Copiar JAR do build anterior
+COPY --from=builder /app/target/app.jar app.jar
+
+# Expor porta
+EXPOSE 8080
+
+# Iniciar aplicação
+ENTRYPOINT ["java", "-jar", "app.jar"]</code></pre>
+                </div>
+
+                <h3>Iniciar a Stack Completa:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">bash</span>
+                    </div>
+                    <pre><code class="language-bash"># Iniciar todos os serviços
+docker-compose up -d
+
+# Ver status
+docker-compose ps
+
+# Ver logs de um serviço específico
+docker-compose logs -f app
+
+# Ver logs de todos
+docker-compose logs -f
+
+# Parar tudo
+docker-compose down
+
+# Parar e remover volumes
+docker-compose down -v</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- COMANDOS ÚTEIS -->
+            <div class="section">
+                <h2>8. Comandos Docker Compose Úteis</h2>
+
+                <h3>Gerenciamento de Containers:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">bash</span>
+                    </div>
+                    <pre><code class="language-bash"># UP - Criar e iniciar containers
+docker-compose up -d              # Background
+docker-compose up                 # Modo verbose
+
+# DOWN - Parar e remover containers
+docker-compose down               # Mantém volumes
+docker-compose down -v            # Remove volumes também
+
+# PS - Listar containers
+docker-compose ps
+
+# START/STOP - Iniciar/Parar containers
+docker-compose start
+docker-compose stop
+
+# RESTART - Reiniciar containers
+docker-compose restart
+
+# LOGS - Ver logs
+docker-compose logs -f            # Todos
+docker-compose logs -f mysql      # Serviço específico
+docker-compose logs --tail 50     # Últimas 50 linhas
+
+# EXEC - Executar comando dentro do container
+docker-compose exec mysql bash    # Abrir shell
+docker-compose exec mysql ls -la  # Listar arquivos
+
+# BUILD - Reconstruir imagens
+docker-compose build
+docker-compose build --no-cache   # Sem cache
+
+# PULL - Atualizar imagens
+docker-compose pull
+
+# RM - Remover containers parados
+docker-compose rm
+
+# CONFIG - Validar e exibir configuração
+docker-compose config</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- BOAS PRÁTICAS -->
+            <div class="section">
+                <h2>9. Boas Práticas</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>✓ Use .env para Variáveis de Ambiente</h3>
+                    <ul class="explanation-list">
+                        <li>Crie arquivo `.env` na raiz do projeto</li>
+                        <li>Docker Compose lê automaticamente</li>
+                        <li>Não committe `.env` no git (adicione ao .gitignore)</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #10b981;">
+                    <h3>✓ Use Healthchecks</h3>
+                    <ul class="explanation-list">
+                        <li>Verifique se serviço está realmente pronto</li>
+                        <li>Use `depends_on` com condition</li>
+                        <li>Evita problemas de inicialização</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #f59e0b;">
+                    <h3>✓ Volumes para Desenvolvimento</h3>
+                    <ul class="explanation-list">
+                        <li>Mapeie seu código local em tempo real</li>
+                        <li>Evite reconstruir imagens a cada mudança</li>
+                        <li>Perfeito para desenvolvimento local</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #ef4444;">
+                    <h3>✓ Versionamento de Imagens</h3>
+                    <ul class="explanation-list">
+                        <li>Sempre especifique versão da imagem</li>
+                        <li>Evite usar `latest` em produção</li>
+                        <li>Garanta reprodutibilidade</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- ARQUIVO .ENV -->
+            <div class="section">
+                <h2>10. Usando Arquivo .env</h2>
+
+                <h3>.env - Variáveis de Ambiente:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">bash</span>
+                    </div>
+                    <pre><code class="language-bash"># .env
+MYSQL_ROOT_PASSWORD=root123
+MYSQL_DATABASE=app_db
+MYSQL_USER=app_user
+MYSQL_PASSWORD=app_pass123
+
+REDIS_PORT=6379
+
+SPRING_PORT=8080
+SPRING_PROFILE=dev</code></pre>
+                </div>
+
+                <h3>docker-compose.yml com .env:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">yaml</span>
+                    </div>
+                    <pre><code class="language-yaml">version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  mysql_data:
+  redis_data:</code></pre>
+                </div>
+
+                <h3>.gitignore - Proteger .env:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">bash</span>
+                    </div>
+                    <pre><code class="language-bash"># .gitignore
+.env
+.env.local
+.env.*.local
+
+node_modules/
+target/
+*.log
+
+.DS_Store
+.vscode/
+.idea/</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- TROUBLESHOOTING -->
+            <div class="section">
+                <h2>11. Troubleshooting Comum</h2>
+
+                <h3>Problemas e Soluções:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">bash</span>
+                    </div>
+                    <pre><code class="language-bash"># ❌ Problema: Porta já em uso
+# Solução: Mude a porta no docker-compose.yml ou:
+docker-compose down
+sudo lsof -i :3306  # Ver qual processo usa porta
+kill -9 PID
+
+---
+
+# ❌ Problema: Não consegue conectar ao banco
+# Solução: Verifique healthcheck e dependências
+docker-compose logs mysql
+docker-compose exec mysql mysql -u root -p
+
+---
+
+# ❌ Problema: Container sai logo após iniciar
+# Solução: Verifique logs
+docker-compose logs app
+# Procure por erros no console
+
+---
+
+# ❌ Problema: Volume não está funcionando
+# Solução: Verifique sintaxe e permissões
+docker-compose exec app ls -la /app
+# Verifique sintaxe do volume no yml
+
+---
+
+# ❌ Problema: Rede não consegue se comunicar
+# Solução: Use nome do serviço como hostname
+# Correto: jdbc:mysql://mysql:3306/db
+# Errado: jdbc:mysql://localhost:3306/db
+
+---
+
+# ❌ Problema: Mudanças no código não aparecem
+# Solução: Verifique se volume está configurado
+volumes:
+  - ./src:/app/src  # Mapeie seu código local
+
+---
+
+# Limpar tudo e começar novamente
+docker-compose down -v
+docker system prune -a
+docker-compose up -d --build</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXERCÍCIOS -->
+            <div class="section">
+                <h2>12. Exercícios Práticos</h2>
+                
+                <div class="exercise-box">
+                    <h4>Exercício 1: MySQL + PhpMyAdmin</h4>
+                    <p>Crie um docker-compose com MySQL e PhpMyAdmin. Inicialize com dados de exemplo. Acesse via PhpMyAdmin e realize consultas.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 2: PostgreSQL + PgAdmin</h4>
+                    <p>Configure PostgreSQL com PgAdmin. Crie tabelas e dados via SQL. Pratique operações CRUD através do PgAdmin.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 3: Stack Multi-container</h4>
+                    <p>Crie uma aplicação Spring Boot que se conecta com MySQL e Redis. Configure docker-compose com todos os serviços, healthchecks e dependências.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 4: Usando .env</h4>
+                    <p>Refatore um docker-compose existente para usar arquivo .env. Crie variáveis para senhas, portas e nomes de bancos.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 5: Volumes e Persistência</h4>
+                    <p>Configure volumes nomeados para banco de dados. Teste que dados persistem após `docker-compose down`.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- CONCLUSÃO -->
+            <div class="conclusion-box">
+                <h2>Conclusão</h2>
+                <p><strong>Docker Compose</strong> é essencial para desenvolvimento moderno, permitindo que todos na equipe tenham o mesmo ambiente.</p>
+                <p>Pontos-chave para lembrar:</p>
+                <ul class="explanation-list">
+                    <li><strong>Um arquivo:</strong> docker-compose.yml define toda a stack</li>
+                    <li><strong>Fácil setup:</strong> `docker-compose up -d` para começar</li>
+                    <li><strong>Isolamento:</strong> Containers isolados em rede própria</li>
+                    <li><strong>Reprodutibilidade:</strong> Mesmo ambiente em qualquer máquina</li>
+                    <li><strong>Variáveis:</strong> Use .env para configurações sensíveis</li>
+                    <li><strong>Healthchecks:</strong> Verifique se serviços estão prontos</li>
+                </ul>
+                <p>Docker Compose é a ponte entre desenvolvimento local e produção. Domine-o para ser um desenvolvedor mais eficiente! 🚀</p>
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>Docker Compose: MySQL, PostgreSQL, Redis, Multi-container!</p>
+            <p>Do setup local à stack completa: Desenvolvimento reprodutível e padronizado!</p>
+        </footer>
+    </div>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul></ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>
