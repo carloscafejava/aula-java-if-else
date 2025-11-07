@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="Conexão com Banco de Dados e Spring Boot - Guia completo com application.properties e application.yml">
+    <meta name="theme-color" content="#8B5A2B">
+    <title>Spring Boot - Conexão com Banco de Dados</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <!-- Logo SVG - Reutilizado -->
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    </svg>
+                </div>
+
+                <!-- Título -->
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <!-- Toggle Modo Escuro/Claro -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
+            <h1>🗄️ Spring Boot & Conexão com Banco de Dados</h1>
+            <p class="subtitle">Domine a configuração e integração de bancos de dados em aplicações Spring Boot</p>
+
+            <!-- INTRODUÇÃO -->
+            <div class="section">
+                <h2>1. Introdução ao Spring Boot e Bancos de Dados</h2>
+                
+                <div class="intro-text">
+                    <p><strong>Spring Boot</strong> é um framework que simplifica a criação de aplicações Spring auto-contidas e prontas para produção. Quando você precisa conectar sua aplicação a um banco de dados, o Spring Boot oferece várias estratégias e configurações.</p>
+                    
+                    <p>A configuração do banco de dados em Spring Boot é feita através de arquivos de propriedades. Os dois formatos mais comuns são: <strong>application.properties</strong> (formato chave=valor) e <strong>application.yml</strong> (formato YAML hierárquico).</p>
+                    
+                    <p>Neste guia, você aprenderá a configurar conexões com MySQL, PostgreSQL e H2, usando ambos os formatos de configuração.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- APPLICATION.PROPERTIES -->
+            <div class="section">
+                <h2>2. 🔧 Configuração com application.properties</h2>
+                
+                <p>O arquivo <strong>application.properties</strong> usa o formato tradicional de propriedades Java (chave=valor).</p>
+
+                <h3>📍 Localização do Arquivo</h3>
+                <div class="solid-box">
+                    <p><strong>Caminho padrão:</strong> <span class="highlight-text">src/main/resources/application.properties</span></p>
+                </div>
+
+                <h3>Configuração MySQL</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">properties</span>
+                    </div>
+                    <pre><code class="language-properties"># ========== MySQL Configuration ==========
+spring.datasource.url=jdbc:mysql://localhost:3306/nome_banco
+spring.datasource.username=root
+spring.datasource.password=sua_senha
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# ========== JPA/Hibernate Configuration ==========
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.properties.hibernate.format_sql=true
+
+# ========== Connection Pool ==========
+spring.datasource.hikari.maximum-pool-size=10
+spring.datasource.hikari.minimum-idle=5
+spring.datasource.hikari.connection-timeout=20000</code></pre>
+                </div>
+
+                <div class="glass-box">
+                    <h3>📌 Explicação das Propriedades:</h3>
+                    <ul class="explanation-list">
+                        <li><strong>spring.datasource.url:</strong> URL de conexão com o banco (host:porta/nome_banco)</li>
+                        <li><strong>spring.datasource.username:</strong> Usuário para autenticação</li>
+                        <li><strong>spring.datasource.password:</strong> Senha para autenticação</li>
+                        <li><strong>spring.datasource.driver-class-name:</strong> Driver JDBC específico</li>
+                        <li><strong>spring.jpa.hibernate.ddl-auto:</strong> Estratégia para criar/atualizar tabelas</li>
+                        <li><strong>spring.jpa.show-sql:</strong> Exibe SQL gerado no console</li>
+                        <li><strong>spring.jpa.properties.hibernate.dialect:</strong> Dialeto SQL específico do banco</li>
+                    </ul>
+                </div>
+
+                <h3>Configuração PostgreSQL</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">properties</span>
+                    </div>
+                    <pre><code class="language-properties"># ========== PostgreSQL Configuration ==========
+spring.datasource.url=jdbc:postgresql://localhost:5432/nome_banco
+spring.datasource.username=postgres
+spring.datasource.password=sua_senha
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# ========== JPA/Hibernate ==========
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQL10Dialect
+spring.jpa.properties.hibernate.format_sql=true</code></pre>
+                </div>
+
+                <h3>Configuração H2 (Banco em Memória - Desenvolvimento)</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">properties</span>
+                    </div>
+                    <pre><code class="language-properties"># ========== H2 Configuration (In-Memory) ==========
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+# ========== H2 Console (Optional) ==========
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+
+# ========== JPA/Hibernate ==========
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.jpa.hibernate.ddl-auto=create-drop
+spring.jpa.show-sql=true</code></pre>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #4ade80;">
+                    <h3 style="color: #4ade80;">✓ Propriedades ddl-auto:</h3>
+                    <ul class="explanation-list">
+                        <li><strong>create:</strong> Cria tabelas a cada execução (deleta dados antigos)</li>
+                        <li><strong>create-drop:</strong> Cria e deleta ao encerrar (ideal para testes)</li>
+                        <li><strong>update:</strong> Atualiza schema sem perder dados (produção)</li>
+                        <li><strong>validate:</strong> Valida sem fazer mudanças</li>
+                        <li><strong>none:</strong> Sem ação automática</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- APPLICATION.YAML -->
+            <div class="section">
+                <h2>3. 📋 Configuração com application.yml</h2>
+                
+                <p>O arquivo <strong>application.yml</strong> usa o formato YAML, que é mais legível e hierárquico.</p>
+
+                <h3>📍 Localização do Arquivo</h3>
+                <div class="solid-box">
+                    <p><strong>Caminho padrão:</strong> <span class="highlight-text">src/main/resources/application.yml</span></p>
+                </div>
+
+                <h3>Configuração MySQL em YAML</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">yaml</span>
+                    </div>
+                    <pre><code class="language-yaml"># ========== MySQL Configuration ==========
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/nome_banco
+    username: root
+    password: sua_senha
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # ========== JPA/Hibernate Configuration ==========
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+
+  # ========== Connection Pool ==========
+  datasource:
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 20000</code></pre>
+                </div>
+
+                <h3>Configuração PostgreSQL em YAML</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">yaml</span>
+                    </div>
+                    <pre><code class="language-yaml"># ========== PostgreSQL Configuration ==========
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/nome_banco
+    username: postgres
+    password: sua_senha
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+        format_sql: true
+        jdbc:
+          batch_size: 20
+          fetch_size: 50</code></pre>
+                </div>
+
+                <h3>Configuração H2 em YAML</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">yaml</span>
+                    </div>
+                    <pre><code class="language-yaml"># ========== H2 Configuration ==========
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: 
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true</code></pre>
+                </div>
+
+                <div class="glass-box">
+                    <h3>🎨 Vantagens do YAML:</h3>
+                    <ul class="explanation-list">
+                        <li>Mais legível e organizado hierarquicamente</li>
+                        <li>Reduz repetição de prefixos</li>
+                        <li>Melhor para configurações complexas</li>
+                        <li>Suporta listas e estruturas aninhadas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- MÚLTIPLOS AMBIENTES -->
+            <div class="section">
+                <h2>4. 🌍 Configuração para Múltiplos Ambientes</h2>
+                
+                <p>É comum ter diferentes configurações para desenvolvimento, testes e produção. Spring Boot suporta múltiplos arquivos de configuração.</p>
+
+                <h3>Estrutura de Arquivos</h3>
+                <div class="solid-box">
+                    <pre style="margin: 0; font-family: 'Courier New', monospace; font-size: 0.9em;">
+src/main/resources/
+├── application.yml                 # Configuração padrão
+├── application-dev.yml             # Desenvolvimento
+├── application-test.yml            # Testes
+└── application-prod.yml            # Produção
+                    </pre>
+                </div>
+
+                <h3>application-dev.yml (Desenvolvimento)</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">yaml</span>
+                    </div>
+                    <pre><code class="language-yaml"># ========== Development Environment ==========
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/dev_db
+    username: root
+    password: root123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+
+server:
+  port: 8080
+  error:
+    include-stacktrace: always</code></pre>
+                </div>
+
+                <h3>application-prod.yml (Produção)</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">yaml</span>
+                    </div>
+                    <pre><code class="language-yaml"># ========== Production Environment ==========
+spring:
+  datasource:
+    url: jdbc:mysql://prod-server.com:3306/prod_db
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 10
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc:
+          batch_size: 50
+          fetch_size: 100
+
+server:
+  port: 8443
+  ssl:
+    enabled: true
+    key-store: classpath:keystore.jks
+    key-store-password: ${SSL_PASSWORD}</code></pre>
+                </div>
+
+                <h3>Como Ativar um Perfil Específico</h3>
+                <div class="solid-box">
+                    <p><strong>Em application.yml:</strong></p>
+                </div>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">yaml</span>
+                    </div>
+                    <pre><code class="language-yaml">spring:
+  profiles:
+    active: dev  # Ativa o perfil de desenvolvimento</code></pre>
+                </div>
+
+                <p><strong>Por linha de comando:</strong></p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">bash</span>
+                    </div>
+                    <pre><code class="language-bash">java -jar aplicacao.jar --spring.profiles.active=prod</code></pre>
+                </div>
+
+                <p><strong>Variável de ambiente:</strong></p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">bash</span>
+                    </div>
+                    <pre><code class="language-bash">export SPRING_PROFILES_ACTIVE=prod
+java -jar aplicacao.jar</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXEMPLO PRÁTICO COMPLETO -->
+            <div class="section">
+                <h2>5. 🔨 Exemplo Prático Completo: Classe Entity com Spring Boot</h2>
+                
+                <p>Vamos criar uma classe Entity (Entidade) para ser persistida no banco de dados:</p>
+
+                <h3>Pom.xml - Dependências Necessárias</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">xml</span>
+                    </div>
+                    <pre><code class="language-xml">&lt;dependencies&gt;
+    &lt;!-- Spring Boot Data JPA --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- MySQL Driver --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.mysql&lt;/groupId&gt;
+        &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+        &lt;version&gt;8.0.33&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- Spring Boot Web (REST) --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- Lombok (Optional - reduz código) --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+        &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+        &lt;optional&gt;true&lt;/optional&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre>
+                </div>
+
+                <h3>Entidade Produto</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">package com.seu_nome.model;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Table(name = "produtos")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Produto {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(nullable = false, length = 100)
+    private String nome;
+    
+    @Column(columnDefinition = "TEXT")
+    private String descricao;
+    
+    @Column(nullable = false)
+    private Double preco;
+    
+    @Column(nullable = false)
+    private Integer estoque;
+    
+    @Column(nullable = false)
+    private Boolean ativo = true;
+}</code></pre>
+                </div>
+
+                <h3>Repository (Acesso ao Banco)</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">package com.seu_nome.repository;
+
+import com.seu_nome.model.Produto;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ProdutoRepository extends JpaRepository&lt;Produto, Long&gt; {
+    // JpaRepository já fornece: save(), findById(), findAll(), delete(), etc.
+    
+    // Métodos customizados
+    Iterable&lt;Produto&gt; findByNomeContainingIgnoreCase(String nome);
+    Iterable&lt;Produto&gt; findByPrecoLessThan(Double preco);
+}</code></pre>
+                </div>
+
+                <h3>Service (Lógica de Negócio)</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">package com.seu_nome.service;
+
+import com.seu_nome.model.Produto;
+import com.seu_nome.repository.ProdutoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
+
+@Service
+public class ProdutoService {
+    
+    @Autowired
+    private ProdutoRepository produtoRepository;
+    
+    // CRUD Operations
+    public Produto salvar(Produto produto) {
+        if (produto.getPreco() &lt; 0) {
+            throw new IllegalArgumentException("Preço não pode ser negativo!");
+        }
+        return produtoRepository.save(produto);
+    }
+    
+    public Optional&lt;Produto&gt; buscarPorId(Long id) {
+        return produtoRepository.findById(id);
+    }
+    
+    public Iterable&lt;Produto&gt; buscarTodos() {
+        return produtoRepository.findAll();
+    }
+    
+    public void deletar(Long id) {
+        produtoRepository.deleteById(id);
+    }
+    
+    public Iterable&lt;Produto&gt; buscarPorNome(String nome) {
+        return produtoRepository.findByNomeContainingIgnoreCase(nome);
+    }
+}</code></pre>
+                </div>
+
+                <h3>Controller (API REST)</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">package com.seu_nome.controller;
+
+import com.seu_nome.model.Produto;
+import com.seu_nome.service.ProdutoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/produtos")
+public class ProdutoController {
+    
+    @Autowired
+    private ProdutoService produtoService;
+    
+    @PostMapping
+    public Produto criar(@RequestBody Produto produto) {
+        return produtoService.salvar(produto);
+    }
+    
+    @GetMapping
+    public Iterable&lt;Produto&gt; listarTodos() {
+        return produtoService.buscarTodos();
+    }
+    
+    @GetMapping("/{id}")
+    public Produto buscarPorId(@PathVariable Long id) {
+        return produtoService.buscarPorId(id)
+            .orElseThrow(() -&gt; new RuntimeException("Produto não encontrado"));
+    }
+    
+    @PutMapping("/{id}")
+    public Produto atualizar(@PathVariable Long id, @RequestBody Produto produtoAtualizado) {
+        Produto produto = produtoService.buscarPorId(id)
+            .orElseThrow(() -&gt; new RuntimeException("Produto não encontrado"));
+        
+        produto.setNome(produtoAtualizado.getNome());
+        produto.setPreco(produtoAtualizado.getPreco());
+        produto.setEstoque(produtoAtualizado.getEstoque());
+        
+        return produtoService.salvar(produto);
+    }
+    
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable Long id) {
+        produtoService.deletar(id);
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- PROPRIEDADES AVANÇADAS -->
+            <div class="section">
+                <h2>6. 🚀 Propriedades Avançadas de Configuração</h2>
+                
+                <h3>Connection Pooling - HikariCP</h3>
+                <div class="glass-box">
+                    <p>HikariCP é o pool de conexões padrão do Spring Boot. Otimiza o gerenciamento de conexões:</p>
+                </div>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">yaml</span>
+                    </div>
+                    <pre><code class="language-yaml">spring:
+  datasource:
+    hikari:
+      # Número máximo de conexões no pool
+      maximum-pool-size: 20
+      # Número mínimo de conexões ociosais
+      minimum-idle: 5
+      # Tempo máximo para obter conexão (ms)
+      connection-timeout: 30000
+      # Tempo máximo que conexão fica inativa antes de ser testada (ms)
+      idle-timeout: 600000
+      # Tempo máximo de vida da conexão (ms)
+      max-lifetime: 1800000
+      # Validação de conexão
+      connection-test-query: SELECT 1</code></pre>
+                </div>
+
+                <h3>Propriedades Hibernate Úteis</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">yaml</span>
+                    </div>
+                    <pre><code class="language-yaml">spring:
+  jpa:
+    properties:
+      hibernate:
+        # Formatação do SQL
+        format_sql: true
+        # Comentários no SQL
+        use_sql_comments: true
+        # Batch size (aumento de performance)
+        jdbc:
+          batch_size: 20
+          fetch_size: 50
+        # Logging
+        generate_statistics: false
+        use_identifier_rollback: true</code></pre>
+                </div>
+
+                <h3>Logging e Debug</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">yaml</span>
+                    </div>
+                    <pre><code class="language-yaml">logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  
+  file:
+    name: logs/aplicacao.log
+    max-size: 10MB
+    max-history: 30</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- VARIÁVEIS DE AMBIENTE -->
+            <div class="section">
+                <h2>7. 🔐 Usando Variáveis de Ambiente</h2>
+                
+                <p>Nunca deixe senhas e dados sensíveis no código. Use variáveis de ambiente:</p>
+
+                <h3>application.yml com Variáveis</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">yaml</span>
+                    </div>
+                    <pre><code class="language-yaml">spring:
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/dev_db}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root123}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: ${DDL_AUTO:update}</code></pre>
+                </div>
+
+                <h3>Definindo Variáveis no Linux/Mac</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">bash</span>
+                    </div>
+                    <pre><code class="language-bash"># Arquivo .env ou .bashrc
+export DB_URL="jdbc:mysql://prod-server.com:3306/banco"
+export DB_USERNAME="usuario_prod"
+export DB_PASSWORD="senha_super_segura"
+export DDL_AUTO="validate"
+
+# Executar a aplicação
+java -jar app.jar</code></pre>
+                </div>
+
+                <h3>Arquivo .env (com dotenv)</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">env</span>
+                    </div>
+                    <pre><code class="language-bash"># .env file
+DB_URL=jdbc:mysql://localhost:3306/producao
+DB_USERNAME=admin
+DB_PASSWORD=senha_super_segura_aqui
+DB_POOL_SIZE=20
+ENVIRONMENT=production</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- COMPARAÇÃO -->
+            <div class="section">
+                <h2>8. 📊 Comparação: properties vs YAML</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 20px 0;">
+                    <div class="solid-box">
+                        <h3>application.properties</h3>
+                        <ul class="explanation-list">
+                            <li>✓ Formato tradicional</li>
+                            <li>✓ Suporte amplo</li>
+                            <li>✓ Simples para configs pequenas</li>
+                            <li>✗ Repetitivo para estruturas aninhadas</li>
+                        </ul>
+                    </div>
+
+                    <div class="solid-box">
+                        <h3>application.yml</h3>
+                        <ul class="explanation-list">
+                            <li>✓ Mais legível</li>
+                            <li>✓ Suporta listas e maps</li>
+                            <li>✓ Reduz redundância</li>
+                            <li>✗ Sensível à indentação</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p style="text-align: center; margin-top: 20px;"><strong>Recomendação:</strong> Use YAML para novos projetos por sua melhor legibilidade e organização.</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- BOAS PRÁTICAS -->
+            <div class="section">
+                <h2>9. ✅ Boas Práticas</h2>
+
+                <h3>✓ FAÇA:</h3>
+                <ul class="explanation-list">
+                    <li>Use <span class="highlight-text">@Transactional</span> para operações críticas</li>
+                    <li>Configure pool de conexões adequadamente</li>
+                    <li>Use variáveis de ambiente para dados sensíveis</li>
+                    <li>Configure logging apropriadamente por ambiente</li>
+                    <li>Use DDL <span class="highlight-text">validate</span> em produção</li>
+                    <li>Implemente versionamento de banco de dados (Flyway/Liquibase)</li>
+                    <li>Teste conexão ao iniciar (Actuator health)</li>
+                </ul>
+
+                <h3>✗ EVITE:</h3>
+                <ul class="explanation-list">
+                    <li>Deixar senhas no código ou arquivo .properties</li>
+                    <li>Usar DDL <span class="highlight-text">create</span> em produção</li>
+                    <li>Configurações hardcoded</li>
+                    <li>Mostrar SQL completo em produção</li>
+                    <li>Pool de conexões muito pequeno (&lt;5)</li>
+                    <li>Pool de conexões muito grande (&gt;50)</li>
+                </ul>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- TROUBLESHOOTING -->
+            <div class="section">
+                <h2>10. 🐛 Problemas Comuns e Soluções</h2>
+
+                <div class="exercise-box">
+                    <h4>❌ "Cannot get a connection, pool error"</h4>
+                    <p><strong>Causa:</strong> Pool de conexões esgotado ou timeout excessivamente curto.</p>
+                    <p><strong>Solução:</strong> Aumente <span class="highlight-text">maximum-pool-size</span> e <span class="highlight-text">connection-timeout</span>. Implemente connection pooling adequado.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>❌ "Communications link failure"</h4>
+                    <p><strong>Causa:</strong> URL, host ou porta incorretos.</p>
+                    <p><strong>Solução:</strong> Verifique URL JDBC, teste conexão manualmente com banco.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>❌ "Access denied for user"</h4>
+                    <p><strong>Causa:</strong> Usuário ou senha incorretos.</p>
+                    <p><strong>Solução:</strong> Verifique credenciais, teste no cliente SQL do banco.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>❌ "Table doesn't exist"</h4>
+                    <p><strong>Causa:</strong> DDL-auto set incorretamente ou banco não criado.</p>
+                    <p><strong>Solução:</strong> Defina <span class="highlight-text">ddl-auto: update</span> ou <span class="highlight-text">create</span> em desenvolvimento.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXERCÍCIOS -->
+            <div class="section">
+                <h2>11. 💪 Exercícios Práticos</h2>
+                
+                <div class="exercise-box">
+                    <h4>Exercício 1: Configurar Aplicação com MySQL</h4>
+                    <p>Crie uma aplicação Spring Boot com entidade <strong>Usuario</strong> (id, nome, email, data_criacao). Configure arquivo <strong>application.yml</strong> para MySQL com pool de 10 conexões.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 2: Múltiplos Ambientes</h4>
+                    <p>Crie configurações para dev (H2), test (H2 em memória) e prod (MySQL). Ative diferentes perfis conforme necessário.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 3: Controller RESTful Completo</h4>
+                    <p>Implemente endpoints CRUD completos para entidade <strong>Produto</strong> com validações e tratamento de exceções.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 4: Variáveis de Ambiente</h4>
+                    <p>Configure aplicação para ler credenciais de banco via variáveis de ambiente. Teste localmente com arquivo .env.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- CONCLUSÃO -->
+            <div class="conclusion-box">
+                <h2>Conclusão</h2>
+                <p>O Spring Boot simplifica enormemente a conexão e gerenciamento de bancos de dados com <strong>application.properties</strong> e <strong>application.yml</strong>. Escolha entre <span class="highlight-text">properties</span> ou <span class="highlight-text">yml</span> (recomendamos YAML), configure corretamente para cada ambiente e use variáveis para dados sensíveis.</p>
+                <p><strong>Lembre-se:</strong> properties/yml corretos + JPA + Repository = aplicação robusta e escalável!</p>
+                <p><strong>Próximos passos:</strong> Explore segurança (Spring Security), cache (Redis), e testes automatizados!</p>
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>Spring Boot: Configure, conecte e domine bancos de dados com facilidade!</p>
+            <p>Desde configurações básicas até produção: application.properties/yml, JPA, Hibernate e muito mais!</p>
+        </footer>
+    </div>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul></ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>
