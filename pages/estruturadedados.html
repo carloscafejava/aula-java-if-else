@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="Estruturas de Dados - Guia completo sobre Arrays, ArrayLists, Listas, Filas e Pilhas em Java">
+    <meta name="theme-color" content="#8B5A2B">
+    <title>Estruturas de Dados - JAVA Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/ciberpunk.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <!-- Logo SVG -->
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    </svg>
+                </div>
+
+                <!-- Título -->
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <!-- Toggle Modo Escuro/Claro -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
+            <h1 class="cyber-title">Estruturas de Dados em Java</h1>
+            <p class="subtitle">Domine as estruturas fundamentais para organizar e manipular dados eficientemente</p>
+
+            <!-- INTRODUÇÃO -->
+            <div class="section">
+                <h2 class="cyber">1. O que são Estruturas de Dados?</h2>
+                
+                <div class="intro-text">
+                    <p><strong>Estruturas de dados</strong> são formas de organizar e armazenar dados na memória do computador. Cada estrutura possui características únicas que a tornam ideal para diferentes situações.</p>
+                    
+                    <p>Uma boa escolha de estrutura de dados pode tornar seu programa mais eficiente, rápido e fácil de manter. Usar a estrutura errada pode resultar em performance ruim e código complexo.</p>
+                    
+                    <p>Em Java, as principais estruturas estão no pacote <span class="highlight-text">java.util</span>, conhecidas como <strong>Collections Framework</strong>.</p>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- ARRAYS -->
+            <div class="section">
+                <h2 class="cyber">2. Arrays - Estrutura Fixa</h2>
+
+                <p>Um <strong>array</strong> é uma coleção de elementos do mesmo tipo armazenados em posições contíguas da memória.</p>
+
+                <h3>Características:</h3>
+                <ul class="explanation-list">
+                    <li><strong>Tamanho fixo</strong> - definido na criação</li>
+                    <li><strong>Acesso rápido</strong> - O(1) por índice</li>
+                    <li><strong>Tipado</strong> - todos os elementos do mesmo tipo</li>
+                    <li><strong>Alocação contígua</strong> - em memória sequencial</li>
+                </ul>
+
+                <h3>Exemplos Práticos:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Array de inteiros
+int[] numeros = new int[5]; // Cria array com 5 posições
+numeros[0] = 10;
+numeros[1] = 20;
+numeros[2] = 30;
+
+// Array inicializado
+int[] notas = {7, 8, 9, 10, 6};
+
+// Percorrer array
+for (int i = 0; i < notas.length; i++) {
+    System.out.println("Nota: " + notas[i]);
+}
+
+// Array de Strings
+String[] nomes = {"João", "Maria", "Pedro"};
+System.out.println(nomes[0]); // João
+
+// Array bidimensional (matriz)
+int[][] matriz = new int[3][3];
+matriz[0][0] = 1;
+matriz[0][1] = 2;
+matriz[0][2] = 3;
+
+// Acessar matriz
+System.out.println(matriz[0][1]); // 2</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- ARRAYLIST -->
+            <div class="section">
+                <h2 class="cyber">3. ArrayList - Dinâmico e Flexível</h2>
+
+                <p><strong>ArrayList</strong> é uma lista dinâmica que cresce automaticamente conforme você adiciona elementos.</p>
+
+                <h3>Características:</h3>
+                <ul class="explanation-list">
+                    <li><strong>Tamanho dinâmico</strong> - cresce automaticamente</li>
+                    <li><strong>Acesso rápido</strong> - O(1) por índice</li>
+                    <li><strong>Generics</strong> - tipagem de elementos</li>
+                    <li><strong>Métodos úteis</strong> - add(), remove(), get(), size()</li>
+                </ul>
+
+                <h3>Exemplo Completo:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.ArrayList;
+
+// Criar ArrayList
+ArrayList<String> frutas = new ArrayList<>();
+
+// Adicionar elementos
+frutas.add("Maçã");
+frutas.add("Banana");
+frutas.add("Laranja");
+
+System.out.println("Total de frutas: " + frutas.size()); // 3
+
+// Acessar elemento
+System.out.println(frutas.get(0)); // Maçã
+
+// Adicionar em posição específica
+frutas.add(1, "Morango");
+
+// Remover elemento
+frutas.remove("Banana");
+frutas.remove(0); // Remove por índice
+
+// Verificar se existe
+if (frutas.contains("Laranja")) {
+    System.out.println("Laranja encontrada!");
+}
+
+// Percorrer com foreach
+for (String fruta : frutas) {
+    System.out.println(fruta);
+}
+
+// Limpar lista
+frutas.clear();
+System.out.println("Lista vazia: " + frutas.isEmpty()); // true</code></pre>
+                </div>
+
+                <h3>ArrayList com Objetos:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Classe Produto
+public class Produto {
+    private String nome;
+    private double preco;
+    
+    public Produto(String nome, double preco) {
+        this.nome = nome;
+        this.preco = preco;
+    }
+    
+    public String getNome() { return nome; }
+    public double getPreco() { return preco; }
+}
+
+// Usar ArrayList com objetos
+ArrayList<Produto> carrinho = new ArrayList<>();
+carrinho.add(new Produto("Notebook", 3000));
+carrinho.add(new Produto("Mouse", 50));
+carrinho.add(new Produto("Teclado", 150));
+
+// Calcular total
+double total = 0;
+for (Produto p : carrinho) {
+    total += p.getPreco();
+}
+System.out.println("Total do carrinho: R$ " + total);</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- LISTAS ESPECIALIZADAS -->
+            <div class="section">
+                <h2 class="cyber">4. Outras Estruturas de Lista</h2>
+
+                <h3>LinkedList - Acesso Sequencial</h3>
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <p><strong>LinkedList</strong> usa nós encadeados, melhor para inserções/remoções no meio. Acesso sequencial é mais lento.</p>
+                </div>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.LinkedList;
+
+LinkedList<Integer> numeros = new LinkedList<>();
+numeros.add(1);
+numeros.add(2);
+numeros.add(3);
+
+// Adicionar no início
+numeros.addFirst(0);
+
+// Adicionar no final
+numeros.addLast(4);
+
+// Remover primeiro
+numeros.removeFirst();
+
+// Remover último
+numeros.removeLast();
+
+// Obter primeiro
+int primeiro = numeros.getFirst();
+
+// Obter último
+int ultimo = numeros.getLast();</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- FILA (QUEUE) -->
+            <div class="section">
+                <h2 class="cyber">5. Queue (Fila) - FIFO</h2>
+
+                <p><strong>Queue</strong> (fila) segue o princípio <strong>FIFO (First In, First Out)</strong> - o primeiro a entrar é o primeiro a sair.</p>
+
+                <h3>Principais Métodos:</h3>
+                <ul class="explanation-list">
+                    <li><span class="highlight-text">offer()</span> ou <span class="highlight-text">add()</span> - adiciona elemento</li>
+                    <li><span class="highlight-text">poll()</span> ou <span class="highlight-text">remove()</span> - remove primeiro</li>
+                    <li><span class="highlight-text">peek()</span> ou <span class="highlight-text">element()</span> - visualiza primeiro</li>
+                    <li><span class="highlight-text">size()</span> - tamanho da fila</li>
+                </ul>
+
+                <h3>Exemplo Prático:</h3>
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.Queue;
+import java.util.LinkedList;
+
+// Criar fila
+Queue<String> fila = new LinkedList<>();
+
+// Adicionar elementos
+fila.offer("João");
+fila.offer("Maria");
+fila.offer("Pedro");
+
+System.out.println("Tamanho: " + fila.size()); // 3
+
+// Ver primeiro sem remover
+System.out.println("Próximo: " + fila.peek()); // João
+
+// Remover primeiro
+String primeiro = fila.poll();
+System.out.println("Atendido: " + primeiro); // João
+
+// Processar fila
+while (!fila.isEmpty()) {
+    String pessoa = fila.poll();
+    System.out.println("Atendendo: " + pessoa);
+}</code></pre>
+                </div>
+
+                <h3>Simulação: Fila de Banco</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">Queue<String> filaBanco = new LinkedList<>();
+
+// Clientes chegando
+filaBanco.offer("Cliente A");
+filaBanco.offer("Cliente B");
+filaBanco.offer("Cliente C");
+
+// Atendimento
+int caixa = 1;
+while (!filaBanco.isEmpty()) {
+    String cliente = filaBanco.poll();
+    System.out.println("Caixa " + caixa + " atende: " + cliente);
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- PILHA (STACK) -->
+            <div class="section">
+                <h2 class="cyber">6. Stack (Pilha) - LIFO</h2>
+
+                <p><strong>Stack</strong> (pilha) segue o princípio <strong>LIFO (Last In, First Out)</strong> - o último a entrar é o primeiro a sair.</p>
+
+                <h3>Principais Métodos:</h3>
+                <ul class="explanation-list">
+                    <li><span class="highlight-text">push()</span> - adiciona elemento no topo</li>
+                    <li><span class="highlight-text">pop()</span> - remove do topo</li>
+                    <li><span class="highlight-text">peek()</span> - visualiza topo</li>
+                    <li><span class="highlight-text">empty()</span> - verifica se vazia</li>
+                </ul>
+
+                <h3>Exemplo Prático:</h3>
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.Stack;
+
+// Criar pilha
+Stack<Integer> pilha = new Stack<>();
+
+// Adicionar elementos
+pilha.push(1);
+pilha.push(2);
+pilha.push(3);
+pilha.push(4);
+
+System.out.println("Topo: " + pilha.peek()); // 4
+
+// Remover todos
+while (!pilha.empty()) {
+    int valor = pilha.pop();
+    System.out.println("Removido: " + valor);
+}
+
+// Ordem: 4, 3, 2, 1</code></pre>
+                </div>
+
+                <h3>Aplicação Real: Desfazer (Undo)</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Simular ações em um editor de texto
+Stack<String> historico = new Stack<>();
+
+// Ações do usuário
+historico.push("Digitou: Hello");
+historico.push("Digitou: World");
+historico.push("Apagou: World");
+
+System.out.println("Histórico:");
+while (!historico.empty()) {
+    System.out.println("- " + historico.pop());
+}
+
+// Saída (em ordem reversa):
+// - Apagou: World
+// - Digitou: World
+// - Digitou: Hello</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- COMPARAÇÃO -->
+            <div class="section">
+                <h2 class="cyber">7. Comparação de Estruturas</h2>
+
+                <div style="overflow-x: auto;">
+                    <table class="comparison-table cyber">
+                        <thead>
+                            <tr>
+                                <th>Estrutura</th>
+                                <th>Tipo</th>
+                                <th>Acesso</th>
+                                <th>Inserção</th>
+                                <th>Remoção</th>
+                                <th>Melhor Uso</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Array</strong></td>
+                                <td>Fixo</td>
+                                <td>O(1)</td>
+                                <td>O(n)</td>
+                                <td>O(n)</td>
+                                <td>Dados imutáveis</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ArrayList</strong></td>
+                                <td>Dinâmico</td>
+                                <td>O(1)</td>
+                                <td>O(n)</td>
+                                <td>O(n)</td>
+                                <td>Acesso frequente</td>
+                            </tr>
+                            <tr>
+                                <td><strong>LinkedList</strong></td>
+                                <td>Dinâmico</td>
+                                <td>O(n)</td>
+                                <td>O(1)*</td>
+                                <td>O(1)*</td>
+                                <td>Inserções no meio</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Queue</strong></td>
+                                <td>FIFO</td>
+                                <td>O(1)</td>
+                                <td>O(1)</td>
+                                <td>O(1)</td>
+                                <td>Fila de espera</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Stack</strong></td>
+                                <td>LIFO</td>
+                                <td>O(1)</td>
+                                <td>O(1)</td>
+                                <td>O(1)</td>
+                                <td>Histórico, backtrack</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p style="margin-top: var(--space-lg); font-size: var(--font-size-sm); color: var(--color-text-secondary);">* Com referência ao nó</p>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- SET E MAP -->
+            <div class="section">
+                <h2 class="cyber">8. Set e Map - Estruturas Especializadas</h2>
+
+                <h3>HashSet - Conjunto Único</h3>
+                <div class="solid-box" style="border-left: 5px solid #4ade80;">
+                    <p><strong>HashSet</strong> armazena valores únicos sem duplicatas. Não mantém ordem.</p>
+                </div>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.HashSet;
+import java.util.Set;
+
+Set<String> cores = new HashSet<>();
+cores.add("Vermelho");
+cores.add("Azul");
+cores.add("Verde");
+cores.add("Vermelho"); // Não será adicionado (duplicata)
+
+System.out.println("Total de cores: " + cores.size()); // 3
+
+// Verificar se existe
+if (cores.contains("Azul")) {
+    System.out.println("Azul existe!");
+}
+
+// Remover
+cores.remove("Verde");
+
+// Percorrer
+for (String cor : cores) {
+    System.out.println(cor);
+}</code></pre>
+                </div>
+
+                <h3>HashMap - Chave-Valor</h3>
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <p><strong>HashMap</strong> armazena pares chave-valor. Ideal para buscas por chave.</p>
+                </div>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.HashMap;
+import java.util.Map;
+
+// Criar mapa
+Map<String, Integer> notas = new HashMap<>();
+
+// Adicionar pares
+notas.put("João", 85);
+notas.put("Maria", 92);
+notas.put("Pedro", 78);
+
+// Obter valor por chave
+int nota = notas.get("João"); // 85
+
+// Verificar se chave existe
+if (notas.containsKey("Maria")) {
+    System.out.println("Nota de Maria: " + notas.get("Maria"));
+}
+
+// Verificar se valor existe
+if (notas.containsValue(78)) {
+    System.out.println("Existe alguém com nota 78");
+}
+
+// Iterar sobre pares
+for (String aluno : notas.keySet()) {
+    System.out.println(aluno + ": " + notas.get(aluno));
+}
+
+// Remover
+notas.remove("Pedro");
+
+// Tamanho
+System.out.println("Total de alunos: " + notas.size());</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- BOAS PRÁTICAS -->
+            <div class="section">
+                <h2 class="cyber">9. Boas Práticas com Estruturas de Dados</h2>
+
+                <h3>✓ FAÇA:</h3>
+                <ul class="explanation-list">
+                    <li>Escolha a estrutura certa para o problema</li>
+                    <li>Use generics para segurança de tipo</li>
+                    <li>Verifique tamanho antes de acessar</li>
+                    <li>Use for-each quando possível</li>
+                    <li>Considere performance e memória</li>
+                    <li>Documente por que escolheu cada estrutura</li>
+                </ul>
+
+                <h3>✗ EVITE:</h3>
+                <ul class="explanation-list">
+                    <li>Usar ArrayList para tudo (nem sempre é a melhor)</li>
+                    <li>Acessar índices sem verificar limites</li>
+                    <li>Modificar coleções enquanto itera</li>
+                    <li>Esquecer de verificar null</li>
+                    <li>Usar estruturas inadequadas por preguiça</li>
+                </ul>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- EXEMPLO COMPLEXO -->
+            <div class="section">
+                <h2 class="cyber">10. Exemplo Prático: Sistema de Gerenciamento</h2>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.*;
+
+public class SistemaEstoque {
+    private Map<Integer, Produto> produtos;
+    private Queue<Pedido> pedidos;
+    private Stack<String> historico;
+    
+    public SistemaEstoque() {
+        this.produtos = new HashMap<>();
+        this.pedidos = new LinkedList<>();
+        this.historico = new Stack<>();
+    }
+    
+    public void adicionarProduto(int id, String nome, double preco) {
+        produtos.put(id, new Produto(id, nome, preco));
+        historico.push("Produto adicionado: " + nome);
+    }
+    
+    public void fazerPedido(String cliente, int idProduto) {
+        if (produtos.containsKey(idProduto)) {
+            Produto p = produtos.get(idProduto);
+            pedidos.offer(new Pedido(cliente, p));
+            historico.push("Pedido de " + cliente + " para " + p.getNome());
+        }
+    }
+    
+    public void processarPedidos() {
+        while (!pedidos.isEmpty()) {
+            Pedido p = pedidos.poll();
+            System.out.println("Processando: " + p);
+        }
+    }
+    
+    public void exibirHistorico() {
+        Stack<String> temp = (Stack<String>) historico.clone();
+        System.out.println("=== Histórico de Operações ===");
+        while (!temp.empty()) {
+            System.out.println("- " + temp.pop());
+        }
+    }
+}
+
+class Produto {
+    private int id;
+    private String nome;
+    private double preco;
+    
+    public Produto(int id, String nome, double preco) {
+        this.id = id;
+        this.nome = nome;
+        this.preco = preco;
+    }
+    
+    public String getNome() { return nome; }
+    public double getPreco() { return preco; }
+}
+
+class Pedido {
+    private String cliente;
+    private Produto produto;
+    
+    public Pedido(String cliente, Produto produto) {
+        this.cliente = cliente;
+        this.produto = produto;
+    }
+    
+    @Override
+    public String toString() {
+        return cliente + " pediu " + produto.getNome() + 
+               " (R$ " + produto.getPreco() + ")";
+    }
+}
+
+// Uso
+SistemaEstoque sistema = new SistemaEstoque();
+sistema.adicionarProduto(1, "Notebook", 3000);
+sistema.adicionarProduto(2, "Mouse", 50);
+
+sistema.fazerPedido("João", 1);
+sistema.fazerPedido("Maria", 2);
+
+sistema.processarPedidos();
+sistema.exibirHistorico();</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- EXERCÍCIOS -->
+            <div class="section">
+                <h2 class="cyber">11. Exercícios Práticos</h2>
+                
+                <div class="exercise-box cyber">
+                    <h4>Exercício 1: Inverter Lista</h4>
+                    <p>Crie uma função que receba um <strong>ArrayList</strong> e retorne uma nova lista com os elementos em ordem inversa.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 2: Validar Parênteses</h4>
+                    <p>Use uma <strong>Stack</strong> para validar se os parênteses de uma expressão estão balanceados.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 3: Remover Duplicatas</h4>
+                    <p>Crie uma função que receba uma lista com duplicatas e retorne um <strong>HashSet</strong> com valores únicos.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 4: Fila de Atendimento</h4>
+                    <p>Implemente um sistema de fila onde clientes entram, são atendidos e removidos da fila.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 5: Sistema de Cachê</h4>
+                    <p>Use <strong>HashMap</strong> para criar um sistema que armazene dados frequentes para acesso rápido.</p>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- RESUMO -->
+            <div class="section">
+                <h2 class="cyber">12. Resumo - Estruturas Essenciais</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>📋 Array</h3>
+                    <p>Coleção fixa e tipada. Rápida para acesso, lenta para inserção/remoção.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>📝 ArrayList</h3>
+                    <p>Lista dinâmica. Melhor para uso geral quando precisa flexibilidade.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #4ade80;">
+                    <h3>🔗 LinkedList</h3>
+                    <p>Lista encadeada. Melhor para inserções/remoções frequentes no meio.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #60a5fa;">
+                    <h3>📞 Queue (Fila)</h3>
+                    <p>FIFO. Use para atendimento, processamento sequencial.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #f472b6;">
+                    <h3>📚 Stack (Pilha)</h3>
+                    <p>LIFO. Use para histórico, backtracking, expressões.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #8b5cf6;">
+                    <h3>🎯 Set</h3>
+                    <p>Valores únicos. Use para remover duplicatas, validações.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #ec4899;">
+                    <h3>🗂️ Map</h3>
+                    <p>Chave-valor. Use para buscas rápidas, mapeamentos.</p>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- CONCLUSÃO -->
+            <div class="conclusion-box cyber">
+                <h2>Conclusão</h2>
+                <p>Dominar estruturas de dados é <strong>essencial para todo programador</strong>. A escolha correta pode fazer a diferença entre um programa eficiente e um programa que trava.</p>
+                <p>Cada estrutura tem seu propósito: <strong>Arrays para dados fixos, ArrayList para flexibilidade, Queue para FIFO, Stack para LIFO, HashMap para buscas rápidas</strong>.</p>
+                <p>Pratique com exemplos reais e você dominará estruturas de dados em Java! 🚀</p>
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>Estruturas de Dados: A Base de Todo Programa Eficiente!</p>
+            <p>Do básico ao avançado: Collections, Performance, Aplicações Reais!</p>
+        </footer>
+    </div>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul></ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>

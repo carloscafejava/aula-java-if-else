@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="Iterator e Collections - Percorra elementos com segurança e eficiência">
+    <meta name="theme-color" content="#8B5A2B">
+    <title>Iterator - Collections e Estruturas de Dados</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <!-- Logo SVG -->
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    </svg>
+                </div>
+
+                <!-- Título -->
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <!-- Toggle Modo Escuro/Claro -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
+            <h1>Iterator</h1>
+            <p class="subtitle">Percorra Collections com Segurança e Eficiência - Padrão de Design para Iteração</p>
+
+            <!-- INTRODUÇÃO -->
+            <div class="section">
+                <h2>1. O que é Iterator?</h2>
+                
+                <div class="intro-text">
+                    <p><strong>Iterator</strong> é um padrão de design que permite <strong>percorrer elementos de uma coleção</strong> sem expor sua estrutura interna. É uma forma <strong>segura e eficiente</strong> de acessar elementos um a um.</p>
+                    
+                    <p>Um Iterator funciona como um <strong>navegador</strong> que sabe como mover-se por qualquer tipo de coleção (List, Set, Queue) sem se preocupar com sua implementação.</p>
+                    
+                    <p>É melhor do que usar índices porque <strong>funciona com qualquer coleção</strong>, mesmo aquelas que não têm índices (como Set).</p>
+                </div>
+            </div>
+
+            <!-- CONCEITOS -->
+            <div class="section">
+                <h2>2. Conceitos Fundamentais</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Iteração</h3>
+                    <p>Processo de <strong>acessar cada elemento</strong> de uma coleção <strong>um de cada vez</strong>, na sequência desejada.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Padrão de Design</h3>
+                    <p>Solution reutilizável para <strong>problemas comuns</strong> em programação. Iterator é um dos padrões mais fundamentais.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Encapsulamento</h3>
+                    <p>O Iterator esconde os detalhes de como a coleção está organizada internamente, exposing apenas uma interface simples.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Segurança</h3>
+                    <p>O Iterator detecta modificações na coleção durante a iteração e lança exceção se apropriado.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- INTERFACE ITERATOR -->
+            <div class="section">
+                <h2>3. Interface Iterator</h2>
+
+                <p>A interface <strong>Iterator</strong> define os métodos básicos para qualquer iterador:</p>
+
+                <h3>Métodos Principais:</h3>
+                <ul class="explanation-list">
+                    <li><span class="highlight-text">hasNext()</span> - Retorna true se há próximo elemento</li>
+                    <li><span class="highlight-text">next()</span> - Retorna o próximo elemento</li>
+                    <li><span class="highlight-text">remove()</span> - Remove o último elemento retornado (opcional)</li>
+                </ul>
+
+                <h3>Assinatura:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">public interface Iterator&lt;E&gt; {
+    // Retorna true se há próximo elemento
+    boolean hasNext();
+    
+    // Retorna o próximo elemento e avança o cursor
+    E next();
+    
+    // Remove o último elemento retornado por next()
+    default void remove() {
+        throw new UnsupportedOperationException("remove");
+    }
+    
+    // Java 8+ - Executa ação para cada elemento restante
+    default void forEachRemaining(Consumer&lt;? super E&gt; action) {
+        Objects.requireNonNull(action);
+        while (hasNext())
+            action.accept(next());
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- USANDO ITERATOR -->
+            <div class="section">
+                <h2>4. Usando Iterator</h2>
+
+                <h3>Padrão Básico:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Criar uma coleção
+List&lt;String&gt; frutas = new ArrayList&lt;&gt;();
+frutas.add("Maçã");
+frutas.add("Banana");
+frutas.add("Laranja");
+frutas.add("Uva");
+
+// Obter o Iterator
+Iterator&lt;String&gt; iterator = frutas.iterator();
+
+// Iterar sobre elementos
+while (iterator.hasNext()) {
+    String fruta = iterator.next();
+    System.out.println(fruta);
+}
+
+// Saída:
+// Maçã
+// Banana
+// Laranja
+// Uva</code></pre>
+                </div>
+
+                <h3>Removendo Elementos Durante Iteração:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">List&lt;Integer&gt; numeros = new ArrayList&lt;&gt;();
+numeros.add(1);
+numeros.add(2);
+numeros.add(3);
+numeros.add(4);
+numeros.add(5);
+
+// Remover números pares
+Iterator&lt;Integer&gt; it = numeros.iterator();
+while (it.hasNext()) {
+    Integer num = it.next();
+    if (num % 2 == 0) {
+        it.remove(); // Remove durante iteração (seguro)
+    }
+}
+
+System.out.println(numeros); // [1, 3, 5]</code></pre>
+                </div>
+
+                <h3>Usando forEachRemaining() (Java 8+):</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">List&lt;String&gt; nomes = new ArrayList&lt;&gt;();
+nomes.add("João");
+nomes.add("Maria");
+nomes.add("Pedro");
+
+Iterator&lt;String&gt; it = nomes.iterator();
+
+// forEachRemaining - executa ação para cada elemento
+it.forEachRemaining(nome -&gt; System.out.println(nome));
+
+// Saída:
+// João
+// Maria
+// Pedro</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXEMPLO COMPLETO -->
+            <div class="section">
+                <h2>5. Exemplo Completo: Sistema de Tarefas</h2>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.*;
+
+public class Tarefa {
+    private String descricao;
+    private boolean concluida;
+    
+    public Tarefa(String descricao) {
+        this.descricao = descricao;
+        this.concluida = false;
+    }
+    
+    public void concluir() {
+        this.concluida = true;
+    }
+    
+    public boolean estaConcluida() {
+        return concluida;
+    }
+    
+    public String getDescricao() {
+        return descricao;
+    }
+    
+    @Override
+    public String toString() {
+        String status = concluida ? "✓ CONCLUÍDA" : "○ PENDENTE";
+        return status + " - " + descricao;
+    }
+}
+
+public class GerenciadorTarefas {
+    private List&lt;Tarefa&gt; tarefas;
+    
+    public GerenciadorTarefas() {
+        this.tarefas = new ArrayList&lt;&gt;();
+    }
+    
+    public void adicionarTarefa(Tarefa tarefa) {
+        tarefas.add(tarefa);
+        System.out.println("Tarefa adicionada: " + tarefa.getDescricao());
+    }
+    
+    // Exibir todas as tarefas
+    public void exibirTodas() {
+        System.out.println("\n=== TODAS AS TAREFAS ===");
+        Iterator&lt;Tarefa&gt; it = tarefas.iterator();
+        if (!it.hasNext()) {
+            System.out.println("Nenhuma tarefa!");
+            return;
+        }
+        while (it.hasNext()) {
+            System.out.println(it.next());
+        }
+    }
+    
+    // Exibir apenas tarefas pendentes
+    public void exibirPendentes() {
+        System.out.println("\n=== TAREFAS PENDENTES ===");
+        Iterator&lt;Tarefa&gt; it = tarefas.iterator();
+        int contador = 0;
+        while (it.hasNext()) {
+            Tarefa t = it.next();
+            if (!t.estaConcluida()) {
+                System.out.println(t);
+                contador++;
+            }
+        }
+        if (contador == 0) {
+            System.out.println("Nenhuma tarefa pendente!");
+        }
+    }
+    
+    // Exibir apenas tarefas concluídas
+    public void exibirConcluidas() {
+        System.out.println("\n=== TAREFAS CONCLUÍDAS ===");
+        Iterator&lt;Tarefa&gt; it = tarefas.iterator();
+        int contador = 0;
+        while (it.hasNext()) {
+            Tarefa t = it.next();
+            if (t.estaConcluida()) {
+                System.out.println(t);
+                contador++;
+            }
+        }
+        if (contador == 0) {
+            System.out.println("Nenhuma tarefa concluída!");
+        }
+    }
+    
+    // Remover tarefas concluídas
+    public void limparConcluidas() {
+        Iterator&lt;Tarefa&gt; it = tarefas.iterator();
+        int removidas = 0;
+        while (it.hasNext()) {
+            Tarefa t = it.next();
+            if (t.estaConcluida()) {
+                it.remove();
+                removidas++;
+            }
+        }
+        System.out.println("\n" + removidas + " tarefa(s) removida(s)!");
+    }
+    
+    // Contar tarefas
+    public int contar() {
+        return tarefas.size();
+    }
+}
+
+// Uso
+public class Principal {
+    public static void main(String[] args) {
+        GerenciadorTarefas gerenciador = new GerenciadorTarefas();
+        
+        // Adicionar tarefas
+        gerenciador.adicionarTarefa(new Tarefa("Estudar Java"));
+        gerenciador.adicionarTarefa(new Tarefa("Fazer exercício"));
+        gerenciador.adicionarTarefa(new Tarefa("Revisar conceitos"));
+        gerenciador.adicionarTarefa(new Tarefa("Dormir cedo"));
+        
+        // Exibir todas
+        gerenciador.exibirTodas();
+        
+        // Concluir algumas
+        Tarefa t1 = gerenciador.tarefas.get(0);
+        t1.concluir();
+        
+        Tarefa t2 = gerenciador.tarefas.get(1);
+        t2.concluir();
+        
+        // Exibir por categoria
+        gerenciador.exibirConcluidas();
+        gerenciador.exibirPendentes();
+        
+        // Limpar concluídas
+        gerenciador.limparConcluidas();
+        
+        // Total
+        System.out.println("\nTotal de tarefas: " + gerenciador.contar());
+        gerenciador.exibirTodas();
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- ITERATOR vs FOR-EACH -->
+            <div class="section">
+                <h2>6. Iterator vs For-Each vs For Tradicional</h2>
+
+                <h3>Três Formas de Iterar:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">List&lt;String&gt; nomes = Arrays.asList("Ana", "Bruno", "Carlos");
+
+// 1. FOR TRADICIONAL - Usa índice
+System.out.println("=== FOR TRADICIONAL ===");
+for (int i = 0; i &lt; nomes.size(); i++) {
+    System.out.println(nomes.get(i));
+}
+
+// 2. FOR-EACH - Mais limpo (internamente usa Iterator)
+System.out.println("\n=== FOR-EACH ===");
+for (String nome : nomes) {
+    System.out.println(nome);
+}
+
+// 3. ITERATOR - Controle total, permite remoção segura
+System.out.println("\n=== ITERATOR ===");
+Iterator&lt;String&gt; it = nomes.iterator();
+while (it.hasNext()) {
+    System.out.println(it.next());
+}
+
+// 4. STREAM (Java 8+) - Programação funcional
+System.out.println("\n=== STREAM ===");
+nomes.stream().forEach(System.out::println);</code></pre>
+                </div>
+
+                <h3>Comparação:</h3>
+                <div style="overflow-x: auto;">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Aspecto</th>
+                                <th>For Tradicional</th>
+                                <th>For-Each</th>
+                                <th>Iterator</th>
+                                <th>Stream</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Sintaxe</strong></td>
+                                <td>Verbosa</td>
+                                <td>Limpa</td>
+                                <td>Moderada</td>
+                                <td>Funcional</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Acesso ao Índice</strong></td>
+                                <td>✓ Sim</td>
+                                <td>✗ Não</td>
+                                <td>✗ Não</td>
+                                <td>✗ Não</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Remover Durante Iteração</strong></td>
+                                <td>✗ Arriscado</td>
+                                <td>✗ Não</td>
+                                <td>✓ Seguro</td>
+                                <td>✗ Não</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Funciona com Set</strong></td>
+                                <td>✗ Não</td>
+                                <td>✓ Sim</td>
+                                <td>✓ Sim</td>
+                                <td>✓ Sim</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Suporte a Filter</strong></td>
+                                <td>✗ Não</td>
+                                <td>✗ Não</td>
+                                <td>✗ Não</td>
+                                <td>✓ Sim</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Quebra/Continua</strong></td>
+                                <td>✓ Sim</td>
+                                <td>✓ Sim</td>
+                                <td>✓ Sim</td>
+                                <td>✗ Não</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Quando Usar Cada Um:</h3>
+                <div class="solid-box" style="border-left: 5px solid #4ade80;">
+                    <h4>For Tradicional:</h4>
+                    <ul class="explanation-list">
+                        <li>Precisa do índice</li>
+                        <li>Quer controle total do loop</li>
+                        <li>Percorre apenas alguns elementos</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #4ade80;">
+                    <h4>For-Each:</h4>
+                    <ul class="explanation-list">
+                        <li>Percorre todos os elementos</li>
+                        <li>Não precisa do índice</li>
+                        <li>Quer código mais limpo</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #4ade80;">
+                    <h4>Iterator:</h4>
+                    <ul class="explanation-list">
+                        <li>Precisa remover elementos</li>
+                        <li>Quer controle fino sobre iteração</li>
+                        <li>Trabalha com qualquer coleção</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #4ade80;">
+                    <h4>Stream (Java 8+):</h4>
+                    <ul class="explanation-list">
+                        <li>Quer programação funcional</li>
+                        <li>Precisa filtrar/mapear dados</li>
+                        <li>Trabalha com grandes volumes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- LISTITERATOR -->
+            <div class="section">
+                <h2>7. ListIterator - Iterador Bidirecional</h2>
+
+                <p><strong>ListIterator</strong> é uma versão <strong>mais poderosa do Iterator</strong> que permite iterar em ambas as direções (para frente e para trás).</p>
+
+                <h3>Métodos Adicionais:</h3>
+                <ul class="explanation-list">
+                    <li><span class="highlight-text">hasPrevious()</span> - Há elemento anterior?</li>
+                    <li><span class="highlight-text">previous()</span> - Retorna elemento anterior</li>
+                    <li><span class="highlight-text">nextIndex()</span> - Índice do próximo elemento</li>
+                    <li><span class="highlight-text">previousIndex()</span> - Índice do elemento anterior</li>
+                    <li><span class="highlight-text">add(E)</span> - Adiciona elemento na posição atual</li>
+                    <li><span class="highlight-text">set(E)</span> - Substitui último elemento acessado</li>
+                </ul>
+
+                <h3>Exemplo Prático:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">List&lt;String&gt; nomes = new ArrayList&lt;&gt;();
+nomes.add("Alice");
+nomes.add("Bob");
+nomes.add("Carlos");
+nomes.add("Diana");
+
+// Obter ListIterator
+ListIterator&lt;String&gt; lit = nomes.listIterator();
+
+// Iterar para frente
+System.out.println("=== PARA FRENTE ===");
+while (lit.hasNext()) {
+    String nome = lit.next();
+    System.out.println(nome);
+}
+
+// Iterar para trás
+System.out.println("\n=== PARA TRÁS ===");
+while (lit.hasPrevious()) {
+    String nome = lit.previous();
+    System.out.println(nome);
+}
+
+// Iterador a partir de índice específico
+System.out.println("\n=== A PARTIR DO ÍNDICE 2 ===");
+ListIterator&lt;String&gt; lit2 = nomes.listIterator(2);
+while (lit2.hasNext()) {
+    System.out.println(lit2.next() + " (índice: " + lit2.previousIndex() + ")");
+}
+
+// Adicionar e substituir
+System.out.println("\n=== ADICIONAR E SUBSTITUIR ===");
+ListIterator&lt;String&gt; lit3 = nomes.listIterator();
+while (lit3.hasNext()) {
+    String nome = lit3.next();
+    if (nome.equals("Bob")) {
+        lit3.set("Robert"); // Substitui Bob
+        lit3.add("Bonnie");  // Adiciona depois
+    }
+}
+
+System.out.println("Lista modificada: " + nomes);
+// [Alice, Robert, Bonnie, Carlos, Diana]</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- BOAS PRÁTICAS -->
+            <div class="section">
+                <h2>8. Boas Práticas com Iterator</h2>
+
+                <h3>✓ FAÇA:</h3>
+                <ul class="explanation-list">
+                    <li>Use <span class="highlight-text">while (iterator.hasNext())</span> antes de chamar <span class="highlight-text">next()</span></li>
+                    <li>Use <span class="highlight-text">iterator.remove()</span> para remover elementos seguramente</li>
+                    <li>Prefira for-each quando não precisa remover elementos</li>
+                    <li>Use ListIterator para iteração bidirecional</li>
+                    <li>Documente quando usa Iterator para operações específicas</li>
+                    <li>Use Iterator em métodos que recebem Collection como parâmetro</li>
+                </ul>
+
+                <h3>✗ EVITE:</h3>
+                <ul class="explanation-list">
+                    <li>Chamar <span class="highlight-text">next()</span> sem verificar <span class="highlight-text">hasNext()</span></li>
+                    <li>Remover elementos da coleção durante iteração sem usar Iterator</li>
+                    <li>Modificar a coleção durante iteração de outras formas</li>
+                    <li>Usar Iterator quando for-each é mais apropriado</li>
+                    <li>Misturar remoções via Iterator e direto na coleção</li>
+                    <li>Ignorar ConcurrentModificationException</li>
+                </ul>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- ERROS COMUNS -->
+            <div class="section">
+                <h2>9. Erros Comuns com Iterator</h2>
+
+                <h3 style="color: #ef4444;">❌ Erro 1: NoSuchElementException</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// ERRADO - Sem verificar hasNext()
+List&lt;String&gt; lista = new ArrayList&lt;&gt;();
+lista.add("A");
+
+Iterator&lt;String&gt; it = lista.iterator();
+it.next(); // OK
+it.next(); // NoSuchElementException!
+
+// CORRETO - Sempre verificar
+Iterator&lt;String&gt; it = lista.iterator();
+while (it.hasNext()) {
+    System.out.println(it.next());
+}</code></pre>
+                </div>
+
+                <h3 style="color: #ef4444;">❌ Erro 2: ConcurrentModificationException</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">List&lt;Integer&gt; numeros = new ArrayList&lt;&gt;();
+numeros.add(1);
+numeros.add(2);
+numeros.add(3);
+
+// ERRADO - Remover durante iteração normal
+Iterator&lt;Integer&gt; it = numeros.iterator();
+while (it.hasNext()) {
+    Integer num = it.next();
+    if (num == 2) {
+        numeros.remove(num); // ConcurrentModificationException!
+    }
+}
+
+// CORRETO - Usar iterator.remove()
+Iterator&lt;Integer&gt; it = numeros.iterator();
+while (it.hasNext()) {
+    Integer num = it.next();
+    if (num == 2) {
+        it.remove(); // Seguro!
+    }
+}</code></pre>
+                </div>
+
+                <h3 style="color: #ef4444;">❌ Erro 3: Chamar remove() Incorretamente</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">List&lt;String&gt; cores = new ArrayList&lt;&gt;();
+cores.add("Vermelho");
+cores.add("Verde");
+
+Iterator&lt;String&gt; it = cores.iterator();
+
+// ERRADO - remove() sem ter chamado next()
+// it.remove(); // IllegalStateException!
+
+// ERRADO - remove() duas vezes
+it.next();
+it.remove();
+// it.remove(); // IllegalStateException!
+
+// CORRETO - remove() após next()
+it.next();
+it.remove(); // OK
+it.next();
+it.remove(); // OK</code></pre>
+                </div>
+
+                <h3 style="color: #ef4444;">❌ Erro 4: Usar Iterator com Set Incorretamente</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">Set&lt;String&gt; conjunto = new HashSet&lt;&gt;();
+conjunto.add("A");
+conjunto.add("B");
+
+// ERRADO - Tentar acessar por índice (Set não tem índice)
+// String primeiro = conjunto.get(0); // Erro!
+
+// CORRETO - Usar Iterator
+Iterator&lt;String&gt; it = conjunto.iterator();
+while (it.hasNext()) {
+    System.out.println(it.next());
+}
+
+// OU com for-each
+for (String item : conjunto) {
+    System.out.println(item);
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- QUANDO USAR -->
+            <div class="section">
+                <h2>10. Quando Usar Iterator</h2>
+
+                <h3>Ideal para Iterator:</h3>
+                <div class="solid-box" style="border-left: 5px solid #4ade80;">
+                    <h4>Remoção Segura de Elementos</h4>
+                    <p>Quando precisa remover elementos durante iteração</p>
+                    <pre><code class="language-java">Iterator&lt;Tarefa&gt; it = tarefas.iterator();
+while (it.hasNext()) {
+    if (it.next().estaConcluida()) {
+        it.remove(); // Seguro!
+    }
+}</code></pre>
+                </div>
+
+                <h3>Ideal para Iterator:</h3>
+                <div class="solid-box" style="border-left: 5px solid #4ade80;">
+                    <h4>Trabalhar com Qualquer Collection</h4>
+                    <p>Iterator funciona com List, Set, Queue</p>
+                    <pre><code class="language-java">public void processar(Collection&lt;String&gt; items) {
+    Iterator&lt;String&gt; it = items.iterator();
+    while (it.hasNext()) {
+        System.out.println(it.next());
+    }
+}</code></pre>
+                </div>
+
+                <h3>Ideal para For-Each:</h3>
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h4>Iteração Simples</h4>
+                    <p>Quando apenas precisa ler elementos</p>
+                    <pre><code class="language-java">for (String item : items) {
+    System.out.println(item);
+}</code></pre>
+                </div>
+
+                <h3>Ideal para Stream:</h3>
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h4>Transformação de Dados</h4>
+                    <p>Filtrar, mapear ou processar funcionalmente</p>
+                    <pre><code class="language-java">items.stream()
+    .filter(item -&gt; item.length() &gt; 5)
+    .map(String::toUpperCase)
+    .forEach(System.out::println);</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- IMPLEMENTAR PRÓPRIO ITERATOR -->
+            <div class="section">
+                <h2>11. Implementar Seu Próprio Iterator</h2>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Classe que implementa Iterable
+public class MinhaLista&lt;E&gt; implements Iterable&lt;E&gt; {
+    private E[] elementos;
+    private int tamanho;
+    
+    @SuppressWarnings("unchecked")
+    public MinhaLista(int capacidade) {
+        elementos = new Object[capacidade];
+        tamanho = 0;
+    }
+    
+    public void adicionar(E elemento) {
+        if (tamanho &lt; elementos.length) {
+            elementos[tamanho++] = elemento;
+        }
+    }
+    
+    @Override
+    public Iterator&lt;E&gt; iterator() {
+        return new MeuIterador();
+    }
+    
+    // Classe interna que implementa Iterator
+    private class MeuIterador implements Iterator&lt;E&gt; {
+        private int posicao = 0;
+        
+        @Override
+        public boolean hasNext() {
+            return posicao &lt; tamanho;
+        }
+        
+        @SuppressWarnings("unchecked")
+        @Override
+        public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return (E) elementos[posicao++];
+        }
+        
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException(
+                "Remoção não suportada neste iterator");
+        }
+    }
+}
+
+// Uso
+public class Teste {
+    public static void main(String[] args) {
+        MinhaLista&lt;String&gt; lista = new MinhaLista&lt;&gt;(5);
+        lista.adicionar("A");
+        lista.adicionar("B");
+        lista.adicionar("C");
+        
+        // Usar com for-each (funciona porque implementa Iterable)
+        for (String item : lista) {
+            System.out.println(item);
+        }
+        
+        // Usar explicitamente Iterator
+        Iterator&lt;String&gt; it = lista.iterator();
+        while (it.hasNext()) {
+            System.out.println(it.next());
+        }
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXERCÍCIOS -->
+            <div class="section">
+                <h2>12. Exercícios Práticos</h2>
+                
+                <div class="exercise-box">
+                    <h4>Exercício 1: Filtrar e Remover</h4>
+                    <p>Crie uma lista de números e use Iterator para remover todos os números menores que 10.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 2: Bidirecionário com ListIterator</h4>
+                    <p>Use ListIterator para iterar uma lista de palavras para frente, depois para trás.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 3: Remover Duplicatas</h4>
+                    <p>Use Iterator para remover elementos duplicados de um ArrayList.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 4: Implementar Iterable</h4>
+                    <p>Crie uma classe personalizada que implemente Iterable e seu próprio Iterator.</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>Exercício 5: Comparar Performance</h4>
+                    <p>Compare performance entre For Tradicional, For-Each, Iterator e Stream em uma lista grande.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- RESUMO -->
+            <div class="section">
+                <h2>13. Resumo - Iterator em Contexto</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Por que Iterator é Importante?</h3>
+                    <ul class="explanation-list">
+                        <li><strong>Padrão de Design</strong> - Solution reutilizável e provada</li>
+                        <li><strong>Uniformidade</strong> - Mesma interface para List, Set, Queue</li>
+                        <li><strong>Segurança</strong> - Remoção segura durante iteração</li>
+                        <li><strong>Flexibilidade</strong> - Implementar próprios iteradores</li>
+                        <li><strong>Performance</strong> - Otimizado para cada tipo de coleção</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Hierarquia de Iteração em Java:</h3>
+                    <ul class="explanation-list">
+                        <li><strong>Iterator</strong> - Básico, unidirecional</li>
+                        <li><strong>ListIterator</strong> - Bidirecional, com operações adicionais</li>
+                        <li><strong>For-Each</strong> - Sintaxe de alto nível (usa Iterator internamente)</li>
+                        <li><strong>Stream</strong> - Programação funcional (Java 8+)</li>
+                    </ul>
+                </div>
+
+                <h3>Próximos Passos:</h3>
+                <ul class="explanation-list">
+                    <li>Estude <strong>ListIterator</strong> para operações mais avançadas</li>
+                    <li>Explore <strong>Stream API</strong> para processamento funcional</li>
+                    <li>Aprenda sobre <strong>padrões de design</strong> como Iterator é implementado</li>
+                    <li>Pratique criando seus próprios <strong>iteradores personalizados</strong></li>
+                </ul>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- CONCLUSÃO -->
+            <div class="conclusion-box">
+                <h2>Conclusão</h2>
+                <p><strong>Iterator</strong> é um padrão fundamental em Java que permite iterar sobre qualquer coleção de forma <strong>segura e uniforme</strong>.</p>
+                <p>Compreender Iterator é essencial para trabalhar com Collections eficientemente, especialmente quando precisa <strong>remover elementos durante iteração</strong>.</p>
+                <p>Domine Iterator, ListIterator, for-each e Streams para ter total controle sobre processamento de coleções em Java! 🚀</p>
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>Iterator: Navegando Collections com Segurança!</p>
+            <p>Do básico ao avançado: Collections, Streams, Padrões de Design e muito mais!</p>
+        </footer>
+    </div>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul></ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>

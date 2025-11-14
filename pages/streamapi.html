@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="Stream API - Processamento Funcional de Dados em Java">
+    <meta name="theme-color" content="#8B5A2B">
+    <title>Stream API - JAVA Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/ciberpunk.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    </svg>
+                </div>
+
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
+            <h1 class="cyber-title">Stream API em Java</h1>
+            <p class="subtitle">Processamento Funcional e Elegante de Dados</p>
+
+            <!-- INTRODUÇÃO -->
+            <div class="section">
+                <h2 class="cyber">1. O que é Stream API?</h2>
+                
+                <div class="intro-text">
+                    <p><strong>Stream API</strong> permite processar coleções de dados de forma <strong>funcional</strong> e <strong>declarativa</strong>.</p>
+                    
+                    <p>Ao invés de loops imperativos, você descreve <strong>o quê</strong> fazer com os dados usando operações como <strong>filter, map, reduce</strong>.</p>
+                    
+                    <p>Streams também suportam <strong>operações paralelas</strong> para aproveitar múltiplos processadores.</p>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- IMPERATIVO VS DECLARATIVO -->
+            <div class="section">
+                <h2 class="cyber">2. Imperativo vs Declarativo</h2>
+
+                <h3>❌ Imperativo (Antigo):</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Como fazer - loop manual
+List<Integer> numeros = Arrays.asList(1, 2, 3, 4, 5);
+List<Integer> pares = new ArrayList<>();
+
+for (Integer num : numeros) {
+    if (num % 2 == 0) {
+        pares.add(num);
+    }
+}
+
+for (Integer par : pares) {
+    System.out.println(par);
+}</code></pre>
+                </div>
+
+                <h3>✅ Declarativo (Stream):</h3>
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// O quê fazer - descrever o resultado
+List<Integer> numeros = Arrays.asList(1, 2, 3, 4, 5);
+
+numeros.stream()
+    .filter(n -> n % 2 == 0)
+    .forEach(System.out::println);</code></pre>
+                </div>
+
+                <p style="margin-top: var(--space-lg);">Muito mais <strong>conciso</strong> e <strong>expressivo</strong>!</p>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- ANATOMIA DO STREAM -->
+            <div class="section">
+                <h2 class="cyber">3. Anatomia de um Stream</h2>
+
+                <div class="solid-box cyber" style="border-left: 5px solid #FF0080;">
+                    <h4>1️⃣ Fonte</h4>
+                    <p>Coleção, array ou gerador que fornece dados. Ex: <span class="highlight-text">list.stream()</span></p>
+                </div>
+
+                <div class="solid-box cyber" style="border-left: 5px solid #FF006B;">
+                    <h4>2️⃣ Operações Intermediárias</h4>
+                    <p>Transformam o stream. Ex: <span class="highlight-text">filter(), map(), sorted()</span></p>
+                </div>
+
+                <div class="solid-box cyber" style="border-left: 5px solid #FF0080;">
+                    <h4>3️⃣ Operação Terminal</h4>
+                    <p>Consome o stream e produz resultado. Ex: <span class="highlight-text">collect(), forEach(), reduce()</span></p>
+                </div>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Estrutura completa de um stream
+List<Integer> resultado = numeros.stream()  // 1. Fonte
+    .filter(n -> n > 0)                     // 2. Intermediária
+    .map(n -> n * 2)                        // 2. Intermediária
+    .sorted()                               // 2. Intermediária
+    .collect(Collectors.toList());          // 3. Terminal
+
+// Diagrama visual:
+// [1,2,3,4,5] --stream()--> 
+//  --filter(>0)--> --map(*2)--> --sorted()-->
+//  --collect()--> [2,4,6,8,10]</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- OPERAÇÕES INTERMEDIÁRIAS -->
+            <div class="section">
+                <h2 class="cyber">4. Operações Intermediárias</h2>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">List<Integer> numeros = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+// filter() - mantém se condição é verdadeira
+numeros.stream()
+    .filter(n -> n > 5)
+    .forEach(System.out::println); // 6, 7, 8, 9, 10
+
+// map() - transforma cada elemento
+numeros.stream()
+    .map(n -> n * n)
+    .forEach(System.out::println); // 1, 4, 9, 16, 25...
+
+// flatMap() - achata streams
+List<List<Integer>> listas = Arrays.asList(
+    Arrays.asList(1, 2),
+    Arrays.asList(3, 4),
+    Arrays.asList(5, 6)
+);
+listas.stream()
+    .flatMap(List::stream)
+    .forEach(System.out::println); // 1, 2, 3, 4, 5, 6
+
+// distinct() - remove duplicatas
+Arrays.asList(1, 2, 2, 3, 3, 3, 4)
+    .stream()
+    .distinct()
+    .forEach(System.out::println); // 1, 2, 3, 4
+
+// sorted() - ordena
+numeros.stream()
+    .sorted()
+    .forEach(System.out::println); // 1, 2, 3...
+
+// sorted com comparador
+numeros.stream()
+    .sorted((a, b) -> b - a) // descendente
+    .forEach(System.out::println); // 10, 9, 8...
+
+// limit() - pega primeiros n
+numeros.stream()
+    .limit(3)
+    .forEach(System.out::println); // 1, 2, 3
+
+// skip() - pula primeiros n
+numeros.stream()
+    .skip(5)
+    .forEach(System.out::println); // 6, 7, 8, 9, 10</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- OPERAÇÕES TERMINAIS -->
+            <div class="section">
+                <h2 class="cyber">5. Operações Terminais</h2>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">List<Integer> numeros = Arrays.asList(1, 2, 3, 4, 5);
+
+// forEach() - executa ação em cada elemento
+numeros.stream()
+    .forEach(n -> System.out.println(n * 2));
+
+// collect() - coleta em coleção
+List<Integer> dobrados = numeros.stream()
+    .map(n -> n * 2)
+    .collect(Collectors.toList());
+
+// toArray() - converte para array
+Integer[] array = numeros.stream()
+    .toArray(Integer[]::new);
+
+// reduce() - combina todos os elementos
+int soma = numeros.stream()
+    .reduce(0, (a, b) -> a + b); // 15
+
+int produto = numeros.stream()
+    .reduce(1, (a, b) -> a * b); // 120
+
+// count() - conta elementos
+long total = numeros.stream()
+    .filter(n -> n > 2)
+    .count(); // 3
+
+// min() e max()
+int minimo = numeros.stream()
+    .min(Integer::compare)
+    .orElse(0); // 1
+
+int maximo = numeros.stream()
+    .max(Integer::compare)
+    .orElse(0); // 5
+
+// findFirst() - primeiro
+int primeiro = numeros.stream()
+    .findFirst()
+    .orElse(-1); // 1
+
+// anyMatch() - existe algum?
+boolean temPar = numeros.stream()
+    .anyMatch(n -> n % 2 == 0); // true
+
+// allMatch() - todos?
+boolean todosMaiores = numeros.stream()
+    .allMatch(n -> n > 0); // true
+
+// noneMatch() - nenhum?
+boolean nenhumNegativo = numeros.stream()
+    .noneMatch(n -> n < 0); // true</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- COLLECTORS -->
+            <div class="section">
+                <h2 class="cyber">6. Collectors Avançados</h2>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">List<String> nomes = Arrays.asList("Ana", "Bruno", "Carlos", "Diana");
+
+// toList()
+List<String> lista = nomes.stream()
+    .collect(Collectors.toList());
+
+// toSet()
+Set<String> conjunto = nomes.stream()
+    .collect(Collectors.toSet());
+
+// toMap()
+Map<Integer, String> mapa = nomes.stream()
+    .collect(Collectors.toMap(
+        String::length,  // chave
+        s -> s           // valor
+    ));
+
+// groupingBy() - agrupa por critério
+Map<Integer, List<String>> porTamanho = nomes.stream()
+    .collect(Collectors.groupingBy(String::length));
+    // {4: [Ana], 5: [Bruno, Diana], 6: [Carlos]}
+
+// partitioningBy() - divide em dois grupos
+Map<Boolean, List<String>> pares = nomes.stream()
+    .collect(Collectors.partitioningBy(
+        s -> s.length() % 2 == 0
+    ));
+    // {true: [Bruno, Diana], false: [Ana, Carlos]}
+
+// joining() - concatena strings
+String resultado = nomes.stream()
+    .collect(Collectors.joining(", ", "[", "]"));
+    // "[Ana, Bruno, Carlos, Diana]"
+
+// mapping() - transforma dentro do collector
+List<Integer> comprimentos = nomes.stream()
+    .collect(Collectors.mapping(
+        String::length,
+        Collectors.toList()
+    ));
+    // [3, 5, 6, 5]</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- EXEMPLO PRÁTICO -->
+            <div class="section">
+                <h2 class="cyber">7. Exemplo Prático: Processamento de Dados</h2>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">class Produto {
+    private String nome;
+    private double preco;
+    private int quantidade;
+    
+    public Produto(String nome, double preco, int quantidade) {
+        this.nome = nome;
+        this.preco = preco;
+        this.quantidade = quantidade;
+    }
+    
+    public String getNome() { return nome; }
+    public double getPreco() { return preco; }
+    public int getQuantidade() { return quantidade; }
+}
+
+// Dados
+List<Produto> produtos = Arrays.asList(
+    new Produto("Notebook", 3000, 5),
+    new Produto("Mouse", 50, 20),
+    new Produto("Teclado", 150, 10),
+    new Produto("Monitor", 800, 3),
+    new Produto("Webcam", 200, 8)
+);
+
+// 1. Produtos caros (> 200)
+List<String> caros = produtos.stream()
+    .filter(p -> p.getPreco() > 200)
+    .map(Produto::getNome)
+    .collect(Collectors.toList());
+System.out.println("Caros: " + caros);
+
+// 2. Valor total do estoque
+double total = produtos.stream()
+    .mapToDouble(p -> p.getPreco() * p.getQuantidade())
+    .sum();
+System.out.println("Total estoque: R$ " + total);
+
+// 3. Produto mais caro
+String maisoCaro = produtos.stream()
+    .max((a, b) -> Double.compare(a.getPreco(), b.getPreco()))
+    .map(Produto::getNome)
+    .orElse("Nenhum");
+System.out.println("Mais caro: " + maisoCaro);
+
+// 4. Agrupar por faixa de preço
+Map<String, List<String>> porFaixa = produtos.stream()
+    .collect(Collectors.groupingBy(
+        p -> p.getPreco() < 100 ? "Barato" : 
+             p.getPreco() < 500 ? "Médio" : "Caro",
+        Collectors.mapping(Produto::getNome, Collectors.toList())
+    ));
+System.out.println("Por faixa: " + porFaixa);
+
+// 5. Média de preço
+double media = produtos.stream()
+    .mapToDouble(Produto::getPreco)
+    .average()
+    .orElse(0);
+System.out.println("Preço médio: R$ " + media);</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- STREAMS PARALELOS -->
+            <div class="section">
+                <h2 class="cyber">8. Streams Paralelos</h2>
+
+                <div class="performance-critical">
+                    <p><strong>parallelStream()</strong> processa elementos em paralelo usando múltiplas threads.</p>
+                </div>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">List<Integer> numeros = 
+    IntStream.range(1, 1000000)
+        .boxed()
+        .collect(Collectors.toList());
+
+// Stream sequencial
+long inicio = System.currentTimeMillis();
+long resultado1 = numeros.stream()
+    .filter(n -> n % 2 == 0)
+    .count();
+long tempo1 = System.currentTimeMillis() - inicio;
+
+// Stream paralelo
+inicio = System.currentTimeMillis();
+long resultado2 = numeros.parallelStream()
+    .filter(n -> n % 2 == 0)
+    .count();
+long tempo2 = System.currentTimeMillis() - inicio;
+
+System.out.println("Sequencial: " + tempo1 + "ms");
+System.out.println("Paralelo: " + tempo2 + "ms"); // Geralmente mais rápido
+
+// Cuidado: não é seguro com operações com efeito colateral
+List<String> resultado = Collections.synchronizedList(new ArrayList<>());
+numeros.parallelStream()
+    .filter(n -> n > 500000)
+    .forEach(n -> resultado.add(n.toString())); // Pode perder dados!
+
+// Melhor: use collect com thread safety
+List<String> seguro = numeros.parallelStream()
+    .filter(n -> n > 500000)
+    .map(String::valueOf)
+    .collect(Collectors.toList()); // Thread-safe</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- LAZY EVALUATION -->
+            <div class="section">
+                <h2 class="cyber">9. Lazy Evaluation (Avaliação Preguiçosa)</h2>
+
+                <div class="solid-box cyber" style="border-left: 5px solid #FF0080;">
+                    <p>Operações intermediárias não são executadas até uma operação terminal ser chamada.</p>
+                </div>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Lazy evaluation
+Stream<Integer> stream = Arrays.asList(1, 2, 3, 4, 5)
+    .stream()
+    .filter(n -> {
+        System.out.println("Filtrando: " + n);
+        return n > 2;
+    })
+    .map(n -> {
+        System.out.println("Mapeando: " + n);
+        return n * 2;
+    });
+
+// Nada é impresso ainda - streams são lazy!
+System.out.println("Stream criado");
+
+// Agora sim executa quando terminal é chamado
+stream.forEach(System.out::println);
+
+// Saída:
+// Stream criado
+// Filtrando: 1
+// Filtrando: 2
+// Filtrando: 3
+// Mapeando: 3
+// 6
+// Filtrando: 4
+// Mapeando: 4
+// 8
+// etc...
+
+// Short-circuit - interrompe quando possível
+IntStream.range(1, 100)
+    .peek(n -> System.out.println(n))
+    .filter(n -> n > 50)
+    .findFirst();
+// Imprime: 1, 2, 3... 50, 51 (para quando encontra o primeiro)</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- BOAS PRÁTICAS -->
+            <div class="section">
+                <h2 class="cyber">10. Boas Práticas com Streams</h2>
+
+                <h3>✓ FAÇA:</h3>
+                <ul class="explanation-list">
+                    <li>Use streams para transformações de dados</li>
+                    <li>Prefira operações funcionais a loops</li>
+                    <li>Use parallelStream() para grandes volumes</li>
+                    <li>Use collectors apropriados</li>
+                    <li>Entenda lazy evaluation</li>
+                </ul>
+
+                <h3>✗ EVITE:</h3>
+                <ul class="explanation-list">
+                    <li>Não use forEach para efeitos colaterais complexos</li>
+                    <li>Não use streams para lógica muito complexa</li>
+                    <li>Não presuma que parallelStream é sempre mais rápido</li>
+                    <li>Não reutilize streams (eles são consumíveis)</li>
+                    <li>Não ignore performance com dados grandes</li>
+                </ul>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- EXEMPLO COMPLEXO -->
+            <div class="section">
+                <h2 class="cyber">11. Exemplo Complexo: Análise de Vendas</h2>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">class Venda {
+    private String produto;
+    private double valor;
+    private int mes;
+    
+    public Venda(String produto, double valor, int mes) {
+        this.produto = produto;
+        this.valor = valor;
+        this.mes = mes;
+    }
+    
+    public String getProduto() { return produto; }
+    public double getValor() { return valor; }
+    public int getMes() { return mes; }
+}
+
+List<Venda> vendas = Arrays.asList(
+    new Venda("Notebook", 3000, 1),
+    new Venda("Mouse", 50, 1),
+    new Venda("Teclado", 150, 1),
+    new Venda("Notebook", 3000, 2),
+    new Venda("Monitor", 800, 2),
+    new Venda("Webcam", 200, 2)
+);
+
+// 1. Total de vendas
+double total = vendas.stream()
+    .mapToDouble(Venda::getValor)
+    .sum();
+System.out.println("Total: R$ " + total);
+
+// 2. Vendas por produto
+Map<String, Double> porProduto = vendas.stream()
+    .collect(Collectors.groupingBy(
+        Venda::getProduto,
+        Collectors.summingDouble(Venda::getValor)
+    ));
+System.out.println("Por produto: " + porProduto);
+
+// 3. Vendas por mês
+Map<Integer, Double> porMes = vendas.stream()
+    .collect(Collectors.groupingBy(
+        Venda::getMes,
+        Collectors.summingDouble(Venda::getValor)
+    ));
+System.out.println("Por mês: " + porMes);
+
+// 4. Produtos com melhor desempenho
+String topProduto = vendas.stream()
+    .collect(Collectors.groupingBy(
+        Venda::getProduto,
+        Collectors.summingDouble(Venda::getValor)
+    ))
+    .entrySet().stream()
+    .max((a, b) -> Double.compare(a.getValue(), b.getValue()))
+    .map(Map.Entry::getKey)
+    .orElse("Nenhum");
+System.out.println("Top produto: " + topProduto);
+
+// 5. Média de venda por mês
+double mediaPosMes = vendas.stream()
+    .mapToDouble(Venda::getValor)
+    .average()
+    .orElse(0);
+System.out.println("Média: R$ " + mediaPosMes);</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- EXERCÍCIOS -->
+            <div class="section">
+                <h2 class="cyber">12. Exercícios Práticos</h2>
+                
+                <div class="exercise-box cyber">
+                    <h4>Exercício 1: Filtro e Mapeamento</h4>
+                    <p>Use streams para filtrar números pares e multiplicar por 2.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 2: Redução</h4>
+                    <p>Calcule soma, média e produto usando <strong>reduce()</strong>.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 3: Grouping</h4>
+                    <p>Agrupe strings por comprimento usando <strong>groupingBy()</strong>.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 4: Collectors Avançados</h4>
+                    <p>Use <strong>partitioningBy()</strong> para dividir dados em dois grupos.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 5: Performance</h4>
+                    <p>Compare streams sequenciais vs paralelos em dados grandes.</p>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- CONCLUSÃO -->
+            <div class="conclusion-box cyber">
+                <h2>Conclusão</h2>
+                <p><strong>Stream API</strong> torna o Java moderno, funcional e elegante.</p>
+                <p>Use <strong>filter, map, reduce, collectors</strong> para processamento de dados expressivo e eficiente.</p>
+                <p>Domine streams e seu código Java será muito mais profissional! 🌊✨</p>
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>Stream API: Programação Funcional e Elegante!</p>
+            <p>Transforme dados com estilo e poder!</p>
+        </footer>
+    </div>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul></ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>
