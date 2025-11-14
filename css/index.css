@@ -8,6 +8,8 @@
     --color-secondary: #1A1F3A;           /* Azul secundário */
     --color-accent: #00D4FF;              /* Azul neon cyan */
     --color-accent-alt: #0099FF;          /* Azul neon royal */
+    --color-accent-red: #FF0080;          /* Vermelho neon ciberpunk */
+    --color-accent-red-alt: #FF006B;      /* Magenta neon ciberpunk */
     --color-bg: #0F1419;                  /* Background principal */
     --color-bg-card: #1A2F4A;             /* Fundo dos cards */
     --color-text: #E8EFF7;                /* Texto principal */
@@ -23,6 +25,8 @@
     --color-border-light: #60A5FA;        /* Azul médio para bordas */
     --color-accent-light: #3B82F6;        /* Azul médio brilhante */
     --color-accent-alt-light: #0369A1;    /* Azul escuro médio */
+    --color-accent-red-light: #DC2626;    /* Vermelho mais escuro para tema claro */
+    --color-accent-red-alt-light: #991B1B; /* Magenta mais escuro para tema claro */
     
     /* VARIAÇÕES - Tema Escuro */
     --color-bg-dark: #050809;             /* Variação escura do fundo */
@@ -30,6 +34,7 @@
     --color-text-dark: #D0D9E8;           /* Variação escura do texto */
     --color-text-secondary-dark: #8899B0; /* Variação escura do texto secundário */
     --color-border-dark: rgba(0, 212, 255, 0.15);
+    --color-border-red-dark: rgba(255, 0, 128, 0.15);
 
     /* TIPOGRAFIA */
     --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -70,6 +75,9 @@
     --shadow-md: 0 4px 16px rgba(0, 212, 255, 0.15);
     --shadow-lg: 0 8px 32px rgba(0, 212, 255, 0.2);
     --shadow-xl: 0 12px 48px rgba(0, 212, 255, 0.25);
+    --shadow-red-sm: 0 2px 8px rgba(255, 0, 128, 0.1);
+    --shadow-red-md: 0 4px 16px rgba(255, 0, 128, 0.15);
+    --shadow-red-lg: 0 8px 32px rgba(255, 0, 128, 0.2);
 
     /* TRANSIÇÕES */
     --transition-fast: 0.15s ease;
@@ -86,9 +94,14 @@
     --color-border: var(--color-border-light);
     --color-accent: var(--color-accent-light);
     --color-accent-alt: var(--color-accent-alt-light);
+    --color-accent-red: var(--color-accent-red-light);
+    --color-accent-red-alt: var(--color-accent-red-alt-light);
     --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.08);
     --shadow-md: 0 4px 16px rgba(59, 130, 246, 0.1);
     --shadow-lg: 0 8px 32px rgba(59, 130, 246, 0.12);
+    --shadow-red-sm: 0 2px 8px rgba(220, 38, 38, 0.08);
+    --shadow-red-md: 0 4px 16px rgba(220, 38, 38, 0.1);
+    --shadow-red-lg: 0 8px 32px rgba(220, 38, 38, 0.12);
 }
 
 /* TEMA ESCURO */

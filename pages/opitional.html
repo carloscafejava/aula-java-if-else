@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="Optional - Evite NullPointerException com estilo em Java">
+    <meta name="theme-color" content="#8B5A2B">
+    <title>Optional - JAVA Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/ciberpunk.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    </svg>
+                </div>
+
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
+            <h1 class="cyber-title">Optional em Java</h1>
+            <p class="subtitle">Diga adeus ao NullPointerException - Trate valores ausentes com elegância</p>
+
+            <!-- INTRODUÇÃO -->
+            <div class="section">
+                <h2 class="cyber">1. O que é Optional?</h2>
+                
+                <div class="intro-text">
+                    <p><strong>Optional</strong> é um container que pode conter ou não um valor. Ele foi introduzido no Java 8 para evitar verificações nulas e tornar o código mais legível.</p>
+                    
+                    <p>Ao invés de retornar <span class="highlight-text">null</span>, você retorna um <strong>Optional</strong> que deixa explícito que o valor pode estar ausente.</p>
+                    
+                    <p>O Optional força o desenvolvedor a tratar o caso onde o valor não existe, evitando surpresas com <strong>NullPointerException</strong>.</p>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- PROBLEMA COM NULL -->
+            <div class="section">
+                <h2 class="cyber">2. O Problema com null</h2>
+
+                <div class="performance-critical">
+                    <p><strong>NullPointerException</strong> é um dos maiores vilões do Java. Sem Optional, é fácil esquecer de verificar null e causar crashes.</p>
+                </div>
+
+                <h3>❌ Problema - Sem Optional:</h3>
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// PERIGOSO - Sem verificação pode gerar NullPointerException
+public Pessoa buscarPessoa(int id) {
+    // Retorna null se não encontrar
+    return banco.encontrar(id);
+}
+
+// USO - Fácil esquecer de verificar null
+Pessoa p = buscarPessoa(1);
+System.out.println(p.getNome()); // CRASH se p for null!</code></pre>
+                </div>
+
+                <h3>✅ Solução - Com Optional:</h3>
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// SEGURO - Deixa claro que o valor pode não existir
+public Optional<Pessoa> buscarPessoa(int id) {
+    return Optional.ofNullable(banco.encontrar(id));
+}
+
+// USO - Obriga a tratar o caso ausente
+Optional<Pessoa> p = buscarPessoa(1);
+if (p.isPresent()) {
+    System.out.println(p.get().getNome());
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- CRIAR OPTIONAL -->
+            <div class="section">
+                <h2 class="cyber">3. Criando Optional</h2>
+
+                <h3>Métodos Estáticos:</h3>
+                <ul class="explanation-list">
+                    <li><span class="highlight-text">Optional.of(T valor)</span> - Cria Optional com valor (lança exceção se null)</li>
+                    <li><span class="highlight-text">Optional.ofNullable(T valor)</span> - Cria Optional com ou sem valor</li>
+                    <li><span class="highlight-text">Optional.empty()</span> - Cria Optional vazio</li>
+                </ul>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.Optional;
+
+// 1. Optional com valor - seguro, não é null
+Optional<String> opt1 = Optional.of("Java");
+
+// 2. Optional que pode ser null
+String nome = null;
+Optional<String> opt2 = Optional.ofNullable(nome); // Vazio
+
+// 3. Optional vazio explicitamente
+Optional<String> opt3 = Optional.empty();
+
+// Verificar se tem valor
+System.out.println(opt1.isPresent()); // true
+System.out.println(opt2.isPresent()); // false
+System.out.println(opt3.isPresent()); // false
+
+// Verificar se está vazio (Java 11+)
+System.out.println(opt2.isEmpty()); // true</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- ACESSAR VALORES -->
+            <div class="section">
+                <h2 class="cyber">4. Acessando Valores</h2>
+
+                <h3>Métodos de Acesso:</h3>
+                <ul class="explanation-list">
+                    <li><span class="highlight-text">get()</span> - Retorna o valor ou lança exceção</li>
+                    <li><span class="highlight-text">orElse(T outro)</span> - Retorna valor ou padrão</li>
+                    <li><span class="highlight-text">orElseGet(Supplier)</span> - Valor ou chamada função</li>
+                    <li><span class="highlight-text">orElseThrow()</span> - Valor ou lança exceção</li>
+                </ul>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">Optional<String> opt = Optional.ofNullable(obterNome());
+
+// 1. get() - perigoso se vazio
+try {
+    String nome = opt.get(); // Lança NoSuchElementException se vazio
+} catch (NoSuchElementException e) {
+    System.out.println("Valor não existe");
+}
+
+// 2. orElse() - melhor - retorna padrão
+String nome1 = opt.orElse("Desconhecido");
+
+// 3. orElseGet() - padrão computado
+String nome2 = opt.orElseGet(() -> gerarNomePadrao());
+
+// 4. orElseThrow() - explícito
+String nome3 = opt.orElseThrow(() -> 
+    new IllegalArgumentException("Nome obrigatório")
+);</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- TRANSFORMAR VALORES -->
+            <div class="section">
+                <h2 class="cyber">5. Transformando Valores com map()</h2>
+
+                <p><strong>map()</strong> permite transformar o valor dentro do Optional sem verificar null.</p>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">Optional<String> nome = Optional.of("java");
+
+// map() transforma o valor se existir
+Optional<Integer> tamanho = nome.map(String::length);
+System.out.println(tamanho.orElse(0)); // 4
+
+// Encadeamento de maps
+Optional<String> resultado = Optional.of("Java Programming")
+    .map(String::toUpperCase)
+    .map(s -> s.replace(" ", "_"));
+
+System.out.println(resultado.get()); // JAVA_PROGRAMMING
+
+// Map retorna Optional vazio se original estiver vazio
+Optional<String> vazio = Optional.empty();
+Optional<Integer> tam = vazio.map(String::length);
+System.out.println(tam.orElse(-1)); // -1</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- FILTRAR VALORES -->
+            <div class="section">
+                <h2 class="cyber">6. Filtrando com filter()</h2>
+
+                <p><strong>filter()</strong> permite validar o valor com uma condição.</p>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">Optional<Integer> idade = Optional.of(25);
+
+// filter() mantém se condição é verdadeira
+Optional<Integer> adulto = idade.filter(i -> i >= 18);
+System.out.println(adulto.orElse(0)); // 25
+
+// filter() retorna vazio se condição é falsa
+Optional<Integer> crianca = idade.filter(i -> i < 18);
+System.out.println(crianca.orElse(-1)); // -1
+
+// Exemplo prático
+Optional<String> email = Optional.of("usuario@email.com");
+Optional<String> emailValido = email
+    .filter(e -> e.contains("@"))
+    .filter(e -> e.contains("."));
+
+if (emailValido.isPresent()) {
+    System.out.println("Email válido: " + emailValido.get());
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- FLATMAP -->
+            <div class="section">
+                <h2 class="cyber">7. Achatando com flatMap()</h2>
+
+                <p><strong>flatMap()</strong> é para quando você tem um Optional dentro de outro Optional.</p>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// map() criaria Optional<Optional<String>>
+// flatMap() cria apenas Optional<String>
+
+class Pessoa {
+    private Optional<Endereco> endereco;
+    
+    public Optional<Endereco> getEndereco() {
+        return endereco;
+    }
+}
+
+class Endereco {
+    private String rua;
+    
+    public String getRua() {
+        return rua;
+    }
+}
+
+// ❌ Errado - map() retorna Optional<Optional<String>>
+Optional<Pessoa> pessoa = buscarPessoa(1);
+Optional<Optional<String>> ruaErrada = pessoa
+    .map(p -> p.getEndereco())
+    .map(e -> e.getRua()); // Errado!
+
+// ✅ Correto - flatMap() achata
+Optional<String> rua = pessoa
+    .flatMap(p -> p.getEndereco())
+    .map(e -> e.getRua());
+
+System.out.println(rua.orElse("Sem endereço"));</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- IFPRESENT -->
+            <div class="section">
+                <h2 class="cyber">8. Ações com ifPresent()</h2>
+
+                <p><strong>ifPresent()</strong> e <strong>ifPresentOrElse()</strong> executam código baseado na presença do valor.</p>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">Optional<String> usuario = Optional.ofNullable(obterUsuario());
+
+// ifPresent() - executa se valor existe
+usuario.ifPresent(u -> System.out.println("Bem-vindo, " + u));
+
+// ifPresentOrElse() - executa um ou outro
+usuario.ifPresentOrElse(
+    u -> System.out.println("Usuário: " + u),
+    () -> System.out.println("Nenhum usuário logado")
+);
+
+// Exemplo real - salvar dados
+Optional<String> email = buscarEmail();
+email.ifPresent(e -> {
+    salvarBackup(e);
+    enviarConfirmacao(e);
+    System.out.println("Email processado");
+});</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- EXEMPLO COMPLETO -->
+            <div class="section">
+                <h2 class="cyber">9. Exemplo Prático Completo</h2>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">class Usuario {
+    private int id;
+    private String nome;
+    private String email;
+    
+    public Usuario(int id, String nome, String email) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+    }
+    
+    public String getNome() { return nome; }
+    public String getEmail() { return email; }
+}
+
+class RepositorioUsuario {
+    private Map<Integer, Usuario> usuarios = new HashMap<>();
+    
+    public RepositorioUsuario() {
+        usuarios.put(1, new Usuario(1, "João", "joao@email.com"));
+        usuarios.put(2, new Usuario(2, "Maria", "maria@email.com"));
+    }
+    
+    // Retorna Optional - deixa claro que pode não encontrar
+    public Optional<Usuario> buscar(int id) {
+        return Optional.ofNullable(usuarios.get(id));
+    }
+    
+    // Usar Optional no dia a dia
+    public void exibirUsuario(int id) {
+        buscar(id)
+            .map(Usuario::getNome)
+            .ifPresentOrElse(
+                nome -> System.out.println("Usuário encontrado: " + nome),
+                () -> System.out.println("Usuário não encontrado")
+            );
+    }
+    
+    public void enviarEmail(int id) {
+        buscar(id)
+            .map(Usuario::getEmail)
+            .filter(e -> e.contains("@"))
+            .ifPresent(email -> {
+                System.out.println("Enviando email para: " + email);
+                // enviar(email);
+            });
+    }
+}
+
+// USO
+RepositorioUsuario repo = new RepositorioUsuario();
+repo.exibirUsuario(1); // Usuário encontrado: João
+repo.exibirUsuario(999); // Usuário não encontrado
+repo.enviarEmail(2); // Enviando email para: maria@email.com</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- BOAS PRÁTICAS -->
+            <div class="section">
+                <h2 class="cyber">10. Boas Práticas com Optional</h2>
+
+                <h3>✓ FAÇA:</h3>
+                <ul class="explanation-list">
+                    <li>Use Optional para retornos que podem ser vazios</li>
+                    <li>Use map(), filter(), flatMap() para transformações</li>
+                    <li>Use orElse() ou orElseGet() para valores padrão</li>
+                    <li>Use ifPresent() e ifPresentOrElse() para efeitos colaterais</li>
+                    <li>Encadeie operações quando possível</li>
+                </ul>
+
+                <h3>✗ EVITE:</h3>
+                <ul class="explanation-list">
+                    <li>Não use get() sem verificar isPresent() primeiro</li>
+                    <li>Não use Optional como parâmetro de função</li>
+                    <li>Não use Optional para valores primitivos (use OptionalInt, etc)</li>
+                    <li>Não use Optional como campo de classe</li>
+                    <li>Não use Optional.get() sem tratamento</li>
+                </ul>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- ERROS COMUNS -->
+            <div class="section">
+                <h2 class="cyber">11. Erros Comuns</h2>
+
+                <h3 style="color: #ef4444;">❌ Erro 1: Usar get() sem verificar</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// ERRADO - NullPointerException!
+Optional<String> opt = Optional.empty();
+String valor = opt.get(); // Lança NoSuchElementException
+
+// CORRETO
+String valor = opt.orElse("padrão");</code></pre>
+                </div>
+
+                <h3 style="color: #ef4444;">❌ Erro 2: Optional como parâmetro</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// ERRADO - Não use Optional em parâmetros
+public void processar(Optional<String> dados) { }
+
+// CORRETO - Deixe o chamador decide
+public void processar(String dados) { }
+
+// Se pode ser null, documente
+public void processar(@Nullable String dados) { }</code></pre>
+                </div>
+
+                <h3 style="color: #ef4444;">❌ Erro 3: Esquecer de tratar Optional vazio</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// ERRADO - Pode não fazer nada
+Optional<String> resultado = buscar();
+resultado.ifPresent(r -> salvar(r));
+// E se estiver vazio?
+
+// CORRETO - Trate ambos os casos
+resultado.ifPresentOrElse(
+    this::salvar,
+    () -> System.out.println("Nada para salvar")
+);</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- EXERCÍCIOS -->
+            <div class="section">
+                <h2 class="cyber">12. Exercícios Práticos</h2>
+                
+                <div class="exercise-box cyber">
+                    <h4>Exercício 1: Método com Optional</h4>
+                    <p>Crie um método que busque um produto por ID e retorne <strong>Optional</strong>. Trate os casos presença e ausência.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 2: Encadeamento</h4>
+                    <p>Use map() e filter() para transformar e validar um email dentro de um Optional.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 3: FlatMap</h4>
+                    <p>Crie classes Pessoa e Telefone onde Pessoa tem Optional<Telefone> e acesse número com flatMap().</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 4: Padrão Padrão</h4>
+                    <p>Implemente orElse(), orElseGet() e orElseThrow() no mesmo contexto.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 5: Comparar null vs Optional</h4>
+                    <p>Reescreva um código antigo que usa null em um novo que usa Optional.</p>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- CONCLUSÃO -->
+            <div class="conclusion-box cyber">
+                <h2>Conclusão</h2>
+                <p><strong>Optional</strong> é uma ferramenta poderosa para evitar <strong>NullPointerException</strong> e tornar o código mais seguro e expressivo.</p>
+                <p>Use <strong>map(), filter(), flatMap()</strong> para transformações elegantes e <strong>ifPresent()</strong> para efeitos colaterais.</p>
+                <p>Domine Optional e seu código Java será muito mais robusto e profissional! ✨</p>
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>Optional: Eliminando NullPointerException com Elegância!</p>
+            <p>Programação defensiva e funcional em Java!</p>
+        </footer>
+    </div>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul></ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>

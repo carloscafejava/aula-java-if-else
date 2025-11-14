@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="Set e Map - Estruturas avançadas para dados únicos e mapeamentos em Java">
+    <meta name="theme-color" content="#8B5A2B">
+    <title>Set e Map - JAVA Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/ciberpunk.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    </svg>
+                </div>
+
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
+            <h1 class="cyber-title">Set e Map em Java</h1>
+            <p class="subtitle">Estruturas avançadas para dados únicos e mapeamentos chave-valor</p>
+
+            <!-- INTRODUÇÃO -->
+            <div class="section">
+                <h2 class="cyber">1. O que são Set e Map?</h2>
+                
+                <div class="intro-text">
+                    <p><strong>Set</strong> é uma coleção que <strong>não permite duplicatas</strong>. Perfeita para manter valores únicos.</p>
+                    
+                    <p><strong>Map</strong> é uma estrutura de <strong>chave-valor</strong>. Cada chave é única e mapeia um valor.</p>
+                    
+                    <p>Ambas são extremamente úteis em cenários reais onde precisa buscar rapidamente ou garantir unicidade.</p>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- SET CONCEITOS -->
+            <div class="section">
+                <h2 class="cyber">2. Set - Conjunto de Valores Únicos</h2>
+
+                <h3>Características:</h3>
+                <ul class="explanation-list">
+                    <li><strong>Sem duplicatas</strong> - valores únicos</li>
+                    <li><strong>Sem ordem garantida</strong> (em HashSet)</li>
+                    <li><strong>Busca rápida</strong> - O(1)</li>
+                    <li><strong>Não indexado</strong> - sem get(i)</li>
+                </ul>
+
+                <h3>Implementações Principais:</h3>
+                <div class="solid-box cyber" style="border-left: 5px solid #FF0080;">
+                    <h4>HashSet</h4>
+                    <p>Melhor performance. Sem ordem. Usa hash table internamente.</p>
+                </div>
+
+                <div class="solid-box cyber" style="border-left: 5px solid #FF006B;">
+                    <h4>TreeSet</h4>
+                    <p>Mantém ordem ordenada. Performance O(log n). Usa árvore interna.</p>
+                </div>
+
+                <div class="solid-box cyber" style="border-left: 5px solid #FF0080;">
+                    <h4>LinkedHashSet</h4>
+                    <p>Mantém ordem de inserção. Performance entre HashSet e TreeSet.</p>
+                </div>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.*;
+
+// HashSet - sem ordem
+Set<String> cores = new HashSet<>();
+cores.add("Vermelho");
+cores.add("Azul");
+cores.add("Vermelho"); // Não adiciona (duplicata)
+
+System.out.println("Total: " + cores.size()); // 2
+
+// TreeSet - ordem ordenada
+Set<Integer> numeros = new TreeSet<>();
+numeros.add(5);
+numeros.add(1);
+numeros.add(3);
+System.out.println(numeros); // [1, 3, 5]
+
+// LinkedHashSet - ordem de inserção
+Set<String> nomes = new LinkedHashSet<>();
+nomes.add("João");
+nomes.add("Maria");
+nomes.add("Pedro");
+// Iteração mantém ordem: João, Maria, Pedro</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- OPERAÇÕES SET -->
+            <div class="section">
+                <h2 class="cyber">3. Operações com Set</h2>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">Set<String> frutas = new HashSet<>();
+frutas.add("Maçã");
+frutas.add("Banana");
+frutas.add("Laranja");
+
+// Verificar presença
+if (frutas.contains("Maçã")) {
+    System.out.println("Tem maçã!");
+}
+
+// Tamanho
+System.out.println("Total: " + frutas.size()); // 3
+
+// Remover
+frutas.remove("Banana");
+
+// Iterar
+for (String fruta : frutas) {
+    System.out.println(fruta);
+}
+
+// Limpar
+frutas.clear();
+System.out.println(frutas.isEmpty()); // true
+
+// Operações de conjunto
+Set<String> numeros1 = new HashSet<>(Arrays.asList("1", "2", "3"));
+Set<String> numeros2 = new HashSet<>(Arrays.asList("2", "3", "4"));
+
+// União
+Set<String> uniao = new HashSet<>(numeros1);
+uniao.addAll(numeros2);
+System.out.println("União: " + uniao); // [1, 2, 3, 4]
+
+// Interseção
+Set<String> intersecao = new HashSet<>(numeros1);
+intersecao.retainAll(numeros2);
+System.out.println("Interseção: " + intersecao); // [2, 3]
+
+// Diferença
+Set<String> diferenca = new HashSet<>(numeros1);
+diferenca.removeAll(numeros2);
+System.out.println("Diferença: " + diferenca); // [1]</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- MAP CONCEITOS -->
+            <div class="section">
+                <h2 class="cyber">4. Map - Estrutura Chave-Valor</h2>
+
+                <h3>Características:</h3>
+                <ul class="explanation-list">
+                    <li><strong>Chaves únicas</strong> - não permite duplicatas de chave</li>
+                    <li><strong>Busca por chave</strong> - O(1) em HashMap</li>
+                    <li><strong>Valores podem repetir</strong> - mas chaves não</li>
+                    <li><strong>Mapeamento 1:1</strong> - cada chave mapeia um valor</li>
+                </ul>
+
+                <h3>Implementações Principais:</h3>
+                <div class="solid-box cyber" style="border-left: 5px solid #FF0080;">
+                    <h4>HashMap</h4>
+                    <p>Melhor performance. Sem ordem. Usa hash table. Permite null.</p>
+                </div>
+
+                <div class="solid-box cyber" style="border-left: 5px solid #FF006B;">
+                    <h4>TreeMap</h4>
+                    <p>Chaves ordenadas. O(log n). Red-black tree internamente.</p>
+                </div>
+
+                <div class="solid-box cyber" style="border-left: 5px solid #FF0080;">
+                    <h4>LinkedHashMap</h4>
+                    <p>Mantém ordem de inserção. Performance similar a HashMap.</p>
+                </div>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.*;
+
+// HashMap - melhor performance
+Map<String, Integer> populacao = new HashMap<>();
+populacao.put("Brasil", 215000000);
+populacao.put("Japão", 125000000);
+populacao.put("Alemanha", 84000000);
+
+// Buscar por chave
+int pop = populacao.get("Brasil");
+System.out.println("População Brasil: " + pop);
+
+// TreeMap - chaves ordenadas
+Map<String, Integer> salarios = new TreeMap<>();
+salarios.put("Zara", 3000);
+salarios.put("Ana", 2500);
+salarios.put("Bruno", 2800);
+// Iteração: Ana, Bruno, Zara (ordem alfabética)
+
+// LinkedHashMap - ordem de inserção
+Map<String, String> contatos = new LinkedHashMap<>();
+contatos.put("João", "11-999999");
+contatos.put("Maria", "21-888888");
+// Iteração: João, Maria (ordem de inserção)</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- OPERAÇÕES MAP -->
+            <div class="section">
+                <h2 class="cyber">5. Operações com Map</h2>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">Map<String, Integer> notas = new HashMap<>();
+notas.put("João", 85);
+notas.put("Maria", 92);
+notas.put("Pedro", 78);
+
+// PUT - adicionar ou atualizar
+notas.put("João", 90); // Atualiza
+
+// GET - obter valor
+int nota = notas.get("Maria"); // 92
+
+// GETORDEFAULT - com padrão
+int notaDesconhecida = notas.getOrDefault("Carlos", 0); // 0
+
+// CONTAINSKEY - verifica chave
+if (notas.containsKey("Pedro")) {
+    System.out.println("Pedro tem nota: " + notas.get("Pedro"));
+}
+
+// CONTAINSVALUE - verifica valor
+if (notas.containsValue(92)) {
+    System.out.println("Alguém tirou 92!");
+}
+
+// SIZE - quantidade
+System.out.println("Total de alunos: " + notas.size());
+
+// REMOVE - remover
+notas.remove("Pedro");
+
+// CLEAR - limpar tudo
+// notas.clear();
+
+// ITERAR - chaves
+for (String aluno : notas.keySet()) {
+    System.out.println(aluno + ": " + notas.get(aluno));
+}
+
+// ITERAR - valores
+for (Integer n : notas.values()) {
+    System.out.println("Nota: " + n);
+}
+
+// ITERAR - pares (Entry)
+for (Map.Entry<String, Integer> entry : notas.entrySet()) {
+    System.out.println(entry.getKey() + " -> " + entry.getValue());
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- COMPARAÇÃO SET MAP -->
+            <div class="section">
+                <h2 class="cyber">6. Comparação Set vs Map vs List</h2>
+
+                <div style="overflow-x: auto;">
+                    <table class="comparison-table cyber">
+                        <thead>
+                            <tr>
+                                <th>Aspecto</th>
+                                <th>List</th>
+                                <th>Set</th>
+                                <th>Map</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Ordem</strong></td>
+                                <td>Mantém ordem</td>
+                                <td>Sem ordem (depende)</td>
+                                <td>Sem ordem (depende)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Duplicatas</strong></td>
+                                <td>Permite</td>
+                                <td>Não permite</td>
+                                <td>Chave sim, valor não</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Acesso</strong></td>
+                                <td>Por índice</td>
+                                <td>Por iteração</td>
+                                <td>Por chave</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Performance</strong></td>
+                                <td>O(1) acesso</td>
+                                <td>O(1) busca</td>
+                                <td>O(1) busca</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Uso</strong></td>
+                                <td>Sequências</td>
+                                <td>Valores únicos</td>
+                                <td>Mapeamentos</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- EXEMPLO PRÁTICO -->
+            <div class="section">
+                <h2 class="cyber">7. Exemplo Prático: Sistema de Votação</h2>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">class SistemaVotacao {
+    private Set<String> votantesJaVotaram; // Set de identidades únicas
+    private Map<String, Integer> votos;    // Mapa candidato -> quantidade
+    
+    public SistemaVotacao() {
+        this.votantesJaVotaram = new HashSet<>();
+        this.votos = new HashMap<>();
+    }
+    
+    // Verificar se já votou
+    public boolean jaVotou(String cpf) {
+        return votantesJaVotaram.contains(cpf);
+    }
+    
+    // Registrar voto
+    public void votar(String cpf, String candidato) {
+        if (jaVotou(cpf)) {
+            System.out.println("Você já votou!");
+            return;
+        }
+        
+        votantesJaVotaram.add(cpf);
+        
+        // Atualizar contagem
+        votos.put(candidato, votos.getOrDefault(candidato, 0) + 1);
+        System.out.println("Voto registrado para: " + candidato);
+    }
+    
+    // Apuração
+    public void apurar() {
+        System.out.println("=== APURAÇÃO ===");
+        
+        // Encontrar vencedor
+        String vencedor = "";
+        int maiorVoto = 0;
+        
+        for (Map.Entry<String, Integer> entry : votos.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue() + " votos");
+            
+            if (entry.getValue() > maiorVoto) {
+                maiorVoto = entry.getValue();
+                vencedor = entry.getKey();
+            }
+        }
+        
+        System.out.println("\nVENCEDOR: " + vencedor + " (" + maiorVoto + " votos)");
+        System.out.println("Total de votantes: " + votantesJaVotaram.size());
+    }
+}
+
+// USO
+SistemaVotacao sistema = new SistemaVotacao();
+sistema.votar("12345678", "Candidato A");
+sistema.votar("87654321", "Candidato B");
+sistema.votar("12345678", "Candidato C"); // Já votou!
+sistema.votar("11111111", "Candidato A");
+sistema.apurar();</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- HASHSET vs TREESET -->
+            <div class="section">
+                <h2 class="cyber">8. HashSet vs TreeSet vs LinkedHashSet</h2>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Mesma entrada
+int[] dados = {3, 1, 4, 1, 5, 9, 2, 6};
+
+// HashSet - sem ordem
+Set<Integer> hash = new HashSet<>(Arrays.asList(3, 1, 4, 5, 9, 2, 6));
+System.out.println("HashSet: " + hash);
+// Saída: [1, 2, 3, 4, 5, 6, 9] ou qualquer ordem
+
+// TreeSet - ordenado
+Set<Integer> tree = new TreeSet<>(Arrays.asList(3, 1, 4, 5, 9, 2, 6));
+System.out.println("TreeSet: " + tree);
+// Saída: [1, 2, 3, 4, 5, 6, 9]
+
+// LinkedHashSet - ordem de inserção
+Set<Integer> linked = new LinkedHashSet<>(Arrays.asList(3, 1, 4, 5, 9, 2, 6));
+System.out.println("LinkedHashSet: " + linked);
+// Saída: [3, 1, 4, 5, 9, 2, 6]
+
+// Performance
+long inicio = System.nanoTime();
+Set<Integer> grande = new HashSet<>();
+for (int i = 0; i < 1000000; i++) {
+    grande.add(i);
+}
+long tempo = System.nanoTime() - inicio;
+System.out.println("HashSet 1M: " + (tempo / 1000000.0) + "ms");
+
+// TreeSet é mais lento
+inicio = System.nanoTime();
+Set<Integer> grandeTree = new TreeSet<>();
+for (int i = 0; i < 1000000; i++) {
+    grandeTree.add(i);
+}
+tempo = System.nanoTime() - inicio;
+System.out.println("TreeSet 1M: " + (tempo / 1000000.0) + "ms"); // Mais lento</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- HASHMAP vs TREEMAP -->
+            <div class="section">
+                <h2 class="cyber">9. HashMap vs TreeMap vs LinkedHashMap</h2>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// HashMap - sem ordem
+Map<String, Integer> hash = new HashMap<>();
+hash.put("Zara", 3000);
+hash.put("Ana", 2500);
+hash.put("Bruno", 2800);
+System.out.println("HashMap: " + hash);
+// Saída: qualquer ordem
+
+// TreeMap - chaves ordenadas
+Map<String, Integer> tree = new TreeMap<>();
+tree.put("Zara", 3000);
+tree.put("Ana", 2500);
+tree.put("Bruno", 2800);
+System.out.println("TreeMap: " + tree);
+// Saída: {Ana=2500, Bruno=2800, Zara=3000}
+
+// LinkedHashMap - ordem de inserção
+Map<String, Integer> linked = new LinkedHashMap<>();
+linked.put("Zara", 3000);
+linked.put("Ana", 2500);
+linked.put("Bruno", 2800);
+System.out.println("LinkedHashMap: " + linked);
+// Saída: {Zara=3000, Ana=2500, Bruno=2800}
+
+// Quando usar
+// HashMap - quando quer máximo performance
+// TreeMap - quando precisa de ordem alfabética/numérica
+// LinkedHashMap - quando precisa de ordem de inserção</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- BOAS PRÁTICAS -->
+            <div class="section">
+                <h2 class="cyber">10. Boas Práticas com Set e Map</h2>
+
+                <h3>✓ FAÇA:</h3>
+                <ul class="explanation-list">
+                    <li>Use HashSet/HashMap para performance máxima</li>
+                    <li>Use TreeSet/TreeMap quando precisa de ordem</li>
+                    <li>Use contains() antes de adicionar em Set</li>
+                    <li>Itere com entrySet() em Map, não com keySet() + get()</li>
+                    <li>Use getOrDefault() para valores opcionais</li>
+                </ul>
+
+                <h3>✗ EVITE:</h3>
+                <ul class="explanation-list">
+                    <li>Não use Set/Map sem entender a diferença</li>
+                    <li>Não itere com keySet() + get() em Map (use entrySet)</li>
+                    <li>Não modifique Set enquanto itera</li>
+                    <li>Não use objetos mutáveis como chave em Map</li>
+                    <li>Não compare performance sem know da aplicação</li>
+                </ul>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- EXEMPLO COMPLEXO -->
+            <div class="section">
+                <h2 class="cyber">11. Exemplo Complexo: Análise de Dados</h2>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.*;
+
+class AnalisadorPalavras {
+    private Map<String, Integer> frequencia;
+    private Set<String> palavrasUnicas;
+    
+    public AnalisadorPalavras(String texto) {
+        this.frequencia = new HashMap<>();
+        this.palavrasUnicas = new HashSet<>();
+        
+        String[] palavras = texto.toLowerCase()
+            .split("\\W+");
+        
+        for (String palavra : palavras) {
+            if (!palavra.isEmpty()) {
+                palavrasUnicas.add(palavra);
+                frequencia.put(palavra, 
+                    frequencia.getOrDefault(palavra, 0) + 1);
+            }
+        }
+    }
+    
+    public void exibirEstatisticas() {
+        System.out.println("=== ANÁLISE ===");
+        System.out.println("Palavras únicas: " + palavrasUnicas.size());
+        System.out.println("Total de palavras: " + 
+            frequencia.values().stream().mapToInt(Integer::intValue).sum());
+        
+        System.out.println("\nFrequência:");
+        frequencia.entrySet().stream()
+            .sorted((a, b) -> b.getValue().compareTo(a.getValue()))
+            .forEach(e -> System.out.println(
+                e.getKey() + ": " + e.getValue()
+            ));
+    }
+}
+
+// USO
+String texto = "Java é legal. Java é poderoso. Java é utilizado.";
+AnalisadorPalavras analise = new AnalisadorPalavras(texto);
+analise.exibirEstatisticas();</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- EXERCÍCIOS -->
+            <div class="section">
+                <h2 class="cyber">12. Exercícios Práticos</h2>
+                
+                <div class="exercise-box cyber">
+                    <h4>Exercício 1: Remover Duplicatas</h4>
+                    <p>Use <strong>HashSet</strong> para remover duplicatas de uma lista.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 2: Contagem de Frequência</h4>
+                    <p>Use <strong>HashMap</strong> para contar quantas vezes cada elemento aparece.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 3: Validador de Email</h4>
+                    <p>Use <strong>Set</strong> para armazenar emails registrados e validar novos.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 4: Agenda Telefônica</h4>
+                    <p>Implemente com <strong>Map</strong> para armazenar nome -> telefone.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 5: Ranking Ordenado</h4>
+                    <p>Use <strong>TreeMap</strong> para manter pontuações em ordem decrescente.</p>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- CONCLUSÃO -->
+            <div class="conclusion-box cyber">
+                <h2>Conclusão</h2>
+                <p><strong>Set</strong> e <strong>Map</strong> são estruturas poderosas para dados únicos e mapeamentos.</p>
+                <p>Choose corretamente: <strong>HashMap para performance, TreeMap para ordem, LinkedHashMap para sequência</strong>.</p>
+                <p>Domine essas estruturas e seu código Java será mais eficiente e elegante! 🚀</p>
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>Set e Map: Estruturas Avançadas para Dados Complexos!</p>
+            <p>Busca rápida, dados únicos, mapeamentos eficientes!</p>
+        </footer>
+    </div>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul></ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>

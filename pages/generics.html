@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="Generics - Type Safety e Reutilização de Código em Java">
+    <meta name="theme-color" content="#8B5A2B">
+    <title>Generics - JAVA Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/ciberpunk.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    </svg>
+                </div>
+
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
+            <h1 class="cyber-title">Generics em Java</h1>
+            <p class="subtitle">Type Safety, Reutilização de Código e Eliminação de Casting</p>
+
+            <!-- INTRODUÇÃO -->
+            <div class="section">
+                <h2 class="cyber">1. O que são Generics?</h2>
+                
+                <div class="intro-text">
+                    <p><strong>Generics</strong> permitem criar classes, interfaces e métodos que funcionam com diferentes tipos enquanto mantêm <strong>type safety</strong> (segurança de tipos).</p>
+                    
+                    <p>Ao invés de trabalhar com <span class="highlight-text">Object</span>, você especifica o tipo quando usa a classe.</p>
+                    
+                    <p>Generics eliminam a necessidade de casting e permitem erros de tipo serem detectados em tempo de compilação.</p>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- PROBLEMA SEM GENERICS -->
+            <div class="section">
+                <h2 class="cyber">2. O Problema sem Generics</h2>
+
+                <div class="performance-critical">
+                    <p>Sem Generics, era necessário fazer <strong>casting manual</strong> e havia risco de erros em runtime.</p>
+                </div>
+
+                <h3>❌ Sem Generics (Java antigo):</h3>
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Sem generics - trabalha com Object
+ArrayList lista = new ArrayList();
+lista.add("Java");
+lista.add(123); // Diferente tipo!
+
+// Precisa fazer casting
+String s = (String) lista.get(0); // OK
+String numero = (String) lista.get(1); // ClassCastException!
+
+// Problema: erro só aparece em runtime</code></pre>
+                </div>
+
+                <h3>✅ Com Generics (Moderno):</h3>
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Com generics - type safety
+ArrayList<String> lista = new ArrayList<>();
+lista.add("Java");
+lista.add(123); // ERRO em COMPILE TIME!
+
+// Sem casting
+String s = lista.get(0); // Automático
+
+// Problema prevenido em tempo de compilação</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- SINTAXE BÁSICA -->
+            <div class="section">
+                <h2 class="cyber">3. Sintaxe Básica de Generics</h2>
+
+                <p>Generics usam <strong>type parameters</strong> entre <span class="highlight-text">&lt;&gt;</span>.</p>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Genérico com um tipo
+ArrayList<String> nomes = new ArrayList<>();
+ArrayList<Integer> numeros = new ArrayList<>();
+ArrayList<Pessoa> pessoas = new ArrayList<>();
+
+// Genérico com múltiplos tipos
+Map<String, Integer> notas = new HashMap<>();
+
+// Iteração é type-safe
+for (String nome : nomes) {
+    System.out.println(nome); // Já sabe que é String
+}
+
+// Sem casting necessário
+Integer primeiro = numeros.get(0); // Automático</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- CRIAR CLASSE GENÉRICA -->
+            <div class="section">
+                <h2 class="cyber">4. Criando Classes Genéricas</h2>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Classe genérica simples
+public class Caixa<T> {
+    private T conteudo;
+    
+    public void colocar(T item) {
+        this.conteudo = item;
+    }
+    
+    public T remover() {
+        return conteudo;
+    }
+    
+    public T obter() {
+        return conteudo;
+    }
+}
+
+// USO
+Caixa<String> caixaTexto = new Caixa<>();
+caixaTexto.colocar("Java");
+System.out.println(caixaTexto.obter()); // Java
+
+Caixa<Integer> caixaNumero = new Caixa<>();
+caixaNumero.colocar(42);
+System.out.println(caixaNumero.obter()); // 42
+
+// Múltiplos type parameters
+public class Par<K, V> {
+    private K chave;
+    private V valor;
+    
+    public Par(K chave, V valor) {
+        this.chave = chave;
+        this.valor = valor;
+    }
+    
+    public K getChave() { return chave; }
+    public V getValor() { return valor; }
+}
+
+// USO
+Par<String, Integer> par = new Par<>("idade", 25);
+System.out.println(par.getChave() + ": " + par.getValor());</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- MÉTODOS GENÉRICOS -->
+            <div class="section">
+                <h2 class="cyber">5. Métodos Genéricos</h2>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Método genérico
+public class Utilitarios {
+    
+    // Tipo T é local ao método
+    public static <T> void imprimir(T elemento) {
+        System.out.println(elemento);
+    }
+    
+    // Múltiplos tipos
+    public static <K, V> void exibir(K chave, V valor) {
+        System.out.println(chave + " = " + valor);
+    }
+    
+    // Com tipo de retorno
+    public static <T> T primeiro(T[] array) {
+        return array.length > 0 ? array[0] : null;
+    }
+    
+    // Encontrar máximo
+    public static <T extends Comparable<T>> T maximo(T[] array) {
+        if (array.length == 0) return null;
+        T max = array[0];
+        for (T elemento : array) {
+            if (elemento.compareTo(max) > 0) {
+                max = elemento;
+            }
+        }
+        return max;
+    }
+}
+
+// USO
+Utilitarios.<String>imprimir("Java");
+Utilitarios.<Integer, String>exibir(1, "um");
+
+Integer[] numeros = {1, 5, 3, 9, 2};
+System.out.println(Utilitarios.primeiro(numeros)); // 1
+System.out.println(Utilitarios.maximo(numeros)); // 9</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- BOUNDED TYPE PARAMETERS -->
+            <div class="section">
+                <h2 class="cyber">6. Bounded Type Parameters</h2>
+
+                <p>Você pode <strong>limitar</strong> qual tipo pode ser usado com um generic.</p>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Extends - limite superior (upper bounded)
+public class NumericoGenerico<T extends Number> {
+    private T valor;
+    
+    public NumericoGenerico(T valor) {
+        this.valor = valor;
+    }
+    
+    public double obterDouble() {
+        return valor.doubleValue(); // Number tem este método
+    }
+}
+
+// USO - funciona com tipos que estendem Number
+new NumericoGenerico<>(42); // Integer extends Number - OK
+new NumericoGenerico<>(3.14); // Double extends Number - OK
+new NumericoGenerico<>("texto"); // ERRO - String não estende Number
+
+// Interface como bound
+public interface Comparavel {
+    int comparar(Object outro);
+}
+
+public class Ordenador<T extends Comparavel> {
+    public void ordenar(T[] array) {
+        // T tem método comparar()
+    }
+}
+
+// Múltiplos bounds
+public <T extends Number & Comparable<T>> T processar(T valor) {
+    return valor;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- WILDCARDS -->
+            <div class="section">
+                <h2 class="cyber">7. Wildcards e ? extends</h2>
+
+                <p><strong>Wildcards</strong> (?) permitem trabalhar com tipos desconhecidos.</p>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Wildcard - qualquer tipo
+public static void imprimirLista(List<?> lista) {
+    for (Object elemento : lista) {
+        System.out.println(elemento);
+    }
+}
+
+// ? extends - tipo ou subtipo (covariance)
+public static double somarNumeros(List<? extends Number> lista) {
+    double soma = 0;
+    for (Number num : lista) {
+        soma += num.doubleValue();
+    }
+    return soma;
+}
+
+// USO
+List<Integer> inteiros = Arrays.asList(1, 2, 3);
+List<Double> decimais = Arrays.asList(1.5, 2.5);
+
+System.out.println(somarNumeros(inteiros)); // 6.0
+System.out.println(somarNumeros(decimais)); // 4.0
+
+// ? super - tipo ou supertipo (contravariance)
+public static void preencherComNumeros(List<? super Number> lista) {
+    lista.add(42);
+    lista.add(3.14);
+    lista.add(new BigDecimal("99.99"));
+}
+
+List<Object> objetos = new ArrayList<>();
+preencherComNumeros(objetos); // OK
+
+List<Integer> inteiros2 = new ArrayList<>();
+preencherComNumeros(inteiros2); // ERRO - Number não é supertipo de Integer</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- TYPE ERASURE -->
+            <div class="section">
+                <h2 class="cyber">8. Type Erasure</h2>
+
+                <div class="performance-critical">
+                    <p><strong>Type Erasure</strong>: Em runtime, informações de generics são apagadas. Generics existem apenas em compile-time.</p>
+                </div>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Compile time - tem tipo
+ArrayList<String> strings = new ArrayList<>();
+ArrayList<Integer> numeros = new ArrayList<>();
+
+// Runtime - tipo é apagado
+// Ambos são simplesmente ArrayList em runtime!
+
+// Por isso ISSO não funciona:
+// public void processar(ArrayList<String> lista) { }
+// public void processar(ArrayList<Integer> lista) { } 
+// ERRO - ambos viram ArrayList em runtime
+
+// Nem isso:
+// ArrayList<String> lista = new ArrayList<Integer>(); // ERRO compile
+// Mas em runtime seria apenas ArrayList
+
+// Implicações
+public <T> boolean ehInstancia(Object obj, Class<T> tipo) {
+    return tipo.isInstance(obj); // Precisa de Class<T> para runtime
+}
+
+// USO
+ehInstancia("texto", String.class); // true
+ehInstancia(42, Integer.class); // true</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- EXEMPLO PRÁTICO -->
+            <div class="section">
+                <h2 class="cyber">9. Exemplo Prático: Repositório Genérico</h2>
+
+                <div class="code-wrapper cyber">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Classe base
+public abstract class Entidade {
+    protected int id;
+    public int getId() { return id; }
+}
+
+// Repositório genérico
+public class Repositorio<T extends Entidade> {
+    private List<T> dados = new ArrayList<>();
+    private int proximoId = 1;
+    
+    public void salvar(T entidade) {
+        entidade.id = proximoId++;
+        dados.add(entidade);
+        System.out.println("Salvo: " + entidade);
+    }
+    
+    public T buscarPorId(int id) {
+        return dados.stream()
+            .filter(e -> e.getId() == id)
+            .findFirst()
+            .orElse(null);
+    }
+    
+    public List<T> buscarTodos() {
+        return new ArrayList<>(dados);
+    }
+    
+    public void deletar(int id) {
+        dados.removeIf(e -> e.getId() == id);
+    }
+}
+
+// Entidades
+class Usuario extends Entidade {
+    private String nome;
+    public Usuario(String nome) { this.nome = nome; }
+    public String toString() { return "Usuario(" + nome + ")"; }
+}
+
+class Produto extends Entidade {
+    private String descricao;
+    public Produto(String descricao) { this.descricao = descricao; }
+    public String toString() { return "Produto(" + descricao + ")"; }
+}
+
+// USO
+Repositorio<Usuario> repUsuario = new Repositorio<>();
+repUsuario.salvar(new Usuario("João"));
+repUsuario.salvar(new Usuario("Maria"));
+
+Repositorio<Produto> repProduto = new Repositorio<>();
+repProduto.salvar(new Produto("Notebook"));
+repProduto.salvar(new Produto("Mouse"));
+
+System.out.println(repUsuario.buscarPorId(1)); // Usuario(João)
+System.out.println(repProduto.buscarTodos()); // [Produto(Notebook), Produto(Mouse)]</code></pre>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- BOAS PRÁTICAS -->
+            <div class="section">
+                <h2 class="cyber">10. Boas Práticas com Generics</h2>
+
+                <h3>✓ FAÇA:</h3>
+                <ul class="explanation-list">
+                    <li>Use generics para type safety</li>
+                    <li>Use bounded types quando necessário</li>
+                    <li>Prefira List<?> a List</li>
+                    <li>Use wildcards apropriadamente</li>
+                    <li>Entenda type erasure</li>
+                </ul>
+
+                <h3>✗ EVITE:</h3>
+                <ul class="explanation-list">
+                    <li>Não misture tipos raw e generics</li>
+                    <li>Não use Object desnecessariamente</li>
+                    <li>Não assuma que generics existem em runtime</li>
+                    <li>Não ignore warnings do compilador</li>
+                    <li>Não use generics para primitivos (use Integer, não int)</li>
+                </ul>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- EXERCÍCIOS -->
+            <div class="section">
+                <h2 class="cyber">11. Exercícios Práticos</h2>
+                
+                <div class="exercise-box cyber">
+                    <h4>Exercício 1: Classe Stack Genérica</h4>
+                    <p>Implemente uma classe <strong>Pilha&lt;T&gt;</strong> genérica com push(), pop(), peek().</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 2: Método de Busca</h4>
+                    <p>Crie um método genérico que busque um elemento em um array.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 3: Bounded Types</h4>
+                    <p>Crie classe que funcione apenas com tipos Comparable.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 4: Repositório</h4>
+                    <p>Implemente repositório genérico com salvar, buscar, deletar.</p>
+                </div>
+
+                <div class="exercise-box cyber">
+                    <h4>Exercício 5: Cache Genérico</h4>
+                    <p>Crie sistema de cache que funcione com qualquer tipo.</p>
+                </div>
+            </div>
+
+            <div class="divider cyber"></div>
+
+            <!-- CONCLUSÃO -->
+            <div class="conclusion-box cyber">
+                <h2>Conclusão</h2>
+                <p><strong>Generics</strong> são essenciais para código Java seguro, reutilizável e profissional.</p>
+                <p>Use <strong>type parameters, bounded types e wildcards</strong> para criar APIs flexíveis e type-safe.</p>
+                <p>Domine generics e seu código será muito mais robusto! 🔒✨</p>
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>Generics: Type Safety e Reutilização!</p>
+            <p>Código seguro, flexível e profissional!</p>
+        </footer>
+    </div>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul></ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>

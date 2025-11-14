@@ -1,0 +1,378 @@
+/* ============================================
+   ESTILOS CIBERPUNK - NEON VERMELHO
+   ============================================ */
+
+/* ============================================
+   TÍTULOS COM DEGRADÊ VERMELHO
+   ============================================ */
+
+.section h2.cyber {
+    background: linear-gradient(135deg, var(--color-accent-red) 0%, var(--color-accent-red-alt) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
+}
+
+.cyber-title {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    font-weight: var(--font-weight-extra-bold);
+    background: linear-gradient(135deg, var(--color-accent-red) 0%, var(--color-accent-red-alt) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--space-lg);
+    text-align: center;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.cyber-title::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--color-accent-red) 25%, 
+        var(--color-accent-red) 75%, 
+        transparent 100%);
+    box-shadow: 0 0 15px var(--color-accent-red);
+}
+
+/* ============================================
+   CAIXAS COM BORDA NEON VERMELHA
+   ============================================ */
+
+.cyber-box {
+    background-color: var(--color-bg-card);
+    border: 2px solid var(--color-accent-red);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    margin: var(--space-xl) 0;
+    box-shadow: 
+        0 0 20px rgba(255, 0, 128, 0.3),
+        inset 0 0 10px rgba(255, 0, 128, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.cyber-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-accent-red), transparent);
+    box-shadow: 0 0 15px var(--color-accent-red);
+    animation: cyber-scan 3s ease-in-out infinite;
+}
+
+@keyframes cyber-scan {
+    0% { left: -100%; }
+    50% { left: 100%; }
+    100% { left: -100%; }
+}
+
+.cyber-box h3 {
+    color: var(--color-accent-red);
+    margin-top: 0;
+    font-weight: var(--font-weight-bold);
+}
+
+.cyber-box h4 {
+    color: var(--color-accent-red);
+}
+
+/* ============================================
+   EXERCÍCIOS COM DESTAQUE VERMELHO
+   ============================================ */
+
+.exercise-box.cyber {
+    background-color: var(--color-bg-card);
+    border: 2px solid var(--color-accent-red);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    margin: var(--space-lg) 0;
+    box-shadow: 
+        0 0 15px rgba(255, 0, 128, 0.2),
+        inset 0 0 8px rgba(255, 0, 128, 0.08);
+    transition: all var(--transition-base);
+}
+
+.exercise-box.cyber:hover {
+    border-color: var(--color-accent-red);
+    background-color: rgba(255, 0, 128, 0.05);
+    box-shadow: 
+        0 0 30px rgba(255, 0, 128, 0.4),
+        inset 0 0 15px rgba(255, 0, 128, 0.15);
+    transform: translateY(-3px);
+}
+
+.exercise-box.cyber h4 {
+    color: var(--color-accent-red);
+    margin-top: 0;
+}
+
+/* ============================================
+   BADGES E TAGS CIBERPUNK
+   ============================================ */
+
+.badge-cyber {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(255, 0, 128, 0.2), rgba(255, 0, 128, 0.1));
+    color: var(--color-accent-red);
+    padding: var(--space-xs) var(--space-md);
+    border: 1px solid var(--color-accent-red);
+    border-radius: 20px;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 10px rgba(255, 0, 128, 0.2);
+    transition: all var(--transition-base);
+}
+
+.badge-cyber:hover {
+    background: linear-gradient(135deg, rgba(255, 0, 128, 0.3), rgba(255, 0, 128, 0.2));
+    box-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
+}
+
+/* ============================================
+   TABELAS COM DESTAQUE VERMELHO
+   ============================================ */
+
+.comparison-table.cyber {
+    border: 2px solid var(--color-accent-red);
+    box-shadow: 0 0 20px rgba(255, 0, 128, 0.2);
+}
+
+.comparison-table.cyber th {
+    background-color: rgba(255, 0, 128, 0.15);
+    border-bottom: 2px solid var(--color-accent-red);
+    color: var(--color-accent-red);
+    box-shadow: inset 0 0 10px rgba(255, 0, 128, 0.1);
+}
+
+.comparison-table.cyber tr:hover td {
+    background-color: rgba(255, 0, 128, 0.05);
+    border-left: 3px solid var(--color-accent-red);
+}
+
+/* ============================================
+   LINHAS DIVISORAS CIBERPUNK
+   ============================================ */
+
+.divider.cyber {
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%,
+        var(--color-accent-red) 25%,
+        var(--color-accent-red) 75%,
+        transparent 100%);
+    box-shadow: 0 0 15px var(--color-accent-red);
+    margin: var(--space-3xl) 0;
+}
+
+/* ============================================
+   DESTAQUE DE PERFORMANCE (CRÍTICO)
+   ============================================ */
+
+.performance-critical {
+    background: rgba(255, 0, 128, 0.08);
+    border-left: 5px solid var(--color-accent-red);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    margin: var(--space-lg) 0;
+    box-shadow: 0 0 15px rgba(255, 0, 128, 0.1);
+}
+
+.performance-critical strong {
+    color: var(--color-accent-red);
+}
+
+/* ============================================
+   BOXES DE ESTRUTURAS CRÍTICAS
+   ============================================ */
+
+.structure-stack,
+.structure-queue {
+    background-color: var(--color-bg-card);
+    border: 2px solid var(--color-accent-red);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    margin: var(--space-xl) 0;
+    box-shadow: 0 0 20px rgba(255, 0, 128, 0.25);
+    position: relative;
+}
+
+.structure-stack::before,
+.structure-queue::before {
+    content: attr(data-icon);
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
+    opacity: 0.15;
+}
+
+/* ============================================
+   EFEITO GLOW EM TEXTOS
+   ============================================ */
+
+.glow-red {
+    color: var(--color-accent-red);
+    text-shadow: 0 0 10px rgba(255, 0, 128, 0.6),
+                 0 0 20px rgba(255, 0, 128, 0.3);
+}
+
+.glow-red-strong {
+    color: var(--color-accent-red);
+    font-weight: var(--font-weight-bold);
+    text-shadow: 0 0 15px rgba(255, 0, 128, 0.8),
+                 0 0 30px rgba(255, 0, 128, 0.5);
+}
+
+/* ============================================
+   CÓDIGOS COM DESTAQUE VERMELHO
+   ============================================ */
+
+.code-wrapper.cyber {
+    border: 2px solid var(--color-accent-red);
+    box-shadow: 0 0 20px rgba(255, 0, 128, 0.2);
+}
+
+.code-wrapper.cyber .code-header {
+    border-bottom: 1px solid var(--color-accent-red);
+    background: rgba(255, 0, 128, 0.05);
+}
+
+.code-lang.cyber {
+    color: var(--color-accent-red);
+    text-shadow: 0 0 8px rgba(255, 0, 128, 0.5);
+}
+
+/* ============================================
+   CONCLUSÃO COM DESTAQUE VERMELHO
+   ============================================ */
+
+.conclusion-box.cyber {
+    background: linear-gradient(135deg, 
+        rgba(255, 0, 128, 0.08) 0%, 
+        rgba(255, 0, 128, 0.04) 100%);
+    border: 2px solid var(--color-accent-red);
+    box-shadow: 0 0 25px rgba(255, 0, 128, 0.2);
+}
+
+.conclusion-box.cyber h2 {
+    color: var(--color-accent-red);
+    border: none;
+    text-shadow: 0 0 15px rgba(255, 0, 128, 0.4);
+}
+
+.conclusion-box.cyber strong {
+    color: var(--color-accent-red);
+    font-weight: var(--font-weight-bold);
+    text-shadow: 0 0 10px rgba(255, 0, 128, 0.5);
+}
+
+/* ============================================
+   HERO CIBERPUNK
+   ============================================ */
+
+.hero.cyber {
+    background: linear-gradient(135deg, 
+        rgba(255, 0, 128, 0.03) 0%,
+        rgba(0, 212, 255, 0.03) 100%);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 0, 128, 0.2);
+    padding: var(--space-3xl) var(--space-lg);
+    box-shadow: 0 0 30px rgba(255, 0, 128, 0.1);
+}
+
+.hero.cyber h2 {
+    background: linear-gradient(135deg, var(--color-accent-red) 0%, var(--color-accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
+}
+
+/* ============================================
+   STAT BOXES COM ACENTO VERMELHO
+   ============================================ */
+
+.stat-box.cyber {
+    border: 2px solid var(--color-accent-red);
+    background-color: rgba(255, 0, 128, 0.05);
+}
+
+.stat-box.cyber:hover {
+    box-shadow: 0 0 25px rgba(255, 0, 128, 0.3);
+    background-color: rgba(255, 0, 128, 0.08);
+}
+
+.stat-box.cyber .stat-number {
+    background: linear-gradient(135deg, var(--color-accent-red) 0%, var(--color-accent-red-alt) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ============================================
+   ANIMAÇÃO PULSE NEON
+   ============================================ */
+
+@keyframes pulse-neon {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 0, 128, 0.3),
+                    inset 0 0 10px rgba(255, 0, 128, 0.1);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 0, 128, 0.6),
+                    inset 0 0 15px rgba(255, 0, 128, 0.2);
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(255, 0, 128, 0.3),
+                    inset 0 0 10px rgba(255, 0, 128, 0.1);
+    }
+}
+
+.pulse-neon {
+    animation: pulse-neon 2s ease-in-out infinite;
+}
+
+/* ============================================
+   RESPONSIVIDADE
+   ============================================ */
+
+@media (max-width: 768px) {
+    .cyber-title {
+        font-size: 1.5rem;
+    }
+
+    .cyber-box {
+        padding: var(--space-lg);
+        margin: var(--space-lg) 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .cyber-title {
+        font-size: 1.3rem;
+    }
+
+    .cyber-box {
+        padding: var(--space-lg);
+        margin: var(--space-lg) 0;
+    }
+
+    .exercise-box.cyber {
+        padding: var(--space-lg);
+    }
+}
