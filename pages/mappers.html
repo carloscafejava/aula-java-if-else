@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="DTO e Mappers - Padrões essenciais para transferência de dados em aplicações Spring Boot">
+    <meta name="theme-color" content="#8B5A2B">
+    <title>DTO e Mappers - Spring Boot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <!-- Logo SVG -->
+                <div class="logo-wrapper">
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="JAVA Coffee Cup Logo">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#0099FF;stop-opacity:0.3" />
+                            </linearGradient>
+                        </defs>
+                        <path class="cup-body" d="M 60 70 L 50 140 Q 50 160 70 160 L 130 160 Q 150 160 150 140 L 140 70 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <ellipse class="cup-body" cx="100" cy="160" rx="45" ry="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <path class="cup-handle" d="M 140 90 Q 170 90 170 120 Q 170 150 140 150" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path class="cup-liquid" d="M 60 130 L 52 145 Q 52 155 70 158 L 130 158 Q 148 155 148 145 L 140 130 Q 100 135 60 130 Z" fill="currentColor" opacity="0.4"/>
+                        <path class="steam-line" d="M 70 60 Q 65 45 70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 100 55 Q 95 35 100 15" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <path class="steam-line" d="M 130 60 Q 135 45 130 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="url(#neonGradient)" stroke-width="1" opacity="0.4" class="neon-ring"/>
+                    </svg>
+                </div>
+
+                <!-- Título -->
+                <div class="header-text">
+                    <h1>JAVA Learning</h1>
+                    <p class="subtitle">Hub de Conteúdo</p>
+                </div>
+
+                <!-- Toggle Modo Escuro/Claro -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar entre modo claro e escuro">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content">
+            <h1>DTO e Mappers</h1>
+            <p class="subtitle">Padrões essenciais para transferência de dados em aplicações Spring Boot - Segurança, Performance e Isolamento</p>
+
+            <!-- INTRODUÇÃO -->
+            <div class="section">
+                <h2>1. O que é DTO?</h2>
+                
+                <div class="intro-text">
+                    <p><strong>DTO</strong> significa <strong>Data Transfer Object</strong>. É um padrão de projeto que cria objetos específicos para transferir dados entre camadas de uma aplicação.</p>
+                    
+                    <p>Um DTO é uma classe simples que contém apenas <strong>getters e setters</strong>, sem lógica de negócio. Seu propósito é <strong>encapsular e transportar dados</strong>.</p>
+                    
+                    <p>Diferente de uma Entity (que representa um banco de dados), um DTO pode conter apenas os dados que o cliente precisa receber, evitando exposição desnecessária.</p>
+                </div>
+            </div>
+
+            <!-- POR QUE USAR DTO -->
+            <div class="section">
+                <h2>2. Por Que Usar DTO?</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #4ade80;">
+                    <h3>Segurança</h3>
+                    <p>Não exponha entidades do banco de dados diretamente. Um DTO controla quais dados são enviados ao cliente.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #4ade80;">
+                    <h3>Isolamento de Camadas</h3>
+                    <p>A API não fica acoplada com a estrutura do banco de dados. Mudanças na Entity não afetam a resposta da API.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #4ade80;">
+                    <h3>Performance</h3>
+                    <p>Envie apenas os dados necessários, reduzindo o tamanho das respostas JSON.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #4ade80;">
+                    <h3>Flexibilidade</h3>
+                    <p>Forneça diferentes DTOs para diferentes endpoints sem modificar a Entity.</p>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #4ade80;">
+                    <h3>Validação</h3>
+                    <p>Adicione regras de validação específicas para entrada de dados sem afetar a Entity.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXEMPLO BÁSICO -->
+            <div class="section">
+                <h2>3. Exemplo Básico: Entity vs DTO</h2>
+
+                <h3>Entity - Representa o Banco de Dados:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = "usuarios")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Usuario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String nome;
+    private String email;
+    
+    @Column(name = "senha_hash")
+    private String senhaHash;  // Nunca deve ser enviado ao cliente!
+    
+    @Column(name = "data_criacao")
+    private LocalDateTime dataCriacao;
+    
+    @Column(name = "cpf")
+    private String cpf;  // Informação sensível
+    
+    @Column(name = "ativo")
+    private Boolean ativo;
+    
+    @OneToMany(mappedBy = "usuario")
+    private List<Pedido> pedidos;  // Relacionamento complexo
+}</code></pre>
+                </div>
+
+                <h3>DTO - Apenas Dados Necessários:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class UsuarioDTO {
+    private Long id;
+    private String nome;
+    private String email;
+    
+    // Nota: senhaHash NÃO está aqui
+    // Nota: cpf NÃO está aqui
+    // Nota: pedidos NÃO está aqui
+}</code></pre>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #ef4444;">
+                    <h3>Nunca Exponha:</h3>
+                    <ul class="explanation-list">
+                        <li>Senhas ou hashes de senhas</li>
+                        <li>Informações sensíveis (CPF, CNPJ, etc)</li>
+                        <li>Tokens de autenticação</li>
+                        <li>Relacionamentos complexos desnecessários</li>
+                        <li>Campos internos da aplicação</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- CRIAR REQUEST DTO -->
+            <div class="section">
+                <h2>4. Request DTO - Receber Dados</h2>
+
+                <p>Use DTOs para <strong>validar e receber dados do cliente</strong>. Isso protege sua Entity e permite validação específica.</p>
+
+                <h3>Exemplo: Criar Novo Usuário</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import jakarta.validation.constraints.*;
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class CriarUsuarioDTO {
+    
+    @NotBlank(message = "Nome é obrigatório")
+    @Size(min = 3, max = 100)
+    private String nome;
+    
+    @NotBlank(message = "Email é obrigatório")
+    @Email(message = "Email inválido")
+    private String email;
+    
+    @NotBlank(message = "Senha é obrigatória")
+    @Size(min = 8, message = "Senha deve ter no mínimo 8 caracteres")
+    private String senha;
+}</code></pre>
+                </div>
+
+                <h3>Usar no Controller:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/api/usuarios")
+public class UsuarioController {
+    
+    private final UsuarioService service;
+    
+    public UsuarioController(UsuarioService service) {
+        this.service = service;
+    }
+    
+    @PostMapping
+    public ResponseEntity<UsuarioDTO> criar(
+        @Valid @RequestBody CriarUsuarioDTO dto) {
+        
+        // O Spring valida automaticamente
+        // Se inválido, retorna 400 Bad Request
+        
+        UsuarioDTO novoUsuario = service.criar(dto);
+        return ResponseEntity.status(201).body(novoUsuario);
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- MAPPERS -->
+            <div class="section">
+                <h2>5. O que é Mapper?</h2>
+
+                <p>Um <strong>Mapper</strong> é responsável por <strong>converter dados de um tipo para outro</strong>. Transforma Entity em DTO e vice-versa.</p>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Responsabilidades do Mapper:</h3>
+                    <ul class="explanation-list">
+                        <li>Entity → DTO (resposta para cliente)</li>
+                        <li>DTO → Entity (receber dados do cliente)</li>
+                        <li>Tratamento de valores nulos</li>
+                        <li>Conversões de tipos quando necessário</li>
+                        <li>Lógica de transformação de dados</li>
+                    </ul>
+                </div>
+
+                <h3>Exemplo Básico - Mapper Manual:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
+@Component
+public class UsuarioMapper {
+    
+    private final PasswordEncoder passwordEncoder;
+    
+    public UsuarioMapper(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+    
+    // Entity para DTO (resposta)
+    public UsuarioDTO toDTO(Usuario entity) {
+        if (entity == null) return null;
+        
+        return new UsuarioDTO(
+            entity.getId(),
+            entity.getNome(),
+            entity.getEmail()
+        );
+    }
+    
+    // DTO para Entity (criar novo)
+    public Usuario toEntity(CriarUsuarioDTO dto) {
+        if (dto == null) return null;
+        
+        Usuario usuario = new Usuario();
+        usuario.setNome(dto.getNome());
+        usuario.setEmail(dto.getEmail());
+        usuario.setSenhaHash(passwordEncoder.encode(dto.getSenha()));
+        usuario.setDataCriacao(LocalDateTime.now());
+        usuario.setAtivo(true);
+        
+        return usuario;
+    }
+    
+    // DTO para Entity (atualizar existente)
+    public void atualizarEntity(AtualizarUsuarioDTO dto, Usuario entity) {
+        if (dto == null || entity == null) return;
+        
+        if (dto.getNome() != null) {
+            entity.setNome(dto.getNome());
+        }
+        if (dto.getEmail() != null) {
+            entity.setEmail(dto.getEmail());
+        }
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- MAPPER FACTORY -->
+            <div class="section">
+                <h2>6. Mapper com Listas</h2>
+
+                <p>Muitas vezes você precisa converter <strong>listas inteiras</strong> de Entities em DTOs.</p>
+
+                <h3>Métodos Úteis para Coleções:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import java.util.stream.Collectors;
+
+@Component
+public class UsuarioMapper {
+    
+    // Converter uma lista de Entities para DTOs
+    public List<UsuarioDTO> toDTOList(List<Usuario> entities) {
+        if (entities == null || entities.isEmpty()) {
+            return new ArrayList<>();
+        }
+        
+        return entities.stream()
+            .map(this::toDTO)
+            .collect(Collectors.toList());
+    }
+    
+    // Converter uma página de Entities para DTOs
+    public Page<UsuarioDTO> toDTOPage(Page<Usuario> page) {
+        return page.map(this::toDTO);
+    }
+    
+    // Método auxiliar para DTO
+    public UsuarioDTO toDTO(Usuario entity) {
+        if (entity == null) return null;
+        
+        return new UsuarioDTO(
+            entity.getId(),
+            entity.getNome(),
+            entity.getEmail()
+        );
+    }
+}</code></pre>
+                </div>
+
+                <h3>Usando no Service:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UsuarioService {
+    
+    private final UsuarioRepository repository;
+    private final UsuarioMapper mapper;
+    
+    public UsuarioService(UsuarioRepository repository, UsuarioMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
+    
+    public Page<UsuarioDTO> listarTodos(Pageable pageable) {
+        Page<Usuario> usuarios = repository.findAll(pageable);
+        return mapper.toDTOPage(usuarios);
+    }
+    
+    public List<UsuarioDTO> buscarPorNome(String nome) {
+        List<Usuario> usuarios = repository.findByNomeContaining(nome);
+        return mapper.toDTOList(usuarios);
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- MAPSTRUCT -->
+            <div class="section">
+                <h2>7. MapStruct - Mapper Automático</h2>
+
+                <p><strong>MapStruct</strong> é uma biblioteca que <strong>gera Mappers automaticamente</strong> em tempo de compilação, sem reflexão.</p>
+
+                <h3>Configuração no pom.xml:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">xml</span>
+                    </div>
+                    <pre><code class="language-xml">&lt;properties&gt;
+    &lt;maven.compiler.source&gt;17&lt;/maven.compiler.source&gt;
+    &lt;maven.compiler.target&gt;17&lt;/maven.compiler.target&gt;
+    &lt;org.mapstruct.version&gt;1.5.5.Final&lt;/org.mapstruct.version&gt;
+&lt;/properties&gt;
+
+&lt;dependencies&gt;
+    &lt;!-- MapStruct --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.mapstruct&lt;/groupId&gt;
+        &lt;artifactId&gt;mapstruct&lt;/artifactId&gt;
+        &lt;version&gt;${org.mapstruct.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+
+&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+            &lt;version&gt;3.8.1&lt;/version&gt;
+            &lt;configuration&gt;
+                &lt;annotationProcessorPaths&gt;
+                    &lt;path&gt;
+                        &lt;groupId&gt;org.mapstruct&lt;/groupId&gt;
+                        &lt;artifactId&gt;mapstruct-processor&lt;/artifactId&gt;
+                        &lt;version&gt;${org.mapstruct.version}&lt;/version&gt;
+                    &lt;/path&gt;
+                &lt;/annotationProcessorPaths&gt;
+            &lt;/configuration&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;</code></pre>
+                </div>
+
+                <h3>Criar Mapper com MapStruct:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
+import java.util.List;
+
+@Mapper(
+    componentModel = "spring",
+    unmappedTargetPolicy = ReportingPolicy.IGNORE
+)
+public interface UsuarioMapperMapStruct {
+    
+    // Entity para DTO (simples)
+    UsuarioDTO toDTO(Usuario entity);
+    
+    // Lista de Entities para DTOs
+    List<UsuarioDTO> toDTOList(List<Usuario> entities);
+    
+    // DTO para Entity (com mapeamento customizado)
+    @Mapping(target = "senhaHash", 
+        expression = "java(org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.encode(dto.getSenha()))")
+    @Mapping(target = "dataCriacao", 
+        expression = "java(java.time.LocalDateTime.now())")
+    @Mapping(target = "ativo", constant = "true")
+    Usuario toEntity(CriarUsuarioDTO dto);
+    
+    // Atualizar Entity existente
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "senhaHash", ignore = true)
+    @Mapping(target = "dataCriacao", ignore = true)
+    void atualizarEntity(AtualizarUsuarioDTO dto, @MappingTarget Usuario entity);
+}</code></pre>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #4ade80;">
+                    <h3>Vantagens do MapStruct:</h3>
+                    <ul class="explanation-list">
+                        <li>Gera código em tempo de compilação (sem reflexão)</li>
+                        <li>Muito mais rápido que mapeamento manual</li>
+                        <li>Type-safe (verificado em tempo de compilação)</li>
+                        <li>Permite customizações com @Mapping</li>
+                        <li>Integração natural com Spring</li>
+                        <li>Zero overhead em runtime</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXEMPLO COMPLETO -->
+            <div class="section">
+                <h2>8. Exemplo Completo: API de Usuários</h2>
+
+                <h3>1. DTOs:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// Response DTO
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class UsuarioDTO {
+    private Long id;
+    private String nome;
+    private String email;
+}
+
+// Request DTO - Criar
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class CriarUsuarioDTO {
+    @NotBlank
+    @Size(min = 3, max = 100)
+    private String nome;
+    
+    @NotBlank
+    @Email
+    private String email;
+    
+    @NotBlank
+    @Size(min = 8)
+    private String senha;
+}
+
+// Request DTO - Atualizar
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class AtualizarUsuarioDTO {
+    @Size(min = 3, max = 100)
+    private String nome;
+    
+    @Email
+    private String email;
+}</code></pre>
+                </div>
+
+                <h3>2. Mapper:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">@Mapper(componentModel = "spring")
+public interface UsuarioMapper {
+    UsuarioDTO toDTO(Usuario entity);
+    List<UsuarioDTO> toDTOList(List<Usuario> entities);
+    
+    @Mapping(target = "senhaHash", ignore = true)
+    Usuario toEntity(CriarUsuarioDTO dto);
+    
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "senhaHash", ignore = true)
+    void update(AtualizarUsuarioDTO dto, @MappingTarget Usuario entity);
+}</code></pre>
+                </div>
+
+                <h3>3. Service:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">@Service
+public class UsuarioService {
+    
+    private final UsuarioRepository repository;
+    private final UsuarioMapper mapper;
+    private final PasswordEncoder passwordEncoder;
+    
+    public UsuarioService(UsuarioRepository repository, 
+                         UsuarioMapper mapper,
+                         PasswordEncoder passwordEncoder) {
+        this.repository = repository;
+        this.mapper = mapper;
+        this.passwordEncoder = passwordEncoder;
+    }
+    
+    public UsuarioDTO criar(CriarUsuarioDTO dto) {
+        Usuario entity = mapper.toEntity(dto);
+        entity.setSenhaHash(passwordEncoder.encode(dto.getSenha()));
+        Usuario salvo = repository.save(entity);
+        return mapper.toDTO(salvo);
+    }
+    
+    public UsuarioDTO buscarPorId(Long id) {
+        Usuario usuario = repository.findById(id)
+            .orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
+        return mapper.toDTO(usuario);
+    }
+    
+    public Page<UsuarioDTO> listarTodos(Pageable pageable) {
+        Page<Usuario> page = repository.findAll(pageable);
+        return page.map(mapper::toDTO);
+    }
+    
+    public UsuarioDTO atualizar(Long id, AtualizarUsuarioDTO dto) {
+        Usuario usuario = repository.findById(id)
+            .orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
+        
+        mapper.update(dto, usuario);
+        Usuario atualizado = repository.save(usuario);
+        return mapper.toDTO(atualizado);
+    }
+    
+    public void deletar(Long id) {
+        if (!repository.existsById(id)) {
+            throw new NotFoundException("Usuário não encontrado");
+        }
+        repository.deleteById(id);
+    }
+}</code></pre>
+                </div>
+
+                <h3>4. Controller:</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">@RestController
+@RequestMapping("/api/usuarios")
+public class UsuarioController {
+    
+    private final UsuarioService service;
+    
+    public UsuarioController(UsuarioService service) {
+        this.service = service;
+    }
+    
+    @PostMapping
+    public ResponseEntity<UsuarioDTO> criar(
+        @Valid @RequestBody CriarUsuarioDTO dto) {
+        UsuarioDTO resultado = service.criar(dto);
+        return ResponseEntity.status(201).body(resultado);
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<UsuarioDTO> buscarPorId(@PathVariable Long id) {
+        UsuarioDTO usuario = service.buscarPorId(id);
+        return ResponseEntity.ok(usuario);
+    }
+    
+    @GetMapping
+    public ResponseEntity<Page<UsuarioDTO>> listarTodos(Pageable pageable) {
+        Page<UsuarioDTO> usuarios = service.listarTodos(pageable);
+        return ResponseEntity.ok(usuarios);
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioDTO> atualizar(
+        @PathVariable Long id,
+        @Valid @RequestBody AtualizarUsuarioDTO dto) {
+        UsuarioDTO atualizado = service.atualizar(id, dto);
+        return ResponseEntity.ok(atualizado);
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        service.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- CASOS DE USO -->
+            <div class="section">
+                <h2>9. Casos de Uso Comuns</h2>
+
+                <h3>Caso 1: DTO Parcial - Listagem</h3>
+                <p>Às vezes você quer menos campos na listagem que na visualização individual:</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// DTO com todos os dados
+@Getter
+@Setter
+public class UsuarioDTO {
+    private Long id;
+    private String nome;
+    private String email;
+    private LocalDateTime dataCriacao;
+}
+
+// DTO simplificado para listagem
+@Getter
+@Setter
+public class UsuarioResumoDTO {
+    private Long id;
+    private String nome;
+    private String email;
+}</code></pre>
+                </div>
+
+                <h3>Caso 2: DTO com Relacionamentos</h3>
+                <p>Incluir dados relacionados sem expor a Entity completa:</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">@Getter
+@Setter
+public class PedidoDTO {
+    private Long id;
+    private LocalDateTime data;
+    private BigDecimal total;
+    
+    // Dados do usuário relacionado (simplificado)
+    private UsuarioResumoDTO usuario;
+    
+    // Lista de itens do pedido
+    private List<ItemPedidoDTO> itens;
+}
+
+@Getter
+@Setter
+public class ItemPedidoDTO {
+    private Long id;
+    private String nomeProduto;
+    private Integer quantidade;
+    private BigDecimal precoUnitario;
+}</code></pre>
+                </div>
+
+                <h3>Caso 3: DTO com Validação Customizada</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">@Getter
+@Setter
+public class CriarProdutoDTO {
+    
+    @NotBlank
+    @Size(min = 3, max = 100)
+    private String nome;
+    
+    @NotBlank
+    private String descricao;
+    
+    @NotNull
+    @DecimalMin("0.01")
+    private BigDecimal preco;
+    
+    @NotNull
+    @Min(0)
+    private Integer estoque;
+    
+    @Email
+    private String emailFornecedor;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- BOAS PRÁTICAS -->
+            <div class="section">
+                <h2>10. Boas Práticas com DTO e Mappers</h2>
+
+                <h3>✓ FAÇA:</h3>
+                <ul class="explanation-list">
+                    <li>Separe Request e Response DTOs</li>
+                    <li>Use validação Bean Validation (@Valid)</li>
+                    <li>Nunca envie senhas ou dados sensíveis</li>
+                    <li>Use Mappers para conversão consistente</li>
+                    <li>Crie DTOs específicos para cada caso de uso</li>
+                    <li>Documente quais campos são opcionais</li>
+                    <li>Use tipos específicos (LocalDateTime, BigDecimal, etc)</li>
+                    <li>Implemente equals() e hashCode() se necessário</li>
+                </ul>
+
+                <h3>✗ EVITE:</h3>
+                <ul class="explanation-list">
+                    <li>Usar Entity diretamente como response</li>
+                    <li>Expor detalhes internos do banco de dados</li>
+                    <li>Mappers sem estrutura ou padrão</li>
+                    <li>DTOs com lógica de negócio</li>
+                    <li>DTOs muito genéricos que servem para tudo</li>
+                    <li>Enviar dados desnecessários (performance)</li>
+                    <li>Mappers sem testes</li>
+                    <li>Esquecer validação em Request DTOs</li>
+                </ul>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- ERROS COMUNS -->
+            <div class="section">
+                <h2>11. Erros Comuns</h2>
+
+                <h3 style="color: #ef4444;">❌ Erro 1: Expor a Entity Diretamente</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// ERRADO - Expõe tudo, inclusive senha!
+@GetMapping("/{id}")
+public ResponseEntity<Usuario> buscar(@PathVariable Long id) {
+    Usuario usuario = repository.findById(id).orElseThrow();
+    return ResponseEntity.ok(usuario);
+}
+
+// CORRETO - Retorna DTO
+@GetMapping("/{id}")
+public ResponseEntity<UsuarioDTO> buscar(@PathVariable Long id) {
+    Usuario usuario = repository.findById(id).orElseThrow();
+    return ResponseEntity.ok(mapper.toDTO(usuario));
+}</code></pre>
+                </div>
+
+                <h3 style="color: #ef4444;">❌ Erro 2: DTO com Lógica de Negócio</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// ERRADO - DTO com lógica
+public class UsuarioDTO {
+    private String nome;
+    
+    public String getNomeFormatado() {
+        return nome.toUpperCase();
+    }
+}
+
+// CORRETO - DTO simples, lógica no Service
+public class UsuarioDTO {
+    private String nome;
+}</code></pre>
+                </div>
+
+                <h3 style="color: #ef4444;">❌ Erro 3: Mapper sem Validação</h3>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-lang">java</span>
+                    </div>
+                    <pre><code class="language-java">// ERRADO - Sem tratamento de nulo
+public UsuarioDTO toDTO(Usuario entity) {
+    return new UsuarioDTO(
+        entity.getId(),  // Pode dar NullPointerException
+        entity.getNome(),
+        entity.getEmail()
+    );
+}
+
+// CORRETO - Valida antes
+public UsuarioDTO toDTO(Usuario entity) {
+    if (entity == null) return null;
+    
+    return new UsuarioDTO(
+        entity.getId(),
+        entity.getNome(),
+        entity.getEmail()
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- ESTRUTURA DE PROJETO -->
+            <div class="section">
+                <h2>12. Estrutura de Projeto Recomendada</h2>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-lang">plaintext</span>
+                    </div>
+                    <pre><code class="language-plaintext">src/main/java/com/example/projeto/
+├── controller/
+│   └── UsuarioController.java
+├── service/
+│   └── UsuarioService.java
+├── repository/
+│   └── UsuarioRepository.java
+├── mapper/
+│   ├── UsuarioMapper.java
+│   └── PedidoMapper.java
+├── dto/
+│   ├── request/
+│   │   ├── CriarUsuarioDTO.java
+│   │   └── AtualizarUsuarioDTO.java
+│   └── response/
+│       ├── UsuarioDTO.java
+│       └── UsuarioResumoDTO.java
+├── entity/
+│   ├── Usuario.java
+│   └── Pedido.java
+└── config/
+    └── MapperConfig.java</code></pre>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- RESUMO -->
+            <div class="section">
+                <h2>13. Resumo - DTO vs Mapper</h2>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>DTO (Data Transfer Object)</h3>
+                    <ul class="explanation-list">
+                        <li>Classe simples com getters/setters</li>
+                        <li>Transfere dados entre camadas</li>
+                        <li>Sem lógica de negócio</li>
+                        <li>Protege a Entity</li>
+                        <li>Pode ter validação específica</li>
+                    </ul>
+                </div>
+
+                <div class="solid-box" style="border-left: 5px solid #0ea5e9;">
+                    <h3>Mapper</h3>
+                    <ul class="explanation-list">
+                        <li>Converte Entity em DTO e vice-versa</li>
+                        <li>Centraliza lógica de transformação</li>
+                        <li>Pode ser manual ou automático (MapStruct)</li>
+                        <li>Trata valores nulos e conversões</li>
+                        <li>Facilita testes e manutenção</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- CONCLUSÃO -->
+            <div class="conclusion-box">
+                <h2>Conclusão</h2>
+                <p><strong>DTO e Mappers</strong> são padrões essenciais em APIs Spring Boot modernas.</p>
+                <p>Eles garantem:</p>
+                <ul class="explanation-list">
+                    <li>✓ Segurança - Dados sensíveis protegidos</li>
+                    <li>✓ Isolamento - Entity independente da API</li>
+                    <li>✓ Performance - Apenas dados necessários</li>
+                    <li>✓ Flexibilidade - Múltiplos DTOs para casos diferentes</li>
+                    <li>✓ Manutenibilidade - Código organizado e consistente</li>
+                </ul>
+                <p>Use sempre DTOs em suas APIs REST e padronize as conversões com Mappers! 🚀</p>
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="footer">
+            <p><strong>JAVA Learning</strong> - Hub de Conteúdo SENAI</p>
+            <p>DTO e Mappers: Segurança e Flexibilidade em APIs REST!</p>
+            <p>Do básico ao avançado: Spring Boot, APIs, Arquitetura e muito mais!</p>
+        </footer>
+    </div>
+
+    <!-- Botão Voltar ao Topo com Menu -->
+    <div class="scroll-to-top-wrapper">
+        <button class="scroll-to-top" id="scrollToTop" aria-label="Menu de navegação">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        
+        <nav class="scroll-menu" id="scrollMenu">
+            <ul></ul>
+        </nav>
+    </div>
+
+    <script defer src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>
